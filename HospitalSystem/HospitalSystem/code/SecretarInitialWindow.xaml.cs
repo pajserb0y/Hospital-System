@@ -46,16 +46,12 @@ namespace HospitalSystem.code
             //    txtList.Text = p.ToString();
             //}
 
-<<<<<<< HEAD
-           // string JSONresult = JsonConvert.DeserializeObject(jsonString);
-            string path = @"C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\HospitalSystem.json";
-            using (var tr = new StreamReader(path, true))
-=======
+
+
             List<string> lines = new List<string>();
             //string jsonresult = jsonconvert.deserializeobject(jsonstring);
             string path = @"e:\fax\projekti\sims\hospital-system\hospitalsystem.json";
             using (JsonTextReader reader = new JsonTextReader(new StreamReader(path, true)))
->>>>>>> 1154d10372273d6bfcd5652bea75be4900fef252
             {
 
                 // while(!tr.endofstream)
