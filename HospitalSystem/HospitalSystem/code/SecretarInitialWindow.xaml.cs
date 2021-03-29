@@ -33,11 +33,11 @@ namespace HospitalSystem.code
             //        lines.Add(reader.ReadLine());
             //    }
             //}
-           // List<Patient> list = JsonConvert.DeserializeObject < List<Patient>>(File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"));
+            // List<Patient> list = JsonConvert.DeserializeObject < List<Patient>>(File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"));
             //var list = JsonConvert.DeserializeObject<string>(File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"));
-         
-          
-           
+
+
+
             //string jsonString  = File.ReadAllText("HospitalSystem.json");
             //List <Patient> list = JsonSerializer.Deserialize<List<Patient>>(jsonString);
 
@@ -46,17 +46,41 @@ namespace HospitalSystem.code
             //    txtList.Text = p.ToString();
             //}
 
-           // string JSONresult = JsonConvert.DeserializeObject(jsonString);
-            string path = @"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json";
-            using (var tr = new StreamReader(path, true))
+            List<string> lines = new List<string>();
+            //string jsonresult = jsonconvert.deserializeobject(jsonstring);
+            string path = @"e:\fax\projekti\sims\hospital-system\hospitalsystem.json";
+            using (JsonTextReader reader = new JsonTextReader(new StreamReader(path, true)))
             {
-                
-               // while(!tr.EndOfStream)
-                txtList.Text = tr.ReadToEnd().ToString();
 
-                tr.Close();
+                // while(!tr.endofstream)
+                //txtlist.text = tr.readtoend().tostring();
+                while (reader.Read())
+                {
+                    if (reader.Value != null)
+                        lines.Add(reader.TokenType + " " + reader.Value);
+                    // console.writeline("token: {0}, value: {1}", reader.tokentype, reader.value);
+                    //txtlist.text = "token: " + reader.tokentype + " value: " + reader.value;
+                    else
+                    {
+                        txtList.Text = "token: " + reader.TokenType;
+                    }
+                }
+                txtList.Text = string.Join(Environment.NewLine, lines);
+                //    //string JSONresult = JsonConvert.DeserializeObject(tr);
+
+                //    //tr.Close();
             }
-            //  FileLocation = 
+
+
+            //    using (StreamReader r = new StreamReader(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"))
+            //{
+            //    string json = r.ReadToEnd();
+            //    List<Patient> items = JsonConvert.DeserializeObject<List<Patient>>(json);
+            //    r.Close();
+            //}
+
+            //DataTable dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
+            //dataGridView.DataSource = dataTable; 
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

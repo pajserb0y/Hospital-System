@@ -11,12 +11,13 @@ public class Patient
 {
     //public File file;
 
-    [JsonProperty] private String Id;
-    [JsonProperty] private String FirstName;
-    [JsonProperty] private String LastName;
-    [JsonProperty] private int Jmbg;
-    [JsonProperty] private String Adress;
-    [JsonProperty] private int Telephone;
+    [JsonProperty] public String Id { get; set; }
+    [JsonProperty] public String FirstName{ get; set; }
+    [JsonProperty] public String LastName { get; set; }
+    [JsonProperty] public int Jmbg { get; set; }
+    [JsonProperty] public String Adress { get; set; }
+    [JsonProperty] public int Telephone { get; set; }
+
 
     public Patient(string id, string firstName, string lastName, int jmbg, string adress, int telephone)
     {
