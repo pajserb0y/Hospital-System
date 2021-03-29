@@ -33,34 +33,39 @@ public class PatientsStorage
 
     public Patient GetOne(String patientID)
     {
-        // TODO: implement
+        foreach (Patient p in patients)
+            if (patientID == p.Id)
+                return p;
         return null;
     }
 
     public List<Patient> GetAll()
     {
-        // TODO: implement
-        List<Patient> patients = new List<Patient>();
-
-
-       
-
         return patients;
     }
 
     public void Edit(Patient patient)
     {
-        // TODO: implement
+        foreach (Patient p in patients)
+            if (patient.Id == p.Id)
+            {
+                p.Jmbg = patient.Jmbg;
+                p.FirstName = patient.FirstName;
+                p.LastName = patient.LastName;
+                p.Adress = patient.Adress;
+                p.Telephone = patient.Telephone;
+            }
     }
 
     public void Delete(Patient patient)
     {
-        // TODO: implement
+        foreach (Patient p in patients)
+            if (patient.Id == p.Id)
+                patients.Remove(p);            
     }
 
     public void Save(Patient patient)
     {
-        // TODO: implement
         this.patients.Add(patient);
  
 
