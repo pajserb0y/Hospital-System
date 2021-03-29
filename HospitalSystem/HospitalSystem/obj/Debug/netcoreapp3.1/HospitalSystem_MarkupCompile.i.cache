@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\
+C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\
 HospitalSystem
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\App.xaml
-3-450379508
+C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\App.xaml
+5147509408
 
-26439475394
-193562804779
-code\NewPatient.xaml;code\SecretarInitialWindow.xaml;MainWindow.xaml;
+282008410221
+1931167375416
+code\DoctorInitialWindow.xaml;code\NewExam.xaml;code\NewPatient.xaml;code\SecretarInitialWindow.xaml;MainWindow.xaml;
 
-False
+True
 

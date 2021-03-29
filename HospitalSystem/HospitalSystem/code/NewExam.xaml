@@ -1,0 +1,23 @@
+﻿<Window x:Class="HospitalSystem.code.NewExam"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalSystem.code"
+        mc:Ignorable="d"
+        Title="NewExam" Height="450" Width="800">
+    <Grid>
+        <TextBox Name="txtPatId"  HorizontalAlignment="Left" Height="26" Margin="192,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtPatName" HorizontalAlignment="Left" Height="26" Margin="394,35,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtPatLastname" HorizontalAlignment="Left" Height="26" Margin="616,34,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtDocId" HorizontalAlignment="Left" Height="28" Margin="192,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtDocName" HorizontalAlignment="Left" Height="28" Margin="400,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtDocLastname" HorizontalAlignment="Left" Height="28" Margin="616,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <TextBox Name="txtDateTime" HorizontalAlignment="Left" Height="27" Margin="192,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <Label Content="Patient" HorizontalAlignment="Left" Height="37" Margin="29,29,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="29,100,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="Date/Time" HorizontalAlignment="Left" Height="36" Margin="29,186,0,0" VerticalAlignment="Top" Width="104"/>
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="540,258,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click"/>
+
+    </Grid>
+</Window>

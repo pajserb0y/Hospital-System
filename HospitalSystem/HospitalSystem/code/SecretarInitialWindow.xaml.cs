@@ -47,7 +47,7 @@ namespace HospitalSystem.code
             //}
 
            // string JSONresult = JsonConvert.DeserializeObject(jsonString);
-            string path = @"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json";
+            string path = @"C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\HospitalSystem.json";
             using (var tr = new StreamReader(path, true))
             {
                 

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Upravnik" HorizontalAlignment="Left" Margin="140,98,0,0" VerticalAlignment="Top" Height="40" Width="70" Click="btnUpravnik_Click"/>
-        <Button Content="Sekretar" HorizontalAlignment="Left" Margin="387,98,0,0" VerticalAlignment="Top" Height="40" Width="70" Click="btnSekretar_Click"/>
-        <Button Content="Lekar" HorizontalAlignment="Left" Margin="140,249,0,0" VerticalAlignment="Top" Height="40" Width="70" Click="btnLekar_Click"/>
-        <Button Content="Pacijent" HorizontalAlignment="Left" Margin="387,254,0,0" VerticalAlignment="Top" Height="40" Width="70" Click="btnPacijent_Click"/>
+        <Button Content="Upravnik" HorizontalAlignment="Left" Margin="140,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnUpravnik_Click"/>
+        <Button Content="Sekretar" HorizontalAlignment="Left" Margin="514,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnSekretar_Click"/>
+        <Button Content="Doctor" HorizontalAlignment="Left" Margin="140,229,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnDoctor_Click"/>
+        <Button Content="Pacijent" HorizontalAlignment="Left" Margin="514,224,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnPacijent_Click"/>
     </Grid>
 </Window>

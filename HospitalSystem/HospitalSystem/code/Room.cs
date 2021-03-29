@@ -8,6 +8,7 @@ using System;
 
 public class Room
 {
+
    public long GetId()
    {
       // TODO: implement
@@ -79,7 +80,17 @@ public class Room
    }
    public RoomType roomType;
 
-   private long Id;
-   private String Name;
+    public Room()
+    {
+    }
+
+    public Room(long id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    public  long Id { get; set; }
+   public String Name { get; set; }
 
 }

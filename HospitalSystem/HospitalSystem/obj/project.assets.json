@@ -48,19 +48,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nikola\\.nuget\\packages\\": {}
+    "C:\\Users\\Marko\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Fax\\Projekti\\SIMS\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
+      "projectUniqueName": "C:\\Users\\Marko\\Desktop\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
       "projectName": "HospitalSystem",
-      "projectPath": "E:\\Fax\\Projekti\\SIMS\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
-      "packagesPath": "C:\\Users\\Nikola\\.nuget\\packages\\",
-      "outputPath": "E:\\Fax\\Projekti\\SIMS\\Hospital-System\\HospitalSystem\\HospitalSystem\\obj\\",
+      "projectPath": "C:\\Users\\Marko\\Desktop\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
+      "packagesPath": "C:\\Users\\Marko\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Marko\\Desktop\\Hospital-System\\HospitalSystem\\HospitalSystem\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Nikola\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Marko\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -109,7 +109,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
