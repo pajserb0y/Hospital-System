@@ -39,7 +39,7 @@ public class Doctor
       return null;
    }
 
-   private String Id;
+   private String id;
    private String Username;
    private String Password;
    private String FirstName;

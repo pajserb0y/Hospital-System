@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -22,72 +24,42 @@ namespace HospitalSystem.code
     {
         public SecretarInitialWindow()
         {
+            this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
 
-            ////string jsonString = File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json");
-            //List<string> lines = new List<string>();
-            //using (StreamReader reader = File.OpenText(filename))
-            //{
-            //    while (!reader.EndOfStream)
-            //    {
-            //        lines.Add(reader.ReadLine());
-            //    }
-            //}
-            // List<Patient> list = JsonConvert.DeserializeObject < List<Patient>>(File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"));
-            //var list = JsonConvert.DeserializeObject<string>(File.ReadAllText(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"));
-
-
-
-            //string jsonString  = File.ReadAllText("HospitalSystem.json");
-            //List <Patient> list = JsonSerializer.Deserialize<List<Patient>>(jsonString);
-
-            //foreach (Patient p in list)
-            //{
-            //    txtList.Text = p.ToString();
-            //}
-
-            List<string> lines = new List<string>();
-            //string jsonresult = jsonconvert.deserializeobject(jsonstring);
-            string path = @"e:\fax\projekti\sims\hospital-system\hospitalsystem.json";
-            using (JsonTextReader reader = new JsonTextReader(new StreamReader(path, true)))
-            {
-
-                // while(!tr.endofstream)
-                //txtlist.text = tr.readtoend().tostring();
-                while (reader.Read())
-                {
-                    if (reader.Value != null)
-                        lines.Add(reader.TokenType + " " + reader.Value);
-                    // console.writeline("token: {0}, value: {1}", reader.tokentype, reader.value);
-                    //txtlist.text = "token: " + reader.tokentype + " value: " + reader.value;
-                    else
-                    {
-                        txtList.Text = "token: " + reader.TokenType;
-                    }
-                }
-                txtList.Text = string.Join(Environment.NewLine, lines);
-                //    //string JSONresult = JsonConvert.DeserializeObject(tr);
-
-                //    //tr.Close();
-            }
-
-
-            //    using (StreamReader r = new StreamReader(@"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json"))
-            //{
-            //    string json = r.ReadToEnd();
-            //    List<Patient> items = JsonConvert.DeserializeObject<List<Patient>>(json);
-            //    r.Close();
-            //}
-
-            //DataTable dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
-            //dataGridView.DataSource = dataTable; 
+            //this.DataContext = PatientsStorage.getInstance(); // DODAO
+            dg.ItemsSource = PatientsStorage.getInstance().GetAll(); 
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             NewPatient np = new NewPatient();
             np.Show();
-            //this.Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            PatientsStorage.getInstance().serialize();
+            this.Close();
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EditPatient ep = new EditPatient((Patient)dg.SelectedItem);
+            ep.Show();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            PatientsStorage.getInstance().Delete((Patient)dg.SelectedItem);
+        }
+
+        private void txb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow mp = new MainWindow();
+            mp.Show();
+            PatientsStorage.getInstance().serialize();
+            this.Close();
         }
     }
 }

@@ -24,10 +24,9 @@ namespace HospitalSystem.code
 
         private void btSave_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = new Patient("p123", txtIme.Text, txtPrezime.Text, Convert.ToInt32(txtJmbg.Text), txtAdresa.Text, Convert.ToInt32(txtTel.Text));
-
+            Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text), txtAdresa.Text, Convert.ToInt64(txtTel.Text));
             PatientsStorage.getInstance().Save(patient);
-
+            this.Close();
         }
     }
 }

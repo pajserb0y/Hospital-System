@@ -6,8 +6,7 @@
 
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
+using System.Collections.ObjectModel;
 using System.IO;
 
 public class PatientsStorage
@@ -23,15 +22,22 @@ public class PatientsStorage
     }
 
 
-    private List<Patient> patients;
-    private String FileLocation;
+    private ObservableCollection<Patient> patients;
+    public ObservableCollection<Patient> Patients
+    {
+        get { return patients; }
+        set { patients = value; }
+    }
+
+    private String FileLocation = "BAZE\\Pacijenti.json";
+
 
     public PatientsStorage()
     {
-        this.patients = new List<Patient>();
+        this.patients = deserialize();
     }
 
-    public Patient GetOne(String patientID)
+    public Patient GetOne(int patientID)
     {
         foreach (Patient p in patients)
             if (patientID == p.Id)
@@ -39,21 +45,28 @@ public class PatientsStorage
         return null;
     }
 
-    public List<Patient> GetAll()
+    public ObservableCollection<Patient> GetAll()
     {
         return patients;
     }
 
     public void Edit(Patient patient)
     {
-        foreach (Patient p in patients)
-            if (patient.Id == p.Id)
+        //Patient help = null;
+        //foreach (Patient P in this.Patients)
+        //    if (patient.Id == P.Id)
+        //       help = P;
+        //int i = this.Patients.IndexOf(help);
+        //this.Patients.Remove(help);
+        //this.Patients.Insert(i, patient);
+        foreach (Patient P in this.patients)
+            if (patient.Id == P.Id)
             {
-                p.Jmbg = patient.Jmbg;
-                p.FirstName = patient.FirstName;
-                p.LastName = patient.LastName;
-                p.Adress = patient.Adress;
-                p.Telephone = patient.Telephone;
+                P.Jmbg = patient.Jmbg;
+                P.FirstName = patient.FirstName;
+                P.LastName = patient.LastName;
+                P.Adress = patient.Adress;
+                P.Telephone = patient.Telephone;
             }
     }
 
@@ -61,21 +74,41 @@ public class PatientsStorage
     {
         foreach (Patient p in patients)
             if (patient.Id == p.Id)
-                patients.Remove(p);            
+            {
+                this.patients.Remove(p);
+                break;
+            }
     }
 
     public void Save(Patient patient)
     {
         this.patients.Add(patient);
- 
+    }
 
-        string JSONresult = JsonConvert.SerializeObject(patient);
-        string path = @"E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem.json";
-        using (var tw = new StreamWriter(path, true))
+    public int GenerateNewID()
+    {
+        return ((patients.Count - 1) == -1) ? 1 : patients[patients.Count - 1].Id + 1;
+    }
+
+    public void serialize()
+    {
+        var JSONresult = JsonConvert.SerializeObject(patients);
+        using (StreamWriter sw = new StreamWriter(FileLocation))
         {
-            tw.WriteLine(JSONresult.ToString());
-            tw.Close();
+            sw.Write(JSONresult);
+            sw.Close();
         }
+    }
+
+    public ObservableCollection<Patient> deserialize()
+    {
+        ObservableCollection<Patient> list = new ObservableCollection<Patient>();
+        using (StreamReader sr = new StreamReader(FileLocation))
+        {
+            list = JsonConvert.DeserializeObject<ObservableCollection<Patient>>(sr.ReadToEnd());
+            sr.Close();
+        }
+        return list;
     }
 
     public void TransferPatient(Patient patient, String newLocation)

@@ -23,3 +23,5 @@ E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\net
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\HospitalSystem.csproj.CopyComplete
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\NewPatient.g.cs
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\NewPatient.baml
+E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\EditPatient.g.cs
+E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\EditPatient.baml
