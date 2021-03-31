@@ -21,7 +21,6 @@ namespace HospitalSystem.code
         public EditPatient(Patient selectedPatient)
         {
             InitializeComponent();
-            //this.btSave_Click += new EventHandler(DataGridCellEditEndingEventArgs);
             p = selectedPatient;
                
             txtIme.Text = selectedPatient.FirstName;

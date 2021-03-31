@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\App.xaml
-4-1295778137
+61606120261
 
-24-439160782
+261896317754
 200271639601
-code\EditPatient.xaml;code\NewPatient.xaml;code\SecretarInitialWindow.xaml;MainWindow.xaml;
+code\DoctorInitialWindow.xaml;code\EditPatient.xaml;code\NewExam.xaml;code\NewPatient.xaml;code\SecretarInitialWindow.xaml;MainWindow.xaml;
 
 False
 

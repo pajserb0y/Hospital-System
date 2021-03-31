@@ -24,6 +24,7 @@ public class Patient : INotifyPropertyChanged
         }
     }
 
+
     private String firstname;
     public String FirstName
     {
@@ -111,6 +112,10 @@ public class Patient : INotifyPropertyChanged
         {
             PropertyChanged(this, new PropertyChangedEventArgs(name));  
         }
+    }
+
+    public Patient()
+    {
     }
 
     public override string ToString()

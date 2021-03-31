@@ -31,16 +31,16 @@ namespace HospitalSystem.code
             dg.ItemsSource = PatientsStorage.getInstance().GetAll(); 
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            NewPatient np = new NewPatient();
-            np.Show();
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             PatientsStorage.getInstance().serialize();
             this.Close();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NewPatient np = new NewPatient();
+            np.Show();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

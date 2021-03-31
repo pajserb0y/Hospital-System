@@ -8,12 +8,12 @@ using System;
 
 public class Appointment
 {
-   private String AppointmentID;
-   private DateTime Time;
-   private DateTime Date;
-   
-   private Patient patient;
-   private Room room;
-   private Doctor doctor;
+   public String AppointmentID { get; set; }
+    public DateTime Time { get; set; }
+    public DateTime Date { get; set; }
+
+    public Patient Patient { get; set; }
+    public Room Room { get; set; }
+    public Doctor Doctor { get; set; }
 
 }

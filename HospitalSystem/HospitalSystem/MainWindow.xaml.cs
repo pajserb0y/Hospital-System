@@ -47,5 +47,12 @@ namespace HospitalSystem
         {
 
         }
+
+        private void btnDoctor_Click(object sender, RoutedEventArgs e)
+        {
+            DoctorInitialWindow doctorWin = new DoctorInitialWindow();
+            doctorWin.Show();
+            this.Close();
+        }
     }
 }
