@@ -15,23 +15,29 @@ namespace HospitalSystem.code
     /// <summary>
     /// Interaction logic for NewExam.xaml
     /// </summary>
-    /*public partial class NewExam : Window
+    public partial class NewExam : Window
     {
         public NewExam()
         {
             InitializeComponent();
+            lv1.ItemsSource = PatientsStorage.getInstance().GetAll();
+            lv2.ItemsSource = DoctorStorage.getInstance().GetAll();
+            lv3.ItemsSource = RoomStorage.getInstance().GetAll();
+            //lv1.DataContext = PatientsStorage.getInstance().GetAll();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Examination exam = new Examination("tempExam");
-            exam.Patient = new Patient(txtPatId.Text, txtPatName.Text, txtPatLastname.Text);
-            exam.Doctor = new Doctor(txtDocId.Text, txtDocName.Text, txtDocLastname.Text);
-            exam.Time = Convert.ToDateTime(txtDateTime.Text);
+            Examination exam = new Examination();
+            exam.Id = ExaminationStorage.getInstance().GenerateNewID();
+            exam.Patient = (Patient)lv1.SelectedItem;
+            exam.Doctor = (Doctor) lv2.SelectedItem;
+            exam.Room = (Room)lv3.SelectedItem;
+           // exam.Time = (DateTime) DatePicker.;
             ExaminationStorage.getInstance().Save(exam);
-            List<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
+            //List<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
           // foreach (Examination exam in ExamList)
            //     DataGridXAML.Items.Add(exam);
         }
-    }*/
+    }
 }

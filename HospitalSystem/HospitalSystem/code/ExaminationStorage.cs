@@ -7,6 +7,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 public class ExaminationStorage
@@ -21,46 +22,92 @@ public class ExaminationStorage
         return instance;
     }
 
-    public ExaminationStorage()
+    private ObservableCollection<Examination> examinations;
+    public ObservableCollection<Examination> Examinations
     {
-        this.Examinations = new List<Examination>();
+        get { return examinations; }
+        set { examinations = value; }
     }
 
-    public Examination GetOne(String examinationID)
-   {
-      // TODO: implement
-      return null;
-   }
-   
-   public List<Examination> GetAll()
-   {
-      // TODO: implement
-      return this.Examinations;
-   }
-   
-   public void Delete(Examination exam)
-   {
-        // TODO: implement
-        Examinations.Remove(exam);
-   }
-   
-   public void Edit(Examination exam)
-   {
-      // TODO: implement
-   }
-   
-   public void Save(Examination exam)
-   {
-        Examinations.Add(exam);
-        string JSONresult = JsonConvert.SerializeObject(exam);
-        string path = @"C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\Examination.json";
-        using (var tw = new StreamWriter(path, true))
+    private String FileLocation = "BAZE\\Pregledi.json";
+
+
+    public ExaminationStorage()
+    {
+        this.examinations = deserialize();
+    }
+
+    public Examination GetOne(int Id)
+    {
+        foreach (Examination e in examinations)
+            if (Id == e.Id)
+                return e;
+        return null;
+    }
+
+    public ObservableCollection<Examination> GetAll()
+    {
+        return examinations;
+    }
+
+    public void Edit(Examination exam)
+    {
+        //Patient help = null;
+        //foreach (Patient P in this.Patients)
+        //    if (patient.Id == P.Id)
+        //       help = P;
+        //int i = this.Patients.IndexOf(help);
+        //this.Patients.Remove(help);
+        //this.Patients.Insert(i, patient);
+        foreach (Examination e in this.examinations)
+            if (exam.Id == e.Id)
+            {
+                e.Doctor = exam.Doctor;
+                e.Patient = exam.Patient;
+                e.Room = exam.Room;
+            }
+    }
+
+    public void Delete(Examination exam)
+    {
+        foreach (Examination e in examinations)
+            if (exam.Id == e.Id)
+            {
+                this.examinations.Remove(e);
+                break;
+            }
+    }
+
+    public void Save(Examination exam)
+    {
+        this.examinations.Add(exam);
+    }
+
+    public int GenerateNewID()
+    {
+        if(examinations == null)
+            return 1;
+        return ((examinations.Count - 1) == -1) ? 1 : examinations[examinations.Count - 1].Id + 1;
+    }
+
+    public void serialize()
+    {
+        var JSONresult = JsonConvert.SerializeObject(examinations);
+        using (StreamWriter sw = new StreamWriter(FileLocation))
         {
-            tw.WriteLine(JSONresult.ToString());
-            tw.Close();
+            sw.Write(JSONresult);
+            sw.Close();
         }
     }
 
-   private String FileLocation;
-    private List<Examination> Examinations;
+    public ObservableCollection<Examination> deserialize()
+    {
+        ObservableCollection<Examination> list = new ObservableCollection<Examination>();
+        using (StreamReader sr = new StreamReader(FileLocation))
+        {
+            list = JsonConvert.DeserializeObject<ObservableCollection<Examination>>(sr.ReadToEnd());
+            sr.Close();
+        }
+        return list;
+    }
 }

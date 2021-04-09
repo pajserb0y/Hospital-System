@@ -1,17 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "dAX2KFjiZgwe1rPZbb1USaEfpoOR6zwAR7iXU8JQ0YzS4OlN0AyH1mTOMvZOgVKCBKH28W0MnZfDp9hLlZw8fg==",
+  "dgSpecHash": "TwGRhBHReFx9vqMgomHeDfr0EYliundqj9rfnDLdlrc+ooXVKqBo2KV5MxVLj8KRAVzTMoj+/3lhLR9VuuQlVw==",
   "success": true,
-  "projectFilePath": "E:\\Fax\\Projekti\\SIMS\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
+  "projectFilePath": "C:\\Users\\Marko\\Desktop\\Hospital-System\\HospitalSystem\\HospitalSystem\\HospitalSystem.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Nikola\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\Marko\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file E:\\Fax\\Projekti\\SIMS\\Hospital-System\\HospitalSystem\\HospitalSystem\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

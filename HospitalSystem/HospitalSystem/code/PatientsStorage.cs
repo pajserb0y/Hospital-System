@@ -1,4 +1,4 @@
-/***********************************************************************
+﻿/***********************************************************************
  * Module:  PatientsStorage.cs
  * Author:  Nikola
  * Purpose: Definition of the Class Sekretar.PatientsStorage

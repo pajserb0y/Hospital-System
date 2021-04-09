@@ -61,3 +61,5 @@ E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\net
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\NewExam.g.cs
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\DoctorInitialWindow.baml
 E:\Fax\Projekti\SIMS\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\NewExam.baml
+C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\EditPatient.g.cs
+C:\Users\Marko\Desktop\Hospital-System\HospitalSystem\HospitalSystem\obj\Debug\netcoreapp3.1\code\EditPatient.baml

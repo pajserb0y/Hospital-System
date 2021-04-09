@@ -6,18 +6,40 @@
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
         Title="NewExam" Height="450" Width="800">
-    <Grid>
-        <TextBox Name="txtPatId"  HorizontalAlignment="Left" Height="26" Margin="192,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtPatName" HorizontalAlignment="Left" Height="26" Margin="394,35,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtPatLastname" HorizontalAlignment="Left" Height="26" Margin="616,34,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtDocId" HorizontalAlignment="Left" Height="28" Margin="192,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtDocName" HorizontalAlignment="Left" Height="28" Margin="400,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtDocLastname" HorizontalAlignment="Left" Height="28" Margin="616,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <TextBox Name="txtDateTime" HorizontalAlignment="Left" Height="27" Margin="192,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
-        <Label Content="Patient" HorizontalAlignment="Left" Height="37" Margin="29,29,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="29,100,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Date/Time" HorizontalAlignment="Left" Height="36" Margin="29,186,0,0" VerticalAlignment="Top" Width="104"/>
-        <!--<Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="540,258,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click"/> -->
+    <Grid RenderTransformOrigin="0.429,0.383">
+        <Label Content="Patient" HorizontalAlignment="Left" Height="37" Margin="96,26,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="96,125,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="Date/Time" HorizontalAlignment="Left" Height="36" Margin="96,348,0,0" VerticalAlignment="Top" Width="104"/>
+        <DatePicker x:Name="dp1" HorizontalAlignment="Left" Margin="223,348,0,0" VerticalAlignment="Top" Height="27" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True"/>
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click"/>
+
+        <Label Content="Room" HorizontalAlignment="Left" Height="36" Margin="96,217,0,0" VerticalAlignment="Top" Width="104"/>
+        <ListView x:Name="lv1"  Margin="223,26,283,327" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="30" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="First Name" Width="120" DisplayMemberBinding="{Binding FirstName}" />
+                    <GridViewColumn Header="Last Name" Width="120" DisplayMemberBinding="{Binding LastName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="lv2" Margin="223,125,283,227" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="30" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="First Name" Width="120" DisplayMemberBinding="{Binding FirstName}" />
+                    <GridViewColumn Header="Last Name" Width="120" DisplayMemberBinding="{Binding LastName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="lv3" Margin="223,235,403,117" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="30" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>

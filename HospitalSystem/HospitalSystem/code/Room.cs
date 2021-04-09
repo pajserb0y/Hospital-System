@@ -5,35 +5,46 @@
  ***********************************************************************/
 
 using System;
+using System.ComponentModel;
 
-public class Room
+public class Room : INotifyPropertyChanged
 {
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
 
-   public long GetId()
-   {
-      // TODO: implement
-      return 0;
-   }
-   
-   public long SetId(long id)
-   {
-      // TODO: implement
-      return 0;
-   }
-   
-   public String GetName()
-   {
-      // TODO: implement
-      return null;
-   }
-   
-   public String SetName(String name)
-   {
-      // TODO: implement
-      return null;
-   }
-
-   public System.Collections.ArrayList equipment;
+    private String name;
+    public String Name
+    {
+        get { return name; }
+        set
+        {
+            if (name != value)
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+    }
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(String name)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+    public System.Collections.ArrayList equipment;
    
    /// <pdGenerated>default getter</pdGenerated>
    public System.Collections.ArrayList GetEquipment()
@@ -78,19 +89,15 @@ public class Room
       if (equipment != null)
          equipment.Clear();
    }
-   public RoomType roomType;
 
-    public Room()
-    {
-    }
-
-    public Room(long id, string name)
+    public Room(int id, string name)
     {
         Id = id;
         Name = name;
     }
-
-    public  long Id { get; set; }
-   public String Name { get; set; }
+    public override string ToString()
+    {
+        return Id.ToString() + " " + Name;
+    }
 
 }

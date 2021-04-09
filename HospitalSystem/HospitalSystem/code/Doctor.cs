@@ -5,83 +5,117 @@
  ***********************************************************************/
 
 using System;
+using System.ComponentModel;
 
-public class Doctor
+public class Doctor : INotifyPropertyChanged
 {
-    /*public Doctor(string id, string firstName, string lastName, int jmbg, string adress, int phoneNumber)
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
+
+
+    private String firstname;
+    public String FirstName
+    {
+        get { return firstname; }
+        set
+        {
+            if (firstname != value)
+            {
+                firstname = value;
+                OnPropertyChanged("FirstName");
+            }
+        }
+    }
+
+    private String lastname;
+    public String LastName
+    {
+        get { return lastname; }
+        set
+        {
+            if (lastname != value)
+            {
+                lastname = value;
+                OnPropertyChanged("Lastname");
+            }
+        }
+    }
+
+    private long jmbg;
+    public long Jmbg
+    {
+        get { return jmbg; }
+        set
+        {
+            if (jmbg != value)
+            {
+                jmbg = value;
+                OnPropertyChanged("Jmbg");
+            }
+        }
+    }
+
+
+    private String adress;
+    public String Adress
+    {
+        get { return adress; }
+        set
+        {
+            if (adress != value)
+            {
+                adress = value;
+                OnPropertyChanged("Adress");
+            }
+        }
+    }
+    private long telephone;
+
+    public long Telephone
+    {
+        get { return telephone; }
+        set
+        {
+            if (telephone != value)
+            {
+                telephone = value;
+                OnPropertyChanged("Telephone");
+            }
+        }
+    }
+
+    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Jmbg = jmbg;
         Adress = adress;
-        PhoneNumber = phoneNumber;
+        Telephone = telephone;
     }
 
-    public Doctor(string id, string firstName, string lastName)
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(String name)
     {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
     }
-
-    public void GenerateReport()
-   {
-      // TODO: implement
-   }
-   
-   public void ViewPatientsChart()
-   {
-      // TODO: implement
-   }
-   
-   public void GenerateReferralLetter()
-   {
-      // TODO: implement
-   }
-   
-   public void CancelExamination()
-   {
-      // TODO: implement
-   }
-   
-   public void GeneratePrescription()
-   {
-      // TODO: implement
-   }
-   
-   public Appointment NewApointment()
-   {
-      // TODO: implement
-      return null;
-   }
-
-
-   private String id;
-   private String Username;
-   private String Password;
-   private String FirstName;
-   private String LastName;
-   private int Jmbg;
-   private String Adress;
-   private int PhoneNumber;
-   private String specialization;
-   private DateTime WorkHour;
-
     public override string ToString()
     {
-        return Id + " " + FirstName + " " + LastName;
+        return Id.ToString() + " " + FirstName + " " + LastName + Jmbg.ToString() + " " + Adress + " " + Telephone.ToString();
     }
-
-    public String Id { get; set; }
-    public String Username { get; set; }
-    public String Password { get; set; }
-    public String FirstName { get; set; }
-    public String LastName { get; set; }
-    public int Jmbg { get; set; }
-    public String Adress { get; set; }
-    public int PhoneNumber { get; set; }
-    public String specialization { get; set; }
-    public DateTime WorkHour { get; set; }
-    */
 }
