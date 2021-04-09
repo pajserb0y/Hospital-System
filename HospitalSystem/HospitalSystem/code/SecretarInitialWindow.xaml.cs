@@ -28,7 +28,9 @@ namespace HospitalSystem.code
             InitializeComponent();
 
             //this.DataContext = PatientsStorage.getInstance(); // DODAO
-            dg.ItemsSource = PatientsStorage.getInstance().GetAll(); 
+            dg.ItemsSource = PatientsStorage.getInstance().GetAll();
+           // dg.Columns[0].Visibility = Visibility.Collapsed;
+            // dg.ColumnWidth = dg.ColumnWidth * 1.5;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -37,29 +39,36 @@ namespace HospitalSystem.code
             this.Close();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            NewPatient np = new NewPatient();
-            np.Show();
-        }
-
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            EditPatient ep = new EditPatient((Patient)dg.SelectedItem);
-            ep.Show();
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            PatientsStorage.getInstance().Delete((Patient)dg.SelectedItem);
-        }
-
-        private void txb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbBack_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow mp = new MainWindow();
             mp.Show();
             PatientsStorage.getInstance().serialize();
             this.Close();
+        }
+
+        private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NewPatient np = new NewPatient();
+            np.Show();
+        }
+
+        private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            EditPatient ep = new EditPatient((Patient)dg.SelectedItem);
+            ep.Show();
+            (dg.ItemContainerGenerator.ContainerFromItem(dg.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan pacijent
+            //(dg.ItemContainerGenerator.ContainerFromItem(dg.SelectedItem) as DataGridCell).IsSelected = false;
+        }
+
+        private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PatientsStorage.getInstance().Delete((Patient)dg.SelectedItem);
+        }
+
+        private void dg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+
         }
     }
 }

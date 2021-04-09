@@ -67,6 +67,9 @@ public class PatientsStorage
                 P.LastName = patient.LastName;
                 P.Adress = patient.Adress;
                 P.Telephone = patient.Telephone;
+                P.Email = patient.Email;
+                P.Gender = patient.Gender;
+                P.Guest = patient.Guest;
             }
     }
 

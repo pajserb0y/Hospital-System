@@ -23,8 +23,6 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-
-
     private String firstname;
     public String FirstName
     {
@@ -38,7 +36,6 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-
     private String lastname;
     public String LastName
     {
@@ -52,7 +49,6 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-
     private long jmbg;
     public long Jmbg
     {
@@ -66,8 +62,19 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-
-    
+    private char gender;
+    public char Gender
+    {
+        get { return gender; }
+        set
+        {
+            if (gender != value)
+            {
+                gender = value;
+                OnPropertyChanged("Gender");
+            }
+        }
+    }
     private String adress;
     public String Adress
     {
@@ -82,7 +89,6 @@ public class Patient : INotifyPropertyChanged
         }
     }
     private long telephone;
-
     public long Telephone
     {   get { return telephone; }
         set
@@ -94,16 +100,48 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
+    private string email;
+    public string Email
+    {
+        get { return email; }
+        set 
+        {
+            if (email != value)
+            {
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+    }
+    private bool guest;
+    public bool Guest
+    {
+        get { return guest; }
+        set 
+        {
+            if (guest != value)
+            {
+                guest = value;
+                OnPropertyChanged("Guest");
+            }
+        }
+    }
 
-    public Patient(int id, string firstName, string lastName, long jmbg, string adress, long telephone)
+    public Patient() { }
+
+    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Jmbg = jmbg;
+        Gender = gender;
         Adress = adress;
         Telephone = telephone;
+        Email = email;
+        Guest = guest;
     }
+
     public event PropertyChangedEventHandler PropertyChanged;
     
     protected virtual void OnPropertyChanged(String name)
@@ -112,10 +150,6 @@ public class Patient : INotifyPropertyChanged
         {
             PropertyChanged(this, new PropertyChangedEventArgs(name));  
         }
-    }
-
-    public Patient()
-    {
     }
 
     public override string ToString()

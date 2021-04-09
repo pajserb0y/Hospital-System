@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Button Content="Upravnik" HorizontalAlignment="Left" Margin="140,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnUpravnik_Click"/>
         <Button Content="Sekretar" HorizontalAlignment="Left" Margin="514,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnSekretar_Click"/>
