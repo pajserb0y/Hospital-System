@@ -7,18 +7,26 @@
         mc:Ignorable="d"
         Title="DoctorInitialWindow" Height="450" Width="1050">
     <Grid Margin="0,6,0,-6">
-        <DataGrid x:Name="DataGridXAML" Margin="26,30,263,114">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Patient ID"  Binding="{Binding ExaminationID}" Width="185"/>
-                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Patient }" Width="185"/>
-                <DataGridTextColumn Header="Room ID" Binding="{Binding Doctor}" Width="185"/>
-                <DataGridTextColumn Header="Time" Binding="{Binding  Time}" Width="*"/>
+       <!-- <DataGrid  ItemsSource="{Binding Examination}" Margin="26,30,263,114">
+             <DataGrid.Columns>
+                <DataGridTextColumn Header="Patient ID"  Binding="{Binding Id}/>
+                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Patient.Id }" Width="185"/>
+                <DataGridTextColumn Header="Room ID" Binding="{Binding Doctor.Id}" Width="185"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding  .Id}" Width="*"/> 
                 
+            </DataGrid.Columns>
+        </DataGrid> -->
+        <DataGrid x:Name="DataGridXAML"  AutoGenerateColumns="False" Margin="26,30,263,114">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Patient ID" Binding="{Binding Id}" Width="185"/>
+                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Patient.Id}" Width="185"/>
+                <DataGridTextColumn Header="Room ID" Binding="{Binding Doctor.Id}" Width="185"/>
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-       <!-- <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,59,0,0" VerticalAlignment="Top" Width="118" Click="Button_Click"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="874,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Click_2"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Click_1"/> -->
+        <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,59,0,0" VerticalAlignment="Top" Width="118" Click="Button_Add"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="874,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Edit"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Delete"/> 
     </Grid>
 </Window>

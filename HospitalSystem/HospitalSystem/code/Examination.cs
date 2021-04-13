@@ -8,18 +8,13 @@ using System;
 
 public class Examination : Appointment
 {
-    public String ExaminationID 
+   /* private int id;
+    public int Id
     { get; set; }
-
+   */
     public Examination()
     {
     }
 
-    public Examination(string examinationID)
-    {
-        ExaminationID = examinationID;
-    }
-
     //private Report Report;
-
 }

@@ -62,7 +62,7 @@ namespace HospitalSystem.code {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/HospitalSystem;V1.0.0.0;component/code/secretarinitialwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/HospitalSystem;component/code/secretarinitialwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\code\SecretarInitialWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
