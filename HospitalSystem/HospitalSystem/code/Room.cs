@@ -5,10 +5,46 @@
  ***********************************************************************/
 
 using System;
+using System.ComponentModel;
 
-public class Room
+public class Room : INotifyPropertyChanged
 {
-   public System.Collections.ArrayList equipment;
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
+
+    private String name;
+    public String Name
+    {
+        get { return name; }
+        set
+        {
+            if (name != value)
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+    }
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(String name)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+    public System.Collections.ArrayList equipment;
    
    /// <pdGenerated>default getter</pdGenerated>
    public System.Collections.ArrayList GetEquipment()
@@ -53,35 +89,15 @@ public class Room
       if (equipment != null)
          equipment.Clear();
    }
-   public RoomType roomType;
 
-   private long Id;
-   private String Name;
-
-   public long _Id
-   {
-      get
-      {
-         return Id;
-      }
-      set
-      {
-         if (this.Id != value)
-            this.Id = value;
-      }
-   }
-   
-   public String _Name
-   {
-      get
-      {
-         return Name;
-      }
-      set
-      {
-         if (this.Name != value)
-            this.Name = value;
-      }
-   }
+    public Room(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+    public override string ToString()
+    {
+        return Id.ToString() + " " + Name;
+    }
 
 }
