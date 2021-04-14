@@ -63,8 +63,8 @@ namespace HospitalSystem.code
 
         private void Button_Back(object sender, RoutedEventArgs e)
         {
-            AppointmentStorage.getInstance().serialize();
             MainWindow mw = new MainWindow();
+            AppointmentStorage.getInstance().serialize();           
             mw.Show();
             this.Close();
         }
