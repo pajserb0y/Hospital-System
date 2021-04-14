@@ -52,9 +52,9 @@ namespace HospitalSystem
 
         private void btnDoctor_Click(object sender, RoutedEventArgs e)
         {
-            //DoctorInitialWindow doctorWin = new DoctorInitialWindow();
-            //doctorWin.Show();
-            //this.Close();
+            DoctorInitialWindow dw = new DoctorInitialWindow();
+            dw.Show();
+            this.Close();
         }
     }
 }
