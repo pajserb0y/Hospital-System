@@ -29,7 +29,7 @@ public class PatientsStorage
         set { patients = value; }
     }
 
-    private String FileLocation = "BAZE\\Pacijenti.json";
+    private String FileLocation = "../../../Resource/Pacijenti.json";
 
 
     public PatientsStorage()

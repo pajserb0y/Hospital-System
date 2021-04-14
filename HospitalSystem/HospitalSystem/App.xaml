@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:HospitalSystem"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--<ResourceDictionary Source="../Resource/Dictionary.xaml"/>-->
     </Application.Resources>
 </Application>
