@@ -1,0 +1,38 @@
+﻿<Window x:Class="HospitalSystem.code.DoctorInitialWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalSystem.code"
+        mc:Ignorable="d"
+        Title="DoctorInitialWindow" Height="700" Width="1050">
+    <Grid Margin="0,6,0,-6">
+        <!-- <DataGrid  ItemsSource="{Binding Examination}" Margin="26,30,263,114">
+             <DataGrid.Columns>
+                <DataGridTextColumn Header="Patient ID"  Binding="{Binding Id}/>
+                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Patient.Id }" Width="185"/>
+                <DataGridTextColumn Header="Room ID" Binding="{Binding Doctor.Id}" Width="185"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding  .Id}" Width="*"/> 
+                
+            </DataGrid.Columns>
+        </DataGrid> -->
+        <DataGrid x:Name="DataGridXAML"  AutoGenerateColumns="False" Margin="26,30,263,114" ColumnWidth="*"
+                  HorizontalAlignment="Left"  VerticalAlignment="Top" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False"
+                  CanUserAddRows="False" CanUserResizeRows="False" IsReadOnly="True" Height="532" Width="766"  AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10"
+                  HeadersVisibility="Column" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Patient ID" Binding="{Binding Patient.Id}" />
+                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,59,0,0" VerticalAlignment="Top" Width="118" Click="Button_Add"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="874,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Edit"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,203,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Delete"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="874,529,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Back"/>
+    </Grid>
+</Window>
