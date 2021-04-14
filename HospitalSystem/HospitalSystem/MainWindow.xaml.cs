@@ -45,7 +45,9 @@ namespace HospitalSystem
 
         private void btnPacijent_Click(object sender, RoutedEventArgs e)
         {
-
+            PatientInitialWindow patientWindow = new PatientInitialWindow();
+            patientWindow.Show();
+            this.Close();
         }
 
         private void btnDoctor_Click(object sender, RoutedEventArgs e)

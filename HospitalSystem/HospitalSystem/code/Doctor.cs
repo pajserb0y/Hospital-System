@@ -5,162 +5,117 @@
  ***********************************************************************/
 
 using System;
+using System.ComponentModel;
 
-public class Doctor
+public class Doctor : INotifyPropertyChanged
 {
-   private String Id;
-   private String Username;
-   private String Password;
-   private String FirstName;
-   private String LastName;
-   private int Jmbg;
-   private String Adress;
-   private int PhoneNumber;
-   private String specialization;
-   private DateTime WorkHour;
-   private Char Gender;
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
 
-   public String _Username
-   {
-      get
-      {
-         return Username;
-      }
-      set
-      {
-         if (this.Username != value)
-            this.Username = value;
-      }
-   }
-   
-   public String _Password
-   {
-      get
-      {
-         return Password;
-      }
-      set
-      {
-         if (this.Password != value)
-            this.Password = value;
-      }
-   }
-   
-   public String _FirstName
-   {
-      get
-      {
-         return FirstName;
-      }
-      set
-      {
-         if (this.FirstName != value)
-            this.FirstName = value;
-      }
-   }
-   
-   public String _LastName
-   {
-      get
-      {
-         return LastName;
-      }
-      set
-      {
-         if (this.LastName != value)
-            this.LastName = value;
-      }
-   }
-   
-   public int _Jmbg
-   {
-      get
-      {
-         return Jmbg;
-      }
-      set
-      {
-         if (this.Jmbg != value)
-            this.Jmbg = value;
-      }
-   }
-   
-   public String _Adress
-   {
-      get
-      {
-         return Adress;
-      }
-      set
-      {
-         if (this.Adress != value)
-            this.Adress = value;
-      }
-   }
-   
-   public int _PhoneNumber
-   {
-      get
-      {
-         return PhoneNumber;
-      }
-      set
-      {
-         if (this.PhoneNumber != value)
-            this.PhoneNumber = value;
-      }
-   }
-   
-   public String Specialization
-   {
-      get
-      {
-         return specialization;
-      }
-      set
-      {
-         if (this.specialization != value)
-            this.specialization = value;
-      }
-   }
-   
-   public DateTime _WorkHour
-   {
-      get
-      {
-         return WorkHour;
-      }
-      set
-      {
-         if (this.WorkHour != value)
-            this.WorkHour = value;
-      }
-   }
-   
-   public Char _Gender
-   {
-      get
-      {
-         return Gender;
-      }
-      set
-      {
-         if (this.Gender != value)
-            this.Gender = value;
-      }
-   }
-   
-   public String _Id
-   {
-      get
-      {
-         return Id;
-      }
-      set
-      {
-         if (this.Id != value)
-            this.Id = value;
-      }
-   }
 
+    private String firstname;
+    public String FirstName
+    {
+        get { return firstname; }
+        set
+        {
+            if (firstname != value)
+            {
+                firstname = value;
+                OnPropertyChanged("FirstName");
+            }
+        }
+    }
+
+    private String lastname;
+    public String LastName
+    {
+        get { return lastname; }
+        set
+        {
+            if (lastname != value)
+            {
+                lastname = value;
+                OnPropertyChanged("Lastname");
+            }
+        }
+    }
+
+    private long jmbg;
+    public long Jmbg
+    {
+        get { return jmbg; }
+        set
+        {
+            if (jmbg != value)
+            {
+                jmbg = value;
+                OnPropertyChanged("Jmbg");
+            }
+        }
+    }
+
+
+    private String adress;
+    public String Adress
+    {
+        get { return adress; }
+        set
+        {
+            if (adress != value)
+            {
+                adress = value;
+                OnPropertyChanged("Adress");
+            }
+        }
+    }
+    private long telephone;
+
+    public long Telephone
+    {
+        get { return telephone; }
+        set
+        {
+            if (telephone != value)
+            {
+                telephone = value;
+                OnPropertyChanged("Telephone");
+            }
+        }
+    }
+
+    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Jmbg = jmbg;
+        Adress = adress;
+        Telephone = telephone;
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(String name)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+    public override string ToString()
+    {
+        return Id.ToString() + " " + FirstName + " " + LastName + Jmbg.ToString() + " " + Adress + " " + Telephone.ToString();
+    }
 }
