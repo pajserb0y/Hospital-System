@@ -29,7 +29,7 @@ namespace HospitalSystem.code
 
             //this.DataContext = PatientsStorage.getInstance(); // DODAO
             dg.ItemsSource = PatientsStorage.getInstance().GetAll();
-           // dg.Columns[0].Visibility = Visibility.Collapsed;
+            // dg.Columns[0].Visibility = Visibility.Collapsed;
             // dg.ColumnWidth = dg.ColumnWidth * 1.5;
         }
 
@@ -45,6 +45,11 @@ namespace HospitalSystem.code
             mp.Show();
             PatientsStorage.getInstance().serialize();
             this.Close();
+        }
+        private void txbUrgentPatient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UrgentPatient up = new UrgentPatient();
+            up.Show();
         }
 
         private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)

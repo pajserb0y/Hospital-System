@@ -25,7 +25,8 @@ namespace HospitalSystem.code
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
-                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true);
+                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
+                txtUsername.Text, txtPassword.Text);
             PatientsStorage.getInstance().Save(patient);
             this.Close();
         }

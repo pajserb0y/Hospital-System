@@ -128,11 +128,37 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
+    private String username;
+    public String Username
+    {
+        get { return username; }
+        set
+        {
+            if (username != value)
+            {
+                username = value;
+                OnPropertyChanged("Username");
+            }
+        }
+    }
+    private String password;
+    public String Password
+    {
+        get { return password; }
+        set
+        {
+            if (password != value)
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+    }
 
 
     public Patient() { }
 
-    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest)
+    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, String username, String password)
     {
         Id = id;
         FirstName = firstName;
@@ -143,6 +169,8 @@ public class Patient : INotifyPropertyChanged
         Telephone = telephone;
         Email = email;
         Guest = guest;
+        Username = username;
+        Password = password;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

@@ -31,12 +31,15 @@ namespace HospitalSystem.code
             txtEmail.Text = selectedPatient.Email;
             _ = selectedPatient.Gender == 'M' ? rbM.IsChecked = true : rbF.IsChecked = true;
             _ = selectedPatient.Guest == true ? cbGuest.IsChecked = true : cbGuest.IsChecked = false;
+            txtUsername.Text = selectedPatient.Username;
+            txtPassword.Text = selectedPatient.Password;
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             PatientsStorage.getInstance().Edit(new Patient(p.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
-                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true));
+                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
+                txtUsername.Text, txtPassword.Text));
             this.Close();
         }
     }

@@ -55,5 +55,9 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style></TextBlock>
+        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="155,413,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
+        <Label Content="Username:" HorizontalAlignment="Left" Margin="66,405,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="155,458,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="66,450,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
     </Grid>
 </Window>
