@@ -35,13 +35,23 @@ namespace HospitalSystem.code
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            appointment.Patient = (Patient)cbPatient.SelectedItem;
-            appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appointment.Date = (DateTime)dp1.SelectedDate;
-            appointment.Time = Convert.ToDateTime(txt1.Text);
-            AppointmentStorage.getInstance().Edit(appointment);
-           
-            this.Close();
+            double differenceInDays = Math.Abs(appointment.Date.Subtract((DateTime)dp1.SelectedDate).TotalDays);
+
+            if (differenceInDays <= 2)
+            {
+                appointment.Patient = (Patient)cbPatient.SelectedItem;
+                appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                appointment.Time = Convert.ToDateTime(txt1.Text);
+                appointment.Date = (DateTime)dp1.SelectedDate;
+                AppointmentStorage.getInstance().Edit(appointment);
+                this.Close();
+            }
+            else
+            {
+                dp1.SelectedDate = appointment.Date;
+                InvalidEdit iv = new InvalidEdit();
+                iv.Show();
+            }
         }
     }
 }
