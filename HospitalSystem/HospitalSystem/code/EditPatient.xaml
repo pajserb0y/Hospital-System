@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="Edit patient" Height="600" Width="500"
+        Title="Edit patient" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <!--<Grid>
@@ -25,7 +25,7 @@
         <Button Content="Save" HorizontalAlignment="Left" Margin="303,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.457,0.986" Width="41" Click="btSave_Click" Grid.Row="1"/>
         <Label Content="Telephone:" HorizontalAlignment="Left" Margin="455,1,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.652,6.979" Grid.Row="1"/>
     </Grid>-->
-    <Grid >
+    <!--<Grid >
         <Label Content="First Name:" HorizontalAlignment="Left" Margin="60,40,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.301,1.503"/>
         <Label Content="Last Name:" HorizontalAlignment="Left" Margin="60,90,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
         <Label Content="JMBG:" HorizontalAlignment="Left" Margin="86,140,0,0" VerticalAlignment="Top" Grid.Row="1"/>
@@ -59,5 +59,102 @@
         <Label Content="Username:" HorizontalAlignment="Left" Margin="66,405,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
         <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="155,458,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
         <Label Content="Password:" HorizontalAlignment="Left" Margin="66,450,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
+    </Grid>-->
+
+    <Grid>
+        <TabControl HorizontalAlignment="Left" Height="720" Width="1000" VerticalAlignment="Center">
+            <TabItem Header="Chart">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,30,0">
+                        <Label Content="ID:"  Padding="0,0,10,0"/>
+                        <TextBox x:Name="txtID" TextWrapping="Wrap" Width="40" Height="20" IsReadOnly="True"/>
+                    </StackPanel>
+                    <Grid Height="Auto" Width="Auto"  Margin="0,30,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <Label Content="Social security number:"  Padding="0,0,20,0"  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="txtSoc" TextWrapping="Wrap" Padding="0,0,20,0" Width="160" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"/>
+
+                        <Label Content="Last Name:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="Adress:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="JMBG:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="City:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCity" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Birth date:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtBirth" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="Country:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCountry" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Gender:" Padding="0,0,20,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,30,0,0" />
+                        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="50,30,0,0" />
+                        <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,30,105,0"/>
+                        <Label Content="Telephone:" Padding="0,0,20,0"  Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Marriage status:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <ComboBox x:Name="cbMarriage" Width="230" Height="20" Grid.Row="5" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="Email:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                    </Grid>
+                   
+                    
+                    
+
+                    <StackPanel Height="Auto" Width="Auto" >
+                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+                                   HorizontalAlignment="Right" Margin="0,15,50,20" Padding="10,10,10,10" >
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Medical history">
+                <StackPanel>
+                    
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Account">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
+                        <Label Content="Username:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
+                        <Label Content="Password:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
+
 </Window>
