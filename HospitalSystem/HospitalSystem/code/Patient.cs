@@ -154,11 +154,76 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-
+    private DateTime birthDate;
+    public DateTime BirthDate
+    {
+        get { return birthDate; }
+        set
+        {
+            if (birthDate != value)
+            {
+                birthDate = value;
+                OnPropertyChanged("BirthDate");
+            }
+        }
+    }
+    private String marriageStatus;
+    public String MarriageStatus
+    {
+        get { return marriageStatus; }
+        set
+        {
+            if (marriageStatus != value)
+            {
+                marriageStatus = value;
+                OnPropertyChanged("MarriageStatus");
+            }
+        }
+    }
+    private long socNumber;
+    public long SocNumber
+    {
+        get { return socNumber; }
+        set
+        {
+            if (socNumber != value)
+            {
+                socNumber = value;
+                OnPropertyChanged("SocNumber");
+            }
+        }
+    }
+    private String city;
+    public String City
+    {
+        get { return city; }
+        set
+        {
+            if (city != value)
+            {
+                city = value;
+                OnPropertyChanged("City");
+            }
+        }
+    }
+    private String country;
+    public String Country
+    {
+        get { return country; }
+        set
+        {
+            if (country != value)
+            {
+                country = value;
+                OnPropertyChanged("Country");
+            }
+        }
+    }
 
     public Patient() { }
 
-    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, String username, String password)
+    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, 
+        string username, string password, DateTime birthDate, string marriageStatus, long socNumber, string city, string country)
     {
         Id = id;
         FirstName = firstName;
@@ -171,6 +236,12 @@ public class Patient : INotifyPropertyChanged
         Guest = guest;
         Username = username;
         Password = password;
+        BirthDate = birthDate;
+        MarriageStatus = marriageStatus;
+        SocNumber = socNumber;
+        City = city;
+        Country = country;
+       // WorkHistory = workHistory;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
