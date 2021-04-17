@@ -52,13 +52,6 @@ public class PatientsStorage
 
     public void Edit(Patient patient)
     {
-        //Patient help = null;
-        //foreach (Patient P in this.Patients)
-        //    if (patient.Id == P.Id)
-        //       help = P;
-        //int i = this.Patients.IndexOf(help);
-        //this.Patients.Remove(help);
-        //this.Patients.Insert(i, patient);
         foreach (Patient P in this.patients)
             if (patient.Id == P.Id)
             {
@@ -70,6 +63,13 @@ public class PatientsStorage
                 P.Email = patient.Email;
                 P.Gender = patient.Gender;
                 P.Guest = patient.Guest;
+                P.Username = patient.Username;
+                P.Password = patient.Password;
+                P.MarriageStatus = patient.MarriageStatus;
+                P.SocNumber = patient.SocNumber;
+                P.Country = patient.Country;
+                P.City = patient.City;
+                P.BirthDate = patient.BirthDate;
             }
     }
 

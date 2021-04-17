@@ -38,7 +38,7 @@ namespace HospitalSystem.code
 
             Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), txtIme.Text, txtPrezime.Text, jmbg,
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, tel, txtEmail.Text, cbGuest.IsChecked == true,
-                "", "");
+                "", "", default(DateTime), "", 0, "", "");
             PatientsStorage.getInstance().Save(patient);
 
 
