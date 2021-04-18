@@ -19,18 +19,21 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class DoctorInitialWindow : Window
     {
+        ListCollectionView collectionViewExamination = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+
         public DoctorInitialWindow()
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
    
             ObservableCollection<Examination> exams = ExaminationStorage.getInstance().GetAll();
-            DataGridXAML.ItemsSource = exams;
-            //exam1.Time = new DateTime(2012, 12, 25, 10, 30, 50);
-            //if(exams != null)
-            //   foreach (Examination exam in exams)
-            //       DataGridXAML.Items.Add(exam);
+            ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            cbDoctor.ItemsSource = doctors;
+           
+            cbPatient.ItemsSource = patients;
 
+            dgDoctorExams.ItemsSource = exams;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -48,7 +51,7 @@ namespace HospitalSystem.code
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            var selectedItem = DataGridXAML.SelectedItem;
+            var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem != null)
             {
                 ExaminationStorage.getInstance().Delete((Examination)selectedItem);
@@ -59,7 +62,7 @@ namespace HospitalSystem.code
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
             ObservableCollection<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
-            var selectedItem = DataGridXAML.SelectedItem;
+            var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem != null)
             {
                 EditExam ee = new EditExam((Examination)selectedItem);
@@ -74,6 +77,36 @@ namespace HospitalSystem.code
             ExaminationStorage.getInstance().serialize();
             mw.Show();
             this.Close();
+        }
+
+        //private void doctorChanged(object sender, SelectionChangedEventArgs e)
+        //{
+
+        //}
+        private void doctorChanged(object sender, System.EventArgs e)
+        {
+            if (cbDoctor.SelectedItem != null)
+            {
+                collectionViewExamination.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Doctor == cbDoctor.SelectedItem)
+                        return true;
+                    return false;
+                };
+                dgDoctorExams.ItemsSource = collectionViewExamination;
+            }
+        }
+
+        private void patientChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PatientDetails patientDetails = new PatientDetails((Patient)cbPatient.SelectedItem);
+            patientDetails.Show();
+        }
+
+        private void Button_View(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
