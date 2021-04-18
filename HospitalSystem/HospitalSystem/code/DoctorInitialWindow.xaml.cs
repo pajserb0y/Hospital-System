@@ -35,7 +35,16 @@ namespace HospitalSystem.code
 
             dgDoctorExams.ItemsSource = exams;
 
+            Drug d1 = new Drug(1, "Bensedin");
+            Drug d2 = new Drug(2, "Bromazepam");
+            Drug d3 = new Drug(3, "Trodon");
+
+            cbDrug.Items.Add(d1);
+            cbDrug.Items.Add(d2);
+            cbDrug.Items.Add(d3);
+
             t1.Visibility = Visibility.Collapsed;
+
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -120,6 +129,15 @@ namespace HospitalSystem.code
             txtAnamnesis.Clear();
             txtDiagnosis.Clear();
             t1.Focus();
+        }
+
+        private void Button_Save_Prescription(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Prescription newPrescription = new Prescription(prescID, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            PrescriptionStorage.getInstance().Add(newPrescription);
+            PrescriptionStorage.getInstance().serialize();
         }
     }
 }

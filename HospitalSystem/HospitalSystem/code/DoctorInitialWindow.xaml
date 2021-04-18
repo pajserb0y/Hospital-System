@@ -104,6 +104,33 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
+            <TabItem Name="t4" Header="Prescription">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="97.693"></RowDefinition>
+                            <RowDefinition Height="98*"></RowDefinition>
+                            <RowDefinition Height="112*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,80,0,0" Padding="0,0,20,0"/>
+
+                        <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,80,0,0" VerticalAlignment="Top" Width="200"/>
+
+                        <Label Content="Date:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,200,0" Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0"/>
+
+                        <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="80,80,0,0" Padding="0,0,20,0"/>
+
+                        <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0"/>
+
+                        <Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
+             </TabItem>
         </TabControl>
     </Grid>
 </Window>
