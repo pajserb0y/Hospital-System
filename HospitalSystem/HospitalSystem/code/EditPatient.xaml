@@ -5,59 +5,231 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="Edit patient" Height="600" Width="500"
+        Title="Edit patient" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="19*"/>
-            <RowDefinition Height="68*"/>
-        </Grid.RowDefinitions>
-        <Label Content="First Name:" HorizontalAlignment="Left" Margin="121,41,0,0" VerticalAlignment="Top"/>
-        <Label Content="Last Name:" HorizontalAlignment="Left" Margin="121,92,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="121,56,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="455,36,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.652,6.979"/>
-        <TextBox Name="txtIme" HorizontalAlignment="Left" Margin="235,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="txtPrezime" HorizontalAlignment="Left" Margin="235,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
-        <TextBox Name="txtJmbg" HorizontalAlignment="Left" Margin="235,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
-        <TextBox Name="txtAdresa" HorizontalAlignment="Left" Margin="522,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="txtTel" HorizontalAlignment="Left" Margin="522,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="303,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.457,0.986" Width="41" Click="btSave_Click" Grid.Row="1"/>
-        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="455,1,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.652,6.979" Grid.Row="1"/>
-    </Grid>-->
-    <Grid >
-        <Label Content="First Name:" HorizontalAlignment="Left" Margin="60,40,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.301,1.503"/>
-        <Label Content="Last Name:" HorizontalAlignment="Left" Margin="60,90,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="86,140,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="81,260,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.652,6.979"/>
-        <TextBox Name="txtIme" HorizontalAlignment="Left" Margin="155,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <TextBox Name="txtPrezime" HorizontalAlignment="Left" Margin="155,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <TextBox Name="txtJmbg" HorizontalAlignment="Left" Margin="155,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231" RenderTransformOrigin="-0.5,0.65"/>
-        <RadioButton Name="rbM" Content="M" GroupName="rbGender" HorizontalAlignment="Left" Height="13" Margin="155,206,0,0" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.476,0.048"/>
-        <RadioButton Name="rbF" Content="F" GroupName="rbGender" HorizontalAlignment="Left" Height="13" Margin="209,207,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="0.476,0.048"/>
-        <CheckBox Name="cbGuest" Content="Guest" HorizontalAlignment="Left" Height="26" Margin="336,208,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtAdresa" HorizontalAlignment="Left" Margin="155,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <TextBox Name="txtTel" HorizontalAlignment="Left" Margin="155,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="63,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.652,6.979"/>
-        <Label Content="Gender:" HorizontalAlignment="Left" Margin="78,200,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,1.604"/>
-        <Label Content="Email:" HorizontalAlignment="Left" Margin="90,360,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
-        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="155,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-       
-        <TextBlock HorizontalAlignment="Left" Margin="361,483,0,0" Text="&lt; save" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseDown="txbSave_PreviewMouseDown"
-            RenderTransformOrigin="-0.729,0.399"  Cursor="Hand" FontSize="20">
-            <TextBlock.Style>
-                <Style>
-                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                    <Style.Triggers>
-                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style></TextBlock>
-        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="155,413,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <Label Content="Username:" HorizontalAlignment="Left" Margin="66,405,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="155,458,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
-        <Label Content="Password:" HorizontalAlignment="Left" Margin="66,450,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.316,1.103"/>
+
+    <Grid>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="720" Width="1000" VerticalAlignment="Center" >
+            <TabItem Header="Chart">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,30,0">
+                        <Label Content="ID:"  Padding="0,0,10,0"/>
+                        <TextBox x:Name="txtID" TextWrapping="Wrap" Width="40" Height="20" IsReadOnly="True"/>
+                    </StackPanel>
+                    <Grid Height="Auto" Width="Auto" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <Label Content="Social security number:"  Padding="0,0,20,0"  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="txtSoc" TextWrapping="Wrap" Padding="0,0,20,0" Width="160" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"/>
+
+                        <Label Content="Last Name:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="Adress:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="JMBG:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="City:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCity" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Birth date:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <DatePicker Name="dpBirth" Grid.Column="1" HorizontalAlignment="Left" Width="230" Height="20" Margin="0,30,0,0" Grid.Row="3"  />
+                        <Label Content="Country:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCountry" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Gender:" Padding="0,0,20,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,30,0,0" />
+                        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="50,30,0,0" />
+                        <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,30,105,0"/>
+                        <Label Content="Telephone:" Padding="0,0,20,0"  Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Marriage status:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <ComboBox x:Name="cbMarriage" Width="230" Height="20" Grid.Row="5" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedValuePath="Content">
+                            <ComboBoxItem Content="Married"/>
+                            <ComboBoxItem Content="Unmarried"/>
+                            <ComboBoxItem Content="Divorced"/>
+                            <ComboBoxItem Content="Widow(er)"/>
+                            <!--<ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="Married"/>
+                                        <TextBlock Text="Unmarried"/>
+                                        <TextBlock Text="Divorced"/>
+                                        <TextBlock Text="Widow(er)"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>-->
+                        </ComboBox>
+                        <Label Content="Email:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+
+                        <Label Content="Work history" Padding="0,5,15,0" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <DataGrid x:Name="dgJob" Height="280" Width="500" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Margin="30,50,30,30" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
+                            <!--<CollectionViewSource x:Key="cvsTasks" Source="{StaticResource tasks}" Filter="CollectionViewSource_Filter">-->
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="No." Binding="{Binding No}" Width="Auto"/>
+                                <DataGridTextColumn Header="Company name" Binding="{Binding CompanyName}" />
+                                <DataGridTextColumn Header="Position" Binding="{Binding Position}" />
+                                <DataGridTextColumn Header="Register number" Binding="{Binding RegisterNumber}" />
+                                <DataGridTextColumn Header="Activity code" Binding="{Binding ActivityCode}" />
+                                <DataGridTextColumn Header="Patient ID" Binding="{Binding PID}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAdd_PreviewMouseDown" Cursor="Hand" FontSize="18" 
+                                   HorizontalAlignment="Right" Margin="0,340,0,0" Grid.Row="6" Grid.Column="0">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                        <TextBlock Text="^ edit" TextWrapping="Wrap" PreviewMouseDown="txbEdit_PreviewMouseDown" Cursor="Hand" FontSize="18" 
+                                   HorizontalAlignment="Center" Margin="0,340,0,0" Grid.Row="6" Grid.Column="1">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                        <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDelete_PreviewMouseDown" Cursor="Hand" 
+                                   HorizontalAlignment="Left" Margin="0,340,0,0"  Grid.Row="6" Grid.Column="2" FontSize="18">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+                                   HorizontalAlignment="Right" Margin="0,300,50,20" Padding="10,10,10,10" Grid.Row="6" Grid.Column="3">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Medical history">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="dgExam" Height="580" Width="700" Grid.Row="0" Grid.Column="0"  Margin="30,50,264,30" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="3">
+                            <!--<CollectionViewSource x:Key="cvsTasks" Source="{StaticResource tasks}" Filter="CollectionViewSource_Filter">-->
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Patient ID" Binding="{Binding Patient.Id}" />
+                                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Text="&lt; start" TextWrapping="Wrap" PreviewMouseDown="txbStart_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
+                                   HorizontalAlignment="Right" Margin="0,297,50,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Account">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
+                        <Label Content="Username:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
+                        <Label Content="Password:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="t3" Header="Examination">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
+                        <Label Content="Anamnesis:"  Padding="0,0,20,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBox x:Name="txtA" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                    </Grid>
+                    <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
+                        <Label Content="Diagnosis:"  Padding="0,0,20,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBox x:Name="txtD" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                    </Grid>
+
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="t4" Header="Prescription">
+
+            </TabItem>
+            <TabItem Name="t5" Header="Instruction">
+
+            </TabItem>
+            <TabItem Name="t6" Header="Control">
+
+            </TabItem>
+            <TabItem x:Name="t7" Header="Hospitalization" >
+
+            </TabItem>
+            <TabItem Name="t8" Header="Operation">
+
+            </TabItem>
+        </TabControl>
     </Grid>
+
 </Window>
