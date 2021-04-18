@@ -53,19 +53,14 @@ public class ExaminationStorage
 
     public void Edit(Examination exam)
     {
-        //Patient help = null;
-        //foreach (Patient P in this.Patients)
-        //    if (patient.Id == P.Id)
-        //       help = P;
-        //int i = this.Patients.IndexOf(help);
-        //this.Patients.Remove(help);
-        //this.Patients.Insert(i, patient);
         foreach (Examination e in this.examinations)
             if (exam.Id == e.Id)
             {
                 e.Doctor = exam.Doctor;
                 e.Patient = exam.Patient;
                 e.Room = exam.Room;
+                e.Date = exam.Date;
+                e.Time = exam.Time;
             }
     }
 
