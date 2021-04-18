@@ -61,7 +61,7 @@ namespace HospitalSystem.code
         public void Delete(Job job)
         {
             foreach (Job p in jobs)
-                if (job.No == p.No)
+                if (job.No == p.No && job.PID == p.PID)
                 {
                     this.jobs.Remove(p);
                     break;

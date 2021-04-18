@@ -17,39 +17,48 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class UrgentPatient : Window
     {
-        private long jmbg = 0;
-        private long tel = 0;
+        ListCollectionView collectionView = new ListCollectionView(DoctorStorage.getInstance().GetAll());
         public UrgentPatient()
         {
             InitializeComponent();
-
-            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
+            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
             cbRoom.ItemsSource = RoomStorage.getInstance().GetAll();
             txtTime.Text = DateTime.Now.ToString("HH:mm");
+
+
+            collectionView.Filter = (e) =>
+            {
+                Doctor temp = e as Doctor;
+                foreach(Examination ex in ExaminationStorage.getInstance().GetAll())
+                    if(ex.IsOperation == false && ex.Doctor != temp)
+                        return true;
+                return false;
+            };
+            cbDoctor.ItemsSource = collectionView;
+            cbDoctor.SelectedIndex = -1;
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(txtJmbg.Text != "")
-                jmbg = Convert.ToInt64(txtJmbg.Text);
-            if (txtTel.Text != "")
-                tel = Convert.ToInt64(txtTel.Text);
-
-
-            Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), txtIme.Text, txtPrezime.Text, jmbg,
-                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, tel, txtEmail.Text, cbGuest.IsChecked == true,
-                "", "", default(DateTime), "", 0, "", "");
-            PatientsStorage.getInstance().Save(patient);
-
+            Patient patient = new Patient();
+            if (cbPatient.SelectedItem == null)
+            {
+                patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), "", "", 0, default, "", 0, "", true, "", "", default(DateTime), "", 0, "", "");
+                PatientsStorage.getInstance().Add(patient);
+            }
+            else
+                patient = (Patient)cbPatient.SelectedItem;
 
             Examination exam = new Examination();
             exam.Id = ExaminationStorage.getInstance().GenerateNewID();
             exam.Patient = patient;
             exam.Doctor = (Doctor)cbDoctor.SelectedItem;
             exam.Room = (Room)cbRoom.SelectedItem;
-            exam.Date = (DateTime)dp1.SelectedDate;
+            exam.Date = (DateTime)dpTime.SelectedDate;
             exam.Time = Convert.ToDateTime(txtTime.Text);
+            ExaminationStorage.getInstance().checkExamination(exam);
             ExaminationStorage.getInstance().Add(exam);
+
             this.Close();
         }
     }

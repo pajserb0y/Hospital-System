@@ -83,7 +83,7 @@ public class PatientsStorage
             }
     }
 
-    public void Save(Patient patient)
+    public void Add(Patient patient)
     {
         this.patients.Add(patient);
     }
