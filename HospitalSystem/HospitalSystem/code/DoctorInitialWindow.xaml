@@ -9,29 +9,30 @@
     <Grid>
 
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="650" Width="1050" VerticalAlignment="Center" >
-            <TabItem Header="Examinations">
+            <TabItem Name="t0" Header="Appointments">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"></ColumnDefinition>
                             <ColumnDefinition Width="40*"/>
                             <ColumnDefinition Width="74*"/>
-                            <ColumnDefinition Width="717*"/>
+                            <ColumnDefinition Width="27*"/>
+                            <ColumnDefinition Width="690*"/>
                             <ColumnDefinition Width="209*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="97.693"></RowDefinition>
+                            <RowDefinition Height="98*"></RowDefinition>
+                            <RowDefinition Height="112*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <DataGrid x:Name="dgDoctorExams" Height="550" Width="720" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" AutoGenerateColumns="False"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="24,40,46,0"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="2">
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="3">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
@@ -47,14 +48,14 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <Button Content="Add" HorizontalAlignment="Center" Height="36" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Width="118" Click="Button_Add"/>
-                        <Button Content="Edit" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="4"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Edit"/>
-                        <Button Content="Delete" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="4"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Delete"/>
-                        <Button Content="View" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="4"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_View"/>
-                        <Button Content="Back" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="4"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Back"/>
+                        <Button Content="Add" HorizontalAlignment="Center" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Add"/>
+                        <Button Content="Edit" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Edit"/>
+                        <Button Content="Delete" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Delete"/>
+                        <Button Content="View" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_View"/>
+                        <Button Content="Back" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Back"/>
 
-                        <Label Content="Choose doctor:"  Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,79" Grid.RowSpan="2"/>
-                        <ComboBox x:Name="cbDoctor" Grid.Column="4" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="118" SelectionChanged="doctorChanged">
+                        <Label Content="Choose doctor:"  Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,79" Grid.RowSpan="2"/>
+                        <ComboBox x:Name="cbDoctor" Grid.Column="5" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="118" SelectionChanged="doctorChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -67,8 +68,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Label Content="Choose patient:"  Grid.Column="4" HorizontalAlignment="Center" Margin="0,79,0,89" Grid.RowSpan="3"/>
-                        <ComboBox x:Name="cbPatient" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="118" SelectionChanged="patientChanged">
+                        <Label Content="Choose patient:"  Grid.Column="5" HorizontalAlignment="Center" Margin="0,79,0,89" Grid.RowSpan="3"/>
+                        <ComboBox x:Name="cbPatient" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="118" SelectionChanged="patientChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -81,6 +82,25 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="t1" Header="Examination">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,30,80,0">
+                        <Label Content="Anamnesis:"  Padding="0,0,20,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBox x:Name="txtAnamnesis" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                    </Grid>
+                    <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,30,80,0">
+                        <Label Content="Diagnosis:"  Padding="0,0,20,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBox x:Name="txtDiagnosis" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                    </Grid>
+                    <Grid>
+                        <Button Content="Save" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Save_Anamnesis"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -110,9 +130,7 @@
                         <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0"/>
 
                         <Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
-                    </Grid>
-                </StackPanel>
-            </TabItem>
+             </TabItem>
         </TabControl>
     </Grid>
 </Window>

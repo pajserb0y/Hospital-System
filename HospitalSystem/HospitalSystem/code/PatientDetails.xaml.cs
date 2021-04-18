@@ -17,12 +17,11 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientDetails : Window
     {
-        ListCollectionView collectionView = new ListCollectionView(JobStorage.getInstance().GetAll());
-
+        ListCollectionView collectionViewJob = new ListCollectionView(JobStorage.getInstance().GetAll());
+        ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         public PatientDetails(Patient selectedPatient)
         {
             InitializeComponent();
-            //p = selectedPatient;
 
             txtID.Text = selectedPatient.Id.ToString();
             txtIme.Text = selectedPatient.FirstName;
@@ -49,14 +48,26 @@ namespace HospitalSystem.code
             txtCity.Text = selectedPatient.City;
             txtCountry.Text = selectedPatient.Country;
 
-            collectionView.Filter = (e) =>
+            collectionViewJob.Filter = (e) =>
             {
                 Job temp = e as Job;
                 if (temp.PID == selectedPatient.Id)
                     return true;
                 return false;
             };
-            dgJob.ItemsSource = collectionView;
+            dgJob.ItemsSource = collectionViewJob;
+
+            if (selectedPatient != null)
+            {
+                collectionViewExam.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Patient == selectedPatient)
+                        return true;
+                    return false;
+                };
+                dgPatientExams.ItemsSource = collectionViewExam;
+            }
 
             txtID.IsReadOnly = true; //PREBACI U XAML
             txtIme.IsReadOnly = true;
@@ -73,11 +84,38 @@ namespace HospitalSystem.code
             rbF.IsEnabled = false;
             rbM.IsEnabled = false;
             cbGuest.IsEnabled = false;
+            tExam.Visibility = Visibility.Collapsed;
         }
 
         private void Button_View(object sender, RoutedEventArgs e)
         {
+            Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
+            Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
 
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+
+            if (anamnesis != null)
+            { 
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
+            }
+            //else
+            //{
+            //    txtAnamnesis.Text = "";
+            //    txtAnamnesis.Text = "";
+            //}
+    
+            tExam.Visibility = Visibility.Visible;
+            tExam.Focus();
+        }
+
+        private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination) dgPatientExams.SelectedItem;
+            Anamnesis anamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
+            AnamnesisStorage.getInstance().Edit(anamnesis);
+            AnamnesisStorage.getInstance().serialize();
         }
     }
 }

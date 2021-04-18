@@ -42,6 +42,9 @@ namespace HospitalSystem.code
             cbDrug.Items.Add(d1);
             cbDrug.Items.Add(d2);
             cbDrug.Items.Add(d3);
+
+            t1.Visibility = Visibility.Collapsed;
+
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -112,9 +115,20 @@ namespace HospitalSystem.code
             patientDetails.Show();
         }
 
+        private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
+            AnamnesisStorage.getInstance().Add(newAnamnesis);
+            AnamnesisStorage.getInstance().serialize();
+        }
+
         private void Button_View(object sender, RoutedEventArgs e)
         {
-
+            t1.Visibility = Visibility.Visible;
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+            t1.Focus();
         }
 
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
