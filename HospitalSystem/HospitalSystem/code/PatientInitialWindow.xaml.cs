@@ -19,13 +19,18 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientInitialWindow : Window
     {
+        ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+
         public PatientInitialWindow()
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
 
             ObservableCollection<Appointment> appts = AppointmentStorage.getInstance().GetAll();
-            DataGridXAML.ItemsSource = appts;
+            dgAppointment.ItemsSource = appts;
+
+            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            cbPatient.ItemsSource = patients;
         }
 
 
@@ -37,26 +42,26 @@ namespace HospitalSystem.code
 
         private void Button_Add(object sender, RoutedEventArgs e)
         {
-            NewAppointment newAppt = new NewAppointment();
-            newAppt.Show();
+            if (cbPatient.SelectedItem != null)
+            {
+                NewAppointment newAppt = new NewAppointment((Patient)cbPatient.SelectedItem);
+                newAppt.Show();
+            }
         }
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            var selectedItem = DataGridXAML.SelectedItem;
-            if (selectedItem != null)
+            if (dgAppointment.SelectedItem != null)
             {
-                AppointmentStorage.getInstance().Delete((Appointment)selectedItem);            
+                AppointmentStorage.getInstance().Delete((Appointment)dgAppointment.SelectedItem);            
             }
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
-            
-            var selectedItem = DataGridXAML.SelectedItem;
-            if (selectedItem != null)
+            if (dgAppointment.SelectedItem != null && cbPatient.SelectedItem != null)
             {
-                EditAppointment editAppt = new EditAppointment((Appointment)selectedItem);
+                EditAppointment editAppt = new EditAppointment((Appointment)dgAppointment.SelectedItem);
                 editAppt.Show();             
             }
         }
@@ -67,6 +72,30 @@ namespace HospitalSystem.code
             AppointmentStorage.getInstance().serialize();           
             mw.Show();
             this.Close();
+        }
+
+        private void Button_Medication(object sender, RoutedEventArgs e)
+        {
+            if (cbPatient.SelectedItem != null)
+            {
+                MedicationWindow mw = new MedicationWindow((Patient)cbPatient.SelectedItem);
+                mw.Show();
+            }
+        }
+
+        private void patientChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbPatient.SelectedItem != null)
+            {
+                collectionView.Filter = (e) =>
+                {
+                    Appointment temp = e as Appointment;
+                    if (temp.Patient == cbPatient.SelectedItem)
+                        return true;
+                    return false;
+                };
+                dgAppointment.ItemsSource = collectionView;
+            }
         }
     }
 }
