@@ -18,25 +18,27 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class NewAppointment : Window
     {
-        Appointment appointment;
+
+        Patient patient;
         ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                                                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
 
-        public NewAppointment()
+        public NewAppointment(Patient selectedItem)
         {
             InitializeComponent();
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
+
+            patient = selectedItem;
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-           
-            
+                    
         }
+
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Appointment appt = new Appointment();
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
-            appt.Patient = (Patient)cbPatient.SelectedItem;
+            appt.Patient = patient;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
             appt.Room = RoomStorage.getInstance().GetOne(8);
             appt.Date = (DateTime)dp1.SelectedDate;

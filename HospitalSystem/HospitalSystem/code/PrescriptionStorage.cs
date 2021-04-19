@@ -50,6 +50,7 @@ namespace HospitalSystem.code
                 if (prescription.Id == P.Id)
                 {
                     P.Id = prescription.Id;
+                    P.PatientID = prescription.PatientID;
                     P.ExaminationID = prescription.ExaminationID;
                     P.DateOfPrescription = prescription.DateOfPrescription;
                     P.Taking = prescription.Taking;

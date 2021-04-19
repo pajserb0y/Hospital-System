@@ -14,6 +14,14 @@ namespace HospitalSystem.code
 
         }
 
+        private int patientID;
+        public int PatientID
+        {
+            get { return patientID; }
+            set { patientID = value; }
+
+        }
+
         private int examinationID;
         public int ExaminationID
         {
@@ -38,9 +46,10 @@ namespace HospitalSystem.code
 
         }
 
-        public Prescription(int prescID, int examID, Drug drug, string taking, DateTime date)
+        public Prescription(int prescID, int patientID, int examID, Drug drug, string taking, DateTime date)
         {
             this.id = prescID;
+            this.patientID = patientID;
             this.examinationID = examID;
             this.drug = drug;
             this.taking = taking;
