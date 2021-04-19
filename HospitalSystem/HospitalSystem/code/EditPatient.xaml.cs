@@ -57,7 +57,7 @@ namespace HospitalSystem.code
             txtCountry.Text = selectedPatient.Country;
 
             //dgJob.ItemsSource = JobStorage.getInstance().GetAll();
-            collectionView.Filter = (e) =>
+            collectionView.Filter = (e) =>              //filtriranje neke baze po odredjenoj logici
             {
                 Job temp = e as Job;
                 if (temp.PID == p.Id)
@@ -76,8 +76,8 @@ namespace HospitalSystem.code
             dgExam.ItemsSource = exams;
             //(dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan exam
 
-            t3.Visibility = Visibility.Collapsed;
-            t4.Visibility = Visibility.Collapsed;
+            tabAnamnesis.Visibility = Visibility.Collapsed;
+            tabPrescription.Visibility = Visibility.Collapsed;
             t5.Visibility = Visibility.Collapsed;
             t6.Visibility = Visibility.Collapsed;
             t7.Visibility = Visibility.Collapsed;
@@ -88,30 +88,58 @@ namespace HospitalSystem.code
         {
             PatientsStorage.getInstance().Edit(new Patient(p.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
-                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text), txtCity.Text, txtCountry.Text));
+                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text), txtCity.Text, txtCountry.Text));
+            PatientsStorage.getInstance().serialize();
             this.Close();
         }
-        private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbAddJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             NewJob nj = new NewJob(p.Id);
             nj.Show();
         }
-        private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbEditJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             EditJob ej = new EditJob((Job)dgJob.SelectedItem);
             ej.Show();
             (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
         }
-        private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbDeleteJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
-        private void Window_Closed(object sender, EventArgs e)
+   
+
+
+
+
+        private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            JobStorage.getInstance().serialize();
-            this.Close();
+            SecretarNewAppointment sne = new SecretarNewAppointment(p);
+            sne.Show();
         }
-        private void txbStart_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedExam = dgExam.SelectedItem;
+            if (selectedExam != null)
+            {
+                SecretarEditAppointment editAppt = new SecretarEditAppointment((Examination)selectedExam);
+                editAppt.Show();
+                (dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+            }  
+        }
+        private void txbDeleteApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedApp = dgExam.SelectedItem;
+            if (selectedApp != null)
+            {
+                ExaminationStorage.getInstance().Delete((Examination)selectedApp);
+            }
+        }
+
+
+
+
+        private void txbView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             //TabItem tab = new TabItem();
             //tab.Header = dgExam.SelectedItem.ToString();
@@ -120,13 +148,43 @@ namespace HospitalSystem.code
             //tab.IsSelected = true;
             //StartExamination se = new StartExamination((Examination)dgExam.SelectedItem);
             //se.Show();
-            t3.Visibility = Visibility.Visible;
-            t4.Visibility = Visibility.Visible;
+            tabAnamnesis.Visibility = Visibility.Visible;
+            tabPrescription.Visibility = Visibility.Visible;
             t5.Visibility = Visibility.Visible;
             t6.Visibility = Visibility.Visible;
             t7.Visibility = Visibility.Visible;
             t8.Visibility = Visibility.Visible;
+
+            Examination selectedExam = (Examination)dgExam.SelectedItem;
+            Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
+            Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
+
+            txtA.Clear();
+            txtD.Clear();
+            if (anamnesis != null)
+            {
+                txtA.Text = anamnesis.AnamnesisInfo;
+                txtD.Text = anamnesis.Diagnosis;
+            }
+            tabAnamnesis.Focus();
+
+            cbDrug.SelectedIndex = -1;
+            txtTaking.Clear();
+            txtDate.Clear();
+            if (prescription != null)
+            {
+                cbDrug.SelectedItem = prescription.Drug;
+                txtTaking.Text = prescription.Taking;
+                txtDate.Text = prescription.DateOfPrescription.ToString();
+            }
+            tabAnamnesis.Focus();
         }
 
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            JobStorage.getInstance().serialize();
+            this.Close();
+        }
     }
 }

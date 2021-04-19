@@ -256,6 +256,6 @@ public class Patient : INotifyPropertyChanged
 
     public override string ToString()
     {
-        return Id.ToString() + " " + FirstName + " " + LastName + Jmbg.ToString() + " " + Adress + " " + Telephone.ToString();
+        return Id.ToString() + " " + FirstName + " " + LastName;
     }
 }
