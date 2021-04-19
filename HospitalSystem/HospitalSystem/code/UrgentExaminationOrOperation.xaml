@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:HospitalSystem.code"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Add URGENT patient" Height="600" Width="478"
+        Title="Create URGENT examination or operation" Height="600" Width="478"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="564" VerticalAlignment="Center" Width="478">
-            <TabItem Header="Details">
+        <!--<TabControl HorizontalAlignment="Left" Height="564" VerticalAlignment="Center" Width="478">-->
+            <!--<TabItem Header="Details">
                 <StackPanel>
                     <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
                         <Label Content="First Name:"  Padding="0,0,20,0"/>
@@ -48,18 +48,18 @@
                         <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20"/>
                     </StackPanel>
                 </StackPanel>
-            </TabItem>
+            </TabItem>-->
 
-            <TabItem Header="Examination/Operation">
+            <!--<TabItem Header="Examination/Operation">-->
                 <StackPanel>
-                    <!--<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
                         <Label Content="Patient:" Padding="0,0,20,0"/>
                         <ComboBox x:Name="cbPatient" Width="200">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="  "/>
                                         <TextBlock Text="{Binding Path=FirstName}"/>
                                         <TextBlock Text=" "/>
                                         <TextBlock Text="{Binding Path=LastName}"/>
@@ -67,7 +67,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                    </StackPanel>-->
+                    </StackPanel>
                     <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
                         <Label Content="Doctor:" Padding="0,0,20,0"/>
                         <ComboBox x:Name="cbDoctor" Width="200">
@@ -75,7 +75,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="  "/>
                                         <TextBlock Text="{Binding Path=FirstName}"/>
                                         <TextBlock Text=" "/>
                                         <TextBlock Text="{Binding Path=LastName}"/>
@@ -98,9 +98,9 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,150,0" >
+            <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
                         <Label Content="Date:" Padding="0,0,20,0"/>
-                        <DatePicker x:Name="dp1" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="160" FirstDayOfWeek="Monday" 
+                <DatePicker x:Name="dpTime" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="200" FirstDayOfWeek="Monday " 
                                     IsTodayHighlighted="True" SelectedDate="{x:Static sys:DateTime.Now}" IsEnabled="False"/>
                         <!--xmlns:sys="clr-namespace:System;assembly=mscorlib"  to sam dodao gore-->
                     </StackPanel>
@@ -110,12 +110,12 @@
                             <TextBox x:Name="txtTime" TextWrapping="Wrap" Width="60" Height="20" IsReadOnly="True" />
                         </StackPanel>
                         <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="50,0,0,0">
-                            <CheckBox x:Name="cbOperation" Content="Operation" Height="26" Padding="17,0,0,0" VerticalContentAlignment="Center"/>
+                            <CheckBox x:Name="cbOperation" Content="Operation" Height="26" Padding="8,0,0,0" VerticalContentAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Margin="0,40,0,0">
+                    <StackPanel Height="Auto" Width="Auto" Margin="0,10,0,0">
                         <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
-                                   HorizontalAlignment="Right" Margin="0,40,50,20" Padding="10,10,10,10" >
+                                   HorizontalAlignment="Right" Margin="0,0,50,20" Padding="10,10,10,10" >
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -126,9 +126,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
-                    </StackPanel>
+                    </StackPanel>                    
                 </StackPanel>
-            </TabItem>
-        </TabControl>
+            <!--</TabItem>
+        </TabControl>-->
     </Grid>
 </Window>

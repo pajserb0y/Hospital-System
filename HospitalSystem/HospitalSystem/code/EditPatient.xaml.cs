@@ -57,7 +57,7 @@ namespace HospitalSystem.code
             txtCountry.Text = selectedPatient.Country;
 
             //dgJob.ItemsSource = JobStorage.getInstance().GetAll();
-            collectionView.Filter = (e) =>
+            collectionView.Filter = (e) =>              //filtriranje neke baze po odredjenoj logici
             {
                 Job temp = e as Job;
                 if (temp.PID == p.Id)
@@ -88,29 +88,57 @@ namespace HospitalSystem.code
         {
             PatientsStorage.getInstance().Edit(new Patient(p.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
-                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text), txtCity.Text, txtCountry.Text));
+                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text), txtCity.Text, txtCountry.Text));
+            PatientsStorage.getInstance().serialize();
             this.Close();
         }
-        private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbAddJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             NewJob nj = new NewJob(p.Id);
             nj.Show();
         }
-        private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbEditJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             EditJob ej = new EditJob((Job)dgJob.SelectedItem);
             ej.Show();
             (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
         }
-        private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbDeleteJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
-        private void Window_Closed(object sender, EventArgs e)
+   
+
+
+
+
+        private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            JobStorage.getInstance().serialize();
-            this.Close();
+            SecretarNewAppointment sne = new SecretarNewAppointment(p);
+            sne.Show();
         }
+        private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedExam = dgExam.SelectedItem;
+            if (selectedExam != null)
+            {
+                SecretarEditAppointment editAppt = new SecretarEditAppointment((Examination)selectedExam);
+                editAppt.Show();
+                (dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+            }  
+        }
+        private void txbDeleteApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedApp = dgExam.SelectedItem;
+            if (selectedApp != null)
+            {
+                ExaminationStorage.getInstance().Delete((Examination)selectedApp);
+            }
+        }
+
+
+
+
         private void txbStart_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             //TabItem tab = new TabItem();
@@ -128,5 +156,14 @@ namespace HospitalSystem.code
             t8.Visibility = Visibility.Visible;
         }
 
+
+
+
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            JobStorage.getInstance().serialize();
+            this.Close();
+        }
     }
 }

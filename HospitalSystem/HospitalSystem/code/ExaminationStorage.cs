@@ -98,6 +98,7 @@ public class ExaminationStorage
             temp.RoomId = e.Room.Id;
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             exams.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(exams);
@@ -129,9 +130,23 @@ public class ExaminationStorage
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             exams.Add(temp);
         }
         return exams;
+    }
+
+
+
+
+    public void checkExamination(Examination exam)
+    {
+        foreach (Examination e in this.examinations)
+            if (exam.Doctor == e.Doctor && exam.Date == e.Date && exam.Time == e.Time)
+            {
+                this.examinations.Remove(e);
+                break;
+            }
     }
 }
 
@@ -205,6 +220,18 @@ internal class ExaminationViewModel
             if (doctorId != value)
             {
                 doctorId = value;
+            }
+        }
+    }
+    private bool isOperation;
+    public bool IsOperation
+    {
+        get { return isOperation; }
+        set
+        {
+            if (isOperation != value)
+            {
+                isOperation = value;
             }
         }
     }

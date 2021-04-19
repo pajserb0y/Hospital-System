@@ -81,9 +81,23 @@ public class PatientsStorage
                 this.patients.Remove(p);
                 break;
             }
+        ObservableCollection<Examination> examinations = ExaminationStorage.getInstance().GetAll();
+        foreach (Examination ex in examinations)
+            if (ex.Patient == patient)
+            {
+                examinations.Remove(ex);
+                break;
+            }
+        ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
+        foreach (Appointment ex in appointments)
+            if (ex.Patient == patient)
+            {
+                appointments.Remove(ex);
+                break;
+            }
     }
 
-    public void Save(Patient patient)
+    public void Add(Patient patient)
     {
         this.patients.Add(patient);
     }
