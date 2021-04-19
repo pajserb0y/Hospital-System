@@ -155,6 +155,7 @@ namespace HospitalSystem.code
             t7.Visibility = Visibility.Visible;
             t8.Visibility = Visibility.Visible;
 
+
             Examination selectedExam = (Examination)dgExam.SelectedItem;
             Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
             Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
