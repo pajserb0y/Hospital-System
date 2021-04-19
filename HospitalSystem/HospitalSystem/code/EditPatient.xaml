@@ -234,7 +234,7 @@
                                 <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBlock Text="&lt; view" TextWrapping="Wrap" PreviewMouseDown="txbStart_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Center"
+                        <TextBlock Text="&lt; view" TextWrapping="Wrap" PreviewMouseDown="txbView_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Center"
                                    HorizontalAlignment="Center" Padding="10,10,10,10" Grid.Column="2">
                             <TextBlock.Style>
                                 <Style>
@@ -285,25 +285,43 @@
                     </Grid>
                 </StackPanel>
             </TabItem>            
-            <TabItem Name="t3" Header="Examination">
+            <TabItem Name="tabAnamnesis" Header="Anamnesis">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
                         <Label Content="Anamnesis:"  Padding="0,0,20,0"/>
                     </Grid>
                     <Grid>
-                        <TextBox x:Name="txtA" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                        <TextBox x:Name="txtA" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0" IsReadOnly="True"/>
                     </Grid>
                     <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
                         <Label Content="Diagnosis:"  Padding="0,0,20,0"/>
                     </Grid>
                     <Grid>
-                        <TextBox x:Name="txtD" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0"/>
+                        <TextBox x:Name="txtD" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" Margin="80,10,83,0" IsReadOnly="True"/>
                     </Grid>
 
                 </StackPanel>
             </TabItem>
-            <TabItem Name="t4" Header="Prescription">
-
+            <TabItem Name="tabPrescription" Header="Prescription">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="97.693"></RowDefinition>
+                            <RowDefinition Height="98*"></RowDefinition>
+                            <RowDefinition Height="112*"></RowDefinition>
+                            <RowDefinition Height="71*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,0" Padding="0,0,20,0"/>
+                        <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200" IsEditable="False"/>
+                        <Label Content="Date:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,200,0" Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0" IsEnabled="True"/>
+                        <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,0" Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0" IsReadOnly="True"/>
+                    </Grid>
+                </StackPanel>
             </TabItem>
             <TabItem Name="t5" Header="Instruction">
 

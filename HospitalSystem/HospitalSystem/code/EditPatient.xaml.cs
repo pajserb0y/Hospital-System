@@ -76,8 +76,8 @@ namespace HospitalSystem.code
             dgExam.ItemsSource = exams;
             //(dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan exam
 
-            t3.Visibility = Visibility.Collapsed;
-            t4.Visibility = Visibility.Collapsed;
+            tabAnamnesis.Visibility = Visibility.Collapsed;
+            tabPrescription.Visibility = Visibility.Collapsed;
             t5.Visibility = Visibility.Collapsed;
             t6.Visibility = Visibility.Collapsed;
             t7.Visibility = Visibility.Collapsed;
@@ -139,7 +139,7 @@ namespace HospitalSystem.code
 
 
 
-        private void txbStart_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             //TabItem tab = new TabItem();
             //tab.Header = dgExam.SelectedItem.ToString();
@@ -148,16 +148,37 @@ namespace HospitalSystem.code
             //tab.IsSelected = true;
             //StartExamination se = new StartExamination((Examination)dgExam.SelectedItem);
             //se.Show();
-            t3.Visibility = Visibility.Visible;
-            t4.Visibility = Visibility.Visible;
+            tabAnamnesis.Visibility = Visibility.Visible;
+            tabPrescription.Visibility = Visibility.Visible;
             t5.Visibility = Visibility.Visible;
             t6.Visibility = Visibility.Visible;
             t7.Visibility = Visibility.Visible;
             t8.Visibility = Visibility.Visible;
+
+            Examination selectedExam = (Examination)dgExam.SelectedItem;
+            Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
+            Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
+
+            txtA.Clear();
+            txtD.Clear();
+            if (anamnesis != null)
+            {
+                txtA.Text = anamnesis.AnamnesisInfo;
+                txtD.Text = anamnesis.Diagnosis;
+            }
+            tabAnamnesis.Focus();
+
+            cbDrug.SelectedIndex = -1;
+            txtTaking.Clear();
+            txtDate.Clear();
+            if (prescription != null)
+            {
+                cbDrug.SelectedItem = prescription.Drug;
+                txtTaking.Text = prescription.Taking;
+                txtDate.Text = prescription.DateOfPrescription.ToString();
+            }
+            tabAnamnesis.Focus();
         }
-
-
-
 
 
         private void Window_Closed(object sender, EventArgs e)
