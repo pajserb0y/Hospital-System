@@ -51,7 +51,7 @@
                         <Button Content="Add" HorizontalAlignment="Center" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Add"/>
                         <Button Content="Edit" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Edit"/>
                         <Button Content="Delete" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Delete"/>
-                        <Button Content="View" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_View"/>
+                        <Button Content="Begin" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Begin"/>
                         <Button Content="Back" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="5"  VerticalAlignment="Center"  Height="33" Width="118" Click="Button_Back"/>
 
                         <Label Content="Choose doctor:"  Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" Margin="0,35,0,0" />
