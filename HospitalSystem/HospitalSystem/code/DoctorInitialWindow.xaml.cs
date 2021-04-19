@@ -124,9 +124,10 @@ namespace HospitalSystem.code
             AnamnesisStorage.getInstance().serialize();
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
+            //dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
         }
 
-        private void Button_View(object sender, RoutedEventArgs e)
+        private void Button_Begin(object sender, RoutedEventArgs e)
         {
             tExam.Visibility = Visibility.Visible;
             txtAnamnesis.Clear();
@@ -149,7 +150,7 @@ namespace HospitalSystem.code
         private void Button_Prescription(object sender, RoutedEventArgs e)
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
-            txtDate.Text = currExam.Date.ToString();
+            txtDate.Text = currExam.Date.ToString("dd/MM/yyyy");
             cbDrug.SelectedIndex = -1;
             txtTaking.Clear();
             tPersc.Visibility = Visibility.Visible;
