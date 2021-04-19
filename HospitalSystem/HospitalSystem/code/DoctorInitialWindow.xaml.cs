@@ -121,7 +121,8 @@ namespace HospitalSystem.code
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             int prescID = PrescriptionStorage.getInstance().GenerateNewID();
-            Prescription newPrescription = new Prescription(prescID, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            Patient p = (Patient)cbPatient.SelectedItem;
+            Prescription newPrescription = new Prescription(prescID, p.Id,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
         }
