@@ -163,6 +163,18 @@
                     </Grid>
                 </StackPanel>
             </TabItem>-->
+            <TabItem Header="Account">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
+                        <Label Content="Username:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
+                        <Label Content="Password:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="Medical history">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
@@ -207,7 +219,7 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Room" Width="2*" >
+                                <DataGridTemplateColumn Header="Room">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -272,19 +284,7 @@
                             </TextBlock.Style></TextBlock>
                     </Grid>
                 </StackPanel>
-            </TabItem>
-            <TabItem Header="Account">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
-                        <Label Content="Username:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="Password:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
+            </TabItem>            
             <TabItem Name="t3" Header="Examination">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
