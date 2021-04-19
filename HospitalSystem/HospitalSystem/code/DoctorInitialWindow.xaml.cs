@@ -43,7 +43,8 @@ namespace HospitalSystem.code
             cbDrug.Items.Add(d2);
             cbDrug.Items.Add(d3);
 
-            t1.Visibility = Visibility.Collapsed;
+            tExam.Visibility = Visibility.Collapsed;
+            tPersc.Visibility = Visibility.Collapsed;
 
         }
 
@@ -121,14 +122,16 @@ namespace HospitalSystem.code
             Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
+            t0.Focus();
+            tExam.Visibility = Visibility.Collapsed;
         }
 
         private void Button_View(object sender, RoutedEventArgs e)
         {
-            t1.Visibility = Visibility.Visible;
+            tExam.Visibility = Visibility.Visible;
             txtAnamnesis.Clear();
             txtDiagnosis.Clear();
-            t1.Focus();
+            tExam.Focus();
         }
 
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
@@ -138,6 +141,17 @@ namespace HospitalSystem.code
             Prescription newPrescription = new Prescription(prescID, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
+            t0.Focus();
+            tPersc.Visibility = Visibility.Collapsed;
+        }
+
+        private void Button_Prescription(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            txtDate.Text = currExam.Date.ToString();
+            cbDrug.SelectedIndex = -1;
+            txtTaking.Clear();
+            tPersc.Visibility = Visibility.Visible;
         }
     }
 }
