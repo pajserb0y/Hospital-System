@@ -19,17 +19,32 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class DoctorInitialWindow : Window
     {
+        ListCollectionView collectionViewExamination = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+
         public DoctorInitialWindow()
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
    
             ObservableCollection<Examination> exams = ExaminationStorage.getInstance().GetAll();
-            DataGridXAML.ItemsSource = exams;
-            //exam1.Time = new DateTime(2012, 12, 25, 10, 30, 50);
-            //if(exams != null)
-            //   foreach (Examination exam in exams)
-            //       DataGridXAML.Items.Add(exam);
+            ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            cbDoctor.ItemsSource = doctors;
+           
+            cbPatient.ItemsSource = patients;
+
+            dgDoctorExams.ItemsSource = exams;
+
+            Drug d1 = new Drug(1, "Bensedin");
+            Drug d2 = new Drug(2, "Bromazepam");
+            Drug d3 = new Drug(3, "Trodon");
+
+            cbDrug.Items.Add(d1);
+            cbDrug.Items.Add(d2);
+            cbDrug.Items.Add(d3);
+
+            tExam.Visibility = Visibility.Collapsed;
+            tPersc.Visibility = Visibility.Collapsed;
 
         }
 
@@ -48,7 +63,7 @@ namespace HospitalSystem.code
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            var selectedItem = DataGridXAML.SelectedItem;
+            var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem != null)
             {
                 ExaminationStorage.getInstance().Delete((Examination)selectedItem);
@@ -59,7 +74,7 @@ namespace HospitalSystem.code
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
             ObservableCollection<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
-            var selectedItem = DataGridXAML.SelectedItem;
+            var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem != null)
             {
                 EditExam ee = new EditExam((Examination)selectedItem);
@@ -74,6 +89,69 @@ namespace HospitalSystem.code
             ExaminationStorage.getInstance().serialize();
             mw.Show();
             this.Close();
+        }
+
+        //private void doctorChanged(object sender, SelectionChangedEventArgs e)
+        //{
+
+        //}
+        private void doctorChanged(object sender, System.EventArgs e)
+        {
+            if (cbDoctor.SelectedItem != null)
+            {
+                collectionViewExamination.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Doctor == cbDoctor.SelectedItem)
+                        return true;
+                    return false;
+                };
+                dgDoctorExams.ItemsSource = collectionViewExamination;
+            }
+        }
+
+        private void patientChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PatientDetails patientDetails = new PatientDetails((Patient)cbPatient.SelectedItem);
+            patientDetails.Show();
+        }
+
+        private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
+            AnamnesisStorage.getInstance().Add(newAnamnesis);
+            AnamnesisStorage.getInstance().serialize();
+            t0.Focus();
+            tExam.Visibility = Visibility.Collapsed;
+        }
+
+        private void Button_View(object sender, RoutedEventArgs e)
+        {
+            tExam.Visibility = Visibility.Visible;
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+            tExam.Focus();
+        }
+
+        private void Button_Save_Prescription(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Prescription newPrescription = new Prescription(prescID, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            PrescriptionStorage.getInstance().Add(newPrescription);
+            PrescriptionStorage.getInstance().serialize();
+            t0.Focus();
+            tPersc.Visibility = Visibility.Collapsed;
+        }
+
+        private void Button_Prescription(object sender, RoutedEventArgs e)
+        {
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            txtDate.Text = currExam.Date.ToString();
+            cbDrug.SelectedIndex = -1;
+            txtTaking.Clear();
+            tPersc.Visibility = Visibility.Visible;
         }
     }
 }
