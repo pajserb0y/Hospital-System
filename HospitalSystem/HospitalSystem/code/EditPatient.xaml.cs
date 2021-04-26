@@ -18,9 +18,10 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class EditPatient : Window
     {
-        private Patient p;
-        ListCollectionView collectionView = new ListCollectionView(JobStorage.getInstance().GetAll());
-        ListCollectionView exams = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        private Patient currentPatient;
+        ListCollectionView jobCollection = new ListCollectionView(JobStorage.getInstance().GetAll());
+        ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        ListCollectionView examCollection = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
 
         public Action<object, MouseButtonEventArgs> TabControl_SelectionChanged { get; }
 
@@ -28,7 +29,7 @@ namespace HospitalSystem.code
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
-            p = selectedPatient;
+            currentPatient = selectedPatient;
 
             txtID.Text = selectedPatient.Id.ToString();
             txtIme.Text = selectedPatient.FirstName;
@@ -57,24 +58,34 @@ namespace HospitalSystem.code
             txtCountry.Text = selectedPatient.Country;
 
             //dgJob.ItemsSource = JobStorage.getInstance().GetAll();
-            collectionView.Filter = (e) =>              //filtriranje neke baze po odredjenoj logici
+            jobCollection.Filter = (e) =>              //filtriranje neke baze po odredjenoj logici
             {
                 Job temp = e as Job;
-                if (temp.PID == p.Id)
+                if (temp.PID == currentPatient.Id)
                     return true;
                 return false;
             };
-            dgJob.ItemsSource = collectionView;
+            dgJob.ItemsSource = jobCollection;
 
-            exams.Filter = (e) =>
+            appointmentCollection.Filter = (e) =>
+            {
+                Appointment temp = e as Appointment;
+                if (temp.Patient == currentPatient)
+                    return true;
+                return false;
+            };
+            dgApp.ItemsSource = appointmentCollection;
+
+            examCollection.Filter = (e) =>
             {
                 Examination temp = e as Examination;
-                if (temp.Patient == p)
+                if (temp.Patient == currentPatient)
                     return true;
                 return false;
             };
-            dgExam.ItemsSource = exams;
+            dgExam.ItemsSource = examCollection;
             //(dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan exam
+
 
             tabAnamnesis.Visibility = Visibility.Collapsed;
             tabPrescription.Visibility = Visibility.Collapsed;
@@ -84,17 +95,19 @@ namespace HospitalSystem.code
             t8.Visibility = Visibility.Collapsed;
         }
 
+        #region Chart + Account
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            PatientsStorage.getInstance().Edit(new Patient(p.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
+            PatientsStorage.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
-                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text), txtCity.Text, txtCountry.Text));
+                txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text),
+                txtCity.Text, txtCountry.Text));
             PatientsStorage.getInstance().serialize();
             this.Close();
         }
         private void txbAddJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NewJob nj = new NewJob(p.Id);
+            NewJob nj = new NewJob(currentPatient.Id);
             nj.Show();
         }
         private void txbEditJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -107,47 +120,39 @@ namespace HospitalSystem.code
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
-   
+        #endregion
 
 
-
-
+        #region Appointment
         private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SecretarNewAppointment sne = new SecretarNewAppointment(p);
+            SecretarNewAppointment sne = new SecretarNewAppointment(currentPatient);
             sne.Show();
         }
         private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var selectedExam = dgExam.SelectedItem;
-            if (selectedExam != null)
+            var selectedApp = dgApp.SelectedItem;
+            if (selectedApp != null)
             {
-                SecretarEditAppointment editAppt = new SecretarEditAppointment((Examination)selectedExam);
+                SecretarEditAppointment editAppt = new SecretarEditAppointment((Appointment)selectedApp);
                 editAppt.Show();
-                (dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                (dgApp.ItemContainerGenerator.ContainerFromItem(dgApp.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
             }  
         }
         private void txbDeleteApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var selectedApp = dgExam.SelectedItem;
+            var selectedApp = dgApp.SelectedItem;
             if (selectedApp != null)
             {
-                ExaminationStorage.getInstance().Delete((Examination)selectedApp);
+                AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
             }
         }
+        #endregion
 
 
-
-
+        #region Medical history
         private void txbView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //TabItem tab = new TabItem();
-            //tab.Header = dgExam.SelectedItem.ToString();
-            //tab.Content = "raf";
-            //tabControl.Items.Add(tab);
-            //tab.IsSelected = true;
-            //StartExamination se = new StartExamination((Examination)dgExam.SelectedItem);
-            //se.Show();
             tabAnamnesis.Visibility = Visibility.Visible;
             tabPrescription.Visibility = Visibility.Visible;
             t5.Visibility = Visibility.Visible;
@@ -180,6 +185,7 @@ namespace HospitalSystem.code
             }
             tabAnamnesis.Focus();
         }
+        #endregion
 
 
         private void Window_Closed(object sender, EventArgs e)
