@@ -139,8 +139,8 @@ namespace HospitalSystem.code
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             int prescID = PrescriptionStorage.getInstance().GenerateNewID();
-            Patient p = (Patient)cbPatient.SelectedItem;
-            Prescription newPrescription = new Prescription(prescID, p.Id,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            int patientId = currExam.Patient.Id;
+            Prescription newPrescription = new Prescription(prescID, patientId,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
             t0.Focus();
