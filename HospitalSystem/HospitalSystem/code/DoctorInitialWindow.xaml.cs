@@ -25,16 +25,18 @@ namespace HospitalSystem.code
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
-   
-            ObservableCollection<Examination> exams = ExaminationStorage.getInstance().GetAll();
-            ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
-            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
-            cbDoctor.ItemsSource = doctors;
-           
-            cbPatient.ItemsSource = patients;
 
-            dgDoctorExams.ItemsSource = exams;
+            InitializeCollection();
 
+            FillDrugList();
+
+            tExam.Visibility = Visibility.Collapsed;
+            tPersc.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void FillDrugList()
+        {
             Drug d1 = new Drug(1, "Bensedin");
             Drug d2 = new Drug(2, "Bromazepam");
             Drug d3 = new Drug(3, "Trodon");
@@ -42,10 +44,17 @@ namespace HospitalSystem.code
             cbDrug.Items.Add(d1);
             cbDrug.Items.Add(d2);
             cbDrug.Items.Add(d3);
+        }
 
-            tExam.Visibility = Visibility.Collapsed;
-            tPersc.Visibility = Visibility.Collapsed;
+        private void InitializeCollection()
+        {
+            ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
+            ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
 
+            cbDoctor.ItemsSource = doctors;
+            cbPatient.ItemsSource = patients;
+            dgDoctorExams.ItemsSource = appointments;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -56,58 +65,54 @@ namespace HospitalSystem.code
 
         private void Button_Add(object sender, RoutedEventArgs e)
         {
-            NewExam ne = new NewExam();
-           
-            ne.Show();
+            NewExam newExamWindow = new NewExam();
+            newExamWindow.Show();
         }
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
             var selectedItem = dgDoctorExams.SelectedItem;
-            if (selectedItem != null)
+            if (selectedItem == null)
             {
-                ExaminationStorage.getInstance().Delete((Examination)selectedItem);
-                //DataGridXAML.Items.Remove(selectedItem);
+                return;
             }
+            ExaminationStorage.getInstance().Delete((Examination)selectedItem);
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
             ObservableCollection<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
             var selectedItem = dgDoctorExams.SelectedItem;
-            if (selectedItem != null)
+            if (selectedItem == null)
             {
-                EditExam ee = new EditExam((Examination)selectedItem);
-                ee.Show();
-                //DataGridXAML.Items.Remove(selectedItem);
+                return;
             }
+            EditExam editExamWindow = new EditExam((Examination)selectedItem);
+            editExamWindow.Show();
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
+            MainWindow mainWindow = new MainWindow();
             ExaminationStorage.getInstance().serialize();
-            mw.Show();
+            mainWindow.Show();
             this.Close();
         }
 
-        //private void doctorChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
         private void doctorChanged(object sender, System.EventArgs e)
         {
-            if (cbDoctor.SelectedItem != null)
+            if (cbDoctor.SelectedItem == null) //PREIMENOVATI cb u comboBox
             {
-                collectionViewExamination.Filter = (e) =>
-                {
-                    Examination temp = e as Examination;
-                    if (temp.Doctor == cbDoctor.SelectedItem)
-                        return true;
-                    return false;
-                };
-                dgDoctorExams.ItemsSource = collectionViewExamination;
+                return;
             }
+            collectionViewExamination.Filter = (exam) =>
+            {
+                Examination tempExam = exam as Examination;
+                if (tempExam.Doctor == cbDoctor.SelectedItem)
+                    return true;
+                return false;
+            };
+            dgDoctorExams.ItemsSource = collectionViewExamination;
         }
 
         private void patientChanged(object sender, SelectionChangedEventArgs e)
@@ -122,6 +127,11 @@ namespace HospitalSystem.code
             Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
+            ExaminationStorage.getInstance().Add(currExam);
+            ExaminationStorage.getInstance().serialize();
+            Appointment currApp = (Appointment)dgDoctorExams.SelectedItem;
+            AppointmentStorage.getInstance().Delete(currApp);
+            AppointmentStorage.getInstance().serialize();
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
             //dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
