@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Bromazepam",
+    "Amount": "500",
+    "Ingridients": [ "Acetil", "Jod", "Hlor" ]
+  },
+  {
+    "Id": 2,
+    "Name": "Trodon",
+    "Amount": "200",
+    "Ingridients": [ "Sumpor", "Vodonik" ]
+  },
+  {
+    "Id": 3,
+    "Name": "Strepsils",
+    "Amount": "1000",
+    "Ingridients": [ "Menta", "Jod"]
+  }
+]

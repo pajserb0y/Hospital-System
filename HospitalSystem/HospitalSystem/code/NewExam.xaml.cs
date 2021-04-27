@@ -27,14 +27,14 @@ namespace HospitalSystem.code
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Examination exam = new Examination();
-            exam.Id = ExaminationStorage.getInstance().GenerateNewID();
-            exam.Patient = (Patient)cbPatient.SelectedItem;
-            exam.Doctor = (Doctor) cbDoctor.SelectedItem;
-            exam.Room = (Room)cbRoom.SelectedItem;
-            exam.Date = (DateTime)dp1.SelectedDate;
-            exam.Time = Convert.ToDateTime(txt1.Text);
-            ExaminationStorage.getInstance().Add(exam);
+            Appointment appointment = new Examination();
+            appointment.Id = ExaminationStorage.getInstance().GenerateNewID();
+            appointment.Patient = (Patient)cbPatient.SelectedItem;
+            appointment.Doctor = (Doctor) cbDoctor.SelectedItem;
+            appointment.Room = (Room)cbRoom.SelectedItem;
+            appointment.Date = (DateTime)dp1.SelectedDate;
+            appointment.Time = Convert.ToDateTime(txt1.Text);
+            AppointmentStorage.getInstance().Add(appointment);
             this.Close();
         }
     }

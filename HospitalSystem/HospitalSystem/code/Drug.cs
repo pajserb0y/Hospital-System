@@ -4,8 +4,14 @@ using System.Text;
 
 namespace HospitalSystem.code
 {
-    class Drug
-    {
+    class Drug 
+    { 
+         public Drug(int v1, string v2)
+         {
+             id = v1;
+            name = v2;
+         }
+    
         private int id;
         public int Id
         {
@@ -16,12 +22,6 @@ namespace HospitalSystem.code
 
         private string name;
 
-        public Drug(int v1, string v2)
-        {
-            id = v1;
-            name = v2;
-        }
-
         public string Name
         {
             get { return name; }
@@ -29,6 +29,19 @@ namespace HospitalSystem.code
 
         }
 
+        private int amount;
+
+        public int Amount
+        {
+            get { return amount; }
+            set { amount = value; }
+        }
+        List<string> ingredients;
+        public List<string> Ingridients
+        {
+            get { return ingredients; }
+            set { ingredients = value; }
+        }
         public override string ToString()
         {
             return id + " - " + name;

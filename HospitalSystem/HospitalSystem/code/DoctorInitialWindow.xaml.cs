@@ -19,7 +19,7 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class DoctorInitialWindow : Window
     {
-        ListCollectionView collectionViewExamination = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        ListCollectionView collectionViewAppointment = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
 
         public DoctorInitialWindow()
         {
@@ -44,6 +44,9 @@ namespace HospitalSystem.code
             cbDrug.Items.Add(d1);
             cbDrug.Items.Add(d2);
             cbDrug.Items.Add(d3);
+
+            ObservableCollection<Drug> drugs = DrugStorage.getInstance().GetAll();
+            dgDrugs.ItemsSource = drugs;
         }
 
         private void InitializeCollection()
@@ -76,7 +79,7 @@ namespace HospitalSystem.code
             {
                 return;
             }
-            ExaminationStorage.getInstance().Delete((Examination)selectedItem);
+            AppointmentStorage.getInstance().Delete((Appointment)selectedItem);
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
@@ -105,14 +108,14 @@ namespace HospitalSystem.code
             {
                 return;
             }
-            collectionViewExamination.Filter = (exam) =>
+            collectionViewAppointment.Filter = (appointment) =>
             {
-                Examination tempExam = exam as Examination;
-                if (tempExam.Doctor == cbDoctor.SelectedItem)
+                Appointment tempAppointment = appointment as Appointment;
+                if (tempAppointment.Doctor == cbDoctor.SelectedItem)
                     return true;
                 return false;
             };
-            dgDoctorExams.ItemsSource = collectionViewExamination;
+            dgDoctorExams.ItemsSource = collectionViewAppointment;
         }
 
         private void patientChanged(object sender, SelectionChangedEventArgs e)
@@ -124,11 +127,14 @@ namespace HospitalSystem.code
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
             Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
+
             ExaminationStorage.getInstance().Add(currExam);
             ExaminationStorage.getInstance().serialize();
+
             Appointment currApp = (Appointment)dgDoctorExams.SelectedItem;
             AppointmentStorage.getInstance().Delete(currApp);
             AppointmentStorage.getInstance().serialize();
@@ -153,7 +159,7 @@ namespace HospitalSystem.code
             Prescription newPrescription = new Prescription(prescID, patientId,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
-            t0.Focus();
+            tExam.Focus();
             tPersc.Visibility = Visibility.Collapsed;
         }
 
@@ -164,6 +170,23 @@ namespace HospitalSystem.code
             cbDrug.SelectedIndex = -1;
             txtTaking.Clear();
             tPersc.Visibility = Visibility.Visible;
+        }
+
+        private void Button_View_Drug(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        //    string input = txtPatient.Text;
+
+        //    string[] tokens = input.Split(" ");
+        //    if(tokens.Length > 3)
+        //    {
+        //        txtPatient.Foreground.Freeze;
+
+        //    }
         }
     }
 }
