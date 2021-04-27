@@ -1,1 +1,38 @@
-[{"Id":8,"FirstName":"Andrija","LastName":"31","Jmbg":31,"Adress":"31","Telephone":31},{"Id":9,"FirstName":"Markic","LastName":"fsf","Jmbg":32,"Adress":"fsf","Telephone":32},{"Id":13,"FirstName":"Teodora","LastName":"Maruna","Jmbg":2203999808098,"Adress":"Balzakova ","Telephone":312313},{"Id":14,"FirstName":"Nikola","LastName":"42","Jmbg":41,"Adress":"421","Telephone":421}]
+[
+  {
+    "Id": 8,
+    "FirstName": "Predrag",
+    "LastName": "Antonijevic",
+    "Jmbg": 311299745645645,
+    "Adress": "Krusedolska 123",
+    "Telephone": 381694564564,
+    "Specialization": "Cardiology"
+  },
+  {
+    "Id": 9,
+    "FirstName": "Milivoje",
+    "LastName": "Katic",
+    "Jmbg": 300398845679845,
+    "Adress": "Manastirska 1",
+    "Telephone": 381604565411,
+    "Specialization": "Urology"
+  },
+  {
+    "Id": 13,
+    "FirstName": "Teodor",
+    "LastName": "Marinkovic",
+    "Jmbg": 2203999808098,
+    "Adress": "Balzakova 44",
+    "Telephone": 381664521451,
+    "Specialization": "Dermatology"
+  },
+  {
+    "Id": 14,
+    "FirstName": "Nikolina",
+    "LastName": "Krivokapic",
+    "Jmbg": 381635412653,
+    "Adress": "Borova 3",
+    "Telephone": 381645412458,
+    "Specialization": "Neurology"
+  }
+]
