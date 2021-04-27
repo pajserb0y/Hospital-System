@@ -65,6 +65,7 @@ namespace HospitalSystem.code
                     d.LastName = doctor.LastName;
                     d.Adress = doctor.Adress;
                     d.Telephone = doctor.Telephone;
+                    d.Specialization = doctor.Specialization;
                 }
         }
 
