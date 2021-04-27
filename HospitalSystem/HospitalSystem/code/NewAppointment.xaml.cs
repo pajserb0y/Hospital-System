@@ -40,7 +40,7 @@ namespace HospitalSystem.code
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
             appt.Patient = patient;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appt.Room = RoomStorage.getInstance().GetOne(8);
+            appt.Room = RoomStorage.getInstance().GetOne(1);
             appt.Date = (DateTime)dp1.SelectedDate;
             string time = (string)cbTime.SelectedItem;
             appt.Time = DateTime.Parse(time);
