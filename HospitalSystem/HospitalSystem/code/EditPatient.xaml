@@ -136,7 +136,19 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <!--<TabItem Header="Appointments">
+            <TabItem Header="Account">
+                <StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
+                        <Label Content="Username:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
+                        <Label Content="Password:"  Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Appointments">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
@@ -151,30 +163,88 @@
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
                             <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Appt ID" Binding="{Binding Id}"/>
-                                    <DataGridTextColumn Header="Patient ID" Binding="{Binding Patient.Id}" />
-                                    <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
-                                    <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
-                                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
-                                    <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
-                                </DataGrid.Columns>
+                                <DataGridTextColumn Header="App ID" Binding="{Binding Id}"/>
+                                <DataGridTemplateColumn Header="Patient" Width="2*" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Path=Patient.Id}"/>
+                                                <TextBlock Text="    "/>
+                                                <TextBlock Text="{Binding Path=Patient.FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding Path=Patient.LastName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Doctor" Width="2*" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Path=Doctor.Id}"/>
+                                                <TextBlock Text="    "/>
+                                                <TextBlock Text="{Binding Path=Doctor.FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding Path=Doctor.LastName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Room">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Path=Room.Id}"/>
+                                                <TextBlock Text="    "/>
+                                                <TextBlock Text="{Binding Path=Room.Name}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                            </DataGrid.Columns>
                         </DataGrid>
-                        
+                        <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
+                                   HorizontalAlignment="Center" Margin="0,100,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                        <TextBlock Text="&lt; edit" TextWrapping="Wrap" PreviewMouseDown="txbEditApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
+                                   HorizontalAlignment="Center" Margin="0,170,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
+                        <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDeleteApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
+                                   HorizontalAlignment="Center" Margin="0,543,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                                    <Style.Triggers>
+                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style></TextBlock>
                     </Grid>
                 </StackPanel>
-            </TabItem>-->
-            <TabItem Header="Account">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
-                        <Label Content="Username:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="Password:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                </StackPanel>
             </TabItem>
+            
             <TabItem Header="Medical history">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
@@ -246,42 +316,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
-                        <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,100,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="&lt; edit" TextWrapping="Wrap" PreviewMouseDown="txbEditApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,170,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDeleteApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,543,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
+                        
                     </Grid>
                 </StackPanel>
             </TabItem>            
