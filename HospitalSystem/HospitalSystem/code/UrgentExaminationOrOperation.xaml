@@ -68,6 +68,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </StackPanel>
+                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,40,0" >
+                        <Label Content="Specialization:" Padding="0,0,20,0"/>
+                        <ComboBox x:Name="cbSpecialization" Width="200" SelectionChanged="specializationChanged" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=Specialization}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
                     <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
                         <Label Content="Doctor:" Padding="0,0,20,0"/>
                         <ComboBox x:Name="cbDoctor" Width="200">
@@ -79,6 +91,8 @@
                                         <TextBlock Text="{Binding Path=FirstName}"/>
                                         <TextBlock Text=" "/>
                                         <TextBlock Text="{Binding Path=LastName}"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding Path=Specialization}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
