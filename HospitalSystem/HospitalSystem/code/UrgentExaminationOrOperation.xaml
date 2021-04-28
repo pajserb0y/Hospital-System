@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HospitalSystem.code"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Create URGENT examination or operation" Height="600" Width="478"
+        Title="Create URGENT examination or operation" Height="800" Width="478"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
@@ -114,7 +114,7 @@
                     </StackPanel>
             <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
                         <Label Content="Date:" Padding="0,0,20,0"/>
-                <DatePicker x:Name="dpTime" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="200" FirstDayOfWeek="Monday " 
+                <DatePicker x:Name="dpDate" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="200" FirstDayOfWeek="Monday " 
                                     IsTodayHighlighted="True" SelectedDate="{x:Static sys:DateTime.Now}" IsEnabled="False"/>
                         <!--xmlns:sys="clr-namespace:System;assembly=mscorlib"  to sam dodao gore-->
                     </StackPanel>
@@ -140,8 +140,55 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
-                    </StackPanel>                    
-                </StackPanel>
+                    </StackPanel>
+            <DataGrid x:Name="dgApp" Height="100" AutoGenerateColumns="False" Visibility="Hidden"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="App ID" Binding="{Binding Id}"/>
+                    <DataGridTemplateColumn Header="Patient" Width="2*" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Patient.Id}"/>
+                                    <TextBlock Text="    "/>
+                                    <TextBlock Text="{Binding Path=Patient.FirstName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Path=Patient.LastName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Doctor" Width="2*" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Doctor.FirstName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Path=Doctor.LastName}"/>
+                                    <TextBlock Text=" - "/>
+                                    <TextBlock Text="{Binding Path=Doctor.Specialization}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Room">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Room.Id}"/>
+                                    <TextBlock Text="    "/>
+                                    <TextBlock Text="{Binding Path=Room.Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                    <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
             <!--</TabItem>
         </TabControl>-->
     </Grid>
