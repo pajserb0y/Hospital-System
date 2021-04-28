@@ -18,7 +18,7 @@ namespace HospitalSystem.code
     public partial class UrgentPatient : Window
     {
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-                                                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
+                                                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "01:00", "01:30", "02:00", "02:30", "03:00" };
         ListCollectionView doctorCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
         ListCollectionView specializationCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
         ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
@@ -186,30 +186,60 @@ namespace HospitalSystem.code
                 {
                     Appointment tempApp = e as Appointment;
                     if (wantedDoctorsID.Contains(tempApp.Doctor.Id.ToString()) && (DateTime)tempApp.Date == (DateTime)dpDate.SelectedDate &&
-                        (tempApp.Time.ToString("HH:mm") == findFirstNearestTerm() || tempApp.Time.ToString("HH:mm") == findSecondNearestTerm()))
+                        (tempApp.Time.ToString("HH:mm") == findFirstNearestTerm() || tempApp.Time.ToString("HH:mm") == findSecondNearestTerm()))    //svi termini tih doktora tog datuma koji vaze za naredna dva termina
                         return true;
                     return false;
                 };
 
                 //sortiram listu tih zauzetih appointmenta po tome koji se mogu odloziti za ranije
                 List<Appointment> sortedAppointmentCollection = new List<Appointment>();
-                Appointment appointmentInNewList = null;
+                //Appointment appointmentInNewList = null;
                 Appointment bestI = (Appointment)appointmentCollection.GetItemAt(0);
                 Appointment bestJ = (Appointment)appointmentCollection.GetItemAt(0);
-                for (int i = 0; i < appointmentCollection.Count - 1; i++)
+                for (int i = 0; i < appointmentCollection.Count ; i++)
                 {
+                    //bestI = (Appointment)appointmentCollection.GetItemAt(i);
+                    //Appointment appointmentInNewList = bestI;
+                    //for (int j = i + 1; j < appointmentCollection.Count; j++)
+                    //{     
+                    //    bestJ = (Appointment)appointmentCollection.GetItemAt(j);
+                    //    if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(bestI.Doctor)) < 1)      //da li doktora od J app ima slobodan termin pre doktora od I app
+                    //        appointmentInNewList = bestJ;
+                    //}
+                    //if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim
+                    //    sortedAppointmentCollection.Add(appointmentInNewList);
+                    bestI = (Appointment)appointmentCollection.GetItemAt(i);
+                    Appointment appointmentInNewList = bestI;
                     for (int j = i + 1; j < appointmentCollection.Count; j++)
-                    {     
-                        bestI = (Appointment)appointmentCollection.GetItemAt(i);
+                    {
                         bestJ = (Appointment)appointmentCollection.GetItemAt(j);
-                        if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(bestI.Doctor)) == -1)      //da li doktora od J app ima slobodan termin pre doktora od I app
+                        if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(appointmentInNewList.Doctor)) == -1)      //da li doktora od J app ima slobodan termin pre doktora od I app
                             appointmentInNewList = bestJ;
+                        if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(appointmentInNewList.Doctor)) == 0)     
+                            appointmentInNewList = bestI;
                     }
-                    sortedAppointmentCollection.Add(appointmentInNewList);
+                    if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim (svakako kad sekretar vidi istog doktora moze izabrati taj najblizi)
+                        sortedAppointmentCollection.Add(appointmentInNewList);
                 }
 
-                
-                dgApp.ItemsSource = sortedAppointmentCollection;
+                List<Appointment> sortedAppointmentCollectionAgain = new List<Appointment>();
+                for (int i = 0; i < sortedAppointmentCollection.Count; i += 2)      //sortiranje termina po najblizim koje treba da pomeri
+                {
+                    Appointment app1 = (Appointment)appointmentCollection.GetItemAt(i);
+                    Appointment app2 = (Appointment)appointmentCollection.GetItemAt(i+1);
+                    if (DateTime.Compare(app1.Time, app2.Time) == -1)
+                    {
+                        sortedAppointmentCollectionAgain.Add(app2);
+                        sortedAppointmentCollectionAgain.Add(app1);
+                    }
+                    else
+                    {
+                        sortedAppointmentCollectionAgain.Add(app1);
+                        sortedAppointmentCollectionAgain.Add(app2);
+                    }
+                }
+
+                dgApp.ItemsSource = sortedAppointmentCollectionAgain;
             }
         }
 
@@ -254,6 +284,13 @@ namespace HospitalSystem.code
 
                 if(availableTermsOnThisDate.Count != 0)
                 {
+                    DateTime min = Convert.ToDateTime("18:30");
+
+                    foreach (string term in availableTermsOnThisDate)
+                        if (DateTime.Compare((DateTime)Convert.ToDateTime(term.Split(',')[1]), min) < 0)
+                            min = (DateTime)Convert.ToDateTime(term.Split(',')[1]);
+
+                    return min;
                     // var min = 18:30
                     // prodjem kroz celu availableTermsOnThisDate i pronadjem najmanje vreme
                     // return to vreme
@@ -262,7 +299,7 @@ namespace HospitalSystem.code
                 dateTemp.AddDays(1);
             }
 
-            return default;
+            //return default;
         }
 
        
