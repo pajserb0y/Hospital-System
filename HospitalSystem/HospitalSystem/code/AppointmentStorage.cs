@@ -124,6 +124,7 @@ public class AppointmentStorage
    public void Add(Appointment a)
    {
         this.appointments.Add(a);
+        serialize();
    }
 
     public int GenerateNewID()

@@ -27,6 +27,7 @@ namespace HospitalSystem.code
             p = selectedPatient;
             txtPatient.Text = selectedPatient.ToString();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
+            cbRoom.ItemsSource = RoomStorage.getInstance().GetAll();
         }
 
 
@@ -39,6 +40,8 @@ namespace HospitalSystem.code
             appt.Room = RoomStorage.getInstance().GetOne(8);
             appt.Date = (DateTime)dp1.SelectedDate;
             appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+            Room selectedRoom = (Room)cbRoom.SelectedItem;
+            _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
             ExaminationStorage.getInstance().Add(appt);
             this.Close();
         }
@@ -62,7 +65,7 @@ namespace HospitalSystem.code
                 collectionView.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate)
+                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate && temp.Room == (Room)cbRoom.SelectedItem)
                         return true;
                     return false;
                 };

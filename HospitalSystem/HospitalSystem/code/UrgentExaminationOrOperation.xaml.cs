@@ -30,20 +30,7 @@ namespace HospitalSystem.code
             //cbRoom.ItemsSource = RoomStorage.getInstance().GetAll();
             txtTime.Text = DateTime.Now.ToString("HH:mm");
 
-
-            //doctorCollection.Filter = (doc) =>
-            //{
-            //    Doctor tempDoc = doc as Doctor;
-            //    foreach(Appointment app in AppointmentStorage.getInstance().GetAll())
-            //        if(app.Doctor != tempDoc)
-            //            return true;
-            //    return false;
-            //};
-            //cbDoctor.ItemsSource = doctorCollection;
-            //cbDoctor.SelectedIndex = -1;
-
-
-            // pronalaze se sve sspecijalizacije ciji doktori rade u bolnici i ispisuju se samo jednom (distinct)
+            // pronalaze se sve specijalizacije ciji doktori rade u bolnici i ispisuju se samo jednom (distinct)
             List<Doctor> doctorsWithDifferentSpecialization = new List<Doctor>();
             specializationCollection.Filter = (doc) =>
             {
@@ -67,8 +54,9 @@ namespace HospitalSystem.code
             };
             cbSpecialization.ItemsSource = specializationCollection;
             cbSpecialization.SelectedIndex = -1;
+
             cbDoctor.SelectedIndex = -1;
-            
+            hideAppointmentDetails();
         }
 
         private void showAppointmentDetails()
@@ -78,6 +66,22 @@ namespace HospitalSystem.code
             dpDate.Visibility = Visibility.Visible;
             txtTime.Visibility = Visibility.Visible;
             cbOperation.Visibility = Visibility.Visible;
+            labelDoctor.Visibility = Visibility.Visible;
+            labelRoom.Visibility = Visibility.Visible;
+            labelDate.Visibility = Visibility.Visible;
+            labelTime.Visibility = Visibility.Visible;
+        }
+        private void hideAppointmentDetails()
+        {
+            cbDoctor.Visibility = Visibility.Hidden;
+            cbRoom.Visibility = Visibility.Hidden;
+            dpDate.Visibility = Visibility.Hidden;
+            txtTime.Visibility = Visibility.Hidden;
+            cbOperation.Visibility = Visibility.Hidden;
+            labelDoctor.Visibility = Visibility.Hidden;
+            labelRoom.Visibility = Visibility.Hidden;
+            labelDate.Visibility = Visibility.Hidden;
+            labelTime.Visibility = Visibility.Hidden;
         }
 
         DateTime RoundUp(DateTime dt, TimeSpan d)   //zaokruzivanje datuma na prvi gore za 30min
@@ -97,39 +101,35 @@ namespace HospitalSystem.code
         private void specializationChanged(object sender, System.EventArgs e)
         {
             filterDoctors();
-            //filterRooms();
-            //displayTerms();
-            showAppointmentDetails();
+            filterRooms();
+            cbDoctor.SelectedIndex = 0;
+            cbRoom.SelectedIndex = 0;
+            showAppointmentDetails();            
         }
         private void filterDoctors()
         {
-            List<string> occupied = new List<string>();
-            List<string> wantedDoctorsID = new List<string>();
+            dgApp.Visibility = Visibility.Hidden;
+            List<string> occupied = new List<string>();     //zauzeti doktorID + , + termin ukoliko postoji u narednih pola sata/sat
+            List<string> wantedDoctorsID = new List<string>();  //doktori sa trazenom specijalizacijom
             if (cbSpecialization.SelectedItem != null)
             {
                 doctorCollection.Filter = (e) =>
                 {
-                    int countOfNearTerms = 0;
                     Doctor tempDoctor = e as Doctor;
                     if (tempDoctor.Specialization == cbSpecialization.SelectedItem.ToString())    //svi doktori sa tom specijalizacijom
                     {
                         wantedDoctorsID.Add(tempDoctor.Id.ToString());
-                        foreach (Appointment nearTerms in AppointmentStorage.getInstance().GetAll())
+                        foreach (Appointment nearTerms in AppointmentStorage.getInstance().GetAll())    //trazim appointmente za taj dan i ukoliko postoje zakazani appointmenti u roku od pola sata/sat onda njih dodajem u listu occupied
                             if (tempDoctor == nearTerms.Doctor && (DateTime)nearTerms.Date == (DateTime)dpDate.SelectedDate)   //appointmenti sa tim doktorom tog datuma
                                 if (findFirstNearestTerm() == nearTerms.Time.ToString("HH:mm") || findSecondNearestTerm() == nearTerms.Time.ToString("HH:mm"))
                                     occupied.Add(tempDoctor.Id.ToString() + "," + nearTerms.Time.ToString("HH:mm"));
-                        //else if (RoundUp(DateTime.Now.AddMinutes(30), TimeSpan.FromMinutes(30)).ToString("HH:mm") == nearTerms.Time.ToString("HH:mm"))  //da li su najbliza oba termina zauzeta
-                        //    countOfNearTerms++;
-
-                        //if (countOfNearTerms == 2)
-                        //    return false;
-                        //return true;
                     }
-                    List<string> occupiedDoctorIDs = new List<string>();    //lista svi id-eva doktora koji imaju termine blizu
+                    List<string> occupiedDoctorIDs = new List<string>();    //lista svih id-eva doktora koji imaju termine blizu
                     foreach (var a in occupied)
                         occupiedDoctorIDs.Add(a.Split(',')[0]);
 
-                    foreach (var wantedDoctor in wantedDoctorsID)            //gledamo da li mozda postoji neki doktor koji nema ni jedan termin u blizini zauzet
+                    //gledamo da li mozda postoji neki doktor koji nema ni jedan termin u blizini zauzet
+                    foreach (var wantedDoctor in wantedDoctorsID)
                     {
                         if (!occupiedDoctorIDs.Contains(wantedDoctor) && wantedDoctor == tempDoctor.Id.ToString())
                         {
@@ -137,10 +137,13 @@ namespace HospitalSystem.code
                             return true;
                         }
                     }
+
+
                     foreach (var occupiedDoctor in occupied)
                     {
                         int k = 0;
-                        if (occupiedDoctor.Split(',')[1] == findSecondNearestTerm())     //gledam da li onda postoji neki doktor kome je zauzet samo drugi termin
+                        //gledam da li onda postoji neki doktor kome je zauzet samo drugi termin
+                        if (occupiedDoctor.Split(',')[1] == findSecondNearestTerm())     
                         {
                             foreach (var o in occupied)     //gledam da li postoji slobodan prvi termin
                                 if (o.Split(',')[0] == occupiedDoctor.Split(',')[0] && o.Split(',')[1] == findFirstNearestTerm()) //ovde jos i moze ono
@@ -152,7 +155,8 @@ namespace HospitalSystem.code
                             }
                         }
 
-                        else if (occupiedDoctor.Split(',')[1] == findFirstNearestTerm())    //gledam da li onda postoji neki doktor koji ima slobodan barem drugi termin
+                        //gledam da li onda postoji neki doktor koji ima slobodan barem drugi termin
+                        else if (occupiedDoctor.Split(',')[1] == findFirstNearestTerm())    
                         {
                             foreach (var o in occupied)     //gledam da li postoji slobodan drugi termin
                                 if (o.Split(',')[0] == occupiedDoctor.Split(',')[0] && o.Split(',')[1] == findSecondNearestTerm())
@@ -167,21 +171,15 @@ namespace HospitalSystem.code
                     return false;
                 };
 
-            }
-            //foreach(Doctor suitableDoctor in doctorCollection)    //prolazim kroz listu doktora i gledam koji je termin najblizi
-            //    foreach (Appointment nearTerms in AppointmentStorage.getInstance().GetAll())
-            //        if (suitableDoctor == nearTerms.Doctor && (DateTime)nearTerms.Date == (DateTime)dpTime.SelectedDate)   //appointmenti sa tim doktorom tog datuma
-            //            if (RoundUp(DateTime.Now, TimeSpan.FromMinutes(30)).ToString("HH:mm") == nearTerms.Time.ToString("HH:mm") ||
-            //            RoundUp(DateTime.Now.AddMinutes(30), TimeSpan.FromMinutes(30)).ToString("HH:mm") == nearTerms.Time.ToString("HH:mm"))  //da li su najbliza oba termina zauzeta
-            //                countOfNearTerms++;
-            
+            }          
             cbDoctor.ItemsSource = doctorCollection;
+
 
             //trazim one termine koje moram da pomerim, jer nema slobodnih
             if(occupied.Count == (wantedDoctorsID.Count * 2) && occupied.Count > 0)
             {
+                hideAppointmentDetails();
                 dgApp.Visibility = Visibility.Visible;
-                //TODO: slucaj kada ne postoji slobodan termin
                 appointmentCollection.Filter = (e) =>
                 {
                     Appointment tempApp = e as Appointment;
@@ -191,23 +189,12 @@ namespace HospitalSystem.code
                     return false;
                 };
 
-                //sortiram listu tih zauzetih appointmenta po tome koji se mogu odloziti za ranije
-                List<Appointment> sortedAppointmentCollection = new List<Appointment>();
+                List<Appointment> sortedAppointmentCollection = new List<Appointment>();    //sortiram listu tih zauzetih appointmenta po tome koji se mogu odloziti za ranije
                 //Appointment appointmentInNewList = null;
-                Appointment bestI = (Appointment)appointmentCollection.GetItemAt(0);
+                Appointment bestI = (Appointment)appointmentCollection.GetItemAt(0);    //nisam siguran da li mi treba inicijalizacija za ove bestove
                 Appointment bestJ = (Appointment)appointmentCollection.GetItemAt(0);
                 for (int i = 0; i < appointmentCollection.Count ; i++)
                 {
-                    //bestI = (Appointment)appointmentCollection.GetItemAt(i);
-                    //Appointment appointmentInNewList = bestI;
-                    //for (int j = i + 1; j < appointmentCollection.Count; j++)
-                    //{     
-                    //    bestJ = (Appointment)appointmentCollection.GetItemAt(j);
-                    //    if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(bestI.Doctor)) < 1)      //da li doktora od J app ima slobodan termin pre doktora od I app
-                    //        appointmentInNewList = bestJ;
-                    //}
-                    //if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim
-                    //    sortedAppointmentCollection.Add(appointmentInNewList);
                     bestI = (Appointment)appointmentCollection.GetItemAt(i);
                     Appointment appointmentInNewList = bestI;
                     for (int j = i + 1; j < appointmentCollection.Count; j++)
@@ -216,10 +203,9 @@ namespace HospitalSystem.code
                         if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(appointmentInNewList.Doctor)) == -1)      //da li doktora od J app ima slobodan termin pre doktora od I app
                         {
                             appointmentInNewList = bestJ;
-                            appointmentCollection.Remove(appointmentInNewList);  //rotiranje u appointment collection
+                            appointmentCollection.Remove(appointmentInNewList);  //nema sanse da ovo radi, treba da se pomeri izvan ovog for-a (u if za sorted)
                             i = -1;
-                        }
-                            
+                        }                            
                     }
                     if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim (svakako kad sekretar vidi istog doktora moze izabrati taj najblizi)
                         sortedAppointmentCollection.Add(appointmentInNewList);
@@ -261,40 +247,29 @@ namespace HospitalSystem.code
 
                 return false;
             };
-            //foreach (Appointment tempApp in newAppointmentCollection)
-            //{
-            //    if ((doctor == tempApp.Doctor) && (DateTime.Compare((DateTime)tempApp.Date, (DateTime)dpDate.SelectedDate) >= 0))
-            //    {
-            //        foreach (string s in terms)
-            //        {
-            //            if (!occupied.Contains(s))
-            //                cbTime.Items.Add(s);
-            //        }
-            //    }
-                    
-            //}
+
             DateTime dateTemp = (DateTime)dpDate.SelectedDate;
             while (true)        //idem redom po datumima pa ce mi s toga prvi dobar na koji naidjem ujedno biti i najblizi slobodan
             {
                 List<string> allTermsOnThisDate = new List<string>();
-                List<string> availableTermsOnThisDate = new List<string>();
-                foreach (string s in terms)
+                foreach (string s in terms)     //dobijem za svaki datum sve termine  
                 {
-                    if (DateTime.Compare(dateTemp, (DateTime)dpDate.SelectedDate) == 0)
+                    if (DateTime.Compare(dateTemp, (DateTime)dpDate.SelectedDate) == 0)     //ovu logiku mogu skroz preneti gore na 242 liniju koda gde pravim ovu listu newOccupied
                     {
                         if (DateTime.Compare((DateTime)Convert.ToDateTime(findSecondNearestTerm()), (DateTime)Convert.ToDateTime(s)) == -1)
                             allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());
                     }
                     else
-                        allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());   //dobijem za jedan datum sve termine                    
+                        allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());                     
                 }
-                    
 
+
+                List<string> availableTermsOnThisDate = new List<string>();
                 foreach (string s in allTermsOnThisDate)
                     if (!newOccupied.Contains(s))
-                        availableTermsOnThisDate.Add(s);
+                        availableTermsOnThisDate.Add(s);    //pronasao najblizi i uradim break??? i onda mi ovo dole nista ne treba, jer mi je lista allTermsOnThisDate vec sortirana od najblizeg ka najdaljem
 
-                if(availableTermsOnThisDate.Count != 0)
+                if (availableTermsOnThisDate.Count != 0)
                 {
                     DateTime min = Convert.ToDateTime("18:30");
 
@@ -303,15 +278,10 @@ namespace HospitalSystem.code
                             min = (DateTime)Convert.ToDateTime(term.Split(',')[1]);
 
                     return min;
-                    // var min = 18:30
-                    // prodjem kroz celu availableTermsOnThisDate i pronadjem najmanje vreme
-                    // return to vreme
                 }
 
                 dateTemp.AddDays(1);
             }
-
-            //return default;
         }
 
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -319,37 +289,48 @@ namespace HospitalSystem.code
             Appointment a = (Appointment)dgApp.SelectedItem;
             txtNext.Text = findNearestAvailableTermForDoctor(a.Doctor).ToString();
         }
+        
+        private void CheckBoxOperationChanged(object sender, RoutedEventArgs e)
+        {
+            filterRooms();
+        }
 
         private void filterRooms()
         {
-            if (cbSpecialization.SelectedItem != null)
+            ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+            List<Room> occupiedRooms = new List<Room>();
+            string roomName = "Ordination";
+            if (cbOperation.IsChecked == true)
+                roomName = "Operation room";              
+
+            
+            foreach (Appointment tempApp in AppointmentStorage.getInstance().GetAll())
+                if (tempApp.Date == dpDate.SelectedDate && tempApp.Time.ToString("HH:mm") == txtTime.Text && tempApp.Room.Name == roomName)
+                    occupiedRooms.Add(tempApp.Room);
+
+            roomCollection.Filter = (e) =>
             {
-                roomCollection.Filter = (e) =>
+                Room tempRoom = e as Room;
+                if (!occupiedRooms.Contains(tempRoom) && tempRoom.Name == roomName)
+                    return true;
+                return false;
+            };
+
+            if (roomCollection == null)
+            {
+                hideAppointmentDetails();
+                dgApp.Visibility = Visibility.Visible;
+                appointmentCollection.Filter = (e) =>
                 {
-                    Doctor temp = e as Doctor;
-                    if (temp.Specialization == cbSpecialization.SelectedItem.ToString())
+                    Appointment tempApp = e as Appointment;
+                    if (occupiedRooms.Contains(tempApp.Room))
                         return true;
                     return false;
                 };
             }
+
             cbRoom.ItemsSource = roomCollection;
         }
-        //private void displayTerms()
-        //{
-        //    List<string> occupied = new List<string>();
-        //    cbTime.Items.Clear();
-
-        //    foreach (Appointment a in appointmentCollection)
-        //    {
-        //        occupied.Add(a.Time.ToString("HH:mm"));
-        //    }
-
-        //    foreach (string s in terms)
-        //    {
-        //        if (!occupied.Contains(s))
-        //            cbTime.Items.Add(s);
-        //    }
-        //}
 
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -363,15 +344,15 @@ namespace HospitalSystem.code
             else
                 patient = (Patient)cbPatient.SelectedItem;
 
-            Examination exam = new Examination();
-            exam.Id = ExaminationStorage.getInstance().GenerateNewID();
-            exam.Patient = patient;
-            exam.Doctor = (Doctor)cbDoctor.SelectedItem;
-            exam.Room = (Room)cbRoom.SelectedItem;
-            exam.Date = (DateTime)dpDate.SelectedDate;
-            exam.Time = Convert.ToDateTime(txtTime.Text);
-            ExaminationStorage.getInstance().checkExamination(exam);
-            ExaminationStorage.getInstance().Add(exam);
+            Appointment app = new Appointment();
+            app.Id = AppointmentStorage.getInstance().GenerateNewID();
+            app.Patient = patient;
+            app.Doctor = (Doctor)cbDoctor.SelectedItem;
+            app.Room = (Room)cbRoom.SelectedItem;
+            app.Date = (DateTime)dpDate.SelectedDate;
+            app.Time = Convert.ToDateTime(txtTime.Text);
+            app.IsOperation = (bool)cbOperation.IsChecked;
+            AppointmentStorage.getInstance().Add(app);
 
             this.Close();
         }

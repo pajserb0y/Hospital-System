@@ -1,1 +1,39 @@
-[{"Id":8,"Name":"Operaciona sala 1"},{"Id":9,"Name":"Operaciona sala 2"},{"Id":1,"Name":"Ordinacija 1"},{"Id":2,"Name":"Ordinacija 2"}]
+[
+  {
+    "Id": 1,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 2,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 3,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 4,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 5,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 6,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 7,
+    "Name": "Operation room"
+  },
+  {
+    "Id": 8,
+    "Name": "Operation room"
+  },
+  {
+    "Id": 9,
+    "Name": "Operation room"
+  }
+
+]

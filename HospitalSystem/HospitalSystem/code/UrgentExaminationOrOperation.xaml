@@ -10,137 +10,96 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <!--<TabControl HorizontalAlignment="Left" Height="564" VerticalAlignment="Center" Width="478">-->
-            <!--<TabItem Header="Details">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="First Name:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,40,83,40">
-                        <Label Content="Last Name:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,0,83,20">
-                        <Label Content="JMBG:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Adress:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtAdresa" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel  Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                            <Label Content="Gender:" Padding="0,0,25,0" VerticalContentAlignment="Center"/>
-                            <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="39"  IsChecked="True"/>
-                            <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="32"  />
-                        </StackPanel>
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,0,0">
-                            <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" IsChecked="True"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Telephone:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Email:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>-->
-
-            <!--<TabItem Header="Examination/Operation">-->
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
-                        <Label Content="Patient:" Padding="0,0,20,0"/>
-                        <ComboBox x:Name="cbPatient" Width="200">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text="  "/>
-                                        <TextBlock Text="{Binding Path=FirstName}"/>
-                                        <TextBlock Text=" "/>
-                                        <TextBlock Text="{Binding Path=LastName}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,40,0" >
-                        <Label Content="Specialization:" Padding="0,0,20,0"/>
-                        <ComboBox x:Name="cbSpecialization" Width="200" SelectionChanged="specializationChanged" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Specialization}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
-                        <Label Content="Doctor:" Padding="0,0,20,0"/>
-                        <ComboBox x:Name="cbDoctor" Width="200">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text="  "/>
-                                        <TextBlock Text="{Binding Path=FirstName}"/>
-                                        <TextBlock Text=" "/>
-                                        <TextBlock Text="{Binding Path=LastName}"/>
-                                        <TextBlock Text=" - "/>
-                                        <TextBlock Text="{Binding Path=Specialization}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
-                        <Label Content="Room:" Padding="0,0,20,0"/>
-                        <ComboBox x:Name="cbRoom" Width="200">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text=" - "/>
-                                        <TextBlock Text="{Binding Path=Name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+        <StackPanel>
             <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
-                        <Label Content="Date:" Padding="0,0,20,0"/>
+                <Label Content="Patient:" Padding="0,0,20,0"/>
+                <ComboBox x:Name="cbPatient" Width="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Id}"/>
+                                <TextBlock Text="  "/>
+                                <TextBlock Text="{Binding Path=FirstName}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding Path=LastName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,40,0" >
+                <Label Content="Specialization:" Padding="0,0,20,0"/>
+                <ComboBox x:Name="cbSpecialization" Width="200" SelectionChanged="specializationChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Specialization}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
+                <Label Name="labelDoctor" Content="Doctor:" Padding="0,0,20,0"/>
+                <ComboBox x:Name="cbDoctor" Width="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Id}"/>
+                                <TextBlock Text="  "/>
+                                <TextBlock Text="{Binding Path=FirstName}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding Path=LastName}"/>
+                                <TextBlock Text=" - "/>
+                                <TextBlock Text="{Binding Path=Specialization}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
+                <Label Name="labelRoom" Content="Room:" Padding="0,0,20,0"/>
+                <ComboBox x:Name="cbRoom" Width="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Id}"/>
+                                <TextBlock Text=" - "/>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60,0,0" >
+                <Label Name="labelDate" Content="Date:" Padding="0,0,20,0"/>
                 <DatePicker x:Name="dpDate" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="200" FirstDayOfWeek="Monday " 
                                     IsTodayHighlighted="True" SelectedDate="{x:Static sys:DateTime.Now}" IsEnabled="False"/>
-                        <!--xmlns:sys="clr-namespace:System;assembly=mscorlib"  to sam dodao gore-->
-                    </StackPanel>
-                    <StackPanel  Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center"  Margin="50">
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" >
-                            <Label Content="Time:" Padding="0,0,20,0"/>
-                            <TextBox x:Name="txtTime" TextWrapping="Wrap" Width="60" Height="20" IsReadOnly="True" />
-                        </StackPanel>
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="50,0,0,0">
-                            <CheckBox x:Name="cbOperation" Content="Operation" Height="26" Padding="8,0,0,0" VerticalContentAlignment="Center"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Margin="0,10,0,0">
-                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+                <!--xmlns:sys="clr-namespace:System;assembly=mscorlib"  to sam dodao gore-->
+            </StackPanel>
+            <StackPanel  Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center"  Margin="50">
+                <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Label Name="labelTime" Content="Time:" Padding="0,0,20,0"/>
+                    <TextBox x:Name="txtTime" TextWrapping="Wrap" Width="60" Height="20" IsReadOnly="True" />
+                </StackPanel>
+                <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="50,0,0,0">
+                    <CheckBox x:Name="cbOperation" Content="Operation" Height="26" Padding="8,0,0,0" VerticalContentAlignment="Center" Checked="CheckBoxOperationChanged" Unchecked="CheckBoxOperationChanged"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Height="Auto" Width="Auto" Margin="0,10,0,0">
+                <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
                                    HorizontalAlignment="Right" Margin="0,0,50,20" Padding="10,10,10,10" >
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                    </StackPanel>
+                    <TextBlock.Style>
+                        <Style>
+                            <Setter Property="TextBlock.TextDecorations" Value="" />
+                            <Style.Triggers>
+                                <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style></TextBlock>
+            </StackPanel>
             <DataGrid x:Name="dgApp" Height="100" AutoGenerateColumns="False" Visibility="Hidden" SelectionChanged="dataGrid_SelectionChanged"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
@@ -190,7 +149,5 @@
             </DataGrid>
             <TextBox x:Name="txtNext" TextWrapping="Wrap" Width="120"/>
         </StackPanel>
-            <!--</TabItem>
-        </TabControl>-->
     </Grid>
 </Window>
