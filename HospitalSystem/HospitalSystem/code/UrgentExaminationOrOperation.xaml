@@ -141,7 +141,7 @@
                                 </Style>
                             </TextBlock.Style></TextBlock>
                     </StackPanel>
-            <DataGrid x:Name="dgApp" Height="100" AutoGenerateColumns="False" Visibility="Hidden"
+            <DataGrid x:Name="dgApp" Height="100" AutoGenerateColumns="False" Visibility="Hidden" SelectionChanged="dataGrid_SelectionChanged"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
                 <DataGrid.Columns>
@@ -188,6 +188,7 @@
                     <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <TextBox x:Name="txtNext" TextWrapping="Wrap" Width="120"/>
         </StackPanel>
             <!--</TabItem>
         </TabControl>-->

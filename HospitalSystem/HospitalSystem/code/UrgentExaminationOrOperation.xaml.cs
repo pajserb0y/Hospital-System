@@ -18,7 +18,7 @@ namespace HospitalSystem.code
     public partial class UrgentPatient : Window
     {
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-                                                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "01:00", "01:30", "02:00", "02:30", "03:00" };
+                                                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"};
         ListCollectionView doctorCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
         ListCollectionView specializationCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
         ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
@@ -214,32 +214,35 @@ namespace HospitalSystem.code
                     {
                         bestJ = (Appointment)appointmentCollection.GetItemAt(j);
                         if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(appointmentInNewList.Doctor)) == -1)      //da li doktora od J app ima slobodan termin pre doktora od I app
+                        {
                             appointmentInNewList = bestJ;
-                        if (DateTime.Compare(findNearestAvailableTermForDoctor(bestJ.Doctor), findNearestAvailableTermForDoctor(appointmentInNewList.Doctor)) == 0)     
-                            appointmentInNewList = bestI;
+                            appointmentCollection.Remove(appointmentInNewList);  //rotiranje u appointment collection
+                            i = -1;
+                        }
+                            
                     }
                     if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim (svakako kad sekretar vidi istog doktora moze izabrati taj najblizi)
                         sortedAppointmentCollection.Add(appointmentInNewList);
                 }
 
-                List<Appointment> sortedAppointmentCollectionAgain = new List<Appointment>();
-                for (int i = 0; i < sortedAppointmentCollection.Count; i += 2)      //sortiranje termina po najblizim koje treba da pomeri
-                {
-                    Appointment app1 = (Appointment)appointmentCollection.GetItemAt(i);
-                    Appointment app2 = (Appointment)appointmentCollection.GetItemAt(i+1);
-                    if (DateTime.Compare(app1.Time, app2.Time) == -1)
-                    {
-                        sortedAppointmentCollectionAgain.Add(app2);
-                        sortedAppointmentCollectionAgain.Add(app1);
-                    }
-                    else
-                    {
-                        sortedAppointmentCollectionAgain.Add(app1);
-                        sortedAppointmentCollectionAgain.Add(app2);
-                    }
-                }
+                //List<Appointment> sortedAppointmentCollectionAgain = new List<Appointment>();
+                //for (int i = 0; i < sortedAppointmentCollection.Count; i += 2)      //sortiranje termina po najblizim koje treba da pomeri
+                //{
+                //    Appointment app1 = (Appointment)appointmentCollection.GetItemAt(i);
+                //    Appointment app2 = (Appointment)appointmentCollection.GetItemAt(i+1);
+                //    if (DateTime.Compare(app1.Time, app2.Time) == -1)
+                //    {
+                //        sortedAppointmentCollectionAgain.Add(app1);
+                //        sortedAppointmentCollectionAgain.Add(app2);
+                //    }
+                //    else
+                //    {
+                //        sortedAppointmentCollectionAgain.Add(app2);
+                //        sortedAppointmentCollectionAgain.Add(app1);
+                //    }
+                //}
 
-                dgApp.ItemsSource = sortedAppointmentCollectionAgain;
+                dgApp.ItemsSource = sortedAppointmentCollection;
             }
         }
 
@@ -255,7 +258,7 @@ namespace HospitalSystem.code
                     newOccupied.Add(tempApp.Date.ToString() + "," + tempApp.Time.ToString("HH:mm"));       //lista datuma i vremena zauzetih termina tog doktora u terminima nakon trenutnnog
                     return true;
                 }
-                    
+
                 return false;
             };
             //foreach (Appointment tempApp in newAppointmentCollection)
@@ -276,7 +279,16 @@ namespace HospitalSystem.code
                 List<string> allTermsOnThisDate = new List<string>();
                 List<string> availableTermsOnThisDate = new List<string>();
                 foreach (string s in terms)
-                    allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());   //dobijem za jedan datum sve termine
+                {
+                    if (DateTime.Compare(dateTemp, (DateTime)dpDate.SelectedDate) == 0)
+                    {
+                        if (DateTime.Compare((DateTime)Convert.ToDateTime(findSecondNearestTerm()), (DateTime)Convert.ToDateTime(s)) == -1)
+                            allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());
+                    }
+                    else
+                        allTermsOnThisDate.Add(dateTemp.ToString() + "," + s.ToString());   //dobijem za jedan datum sve termine                    
+                }
+                    
 
                 foreach (string s in allTermsOnThisDate)
                     if (!newOccupied.Contains(s))
@@ -302,7 +314,11 @@ namespace HospitalSystem.code
             //return default;
         }
 
-       
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Appointment a = (Appointment)dgApp.SelectedItem;
+            txtNext.Text = findNearestAvailableTermForDoctor(a.Doctor).ToString();
+        }
 
         private void filterRooms()
         {
