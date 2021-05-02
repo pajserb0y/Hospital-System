@@ -70,18 +70,20 @@ namespace HospitalSystem.code
             labelRoom.Visibility = Visibility.Visible;
             labelDate.Visibility = Visibility.Visible;
             labelTime.Visibility = Visibility.Visible;
+            textBlockSave.Visibility = Visibility.Visible;
         }
         private void hideAppointmentDetails()
         {
-            cbDoctor.Visibility = Visibility.Hidden;
-            cbRoom.Visibility = Visibility.Hidden;
-            dpDate.Visibility = Visibility.Hidden;
-            txtTime.Visibility = Visibility.Hidden;
-            cbOperation.Visibility = Visibility.Hidden;
-            labelDoctor.Visibility = Visibility.Hidden;
-            labelRoom.Visibility = Visibility.Hidden;
-            labelDate.Visibility = Visibility.Hidden;
-            labelTime.Visibility = Visibility.Hidden;
+            cbDoctor.Visibility = Visibility.Collapsed;
+            cbRoom.Visibility = Visibility.Collapsed;
+            dpDate.Visibility = Visibility.Collapsed;
+            txtTime.Visibility = Visibility.Collapsed;
+            cbOperation.Visibility = Visibility.Collapsed;
+            labelDoctor.Visibility = Visibility.Collapsed;
+            labelRoom.Visibility = Visibility.Collapsed;
+            labelDate.Visibility = Visibility.Collapsed;
+            labelTime.Visibility = Visibility.Collapsed;
+            textBlockSave.Visibility = Visibility.Collapsed;
         }
 
         DateTime RoundUp(DateTime dt, TimeSpan d)   //zaokruzivanje datuma na prvi gore za 30min
@@ -108,7 +110,9 @@ namespace HospitalSystem.code
         }
         private void filterDoctors()
         {
-            dgApp.Visibility = Visibility.Hidden;
+            dgApp.Visibility = Visibility.Collapsed;
+            txtNext.Visibility = Visibility.Collapsed;
+            buttonDelay.Visibility = Visibility.Collapsed;
             List<string> occupied = new List<string>();     //zauzeti doktorID + , + termin ukoliko postoji u narednih pola sata/sat
             List<string> wantedDoctorsID = new List<string>();  //doktori sa trazenom specijalizacijom
             if (cbSpecialization.SelectedItem != null)
@@ -180,6 +184,9 @@ namespace HospitalSystem.code
             {
                 hideAppointmentDetails();
                 dgApp.Visibility = Visibility.Visible;
+                txtNext.Visibility = Visibility.Visible;
+                buttonDelay.Visibility = Visibility.Visible;
+                
                 appointmentCollection.Filter = (e) =>
                 {
                     Appointment tempApp = e as Appointment;
@@ -190,7 +197,6 @@ namespace HospitalSystem.code
                 };
 
                 List<Appointment> sortedAppointmentCollection = new List<Appointment>();    //sortiram listu tih zauzetih appointmenta po tome koji se mogu odloziti za ranije
-                //Appointment appointmentInNewList = null;
                 Appointment bestI = (Appointment)appointmentCollection.GetItemAt(0);    //nisam siguran da li mi treba inicijalizacija za ove bestove
                 Appointment bestJ = (Appointment)appointmentCollection.GetItemAt(0);
                 for (int i = 0; i < appointmentCollection.Count ; i++)
@@ -208,27 +214,30 @@ namespace HospitalSystem.code
                         }                            
                     }
                     if (appointmentInNewList != null)   //treba da prodjem kroz sve termine koji su best i da ih sortiram po najblizim (svakako kad sekretar vidi istog doktora moze izabrati taj najblizi)
+                    {
                         sortedAppointmentCollection.Add(appointmentInNewList);
+                        //appointmentCollection.Remove(appointmentInNewList); 
+                    }
                 }
 
-                //List<Appointment> sortedAppointmentCollectionAgain = new List<Appointment>();
-                //for (int i = 0; i < sortedAppointmentCollection.Count; i += 2)      //sortiranje termina po najblizim koje treba da pomeri
-                //{
-                //    Appointment app1 = (Appointment)appointmentCollection.GetItemAt(i);
-                //    Appointment app2 = (Appointment)appointmentCollection.GetItemAt(i+1);
-                //    if (DateTime.Compare(app1.Time, app2.Time) == -1)
-                //    {
-                //        sortedAppointmentCollectionAgain.Add(app1);
-                //        sortedAppointmentCollectionAgain.Add(app2);
-                //    }
-                //    else
-                //    {
-                //        sortedAppointmentCollectionAgain.Add(app2);
-                //        sortedAppointmentCollectionAgain.Add(app1);
-                //    }
-                //}
+                List<Appointment> sortedAppointmentCollectionAgain = new List<Appointment>();
+                for (int i = 0; i < sortedAppointmentCollection.Count - 1; i += 2)      //sortiranje termina po najblizim koje treba da pomeri
+                {
+                    Appointment app1 = (Appointment)sortedAppointmentCollection[i];
+                    Appointment app2 = (Appointment)sortedAppointmentCollection[i + 1];
+                    if (app1.Time.TimeOfDay < app2.Time.TimeOfDay)
+                    {
+                        sortedAppointmentCollectionAgain.Add(app1);
+                        sortedAppointmentCollectionAgain.Add(app2);
+                    }
+                    else
+                    {
+                        sortedAppointmentCollectionAgain.Add(app2);
+                        sortedAppointmentCollectionAgain.Add(app1);
+                    }
+                }
 
-                dgApp.ItemsSource = sortedAppointmentCollection;
+                dgApp.ItemsSource = sortedAppointmentCollectionAgain;
             }
         }
 
@@ -319,7 +328,7 @@ namespace HospitalSystem.code
             if (roomCollection == null)
             {
                 hideAppointmentDetails();
-                dgApp.Visibility = Visibility.Visible;
+                //dgApp.Visibility = Visibility.Visible;
                 appointmentCollection.Filter = (e) =>
                 {
                     Appointment tempApp = e as Appointment;
@@ -355,6 +364,22 @@ namespace HospitalSystem.code
             AppointmentStorage.getInstance().Add(app);
 
             this.Close();
+        }
+
+
+        private void buttonDelay_Click(object sender, RoutedEventArgs e)
+        {
+            Appointment selectedAppointment = (Appointment)dgApp.SelectedItem;
+
+            selectedAppointment.Date = (DateTime)Convert.ToDateTime(txtNext.Text);
+            selectedAppointment.Time = (DateTime)Convert.ToDateTime(txtNext.Text);
+            AppointmentStorage.getInstance().Edit(selectedAppointment);
+
+            filterDoctors();
+            filterRooms();
+            cbDoctor.SelectedIndex = 0;
+            cbRoom.SelectedIndex = 0;
+            showAppointmentDetails();
         }
     }
 }

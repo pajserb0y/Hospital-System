@@ -109,6 +109,7 @@ public class AppointmentStorage
                 a.Date = appointment.Date;
                 a.Time = appointment.Time;
             }
+        serialize();
     }
    
    public void Delete(Appointment appointment)
