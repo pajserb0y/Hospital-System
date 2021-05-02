@@ -135,19 +135,6 @@ public class ExaminationStorage
         }
         return exams;
     }
-
-
-
-
-    public void checkExamination(Examination exam)
-    {
-        foreach (Examination e in this.examinations)
-            if (exam.Doctor == e.Doctor && exam.Date == e.Date && exam.Time == e.Time)
-            {
-                this.examinations.Remove(e);
-                break;
-            }
-    }
 }
 
 internal class ExaminationViewModel

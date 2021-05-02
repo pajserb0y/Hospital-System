@@ -87,6 +87,19 @@ public class Appointment : INotifyPropertyChanged
             }
         }
     }
+    private bool isOperation;
+    public bool IsOperation
+    {
+        get { return isOperation; }
+        set
+        {
+            if (isOperation != value)
+            {
+                isOperation = value;
+                OnPropertyChanged("IsOperation");
+            }
+        }
+    }
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(String name)

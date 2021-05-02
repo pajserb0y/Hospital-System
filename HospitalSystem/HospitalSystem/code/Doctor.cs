@@ -131,6 +131,6 @@ public class Doctor : INotifyPropertyChanged
     }
     public override string ToString()
     {
-        return Id.ToString() + " " + FirstName + " " + LastName + Specialization + Jmbg.ToString() + " " + Adress + " " + Telephone.ToString();
+        return Specialization;
     }
 }
