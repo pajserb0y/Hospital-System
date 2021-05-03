@@ -146,12 +146,13 @@
             <TabItem Header="Charts"></TabItem>
             <TabItem Header="Drug approvement">
                 <TabControl x:Name="tabControlDrug">
-                    <TabItem Header="Drug Records">
+                    <TabItem Name="tDrugRecord" Header="Drug Records">
                         <StackPanel>
                             <Grid Height="Auto" Width="Auto" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="62*"></ColumnDefinition>
-                                    <ColumnDefinition Width="987*"/>
+                                    <ColumnDefinition Width="71*"></ColumnDefinition>
+                                    <ColumnDefinition Width="77*"/>
+                                    <ColumnDefinition Width="1061*"/>
 
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -161,11 +162,11 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Search:" Margin="74,0,0,0" Grid.Row="0" VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Left"/>
+                                <Label Content="Search:" Margin="74,0,0,0" Grid.Row="0" VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 
-                                <Button Content="View" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="789,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Drug"/>
-                                <DataGrid x:Name="dgDrugs" Height="300" Width="750" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" AutoGenerateColumns="False"
-                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="77,25,160,25"
+                                <Button Content="View" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="712,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Drug"/>
+                                <DataGrid x:Name="dgDrugs" Height="300" Width="750" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="76,25,235,25"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
@@ -175,12 +176,41 @@
                                         <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <TextBox HorizontalAlignment="Left" Margin="128,0,0,4" Grid.Row="0" VerticalAlignment="Bottom" TextWrapping="Wrap"  Width="200" Grid.Column="1"/>
+                                <TextBox HorizontalAlignment="Left" Margin="51,0,0,4" Grid.Row="0" VerticalAlignment="Bottom" TextWrapping="Wrap"  Width="200" Grid.Column="2"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="Drug details">
-                        
+                    <TabItem Name="tDrugDetails" Header="Drug details">
+                        <StackPanel>
+                            <Grid Height="Auto" Width="Auto" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="34*"></ColumnDefinition>
+                                    <ColumnDefinition Width="312*"/>
+                                    <ColumnDefinition Width="375*"/>
+                                    <ColumnDefinition Width="488*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"></RowDefinition>
+                                    <RowDefinition Height="250*"></RowDefinition>
+                                    <RowDefinition Height="100*"></RowDefinition>
+
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1"  Grid.Row="0" Content="Ingridients:" HorizontalAlignment="Left" Height="26" Width="974"  Margin="46,47,0,27" Grid.ColumnSpan="3"/>
+                                <DataGrid HorizontalAlignment="Left" x:Name="dgDrugDetails" Height="230" Width="940" Grid.Row="1" Grid.Column="1"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="46,0,0,0"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="3" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" /> 
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <Button Content="Save" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Width="118"  Margin="0,30,199,0" Click="Button_Save_Drug_Details"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" x:Name="txtNewIngridients" HorizontalAlignment="Left" TextWrapping="Wrap" Height="20" Width="140"  Margin="46,38,0,8"/>
+                                <Button Content="Add" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="118"  Margin="216,30,0,0" Click="Button_Add_Ingridient"/>
+                                <Button Content="Delete" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="118"  Margin="50,30,0,0" Click="Button_Delete_Ingridient"/>
+                            </Grid>
+                        </StackPanel>
                     </TabItem>
                 </TabControl>
             </TabItem>

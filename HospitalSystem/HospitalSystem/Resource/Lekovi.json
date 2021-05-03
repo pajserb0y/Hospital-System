@@ -2,19 +2,16 @@
   {
     "Id": 1,
     "Name": "Bromazepam",
-    "Amount": "500",
-    "Ingridients": [ "Acetil", "Jod", "Hlor" ]
+    "Amount": "500"
   },
   {
     "Id": 2,
     "Name": "Trodon",
-    "Amount": "200",
-    "Ingridients": [ "Sumpor", "Vodonik" ]
+    "Amount": "200"
   },
   {
     "Id": 3,
     "Name": "Strepsils",
-    "Amount": "1000",
-    "Ingridients": [ "Menta", "Jod"]
+    "Amount": "1000"
   }
 ]

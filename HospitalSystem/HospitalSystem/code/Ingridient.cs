@@ -1,36 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
 namespace HospitalSystem.code
 {
-    class Drug : INotifyPropertyChanged
-    { 
-         public Drug(int v1, string v2)
-         {
-             id = v1;
-            name = v2;
-         }
-    
-        private int id;
-        public int Id
-        {
-            get { return id; }
-            set 
-            {
-                if (id != value)
-                {
-                    id = value;
-                    OnPropertyChanged("Id");
-                }
-            }
-
-        }
-
+    class Ingridient : INotifyPropertyChanged
+    {
         private string name;
-
         public string Name
         {
             get { return name; }
@@ -42,16 +19,12 @@ namespace HospitalSystem.code
                     OnPropertyChanged("Name");
                 }
             }
-
         }
-
         private int amount;
-
         public int Amount
         {
             get { return amount; }
-            set 
-            {
+            set {
                 if (amount != value)
                 {
                     amount = value;
@@ -59,23 +32,7 @@ namespace HospitalSystem.code
                 }
             }
         }
-        ObservableCollection<Ingridient> ingredients;
-        public ObservableCollection<Ingridient> Ingridients
-        {
-            get { return ingredients; }
-            set 
-            {
-                if (ingredients != value)
-                {
-                    ingredients = value;
-                    OnPropertyChanged("Ingridients");
-                }
-            }
-        }
-        public override string ToString()
-        {
-            return id + " - " + name;
-        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(String name)

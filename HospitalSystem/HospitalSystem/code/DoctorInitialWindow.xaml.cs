@@ -32,6 +32,7 @@ namespace HospitalSystem.code
 
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
+            tDrugDetails.Visibility = Visibility.Collapsed;
 
         }
 
@@ -45,8 +46,7 @@ namespace HospitalSystem.code
             cbDrug.Items.Add(d2);
             cbDrug.Items.Add(d3);
 
-            ObservableCollection<Drug> drugs = DrugStorage.getInstance().GetAll();
-            dgDrugs.ItemsSource = drugs;
+
         }
 
         private void InitializeCollection()
@@ -54,7 +54,9 @@ namespace HospitalSystem.code
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
             ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            ObservableCollection<Drug> drugs = DrugStorage.getInstance().GetAll();
 
+            dgDrugs.ItemsSource = drugs;
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
             dgDoctorExams.ItemsSource = appointments;
@@ -174,7 +176,14 @@ namespace HospitalSystem.code
 
         private void Button_View_Drug(object sender, RoutedEventArgs e)
         {
-
+            if(dgDrugs.SelectedItem != null)
+            {
+                tDrugDetails.Visibility = Visibility.Visible;
+                Drug selectedDrug = (Drug) dgDrugs.SelectedItem;
+                dgDrugDetails.ItemsSource = selectedDrug.Ingridients;
+                tDrugDetails.Focus();
+                    
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -187,6 +196,29 @@ namespace HospitalSystem.code
         //        txtPatient.Foreground.Freeze;
 
         //    }
+        }
+
+        private void Button_Add_Ingridient(object sender, RoutedEventArgs e)
+        {
+            Ingridient ingridient = new Ingridient();
+            ingridient.Name = txtNewIngridients.Text;
+            ingridient.Amount = 100;
+            Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
+            if (selectedDrug.Ingridients == null)
+                selectedDrug.Ingridients = new ObservableCollection<Ingridient>();
+            selectedDrug.Ingridients.Add(ingridient);
+            
+           // DrugStorage.getInstance().serialize();
+        }
+
+        private void Button_Delete_Ingridient(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Save_Drug_Details(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
