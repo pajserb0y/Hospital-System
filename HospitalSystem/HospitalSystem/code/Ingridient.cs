@@ -20,8 +20,8 @@ namespace HospitalSystem.code
                 }
             }
         }
-        private int amount;
-        public int Amount
+        private string amount;
+        public string Amount
         {
             get { return amount; }
             set {

@@ -180,6 +180,8 @@ namespace HospitalSystem.code
             {
                 tDrugDetails.Visibility = Visibility.Visible;
                 Drug selectedDrug = (Drug) dgDrugs.SelectedItem;
+                if (selectedDrug.Ingridients == null)
+                    selectedDrug.Ingridients = new ObservableCollection<Ingridient>();
                 dgDrugDetails.ItemsSource = selectedDrug.Ingridients;
                 tDrugDetails.Focus();
                     
@@ -202,23 +204,29 @@ namespace HospitalSystem.code
         {
             Ingridient ingridient = new Ingridient();
             ingridient.Name = txtNewIngridients.Text;
-            ingridient.Amount = 100;
+            ingridient.Amount = txtNewAmount.Text;
             Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
-            if (selectedDrug.Ingridients == null)
-                selectedDrug.Ingridients = new ObservableCollection<Ingridient>();
             selectedDrug.Ingridients.Add(ingridient);
-            
-           // DrugStorage.getInstance().serialize();
+            txtNewIngridients.Text = "";
+            txtNewAmount.Text = "";
+            // DrugStorage.getInstance().serialize();
         }
 
         private void Button_Delete_Ingridient(object sender, RoutedEventArgs e)
         {
-
+            Ingridient selectedIngridient = (Ingridient)dgDrugDetails.SelectedItem;
+            Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
+            if (selectedIngridient != null)
+            {
+                selectedDrug.Ingridients.Remove(selectedIngridient);
+            }
         }
 
         private void Button_Save_Drug_Details(object sender, RoutedEventArgs e)
         {
-
+            DrugStorage.getInstance().serialize();
+            tDrugDetails.Visibility = Visibility.Collapsed;
+            tDrugRecord.Focus();
         }
     }
 }

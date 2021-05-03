@@ -59,15 +59,15 @@ namespace HospitalSystem.code
                 }
             }
         }
-        ObservableCollection<Ingridient> ingredients;
+        private ObservableCollection<Ingridient> ingridients;
         public ObservableCollection<Ingridient> Ingridients
         {
-            get { return ingredients; }
+            get { return ingridients; }
             set 
             {
-                if (ingredients != value)
+                if (ingridients != value)
                 {
-                    ingredients = value;
+                    ingridients = value;
                     OnPropertyChanged("Ingridients");
                 }
             }
