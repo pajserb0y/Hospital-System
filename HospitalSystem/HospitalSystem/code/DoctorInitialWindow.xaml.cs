@@ -54,9 +54,12 @@ namespace HospitalSystem.code
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
             ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
-            ObservableCollection<Drug> drugs = DrugStorage.getInstance().GetAll();
+            ObservableCollection<Drug> verifiedDrugs = DrugStorage.getInstance().GetAllVerifiedDrugs();
+            ObservableCollection<Drug> unverifiedDrugs = DrugStorage.getInstance().GetAllUnverifiedDrugs();
 
-            dgDrugs.ItemsSource = drugs;
+            dgVerifiedDrugs.ItemsSource = verifiedDrugs;
+            dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
+
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
             dgDoctorExams.ItemsSource = appointments;
@@ -174,20 +177,32 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Visible;
         }
 
-        private void Button_View_Drug(object sender, RoutedEventArgs e)
+        private  Drug selectedDrug;
+
+        private void Button_View_Verified_Drug(object sender, RoutedEventArgs e)
         {
-            if(dgDrugs.SelectedItem != null)
+            selectedDrug = (Drug)dgVerifiedDrugs.SelectedItem;
+            View_Drug(dgVerifiedDrugs);
+        }
+        private void Button_View_Unverified_Drug(object sender, RoutedEventArgs e)
+        {
+            selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
+            View_Drug(dgUnverifiedDrugs);
+        }
+
+        private void View_Drug(DataGrid dgDrugs)
+        {
+            if (dgDrugs.SelectedItem != null)
             {
                 tDrugDetails.Visibility = Visibility.Visible;
-                Drug selectedDrug = (Drug) dgDrugs.SelectedItem;
+                //Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
                 if (selectedDrug.Ingridients == null)
                     selectedDrug.Ingridients = new ObservableCollection<Ingridient>();
                 dgDrugDetails.ItemsSource = selectedDrug.Ingridients;
                 tDrugDetails.Focus();
-                    
+
             }
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
         //    string input = txtPatient.Text;
@@ -205,17 +220,16 @@ namespace HospitalSystem.code
             Ingridient ingridient = new Ingridient();
             ingridient.Name = txtNewIngridients.Text;
             ingridient.Amount = txtNewAmount.Text;
-            Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
+            //Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
             selectedDrug.Ingridients.Add(ingridient);
             txtNewIngridients.Text = "";
             txtNewAmount.Text = "";
-            // DrugStorage.getInstance().serialize();
         }
 
         private void Button_Delete_Ingridient(object sender, RoutedEventArgs e)
         {
             Ingridient selectedIngridient = (Ingridient)dgDrugDetails.SelectedItem;
-            Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
+           // Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
             if (selectedIngridient != null)
             {
                 selectedDrug.Ingridients.Remove(selectedIngridient);
@@ -224,9 +238,19 @@ namespace HospitalSystem.code
 
         private void Button_Save_Drug_Details(object sender, RoutedEventArgs e)
         {
-            DrugStorage.getInstance().serialize();
-            tDrugDetails.Visibility = Visibility.Collapsed;
-            tDrugRecord.Focus();
+            
+            if(dgVerifiedDrugs.Items.Contains(selectedDrug))
+            {
+                DrugStorage.getInstance().serialize("../../../Resource/Verifikovani_Lekovi.json", DrugStorage.getInstance().GetAllVerifiedDrugs());
+                tDrugDetails.Visibility = Visibility.Collapsed;
+                tDrugRecord.Focus();
+            }
+            else 
+            {
+                DrugStorage.getInstance().serialize("../../../Resource/Neverifikovani_Lekovi.json",DrugStorage.getInstance().GetAllUnverifiedDrugs());
+                tDrugDetails.Visibility = Visibility.Collapsed;
+                tDrugRecord.Focus();
+            }
         }
     }
 }

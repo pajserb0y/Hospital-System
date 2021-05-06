@@ -148,7 +148,7 @@
                 <TabControl x:Name="tabControlDrug">
                     <TabItem Name="tDrugRecord" Header="Drug Records">
                         <StackPanel>
-                            <Grid Height="Auto" Width="Auto" >
+                            <Grid Height="651" Width="Auto" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="71*"></ColumnDefinition>
                                     <ColumnDefinition Width="77*"/>
@@ -162,21 +162,47 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Search:" Margin="74,0,0,0" Grid.Row="0" VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+                                <Button Content="View" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="755,50,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Verified_Drug"/>
+                                <Button Content="View" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="755,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_View_Unverified_Drug"/>
+                                
+                                <Canvas Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="183" Margin="0,50,0,0"  VerticalAlignment="Top" Width="953" Visibility="Visible">
 
-                                <Button Content="View" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="712,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Drug"/>
-                                <DataGrid x:Name="dgDrugs" Height="300" Width="750" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" AutoGenerateColumns="False"
-                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="76,25,235,25"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
-                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
-                                        <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
-                                        <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                                <TextBox HorizontalAlignment="Left" Margin="51,0,0,4" Grid.Row="0" VerticalAlignment="Bottom" TextWrapping="Wrap"  Width="200" Grid.Column="2"/>
+                                    <Label  Content="Unverified Drugs" FontSize="16" FontWeight="Bold"/>
+                                    <Label Canvas.Left="675" Content="Search:"/>
+
+                                    <DataGrid x:Name="dgUnverifiedDrugs" Height="150" Width="950" AutoGenerateColumns="False"
+                                        SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                        CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Canvas.Left="3" Canvas.Top="33">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
+                                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
+                                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                </Canvas>
+                                <Canvas Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="183" Margin="0,250,0,0"  VerticalAlignment="Top" Width="953" Visibility="Visible">
+
+                                    <Label  Content="Verified Drugs" FontSize="16" FontWeight="Bold"/>
+                                    <Label Canvas.Left="675" Content="Search:"/>
+
+                                    <DataGrid x:Name="dgVerifiedDrugs" Height="150" Width="953" AutoGenerateColumns="False"
+                                        SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                        CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Canvas.Left="3" Canvas.Top="33">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
+                                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
+                                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                </Canvas>
                             </Grid>
                         </StackPanel>
                     </TabItem>
