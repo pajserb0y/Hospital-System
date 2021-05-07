@@ -17,17 +17,16 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class SecretarNewAppointment : Window
     {
-        Patient p;
-        ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        Patient currentPatient;
+        ListCollectionView collectionAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                                                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
         public SecretarNewAppointment(Patient selectedPatient)
         {
             InitializeComponent();
-            p = selectedPatient;
+            currentPatient = selectedPatient;
             txtPatient.Text = selectedPatient.ToString();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-            cbRoom.ItemsSource = RoomStorage.getInstance().GetAll();
         }
 
 
@@ -35,10 +34,10 @@ namespace HospitalSystem.code
         {
             Examination appt = new Examination();
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
-            appt.Patient = p;
+            appt.Patient = currentPatient;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
             appt.Room = RoomStorage.getInstance().GetOne(8);
-            appt.Date = (DateTime)dp1.SelectedDate;
+            appt.Date = (DateTime)dpDate.SelectedDate;
             appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
             Room selectedRoom = (Room)cbRoom.SelectedItem;
             _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
@@ -60,12 +59,12 @@ namespace HospitalSystem.code
 
         private void filter()
         {
-            if (cbDoctor.SelectedItem != null && dp1.SelectedDate != null)
+            if (cbDoctor.SelectedItem != null && dpDate.SelectedDate != null)
             {
-                collectionView.Filter = (e) =>
+                collectionAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate && temp.Room == (Room)cbRoom.SelectedItem)
+                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate && temp.Room == (Room)cbRoom.SelectedItem)
                         return true;
                     return false;
                 };
@@ -74,19 +73,50 @@ namespace HospitalSystem.code
 
         private void displayTerms()
         {
-            List<string> occupied = new List<string>();
+            List<string> occupiedTerms = new List<string>();
             cbTime.Items.Clear();
 
-            foreach (Appointment a in collectionView)
+            foreach (Appointment a in collectionAppointments)
             {
-                occupied.Add(a.Time.ToString("HH:mm"));
+                occupiedTerms.Add(a.Time.ToString("HH:mm"));
             }
 
             foreach (string s in terms)
             {
-                if (!occupied.Contains(s))
+                if (!occupiedTerms.Contains(s))
                     cbTime.Items.Add(s);
             }
+        }
+
+        private void timeChanged(object sender, System.EventArgs e)
+        {
+            displayRooms();
+        }
+
+        private void displayRooms()
+        {
+            List<Room> occupiedRooms = new List<Room>();
+            cbRoom.Items.Clear();
+
+            if (cbTime.SelectedItem != null)
+            {
+                fillListOfOccupiedRooms(occupiedRooms);
+                fillCbRoomsWithAvailableRooms(occupiedRooms);
+            }
+        }
+
+        private void fillCbRoomsWithAvailableRooms(List<Room> occupiedRooms)
+        {
+            foreach (Room room in RoomStorage.getInstance().GetAll())
+                if (!occupiedRooms.Contains(room))
+                    cbRoom.Items.Add(room);
+        }
+
+        private void fillListOfOccupiedRooms(List<Room> occupiedRooms)
+        {
+            foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
+                if (a.Date == (DateTime)dpDate.SelectedDate && a.Time.ToString("HH:mm") == cbTime.SelectedItem.ToString())
+                    occupiedRooms.Add(a.Room);
         }
     }
 }

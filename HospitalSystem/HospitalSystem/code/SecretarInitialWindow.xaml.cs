@@ -71,9 +71,10 @@ namespace HospitalSystem.code
             PatientsStorage.getInstance().Delete((Patient)dg.SelectedItem);
         }
 
-        private void dg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void txbAnnouncement_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            AnnouncementWindow aw = new AnnouncementWindow();
+            aw.Show();
         }
     }
 }

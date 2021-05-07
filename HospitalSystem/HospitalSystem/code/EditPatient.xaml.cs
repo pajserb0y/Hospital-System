@@ -93,6 +93,12 @@ namespace HospitalSystem.code
             t6.Visibility = Visibility.Collapsed;
             t7.Visibility = Visibility.Collapsed;
             t8.Visibility = Visibility.Collapsed;
+
+            List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
+            foreach(Announcement ann in AnnouncementStorage.getInstance().GetAll())
+                if (ann.PatientIDs.Contains(currentPatient.Id))
+                    selectedPatientAnnouncements.Add(ann);
+            announcementList.ItemsSource = selectedPatientAnnouncements;
         }
 
         #region Chart + Account
@@ -121,6 +127,12 @@ namespace HospitalSystem.code
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
         #endregion
+
+        private void txbRead_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            AnnouncementWindow aw = new AnnouncementWindow((Announcement)announcementList.SelectedItem);
+            aw.Show();
+        }
 
 
         #region Appointment
