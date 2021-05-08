@@ -32,7 +32,7 @@ namespace HospitalSystem.code
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Examination appt = new Examination();
+            Appointment appt = new Appointment();
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
             appt.Patient = currentPatient;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
@@ -41,7 +41,7 @@ namespace HospitalSystem.code
             appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
             Room selectedRoom = (Room)cbRoom.SelectedItem;
             _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
-            ExaminationStorage.getInstance().Add(appt);
+            AppointmentStorage.getInstance().Add(appt);
             this.Close();
         }
 
