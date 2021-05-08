@@ -20,59 +20,60 @@ namespace HospitalSystem.code
         }
 
 
-        private ObservableCollection<Drug> verifiedDrugs;
-        public ObservableCollection<Drug> VerifiedDrugs
+        private ObservableCollection<Drug> drugs;
+        public ObservableCollection<Drug> Drugs
         {
-            get { return verifiedDrugs; }
-            set { verifiedDrugs = value; }
+            get { return drugs; }
+            set { drugs = value; }
         }
 
-        private ObservableCollection<Drug> unverifiedDrugs;
-        public ObservableCollection<Drug> UnverifiedDrugs
-        {
-            get { return unverifiedDrugs; }
-            set { unverifiedDrugs = value; }
-        }
 
-        private String FileLocationUnverifiedDrugs = "../../../Resource/Neverifikovani_Lekovi.json";
-        private String FileLocationVerifiedDrugs = "../../../Resource/Verifikovani_Lekovi.json";
+        //private String FileLocationUnverifiedDrugs = "../../../Resource/Neverifikovani_Lekovi.json";
+        private String FileLocation = "../../../Resource/Lekovi.json";
 
 
         public DrugStorage()
         {
-            this.verifiedDrugs = deserialize(FileLocationVerifiedDrugs);
-            this.unverifiedDrugs = deserialize(FileLocationUnverifiedDrugs);
+            this.drugs = deserialize();
         }
 
-        public Drug GetOneVerifiedDrug(int Id)
+        public Drug GetOneDrug(int Id)
         {
-            foreach (Drug d in verifiedDrugs)
+            foreach (Drug d in drugs)
                 if (Id == d.Id)
                     return d;
             return null;
         }
 
-        public Drug GetOneUnverifiedDrug(int Id)
-        {
-            foreach (Drug d in unverifiedDrugs)
-                if (Id == d.Id)
-                    return d;
-            return null;
-        }
+        //public Drug GetOneUnverifiedDrug(int Id)
+        //{
+        //    foreach (Drug d in unverifiedDrugs)
+        //        if (Id == d.Id)
+        //            return d;
+        //    return null;
+        //}
 
         public ObservableCollection<Drug> GetAllVerifiedDrugs()
         {
+            ObservableCollection<Drug> verifiedDrugs = new ObservableCollection<Drug>();
+            foreach (Drug d in drugs)
+                if (d.Status == Drug.STATUS.Verified)
+                    verifiedDrugs.Add(d);
             return verifiedDrugs;
         }
 
         public ObservableCollection<Drug> GetAllUnverifiedDrugs()
         {
+            ObservableCollection<Drug> unverifiedDrugs = new ObservableCollection<Drug>();
+            foreach (Drug d in drugs)
+                if (d.Status == Drug.STATUS.Unverified)
+                    unverifiedDrugs.Add(d);
             return unverifiedDrugs;
         }
 
-        public void EditVerifiedDrug(Drug drug)
+        public void EditDrug(Drug drug)
         {
-            foreach (Drug d in this.verifiedDrugs)
+            foreach (Drug d in this.drugs)
                 if (drug.Id == d.Id)
                 {
                     d.Name = drug.Name;
@@ -80,57 +81,57 @@ namespace HospitalSystem.code
                 }
         }
 
-        public void EditUnverifiedDrug(Drug drug)
-        {
-            foreach (Drug d in this.unverifiedDrugs)
-                if (drug.Id == d.Id)
-                {
-                    d.Name = drug.Name;
-                    d.Amount = drug.Amount;
-                }
-        }
+        //public void EditUnverifiedDrug(Drug drug)
+        //{
+        //    foreach (Drug d in this.unverifiedDrugs)
+        //        if (drug.Id == d.Id)
+        //        {
+        //            d.Name = drug.Name;
+        //            d.Amount = drug.Amount;
+        //        }
+        //}
 
-        public void DeleteVerifiedDrug(Drug drug)
+        public void DeleteDrug(Drug drug)
         {
-            foreach (Drug d in verifiedDrugs)
+            foreach (Drug d in drugs)
                 if (drug.Id == d.Id)
                 {
-                    this.verifiedDrugs.Remove(d);
+                    this.drugs.Remove(d);
                     break;
                 }
         }
 
-        public void DeleteUnverifiedDrug(Drug drug)
+        //public void DeleteUnverifiedDrug(Drug drug)
+        //{
+        //    foreach (Drug d in unverifiedDrugs)
+        //        if (drug.Id == d.Id)
+        //        {
+        //            this.unverifiedDrugs.Remove(d);
+        //            break;
+        //        }
+        //}
+
+        public void AddDrug(Drug drug)
         {
-            foreach (Drug d in unverifiedDrugs)
-                if (drug.Id == d.Id)
-                {
-                    this.unverifiedDrugs.Remove(d);
-                    break;
-                }
+            this.drugs.Add(drug);
         }
 
-        public void SaveVerifiedDrug(Drug drug)
+        //public void AddUnverifiedDrug(Drug drug)
+        //{
+        //    this.unverifiedDrugs.Add(drug);
+        //}
+
+        public int GenerateNewDrugID()
         {
-            this.verifiedDrugs.Add(drug);
+            return ((drugs.Count - 1) == -1) ? 1 : drugs[drugs.Count - 1].Id + 1;
         }
 
-        public void SaveUnverifiedDrug(Drug drug)
-        {
-            this.unverifiedDrugs.Add(drug);
-        }
+        //public int GenerateNewUnverifiedDrugID()
+        //{
+        //    return ((unverifiedDrugs.Count - 1) == -1) ? 1 : unverifiedDrugs[unverifiedDrugs.Count - 1].Id + 1;
+        //}
 
-        public int GenerateNewVerifiedDrugID()
-        {
-            return ((verifiedDrugs.Count - 1) == -1) ? 1 : verifiedDrugs[verifiedDrugs.Count - 1].Id + 1;
-        }
-
-        public int GenerateNewUnverifiedDrugID()
-        {
-            return ((unverifiedDrugs.Count - 1) == -1) ? 1 : unverifiedDrugs[unverifiedDrugs.Count - 1].Id + 1;
-        }
-
-        public void serialize(string FileLocation,ObservableCollection<Drug> drugs)
+        public void serialize()
         {
             var JSONresult = JsonConvert.SerializeObject(drugs);
             using (StreamWriter sw = new StreamWriter(FileLocation))
@@ -140,7 +141,7 @@ namespace HospitalSystem.code
             }
         }
 
-        public ObservableCollection<Drug> deserialize(string FileLocation)
+        public ObservableCollection<Drug> deserialize()
         {
             ObservableCollection<Drug> list = new ObservableCollection<Drug>();
             using (StreamReader sr = new StreamReader(FileLocation))

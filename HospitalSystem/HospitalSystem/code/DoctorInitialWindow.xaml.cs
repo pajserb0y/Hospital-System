@@ -33,7 +33,7 @@ namespace HospitalSystem.code
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
-
+            tReport.Visibility = Visibility.Collapsed;
         }
 
         private void FillDrugList()
@@ -182,12 +182,14 @@ namespace HospitalSystem.code
         private void Button_View_Verified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgVerifiedDrugs.SelectedItem;
-            View_Drug(dgVerifiedDrugs);
+            if(selectedDrug != null)
+                View_Drug(dgVerifiedDrugs);
         }
         private void Button_View_Unverified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
-            View_Drug(dgUnverifiedDrugs);
+            if(selectedDrug != null)
+                View_Drug(dgUnverifiedDrugs);
         }
 
         private void View_Drug(DataGrid dgDrugs)
@@ -195,10 +197,10 @@ namespace HospitalSystem.code
             if (dgDrugs.SelectedItem != null)
             {
                 tDrugDetails.Visibility = Visibility.Visible;
-                //Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
                 if (selectedDrug.Ingridients == null)
                     selectedDrug.Ingridients = new ObservableCollection<Ingridient>();
                 dgDrugDetails.ItemsSource = selectedDrug.Ingridients;
+                txtName.Text = selectedDrug.Name;
                 tDrugDetails.Focus();
 
             }
@@ -219,9 +221,10 @@ namespace HospitalSystem.code
         {
             Ingridient ingridient = new Ingridient();
             ingridient.Name = txtNewIngridients.Text;
-            ingridient.Amount = txtNewAmount.Text;
-            //Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
+            ingridient.Amount = Convert.ToInt32(txtNewAmount.Text);
             selectedDrug.Ingridients.Add(ingridient);
+            foreach (Ingridient i in selectedDrug.Ingridients)
+                selectedDrug.Amount += i.Amount;
             txtNewIngridients.Text = "";
             txtNewAmount.Text = "";
         }
@@ -229,7 +232,6 @@ namespace HospitalSystem.code
         private void Button_Delete_Ingridient(object sender, RoutedEventArgs e)
         {
             Ingridient selectedIngridient = (Ingridient)dgDrugDetails.SelectedItem;
-           // Drug selectedDrug = (Drug)dgDrugs.SelectedItem;
             if (selectedIngridient != null)
             {
                 selectedDrug.Ingridients.Remove(selectedIngridient);
@@ -238,19 +240,44 @@ namespace HospitalSystem.code
 
         private void Button_Save_Drug_Details(object sender, RoutedEventArgs e)
         {
-            
-            if(dgVerifiedDrugs.Items.Contains(selectedDrug))
+            int newAmount = 0;
+            foreach (Ingridient i in selectedDrug.Ingridients)
+                 newAmount += i.Amount;
+            selectedDrug.Amount = newAmount;
+            DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Name = txtName.Text;
+            DrugStorage.getInstance().serialize();
+            tDrugDetails.Visibility = Visibility.Collapsed;
+            tDrugRecord.Focus();
+        }
+
+        private void Button_Verify_Drug(object sender, RoutedEventArgs e)
+        {
+            selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
+            DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Status = Drug.STATUS.Verified;
+            DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Report = null;
+            InitializeCollection();
+            DrugStorage.getInstance().serialize();
+        }
+
+        private void Button_Report(object sender, RoutedEventArgs e)
+        {
+            selectedDrug = (Drug) dgUnverifiedDrugs.SelectedItem;
+            if (selectedDrug != null)
             {
-                DrugStorage.getInstance().serialize("../../../Resource/Verifikovani_Lekovi.json", DrugStorage.getInstance().GetAllVerifiedDrugs());
-                tDrugDetails.Visibility = Visibility.Collapsed;
-                tDrugRecord.Focus();
+                tReport.Visibility = Visibility.Visible;
+                tReport.Focus();
+                txtReport.Text = "";
             }
-            else 
-            {
-                DrugStorage.getInstance().serialize("../../../Resource/Neverifikovani_Lekovi.json",DrugStorage.getInstance().GetAllUnverifiedDrugs());
-                tDrugDetails.Visibility = Visibility.Collapsed;
-                tDrugRecord.Focus();
-            }
+        }
+
+        private void Button_Send_Report(object sender, RoutedEventArgs e)
+        {
+            selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
+            DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Status = Drug.STATUS.InProgress;
+            InitializeCollection();
+            DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Report = txtReport.Text;
+            tReport.Visibility = Visibility.Collapsed;
+            tDrugRecord.Focus();
         }
     }
 }

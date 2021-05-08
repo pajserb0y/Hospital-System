@@ -28,6 +28,39 @@ namespace HospitalSystem.code
             }
 
         }
+        private string report;
+        public string Report
+        {
+            get { return report; }
+            set
+            {
+                if (report != value)
+                {
+                    report = value;
+                    OnPropertyChanged("Report");
+                }
+            }
+        }
+
+        public enum STATUS
+        {
+            Verified,
+            InProgress,
+            Unverified
+        }
+        private STATUS status;
+        public STATUS Status
+        {
+            get { return status; }
+            set
+            {
+                if (status != value)
+                {
+                    status = value;
+                    OnPropertyChanged("Status");
+                }
+            }
+        }
 
         private string name;
 
@@ -46,7 +79,6 @@ namespace HospitalSystem.code
         }
 
         private int amount;
-
         public int Amount
         {
             get { return amount; }
