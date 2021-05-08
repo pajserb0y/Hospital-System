@@ -17,43 +17,46 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class SecretarEditAppointment : Window
     {
-        private Examination ex;
-        ListCollectionView collectionView = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        private Appointment currentAppointment;
+        ListCollectionView collectionAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                                                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
 
-
-        public SecretarEditAppointment(Examination selectedExam)
+        public SecretarEditAppointment(Appointment selectedApp)
         {
-            ex = selectedExam;
+            currentAppointment = selectedApp;
             InitializeComponent();
-            
-            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
 
-            txtPatient.Text = selectedExam.Patient.ToString();
-            cbDoctor.SelectedItem = selectedExam.Doctor;
-            dp1.SelectedDate = selectedExam.Date;
-            cbTime.Items.Add(selectedExam.Time.ToString("HH:mm"));
-            cbTime.SelectedItem = selectedExam.Time.ToString("HH:mm");
+            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
+            initializeSelectedAppointmentDetails(selectedApp);
         }
 
-        
+        private void initializeSelectedAppointmentDetails(Appointment selectedApp)
+        {
+            txtPatient.Text = selectedApp.Patient.ToString();
+            cbDoctor.SelectedItem = selectedApp.Doctor;
+            dpDate.SelectedDate = selectedApp.Date;
+            cbTime.Items.Add(selectedApp.Time.ToString("HH:mm"));
+            cbTime.SelectedItem = selectedApp.Time.ToString("HH:mm");
+            cbRoom.SelectedItem = selectedApp.Room;
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            double differenceInDays = Math.Abs(ex.Date.Subtract((DateTime)dp1.SelectedDate).TotalDays);
+            double differenceInDays = Math.Abs(currentAppointment.Date.Subtract((DateTime)dpDate.SelectedDate).TotalDays);
 
             if (differenceInDays <= 2)
             {
-                ex.Doctor = (Doctor)cbDoctor.SelectedItem;
-                ex.Room = RoomStorage.getInstance().GetOne(8);
-                ex.Date = (DateTime)dp1.SelectedDate;
-                ex.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-                ExaminationStorage.getInstance().Edit(ex);
+                currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                currentAppointment.Room = (Room)cbRoom.SelectedItem;
+                currentAppointment.Date = (DateTime)dpDate.SelectedDate;
+                currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                AppointmentStorage.getInstance().Edit(currentAppointment);
                 this.Close();
             }
             else
             {
-                dp1.SelectedDate = ex.Date;
+                dpDate.SelectedDate = currentAppointment.Date;
                 InvalidEdit iv = new InvalidEdit();
                 iv.Show();
             }
@@ -73,12 +76,12 @@ namespace HospitalSystem.code
 
         private void filter()
         {
-            if (cbDoctor.SelectedItem != null && dp1.SelectedDate != null)
+            if (cbDoctor.SelectedItem != null && dpDate.SelectedDate != null)
             {
-                collectionView.Filter = (e) =>
+                collectionAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate)
+                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate)
                         return true;
                     return false;
                 };
@@ -87,19 +90,50 @@ namespace HospitalSystem.code
 
         private void displayTerms()
         {
-            List<string> occupied = new List<string>();
+            List<string> occupiedTerms = new List<string>();
             cbTime.Items.Clear();
 
-            foreach (Appointment a in collectionView)
+            foreach (Appointment a in collectionAppointments)
             {
-                occupied.Add(a.Time.ToString("HH:mm"));
+                occupiedTerms.Add(a.Time.ToString("HH:mm"));
             }
 
             foreach (string s in terms)
             {
-                if (!occupied.Contains(s))
+                if (!occupiedTerms.Contains(s))
                     cbTime.Items.Add(s);
             }
+        }
+
+        private void timeChanged(object sender, System.EventArgs e)
+        {
+            displayRooms();
+        }
+
+        private void displayRooms()
+        {
+            List<Room> occupiedRooms = new List<Room>();
+            cbRoom.Items.Clear();
+
+            if (cbTime.SelectedItem != null)
+            {
+                fillListOfOccupiedRooms(occupiedRooms);
+                fillCbRoomsWithAvailableRooms(occupiedRooms);
+            }
+        }
+
+        private void fillCbRoomsWithAvailableRooms(List<Room> occupiedRooms)
+        {
+            foreach (Room room in RoomStorage.getInstance().GetAll())
+                if (!occupiedRooms.Contains(room))
+                    cbRoom.Items.Add(room);
+        }
+
+        private void fillListOfOccupiedRooms(List<Room> occupiedRooms)
+        {
+            foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
+                if (a.Date == (DateTime)dpDate.SelectedDate && a.Time.ToString("HH:mm") == cbTime.SelectedItem.ToString())
+                    occupiedRooms.Add(a.Room);
         }
     }
 }

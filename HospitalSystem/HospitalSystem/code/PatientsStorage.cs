@@ -6,6 +6,7 @@
 
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -81,20 +82,29 @@ public class PatientsStorage
                 this.patients.Remove(p);
                 break;
             }
-        ObservableCollection<Examination> examinations = ExaminationStorage.getInstance().GetAll();
-        foreach (Examination ex in examinations)
-            if (ex.Patient == patient)
-            {
-                examinations.Remove(ex);
-                break;
-            }
+
+        deletePatientExaminations(patient);
+        deletePatientAppointments(patient);
+    }
+
+    private static void deletePatientAppointments(Patient patient)
+    {
         ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
-        foreach (Appointment ex in appointments)
-            if (ex.Patient == patient)
-            {
-                appointments.Remove(ex);
-                break;
-            }
+        List<Appointment> newAppointmentList = new List<Appointment>(AppointmentStorage.getInstance().GetAll());
+        if (appointments != null)
+            foreach (Appointment ap in appointments)
+                if (ap.Patient == patient)
+                    appointments.Remove(ap);
+    }
+
+    private static void deletePatientExaminations(Patient patient)
+    {
+        ObservableCollection<Examination> examinations = ExaminationStorage.getInstance().GetAll();
+        List<Examination> newExaminationList = new List<Examination>(ExaminationStorage.getInstance().GetAll());
+        if (examinations != null)
+            foreach (Examination ex in newExaminationList)
+                if (ex.Patient == patient)
+                    examinations.Remove(ex);
     }
 
     public void Add(Patient patient)

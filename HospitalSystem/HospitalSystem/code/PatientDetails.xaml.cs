@@ -100,11 +100,6 @@ namespace HospitalSystem.code
                 txtAnamnesis.Text = anamnesis.AnamnesisInfo;
                 txtDiagnosis.Text = anamnesis.Diagnosis;
             }
-            //else
-            //{
-            //    txtAnamnesis.Text = "";
-            //    txtAnamnesis.Text = "";
-            //}
     
             tExam.Visibility = Visibility.Visible;
             tExam.Focus();

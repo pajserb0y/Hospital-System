@@ -95,7 +95,21 @@ public class Doctor : INotifyPropertyChanged
         }
     }
 
-    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone)
+    private String specialization;
+    public String Specialization
+    {
+        get { return specialization; }
+        set
+        {
+            if (specialization != value)
+            {
+                specialization = value;
+                OnPropertyChanged("Specialization");
+            }
+        }
+    }
+
+    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone, string specialization)
     {
         Id = id;
         FirstName = firstName;
@@ -103,6 +117,7 @@ public class Doctor : INotifyPropertyChanged
         Jmbg = jmbg;
         Adress = adress;
         Telephone = telephone;
+        Specialization = specialization;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -116,6 +131,6 @@ public class Doctor : INotifyPropertyChanged
     }
     public override string ToString()
     {
-        return Id.ToString() + " " + FirstName + " " + LastName + Jmbg.ToString() + " " + Adress + " " + Telephone.ToString();
+        return Specialization;
     }
 }

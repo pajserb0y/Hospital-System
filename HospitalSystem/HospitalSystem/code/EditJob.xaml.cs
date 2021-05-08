@@ -23,7 +23,11 @@ namespace HospitalSystem.code
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
             p = selectedJob;
+            initializeSelectedJobDetails(selectedJob);
+        }
 
+        private void initializeSelectedJobDetails(Job selectedJob)
+        {
             txtNo.Text = selectedJob.No.ToString();
             txtName.Text = selectedJob.CompanyName;
             txtJob.Text = selectedJob.Position;

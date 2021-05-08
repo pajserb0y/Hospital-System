@@ -1,1 +1,39 @@
-[{"Id":8,"Name":"op"},{"Id":9,"Name":"Mc"},{"Id":13,"Name":"od"}]
+[
+  {
+    "Id": 1,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 2,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 3,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 4,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 5,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 6,
+    "Name": "Ordination"
+  },
+  {
+    "Id": 7,
+    "Name": "Operation room"
+  },
+  {
+    "Id": 8,
+    "Name": "Operation room"
+  },
+  {
+    "Id": 9,
+    "Name": "Operation room"
+  }
+
+]
