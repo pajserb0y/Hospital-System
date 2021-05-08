@@ -28,27 +28,11 @@ namespace HospitalSystem.code
 
             InitializeCollection();
 
-            FillDrugList();
-
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
         }
-
-        private void FillDrugList()
-        {
-            Drug d1 = new Drug(1, "Bensedin");
-            Drug d2 = new Drug(2, "Bromazepam");
-            Drug d3 = new Drug(3, "Trodon");
-
-            cbDrug.Items.Add(d1);
-            cbDrug.Items.Add(d2);
-            cbDrug.Items.Add(d3);
-
-
-        }
-
         private void InitializeCollection()
         {
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
@@ -59,6 +43,7 @@ namespace HospitalSystem.code
 
             dgVerifiedDrugs.ItemsSource = verifiedDrugs;
             dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
+            cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
 
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;

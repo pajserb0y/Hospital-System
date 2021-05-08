@@ -52,7 +52,10 @@ namespace HospitalSystem.code
         //            return d;
         //    return null;
         //}
-
+        public ObservableCollection<Drug> GetAllDrugs()
+        {
+            return drugs;
+        }
         public ObservableCollection<Drug> GetAllVerifiedDrugs()
         {
             ObservableCollection<Drug> verifiedDrugs = new ObservableCollection<Drug>();
