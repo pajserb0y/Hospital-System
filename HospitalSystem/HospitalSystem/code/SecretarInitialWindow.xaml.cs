@@ -26,11 +26,8 @@ namespace HospitalSystem.code
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
-
-            //this.DataContext = PatientsStorage.getInstance(); // DODAO
+            
             dg.ItemsSource = PatientsStorage.getInstance().GetAll();
-            // dg.Columns[0].Visibility = Visibility.Collapsed;
-            // dg.ColumnWidth = dg.ColumnWidth * 1.5;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -41,29 +38,28 @@ namespace HospitalSystem.code
 
         private void txbBack_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow mp = new MainWindow();
-            mp.Show();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             PatientsStorage.getInstance().serialize();
             this.Close();
         }
         private void txbUrgentPatient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            UrgentPatient up = new UrgentPatient();
-            up.Show();
+            UrgentPatient urgentPatient = new UrgentPatient();
+            urgentPatient.Show();
         }
 
         private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NewPatient np = new NewPatient();
-            np.Show();
+            NewPatient newPatient = new NewPatient();
+            newPatient.Show();
         }
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            EditPatient ep = new EditPatient((Patient)dg.SelectedItem);
-            ep.Show();
+            EditPatient editPatient = new EditPatient((Patient)dg.SelectedItem);
+            editPatient.Show();
             (dg.ItemContainerGenerator.ContainerFromItem(dg.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan pacijent
-            //(dg.ItemContainerGenerator.ContainerFromItem(dg.SelectedItem) as DataGridCell).IsSelected = false;
         }
 
         private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -73,8 +69,8 @@ namespace HospitalSystem.code
 
         private void txbAnnouncement_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            AnnouncementWindow aw = new AnnouncementWindow();
-            aw.Show();
+            AnnouncementWindow announcementWindow = new AnnouncementWindow();
+            announcementWindow.Show();
         }
     }
 }
