@@ -10,7 +10,7 @@ public class Examination : Appointment
      public int Id
      { get; set; }
     */
-    public bool IsOperation { get; set; }
+    //public bool IsOperation { get; set; }
     public Examination()
     {
     }

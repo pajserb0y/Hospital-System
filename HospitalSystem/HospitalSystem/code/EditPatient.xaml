@@ -148,6 +148,35 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Inbox">
+                <Grid>
+                    <ListView x:Name="announcementList" Margin="75,40,159,40">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Path=Title}"/>
+                                    <TextBlock Text=" - "/>
+                                    <TextBlock Text="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                                    <TextBlock Text=",  "/>
+                                    <TextBlock Text="{Binding Time, StringFormat={}{0:HH:mm }}"/>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Text="&lt; read" TextWrapping="Wrap" PreviewMouseDown="txbRead_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+                                   HorizontalAlignment="Right" Margin="0,300,50,20" Padding="10,10,10,10" Grid.Row="6" Grid.Column="3">
+                        <TextBlock.Style>
+                            <Style>
+                                <Setter Property="TextBlock.TextDecorations" Value="" />
+                                <Style.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style></TextBlock>
+                </Grid>
+            </TabItem>
             <TabItem Header="Appointments">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
@@ -159,7 +188,7 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid x:Name="dgApp" Height="580" Width="700" Grid.Row="0" Grid.Column="0"  Margin="30,50,16,30" AutoGenerateColumns="False"
+                        <DataGrid x:Name="dgApp" Height="580" Width="750" Grid.Row="0" Grid.Column="0"  Margin="30,50,16,30" AutoGenerateColumns="False"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
                             <DataGrid.Columns>
@@ -181,11 +210,11 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Path=Doctor.Id}"/>
-                                                <TextBlock Text="    "/>
                                                 <TextBlock Text="{Binding Path=Doctor.FirstName}"/>
                                                 <TextBlock Text=" "/>
                                                 <TextBlock Text="{Binding Path=Doctor.LastName}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding Path=Doctor.Specialization}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -203,6 +232,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
                                 <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                                <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
@@ -249,17 +279,16 @@
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="117*"/>
-                            <ColumnDefinition Width="297*"/>
-                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid x:Name="dgExam" Height="580" Width="750" Grid.Row="0" Grid.Column="0"  Margin="54,50,24,30" AutoGenerateColumns="False"
+                        <DataGrid x:Name="dgExam" Height="580" Width="750" Grid.Row="0" Grid.Column="0"  Margin="30,50,16,30" AutoGenerateColumns="False"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="2">
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" >
                             <!--<CollectionViewSource x:Key="cvsTasks" Source="{StaticResource tasks}" Filter="CollectionViewSource_Filter">-->
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
@@ -280,11 +309,11 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Path=Doctor.Id}"/>
-                                                <TextBlock Text="    "/>
                                                 <TextBlock Text="{Binding Path=Doctor.FirstName}"/>
                                                 <TextBlock Text=" "/>
                                                 <TextBlock Text="{Binding Path=Doctor.LastName}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding Path=Doctor.Specialization}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -302,6 +331,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
                                 <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                                <DataGridCheckBoxColumn Header="Operation" Binding="{Binding IsOperation}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock Text="&lt; view" TextWrapping="Wrap" PreviewMouseDown="txbView_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Center"
