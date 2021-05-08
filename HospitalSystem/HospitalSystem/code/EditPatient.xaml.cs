@@ -35,12 +35,19 @@ namespace HospitalSystem.code
             fillJobDataGrid();
             fillAppointments();
             fillExaminations();
-            //(dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan exam
-
             hideExaminationDetails();
             fillAnnouncements();
+            fillAlergens();
         }
 
+        private void fillAlergens()
+        {
+            List<Alergen> selectedPatientAlergens = new List<Alergen>();
+            foreach (Alergen alergen in AlergenStorage.getInstance().GetAll())
+                if (alergen.PatientID == currentPatient.Id)
+                    selectedPatientAlergens.Add(alergen);
+            listViewAlergens.ItemsSource = selectedPatientAlergens;
+        }
         private void fillAnnouncements()
         {
             List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
@@ -150,6 +157,20 @@ namespace HospitalSystem.code
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
+        private void txbAddAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
+            newAlergen.Show();
+        }
+        private void txbEditAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
+            editAlergen.Show();
+        }
+        private void txbDeleteAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
+        }
 
         private void txbRead_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -195,12 +216,12 @@ namespace HospitalSystem.code
             Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
             Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
 
-            txtA.Clear();
-            txtD.Clear();
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
             if (anamnesis != null)
             {
-                txtA.Text = anamnesis.AnamnesisInfo;
-                txtD.Text = anamnesis.Diagnosis;
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
             }
             tabAnamnesis.Focus();
 
