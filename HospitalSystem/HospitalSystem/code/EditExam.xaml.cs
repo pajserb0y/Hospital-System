@@ -17,31 +17,31 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class EditExam : Window
     {
-        private Examination exam;
-        public EditExam(Examination selectedExam)
+        private Appointment appointment;
+        public EditExam(Appointment selectedAppointment)
         {
             InitializeComponent();
-            exam = selectedExam;
+            appointment = selectedAppointment;
 
             cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
             cbRoom.ItemsSource = RoomStorage.getInstance().GetAll();
 
-            cbPatient.SelectedItem = selectedExam.Patient;
-            cbDoctor.SelectedItem = selectedExam.Doctor;
-            cbRoom.SelectedItem = selectedExam.Room;
-            dp1.SelectedDate = selectedExam.Date;
-            txt1.Text = Convert.ToString(selectedExam.Time.TimeOfDay);
+            cbPatient.SelectedItem = selectedAppointment.Patient;
+            cbDoctor.SelectedItem = selectedAppointment.Doctor;
+            cbRoom.SelectedItem = selectedAppointment.Room;
+            dp1.SelectedDate = selectedAppointment.Date;
+            txt1.Text = Convert.ToString(selectedAppointment.Time.TimeOfDay);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            exam.Patient = (Patient)cbPatient.SelectedItem;
-            exam.Doctor = (Doctor)cbDoctor.SelectedItem;
-            exam.Room = (Room)cbRoom.SelectedItem;
-            exam.Date = (DateTime)dp1.SelectedDate;
-            exam.Time = Convert.ToDateTime(txt1.Text);
-            ExaminationStorage.getInstance().Edit(exam);
+            appointment.Patient = (Patient)cbPatient.SelectedItem;
+            appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+            appointment.Room = (Room)cbRoom.SelectedItem;
+            appointment.Date = (DateTime)dp1.SelectedDate;
+            appointment.Time = Convert.ToDateTime(txt1.Text);
+            AppointmentStorage.getInstance().Edit(appointment);
             //List<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
             //foreach (Examination exam in ExamList)
             //     DataGridXAML.Items.Add(exam);

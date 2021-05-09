@@ -50,6 +50,8 @@ public class AppointmentStorage
             temp.RoomId = e.Room.Id;
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.TimesChanged = e.TimesChanged;
+            temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(appts);
@@ -74,13 +76,15 @@ public class AppointmentStorage
         }
         foreach (AppointmentViewModel e in apptIDs)
         {
-            Examination temp = new Examination();
+            Appointment temp = new Appointment();
             temp.Id = e.Id;
             temp.Doctor = DoctorStorage.getInstance().GetOne(e.DoctorId);
             temp.Patient = PatientsStorage.getInstance().GetOne(e.PatientId);
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.TimesChanged = e.TimesChanged;
+            temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
         }
         return appts;
@@ -105,9 +109,9 @@ public class AppointmentStorage
             if (appointment.Id == a.Id)
             {
                 a.Doctor = appointment.Doctor;
-                a.Patient = appointment.Patient;
                 a.Date = appointment.Date;
                 a.Time = appointment.Time;
+                a.TimesChanged += 1;
             }
         serialize();
     }
@@ -215,4 +219,21 @@ internal class AppointmentViewModel
             }
         }
     }
+
+    private int timesChanged;
+
+    public int TimesChanged
+    {
+        get { return timesChanged; }
+        set { timesChanged = value; }
+    }
+
+    private DateTime timeOfCreation;
+
+    public DateTime TimeOfCreation
+    {
+        get { return timeOfCreation; }
+        set { timeOfCreation = value; }
+    }
+
 }

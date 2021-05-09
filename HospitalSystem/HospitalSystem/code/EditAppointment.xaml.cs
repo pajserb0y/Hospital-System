@@ -27,37 +27,41 @@ namespace HospitalSystem.code
             InitializeComponent();
             appointment = selectedAppointment;
 
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-
-
-            
-            cbPatient.SelectedItem = selectedAppointment.Patient;
+           
             cbDoctor.SelectedItem = selectedAppointment.Doctor;
+            cbDoctor.IsEnabled = false;
             dp1.SelectedDate = selectedAppointment.Date;
             cbTime.Items.Add(selectedAppointment.Time.ToString("HH:mm"));
             cbTime.SelectedItem = selectedAppointment.Time.ToString("HH:mm");
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Save_Click_Edit(object sender, RoutedEventArgs e)
         {
             double differenceInDays = Math.Abs(appointment.Date.Subtract((DateTime)dp1.SelectedDate).TotalDays);
 
             if (differenceInDays <= 2)
             {
-                appointment.Patient = (Patient)cbPatient.SelectedItem;
-                appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-                string time = (string)cbTime.SelectedItem;
-                appointment.Time = DateTime.Parse(time);
-                appointment.Date = (DateTime)dp1.SelectedDate;
-                AppointmentStorage.getInstance().Edit(appointment);
+                
+                if (appointment.TimesChanged > 2)
+                {
+                    //displayErrorApptChanged();
+                    MessageBox.Show("Cannot change details of appointment more than 3 times!");
+                }
+                else
+                {
+                    appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                    string time = (string)cbTime.SelectedItem;
+                    appointment.Time = DateTime.Parse(time);
+                    appointment.Date = (DateTime)dp1.SelectedDate;
+                    AppointmentStorage.getInstance().Edit(appointment);
+                }
                 this.Close();
             }
             else
             {
                 dp1.SelectedDate = appointment.Date;
-                InvalidEdit iv = new InvalidEdit();
-                iv.Show();
+                MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
             }
         }
 
@@ -86,6 +90,11 @@ namespace HospitalSystem.code
                     return false;
                 };
             }
+        }
+
+        private void displayErrorApptChanged()
+        {
+            return;
         }
 
         private void displayTerms()

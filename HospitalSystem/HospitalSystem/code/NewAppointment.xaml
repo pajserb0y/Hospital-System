@@ -7,18 +7,30 @@
         mc:Ignorable="d"
         Title="NewAppointment" Height="435" Width="800">
     <Grid HorizontalAlignment="Left" Width="800">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="399*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="96,134,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Date" HorizontalAlignment="Left" Height="36" Margin="96,204,0,0" VerticalAlignment="Top" Width="104"/>
-        <DatePicker x:Name="dp1" HorizontalAlignment="Left" Margin="223,204,0,0" VerticalAlignment="Top" Height="26" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
-        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="565,339,0,0" VerticalAlignment="Top" Width="130" Click="Save_Click"/>
 
+        <Label Content="Doctor" HorizontalAlignment="Left" Height="25" Margin="276,129,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="Date" HorizontalAlignment="Left" Height="25" Margin="276,202,0,0" VerticalAlignment="Top" Width="104"/>
+        <DatePicker x:Name="dp1" HorizontalAlignment="Left" Margin="440,202,0,0" VerticalAlignment="Top" Height="26" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="470,330,0,0" VerticalAlignment="Top" Width="130" Click="Save_Click"/>
 
-        <Label Content="Time" HorizontalAlignment="Left" Height="36" Margin="96,277,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.5,1.418"/>
-        <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Left" Margin="223,141,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="doctorChanged">
+        <Label Content="Specialization" HorizontalAlignment="Left" Height="25" Margin="276,69,0,0" VerticalAlignment="Top" Width="104"/>
+        <ComboBox Name="cbSpecialization" HorizontalAlignment="Left" Margin="400,72,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="specializationChanged" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Specialization}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <CheckBox x:Name="OptionDoctor" Content="Find first available:" Height="20" Margin="0,134,549,0" VerticalAlignment="Top" Checked="CheckBoxDoctor" Unchecked="CheckBoxDoctor" HorizontalAlignment="Right" Width="150" />
+        <Label Content="(for selected specialization)" HorizontalAlignment="Right" Height="25" Margin="0,144,539,0" VerticalAlignment="Top" Width="170"/>
+        <CheckBox x:Name="OptionTime" Content="Find first available term:" Width="150" Height="20" Margin="101,207,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBoxTerm" Unchecked="CheckBoxTerm" />
+        <Label Content="(with selected doctor)" HorizontalAlignment="Right" Height="25" Margin="0,217,529,0" VerticalAlignment="Top" Width="150"/>
+
+        <Label Content="Time" HorizontalAlignment="Left" Height="25" Margin="276,264,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.5,1.418"/>
+        <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Left" Margin="400,132,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="doctorChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -31,7 +43,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="cbTime"  HorizontalAlignment="Left" Margin="223,284,0,0" VerticalAlignment="Top" Width="200" >
+        <ComboBox x:Name="cbTime"  HorizontalAlignment="Left" Margin="400,264,0,0" VerticalAlignment="Top" Width="200" >
         </ComboBox>
+
     </Grid>
 </Window>
