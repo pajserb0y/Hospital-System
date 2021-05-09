@@ -32,6 +32,8 @@ namespace HospitalSystem.code
             initializeSpecializations();
         }
 
+        
+
         private void initializeSpecializations()
         {
             List<Doctor> doctorsWithDifferentSpecialization = new List<Doctor>();            
@@ -80,6 +82,8 @@ namespace HospitalSystem.code
             }
             else
                 return;
+            appt.TimesChanged = 0;
+            appt.TimeOfCreation = DateTime.Now;
             AppointmentStorage.getInstance().Add(appt);
             this.Close();           
         }
