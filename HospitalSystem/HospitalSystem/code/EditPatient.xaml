@@ -145,42 +145,9 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddAlergen_PreviewMouseDown" Cursor="Hand" FontSize="18" 
-                                   HorizontalAlignment="Left" Margin="0,250,0,0" Grid.Row="6" Grid.Column="3">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="^ edit" TextWrapping="Wrap" PreviewMouseDown="txbEditAlergen_PreviewMouseDown" Cursor="Hand" FontSize="18" 
-                                   HorizontalAlignment="Center" Margin="0,250,0,0" Grid.Row="6" Grid.Column="3">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDeleteAlergen_PreviewMouseDown" Cursor="Hand" 
-                                   HorizontalAlignment="Right" Margin="0,250,0,0"  Grid.Row="6" Grid.Column="3" FontSize="18">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
+                        <Button Content="add" Cursor="Hand" FontSize="18" HorizontalAlignment="Left" Margin="0,250,0,90" Grid.Row="6" Grid.Column="3" Click="ButtonAddAlergen_Click" Background="White" />
+                        <Button Content="edit" Cursor="Hand" FontSize="18" HorizontalAlignment="Center" Margin="0,250,70,90" Grid.Row="6" Grid.Column="3" Click="ButtonEditAlergen_Click" Background="White"/>
+                        <Button Content="delete" Cursor="Hand" HorizontalAlignment="Right" Margin="0,250,50,90"  Grid.Row="6" Grid.Column="3" FontSize="18" Click="ButtonDeleteAlergen_Click" Background="White"/>
                     </Grid>
                 </StackPanel>
             </TabItem>

@@ -47,9 +47,9 @@ namespace HospitalSystem.code
 
         public Alergen(int no, string substance, int patientID)
         {
-            No = no;
-            Substance = substance;
-            PatientID = patientID;
+            this.no = no;
+            this.substance = substance;
+            this.patientID = patientID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

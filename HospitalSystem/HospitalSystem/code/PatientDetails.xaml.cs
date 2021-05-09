@@ -19,9 +19,14 @@ namespace HospitalSystem.code
     {
         ListCollectionView collectionViewJob = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        ListCollectionView alergensCollection = new ListCollectionView(AlergenStorage.getInstance().GetAll());
+        private Patient currentPatient;
+
         public PatientDetails(Patient selectedPatient)
         {
             InitializeComponent();
+            currentPatient = selectedPatient;
+
 
             txtID.Text = selectedPatient.Id.ToString();
             txtIme.Text = selectedPatient.FirstName;
@@ -85,6 +90,16 @@ namespace HospitalSystem.code
             rbM.IsEnabled = false;
             cbGuest.IsEnabled = false;
             tExam.Visibility = Visibility.Collapsed;
+
+
+            alergensCollection.Filter = (e) =>
+            {
+                Alergen temp = e as Alergen;
+                if (temp.PatientID == selectedPatient.Id)
+                    return true;
+                return false;
+            };
+            listViewAlergens.ItemsSource = alergensCollection;
         }
 
         private void Button_View(object sender, RoutedEventArgs e)
@@ -103,6 +118,22 @@ namespace HospitalSystem.code
     
             tExam.Visibility = Visibility.Visible;
             tExam.Focus();
+        }
+        private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
+            newAlergen.Show();
+        }
+
+        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
+            editAlergen.Show();
+        }
+
+        private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
         }
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)

@@ -28,6 +28,6 @@ namespace HospitalSystem.code
             Alergen alergen = new Alergen(AlergenStorage.getInstance().GenerateNewID(patientID), txtSubstance.Text, patientID);
             AlergenStorage.getInstance().Save(alergen);
             this.Close();
-        }
+        }        
     }
 }

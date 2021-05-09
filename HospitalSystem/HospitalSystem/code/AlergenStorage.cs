@@ -37,7 +37,7 @@ namespace HospitalSystem.code
         public void Edit(Alergen alergen)
         {
             foreach (Alergen a in this.alergens)
-                if (alergen.No == a.No)
+                if (alergen.No == a.No && alergen.PatientID == a.PatientID)
                 {
                     a.Substance = alergen.Substance;
                 }
@@ -48,14 +48,14 @@ namespace HospitalSystem.code
             foreach (Alergen a in alergens)
                 if (alergen.No == a.No && alergen.PatientID == a.PatientID)
                 {
-                    this.alergens.Remove(a);
+                    alergens.Remove(a);
                     break;
                 }
         }
 
         public void Save(Alergen alergen)
         {
-            this.alergens.Add(alergen);
+            alergens.Add(alergen);
             serialize();
         }
 

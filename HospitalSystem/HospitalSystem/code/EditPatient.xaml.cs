@@ -22,6 +22,7 @@ namespace HospitalSystem.code
         ListCollectionView jobCollection = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         ListCollectionView examCollection = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        ListCollectionView alergensCollection = new ListCollectionView(AlergenStorage.getInstance().GetAll());
 
         public Action<object, MouseButtonEventArgs> TabControl_SelectionChanged { get; }
 
@@ -42,11 +43,14 @@ namespace HospitalSystem.code
 
         private void fillAlergens()
         {
-            List<Alergen> selectedPatientAlergens = new List<Alergen>();
-            foreach (Alergen alergen in AlergenStorage.getInstance().GetAll())
-                if (alergen.PatientID == currentPatient.Id)
-                    selectedPatientAlergens.Add(alergen);
-            listViewAlergens.ItemsSource = selectedPatientAlergens;
+            alergensCollection.Filter = (e) =>
+            {
+                Alergen temp = e as Alergen;
+                if (temp.PatientID == currentPatient.Id)
+                    return true;
+                return false;
+            };
+            listViewAlergens.ItemsSource = alergensCollection;
         }
         private void fillAnnouncements()
         {
@@ -157,17 +161,19 @@ namespace HospitalSystem.code
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
-        private void txbAddAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
             NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
             newAlergen.Show();
         }
-        private void txbEditAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+
+        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
         {
             EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
             editAlergen.Show();
         }
-        private void txbDeleteAlergen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+
+        private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
         {
             AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
         }
@@ -252,7 +258,8 @@ namespace HospitalSystem.code
         private void Window_Closed(object sender, EventArgs e)
         {
             JobStorage.getInstance().serialize();
+            AlergenStorage.getInstance().serialize();
             this.Close();
-        }
+        }        
     }
 }
