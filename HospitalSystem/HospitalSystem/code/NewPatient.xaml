@@ -29,14 +29,14 @@
                         <TextBox x:Name="txtAdresa" TextWrapping="Wrap" Width="230" Height="20"/>
                     </StackPanel>
                     <StackPanel  Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,20,160,20">
                             <Label Content="Gender:" Padding="0,0,25,0" VerticalContentAlignment="Center"/>
                             <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="39"  IsChecked="True"/>
                             <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="32"  />
                         </StackPanel>
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,0,0">
+                        <!--<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,0,0">
                             <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center"/>
-                        </StackPanel>
+                        </StackPanel>-->
                     </StackPanel>
                     <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
                         <Label Content="Telephone:" Padding="0,0,20,0"/>

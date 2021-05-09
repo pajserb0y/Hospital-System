@@ -49,7 +49,7 @@ namespace HospitalSystem.code
         public void Edit(Job job)
         {
             foreach (Job P in this.jobs)
-                if (job.No == P.No)
+                if (job.No == P.No && job.PID == P.PID)
                 {
                     P.Position = job.Position;
                     P.CompanyName = job.CompanyName;

@@ -22,6 +22,7 @@ namespace HospitalSystem.code
         ListCollectionView jobCollection = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         ListCollectionView examCollection = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        ListCollectionView alergensCollection = new ListCollectionView(AlergenStorage.getInstance().GetAll());
 
         public Action<object, MouseButtonEventArgs> TabControl_SelectionChanged { get; }
 
@@ -35,12 +36,22 @@ namespace HospitalSystem.code
             fillJobDataGrid();
             fillAppointments();
             fillExaminations();
-            //(dgExam.ItemContainerGenerator.ContainerFromItem(dgExam.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan exam
-
             hideExaminationDetails();
             fillAnnouncements();
+            fillAlergens();
         }
 
+        private void fillAlergens()
+        {
+            alergensCollection.Filter = (e) =>
+            {
+                Alergen temp = e as Alergen;
+                if (temp.PatientID == currentPatient.Id)
+                    return true;
+                return false;
+            };
+            listViewAlergens.ItemsSource = alergensCollection;
+        }
         private void fillAnnouncements()
         {
             List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
@@ -150,6 +161,22 @@ namespace HospitalSystem.code
         {
             JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
         }
+        private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
+            newAlergen.Show();
+        }
+
+        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
+            editAlergen.Show();
+        }
+
+        private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
+        }
 
         private void txbRead_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -195,12 +222,12 @@ namespace HospitalSystem.code
             Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
             Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
 
-            txtA.Clear();
-            txtD.Clear();
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
             if (anamnesis != null)
             {
-                txtA.Text = anamnesis.AnamnesisInfo;
-                txtD.Text = anamnesis.Diagnosis;
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
             }
             tabAnamnesis.Focus();
 
@@ -231,7 +258,8 @@ namespace HospitalSystem.code
         private void Window_Closed(object sender, EventArgs e)
         {
             JobStorage.getInstance().serialize();
+            AlergenStorage.getInstance().serialize();
             this.Close();
-        }
+        }        
     }
 }
