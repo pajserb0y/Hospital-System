@@ -32,6 +32,8 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
+            tOperation.Visibility = Visibility.Collapsed;
+            tRefferal.Visibility = Visibility.Collapsed;
         }
         private void InitializeCollection()
         {
@@ -48,6 +50,54 @@ namespace HospitalSystem.code
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
             dgDoctorExams.ItemsSource = appointments;
+
+            InitializeSpecializatonForRefferal(cbSpecializationRefferal);
+        }
+
+        private void InitializeSpecializatonForRefferal(ComboBox cb)
+        {
+            ListCollectionView specializationCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
+            List<Doctor> doctorsWithDifferentSpecialization = new List<Doctor>();
+            specializationCollection.Filter = (doc) =>
+            {
+                bool specializationAlreadyInList = false;
+                Doctor tempDoc = doc as Doctor;
+                if (doctorsWithDifferentSpecialization.Count <= 0)
+                {
+                    doctorsWithDifferentSpecialization.Add(tempDoc);
+                    return true;
+                }
+                foreach (Doctor dr in doctorsWithDifferentSpecialization)
+                    if (tempDoc.Specialization == dr.Specialization)
+                        specializationAlreadyInList = true;
+
+                if (specializationAlreadyInList is false)
+                {
+                    doctorsWithDifferentSpecialization.Add(tempDoc);
+                    return true;
+                }
+                return false;
+            };
+            cb.ItemsSource = specializationCollection;
+        }
+
+        private void cbSpecializationRefferal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbSpecializationRefferal.SelectedIndex != -1)
+                InitializeDoctorsForRefferal(cbSpecializationRefferal.SelectedItem.ToString(), cbDoctorRefferal);
+        }
+
+        private void InitializeDoctorsForRefferal(string Specializaton,ComboBox cb)
+        {
+            ListCollectionView doctorsCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
+            doctorsCollection.Filter = (e) =>
+            {
+                Doctor temp = e as Doctor;
+                if (temp.Specialization == Specializaton)
+                    return true;
+                return false;
+            };
+            cb.ItemsSource = doctorsCollection;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -263,6 +313,35 @@ namespace HospitalSystem.code
             DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Report = txtReport.Text;
             tReport.Visibility = Visibility.Collapsed;
             tDrugRecord.Focus();
+        }
+
+        private void Button_Save_Refferal(object sender, RoutedEventArgs e)
+        {
+            string Note = txtNoteRefferal.Text;
+            string specialization = cbSpecializationRefferal.Text;
+            Doctor doctor = (Doctor) cbDoctorRefferal.SelectedItem;
+            int id = RefferalStorage.getInstance().GenerateNewID();
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Patient patient = currExam.Patient;
+            Refferal newRefferal = new Refferal(id, Note, specialization,patient.Id,patient.FirstName,patient.LastName, Refferal.STATUS.Active, doctor.Id,doctor.FirstName,doctor.LastName);
+            RefferalStorage.getInstance().Add(newRefferal);
+            RefferalStorage.getInstance().serialize();
+            tRefferal.Visibility = Visibility.Collapsed;
+            tExam.Focus();
+        }
+
+        private void Button_Refferal(object sender, RoutedEventArgs e)
+        {
+            txtNoteRefferal.Text = "";
+            cbDoctorRefferal.SelectedIndex = -1;
+            cbSpecializationRefferal.SelectedIndex = -1;
+            tRefferal.Visibility = Visibility.Visible;
+            tRefferal.Focus();
+        }
+
+        private void Button_Operation(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

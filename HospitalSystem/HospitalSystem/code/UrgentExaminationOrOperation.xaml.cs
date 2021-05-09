@@ -381,5 +381,10 @@ namespace HospitalSystem.code
             cbRoom.SelectedIndex = 0;
             showAppointmentDetails();
         }
+
+        private void specializationChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

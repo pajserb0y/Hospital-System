@@ -108,6 +108,9 @@
                             <Grid>
                                 <Button Content="Save" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Save_Anamnesis"/>
                                 <Button Content="Prescription" HorizontalAlignment="Right" Margin="0,30,230,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Prescription"/>
+                                <Button Content="Refferal" HorizontalAlignment="Right" Margin="0,30,380,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Refferal"/>
+                                <Button Content="Operation" HorizontalAlignment="Right" Margin="0,30,530,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Operation"/>
+
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -156,14 +159,26 @@
 
                                 <Label Content="Note:" Grid.Row="0" Grid.Column="0" Margin="80,50,0,0" Padding="0,0,20,0"/>
 
-                                <ComboBox x:Name="cbSpecializationRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200"/>
-                                <ComboBox x:Name="cbDoctorRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top" Width="200"/>
+                                <ComboBox x:Name="cbSpecializationRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="cbSpecializationRefferal_SelectionChanged"/>
+                                <ComboBox x:Name="cbDoctorRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top" Width="200">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Id}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding LastName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
 
 
                                 <TextBox x:Name="txtNoteRefferal" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="200" Grid.Column="0" HorizontalAlignment="Center" Margin="0,80,100,0" />
 
-                                <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,0,0" Padding="0,0,20,0"/>
-                                <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,0,0" Padding="0,0,20,0"/>
+                                <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,889,140"/>
+                                <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,889,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
 
                                 <Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
                             </Grid>
@@ -248,7 +263,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
-                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="950" Canvas.Left="3"/>
                                 </Canvas>
                                 <Canvas Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="183" Margin="0,250,0,0"  VerticalAlignment="Top" Width="953" Visibility="Visible">
 
@@ -267,7 +282,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
-                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="953" Canvas.Left="3"/>
                                 </Canvas>
                             </Grid>
                         </StackPanel>
