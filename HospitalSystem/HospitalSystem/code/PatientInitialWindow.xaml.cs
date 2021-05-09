@@ -20,6 +20,7 @@ namespace HospitalSystem.code
     public partial class PatientInitialWindow : Window
     {
         ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        Dictionary<int, int> newApptsMade = new Dictionary<int, int>();
 
         public PatientInitialWindow()
         {
@@ -44,6 +45,22 @@ namespace HospitalSystem.code
         {
             if (cbPatient.SelectedItem != null)
             {
+                int pid = ((Patient)cbPatient.SelectedItem).Id;
+
+
+                foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
+                {
+                    if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date == DateTime.Now.Date)
+                        newApptsMade[pid] += 1;
+                    else if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date < DateTime.Now.Date)
+                        newApptsMade[pid] = 0;
+                }
+
+                if (newApptsMade[pid] >= 3)
+                {
+                    MessageBox.Show("Cannot make more than 3 appointments in a day! Contact secretary for more details.");
+                    return;
+                }            
                 NewAppointment newAppt = new NewAppointment((Patient)cbPatient.SelectedItem);
                 newAppt.Show();
             }
@@ -87,6 +104,9 @@ namespace HospitalSystem.code
         {
             if (cbPatient.SelectedItem != null)
             {
+                if (!newApptsMade.ContainsKey(((Patient)cbPatient.SelectedItem).Id))
+                    newApptsMade.Add(((Patient)cbPatient.SelectedItem).Id, 0);
+
                 collectionView.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;

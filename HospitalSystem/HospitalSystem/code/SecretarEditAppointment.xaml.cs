@@ -57,8 +57,7 @@ namespace HospitalSystem.code
             else
             {
                 dpDate.SelectedDate = currentAppointment.Date;
-                InvalidEdit iv = new InvalidEdit();
-                iv.Show();
+                MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
             }
         }
 

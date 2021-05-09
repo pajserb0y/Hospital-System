@@ -10,7 +10,7 @@
         <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="173,80,0,0" VerticalAlignment="Top" Width="104"/>
         <Label Content="Date" HorizontalAlignment="Left" Height="36" Margin="173,150,0,0" VerticalAlignment="Top" Width="104"/>
         <DatePicker x:Name="dp1" HorizontalAlignment="Left" Margin="300,155,0,0" VerticalAlignment="Top" Height="26" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
-        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="370,328,0,0" VerticalAlignment="Top" Width="130" Click="Save_Click"/>
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="370,328,0,0" VerticalAlignment="Top" Width="130" Click="Save_Click_Edit"/>
         <Label Content="Time" HorizontalAlignment="Left" Height="36" Margin="173,210,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.5,1.418"/>
         <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Center" Margin="0,82,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="doctorChanged">
             <ComboBox.ItemTemplate>
