@@ -27,13 +27,10 @@ namespace HospitalSystem.code
             InitializeComponent();
             appointment = selectedAppointment;
 
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-
-
-            
-            cbPatient.SelectedItem = selectedAppointment.Patient;
+           
             cbDoctor.SelectedItem = selectedAppointment.Doctor;
+            cbDoctor.IsEnabled = false;
             dp1.SelectedDate = selectedAppointment.Date;
             cbTime.Items.Add(selectedAppointment.Time.ToString("HH:mm"));
             cbTime.SelectedItem = selectedAppointment.Time.ToString("HH:mm");
@@ -45,7 +42,6 @@ namespace HospitalSystem.code
 
             if (differenceInDays <= 2)
             {
-                appointment.Patient = (Patient)cbPatient.SelectedItem;
                 appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
                 string time = (string)cbTime.SelectedItem;
                 appointment.Time = DateTime.Parse(time);

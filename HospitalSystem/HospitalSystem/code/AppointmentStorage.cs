@@ -105,7 +105,6 @@ public class AppointmentStorage
             if (appointment.Id == a.Id)
             {
                 a.Doctor = appointment.Doctor;
-                a.Patient = appointment.Patient;
                 a.Date = appointment.Date;
                 a.Time = appointment.Time;
             }
