@@ -201,13 +201,15 @@ namespace HospitalSystem.code
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             Drug selectedDrug = (Drug)cbDrug.SelectedItem;
-            
-            foreach(Ingridient ingridient in selectedDrug.Ingridients)
-                if (currExam.Patient.Alergens.Contains(ingridient.Name))
-                {
-                    MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
-                    return;
-                }
+            if (currExam.Patient.Alergens != null)
+            {
+                foreach (Ingridient ingridient in selectedDrug.Ingridients)
+                    if (currExam.Patient.Alergens.Contains(ingridient.Name))
+                    {
+                        MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
+                        return;
+                    }
+            }
 
             int patientId = currExam.Patient.Id;
 
