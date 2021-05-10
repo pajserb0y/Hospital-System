@@ -160,8 +160,20 @@ namespace HospitalSystem.code
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
         {
-            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Appointment currApp = (Appointment)dgDoctorExams.SelectedItem;
+            Examination currExam = new Examination();
+
             currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
+            currExam.Time = currApp.Time;
+            currExam.Date = currApp.Date;
+            currExam.Patient = currApp.Patient;
+            currExam.Room = currApp.Room;
+            currExam.Doctor = currApp.Doctor;
+            currExam.IsOperation = currApp.IsOperation;
+            currExam.TimesChanged = currApp.TimesChanged;
+            currExam.TimeOfCreation = currApp.TimeOfCreation;
+       
+            
             Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
@@ -169,7 +181,7 @@ namespace HospitalSystem.code
             ExaminationStorage.getInstance().Add(currExam);
             ExaminationStorage.getInstance().serialize();
 
-            Appointment currApp = (Appointment)dgDoctorExams.SelectedItem;
+
             AppointmentStorage.getInstance().Delete(currApp);
             AppointmentStorage.getInstance().serialize();
             t0.Focus();
@@ -328,7 +340,7 @@ namespace HospitalSystem.code
             string specialization = cbSpecializationRefferal.Text;
             Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
             int id = RefferalStorage.getInstance().GenerateNewID();
-            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Appointment currExam = (Appointment)dgDoctorExams.SelectedItem;
             Patient patient = currExam.Patient;
             Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
             RefferalStorage.getInstance().Add(newRefferal);

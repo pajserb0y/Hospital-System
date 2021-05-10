@@ -81,7 +81,7 @@ namespace HospitalSystem.code
             {
                 collectionViewOperation.Filter = (e) =>
                 {
-                    Examination temp = e as Examination;
+                    Appointment temp = e as Appointment;
                     if (temp.Patient == currentPatient && temp.IsOperation == true)
                         return true;
                     return false;
@@ -120,7 +120,13 @@ namespace HospitalSystem.code
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
 
+
+            if (selectedPatient.Alergens == null)
+                selectedPatient.Alergens = new ObservableCollection<string>();
             listViewAlergens.ItemsSource = selectedPatient.Alergens;
+
+            if (selectedPatient.WorkHistory == default)
+                selectedPatient.WorkHistory = new ObservableCollection<Job>();
             dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 

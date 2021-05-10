@@ -4,6 +4,8 @@
  * Purpose: Definition of the Class Doctor.Pregled
  ***********************************************************************/
 
+using System;
+
 public class Examination : Appointment
 {
     /* private int id;
@@ -11,10 +13,11 @@ public class Examination : Appointment
      { get; set; }
     */
     //public bool IsOperation { get; set; }
+
     public Examination()
     {
-    }
-    
 
+
+    }
     //private Report Report;
 }
