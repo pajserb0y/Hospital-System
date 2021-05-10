@@ -58,6 +58,21 @@ namespace HospitalSystem.code
             cbSpecialization.SelectedIndex = -1;
         }
 
+        private bool checkRefferal(string spec)
+        {
+            if (spec == "General medicine")
+                return true;
+
+            bool found = false;
+            foreach (Refferal r in RefferalStorage.getInstance().GetAll())
+            {
+                if (r.PatientId == patient.Id)
+                    if (r.Specialization == spec)
+                        return true;
+            }
+
+            return false;
+        }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -65,7 +80,14 @@ namespace HospitalSystem.code
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
             appt.Patient = patient;
             if (cbDoctor.SelectedItem != null)
+            {
                 appt.Doctor = (Doctor)cbDoctor.SelectedItem;
+                if (!checkRefferal(appt.Doctor.Specialization))
+                {
+                    MessageBox.Show("You must have refferal for doctor specializing in " + appt.Doctor.Specialization + ".");
+                    return;
+                }
+            }
             else
                 return;
 
