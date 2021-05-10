@@ -50,6 +50,7 @@ public class AppointmentStorage
             temp.RoomId = e.Room.Id;
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             appts.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(appts);
@@ -81,6 +82,7 @@ public class AppointmentStorage
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             appts.Add(temp);
         }
         return appts;
@@ -120,13 +122,14 @@ public class AppointmentStorage
                 this.appointments.Remove(a);
                 break;
             }
+        serialize();
     }
    
    public void Add(Appointment a)
    {
         this.appointments.Add(a);
         serialize();
-   }
+    }
 
     public int GenerateNewID()
     {
@@ -212,6 +215,20 @@ internal class AppointmentViewModel
             if (doctorId != value)
             {
                 doctorId = value;
+            }
+        }
+    }
+
+
+    private bool isOperation;
+    public bool IsOperation
+    {
+        get { return isOperation; }
+        set
+        {
+            if (isOperation != value)
+            {
+                isOperation = value;
             }
         }
     }

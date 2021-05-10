@@ -21,6 +21,7 @@ namespace HospitalSystem.code
         ListCollectionView collectionViewJob = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         ListCollectionView collectionViewRefferals = new ListCollectionView(RefferalStorage.getInstance().GetAll());
+        ListCollectionView collectionViewOperation = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         private Patient selectedPatient;
 
         public PatientDetails(Patient currentPatient)
@@ -76,6 +77,18 @@ namespace HospitalSystem.code
 
             if (currentPatient != null)
             {
+                collectionViewOperation.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Patient == currentPatient && temp.IsOperation == true)
+                        return true;
+                    return false;
+                };
+                dgPatientOperations.ItemsSource = collectionViewOperation;
+            }
+
+            if (currentPatient != null)
+            {
                 collectionViewRefferals.Filter = (e) =>
                 {
                     Refferal temp = e as Refferal;
@@ -97,7 +110,7 @@ namespace HospitalSystem.code
             txtSoc.IsReadOnly = true;
             txtCity.IsReadOnly = true;
             txtCountry.IsReadOnly = true;
-            cbMarriage.IsEditable = false;
+            cbMarriage.IsEnabled = false;
             dpBirth.IsEnabled = false;
             rbF.IsEnabled = false;
             rbM.IsEnabled = false;
@@ -152,6 +165,8 @@ namespace HospitalSystem.code
             InitializeSpecializatonForRefferal(cbSpecializationRefferal);
             cbDoctorRefferal.SelectedIndex = -1;
             cbSpecializationRefferal.SelectedIndex = -1;
+            cbDoctorRefferal.IsEnabled = true;
+            cbSpecializationRefferal.IsEnabled = true;
             tRefferal.Visibility = Visibility.Visible;
             tRefferal.Focus();
         }
@@ -162,14 +177,15 @@ namespace HospitalSystem.code
             txtNoteRefferal.Text = selectedRefferal.Note;
 
             Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
-            List<string> doc = new List<string>();
-            doc.Add(selectedDoctor.Id + "-" + selectedDoctor.FirstName + " " + selectedDoctor.LastName);
-            cbDoctorRefferal.ItemsSource = doc;
-            List<string> spec = new List<string>();
-            spec.Add(selectedDoctor.Specialization);
-            cbSpecializationRefferal.ItemsSource = spec;
-            cbDoctorRefferal.IsEditable = false;
-            cbSpecializationRefferal.IsEditable = false;
+
+            cbDoctorRefferal.ItemsSource = DoctorStorage.getInstance().GetAll();
+            cbDoctorRefferal.SelectedItem = selectedDoctor;
+
+            InitializeSpecializatonForRefferal(cbSpecializationRefferal);
+            cbSpecializationRefferal.SelectedItem = selectedDoctor;
+
+            cbDoctorRefferal.IsEnabled = false;
+            cbSpecializationRefferal.IsEnabled = false;
 
             tRefferal.Visibility = Visibility.Visible;
             tRefferal.Focus();
@@ -219,6 +235,11 @@ namespace HospitalSystem.code
                 return false;
             };
             cb.ItemsSource = doctorsCollection;
+        }
+
+        private void Button_View_Operation(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

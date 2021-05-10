@@ -102,7 +102,8 @@
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20*"></ColumnDefinition>
-                            <ColumnDefinition Width="151*"/>
+                            <ColumnDefinition Width="129*"/>
+                            <ColumnDefinition Width="22*"/>
                             <ColumnDefinition Width="31*"/>
                             <ColumnDefinition Width="581*"/>
                             <ColumnDefinition Width="261*"/>
@@ -113,7 +114,7 @@
                         </Grid.RowDefinitions>
                         <DataGrid x:Name="dgPatientExams" Height="580" Width="710" Grid.Row="0" Grid.Column="1"  Margin="35,50,18,30" AutoGenerateColumns="False"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="3">
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="4">
                             <!--<CollectionViewSource x:Key="cvsTasks" Source="{StaticResource tasks}" Filter="CollectionViewSource_Filter">-->
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
@@ -128,7 +129,43 @@
                                 <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Content="View" HorizontalAlignment="Center" Grid.Column="4"  VerticalAlignment="Center"  Height="32" Width="118" Click="Button_View_Examination"/>
+                        <Button Content="View" HorizontalAlignment="Center" Grid.Column="5"  VerticalAlignment="Center"  Height="32" Width="118" Click="Button_View_Examination"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tOperations" Header="Operations" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="96">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20*"></ColumnDefinition>
+                            <ColumnDefinition Width="151*"/>
+                            <ColumnDefinition Width="31*"/>
+                            <ColumnDefinition Width="581*"/>
+                            <ColumnDefinition Width="261*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="dgPatientOperations" Height="580" Grid.Row="0" Grid.Column="1"  Margin="0,50,173,30" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="4">
+                            <!--<CollectionViewSource x:Key="cvsTasks" Source="{StaticResource tasks}" Filter="CollectionViewSource_Filter">-->
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Operation ID" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Patient ID" Binding="{Binding Patient.Id}" />
+                                <DataGridTextColumn Header="Patient Firstname" Binding="{Binding Patient.FirstName}" />
+                                <DataGridTextColumn Header="Patient Lastname" Binding="{Binding Patient.LastName}" />
+                                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Doctor.Specialization}" />
+                                <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
+                                <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
+                                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Content="View" HorizontalAlignment="Left" Grid.Column="4"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_View_Operation" Margin="113,308,0,0"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -170,8 +207,8 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            
-            <TabItem Name="tRefferal" Header="Refferal">
+
+            <TabItem Name="tRefferal" Header="Refferal" Margin="-2,-6,-2,0">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" >
                         <Grid.ColumnDefinitions>
@@ -212,7 +249,7 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Name="tExam" Header="Examination">
+            <TabItem Name="tExam" Header="Examination" VerticalAlignment="Center">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,30,80,0">
                         <Label Content="Anamnesis:"  Padding="0,0,20,0"/>

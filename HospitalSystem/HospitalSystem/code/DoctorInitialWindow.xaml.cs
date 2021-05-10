@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HospitalSystem.code
 {
@@ -87,7 +80,7 @@ namespace HospitalSystem.code
                 InitializeDoctorsForRefferal(cbSpecializationRefferal.SelectedItem.ToString(), cbDoctorRefferal);
         }
 
-        private void InitializeDoctorsForRefferal(string Specializaton,ComboBox cb)
+        private void InitializeDoctorsForRefferal(string Specializaton, ComboBox cb)
         {
             ListCollectionView doctorsCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
             doctorsCollection.Filter = (e) =>
@@ -102,7 +95,7 @@ namespace HospitalSystem.code
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            ExaminationStorage.getInstance().serialize();
+            AppointmentStorage.getInstance().serialize();
             this.Close();
         }
 
@@ -124,20 +117,20 @@ namespace HospitalSystem.code
 
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
+            ObservableCollection<Appointment> ExamList = AppointmentStorage.getInstance().GetAll();
             var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem == null)
             {
                 return;
             }
-            EditExam editExamWindow = new EditExam((Examination)selectedItem);
+            EditExam editExamWindow = new EditExam((Appointment)selectedItem);
             editExamWindow.Show();
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            ExaminationStorage.getInstance().serialize();
+            AppointmentStorage.getInstance().serialize();
             mainWindow.Show();
             this.Close();
         }
@@ -168,7 +161,7 @@ namespace HospitalSystem.code
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
-            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
+            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
 
@@ -180,7 +173,7 @@ namespace HospitalSystem.code
             AppointmentStorage.getInstance().serialize();
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
-            //dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
+           // dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
         }
 
         private void Button_Begin(object sender, RoutedEventArgs e)
@@ -196,7 +189,7 @@ namespace HospitalSystem.code
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             int prescID = PrescriptionStorage.getInstance().GenerateNewID();
             int patientId = currExam.Patient.Id;
-            Prescription newPrescription = new Prescription(prescID, patientId,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            Prescription newPrescription = new Prescription(prescID, patientId, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
             tExam.Focus();
@@ -212,18 +205,18 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Visible;
         }
 
-        private  Drug selectedDrug;
+        private Drug selectedDrug;
 
         private void Button_View_Verified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgVerifiedDrugs.SelectedItem;
-            if(selectedDrug != null)
+            if (selectedDrug != null)
                 View_Drug(dgVerifiedDrugs);
         }
         private void Button_View_Unverified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
-            if(selectedDrug != null)
+            if (selectedDrug != null)
                 View_Drug(dgUnverifiedDrugs);
         }
 
@@ -242,14 +235,14 @@ namespace HospitalSystem.code
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-        //    string input = txtPatient.Text;
+            //    string input = txtPatient.Text;
 
-        //    string[] tokens = input.Split(" ");
-        //    if(tokens.Length > 3)
-        //    {
-        //        txtPatient.Foreground.Freeze;
+            //    string[] tokens = input.Split(" ");
+            //    if(tokens.Length > 3)
+            //    {
+            //        txtPatient.Foreground.Freeze;
 
-        //    }
+            //    }
         }
 
         private void Button_Add_Ingridient(object sender, RoutedEventArgs e)
@@ -277,7 +270,7 @@ namespace HospitalSystem.code
         {
             int newAmount = 0;
             foreach (Ingridient i in selectedDrug.Ingridients)
-                 newAmount += i.Amount;
+                newAmount += i.Amount;
             selectedDrug.Amount = newAmount;
             DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Name = txtName.Text;
             DrugStorage.getInstance().serialize();
@@ -296,7 +289,7 @@ namespace HospitalSystem.code
 
         private void Button_Report(object sender, RoutedEventArgs e)
         {
-            selectedDrug = (Drug) dgUnverifiedDrugs.SelectedItem;
+            selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
             if (selectedDrug != null)
             {
                 tReport.Visibility = Visibility.Visible;
@@ -319,11 +312,11 @@ namespace HospitalSystem.code
         {
             string Note = txtNoteRefferal.Text;
             string specialization = cbSpecializationRefferal.Text;
-            Doctor doctor = (Doctor) cbDoctorRefferal.SelectedItem;
+            Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
             int id = RefferalStorage.getInstance().GenerateNewID();
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             Patient patient = currExam.Patient;
-            Refferal newRefferal = new Refferal(id, Note, specialization,patient.Id,patient.FirstName,patient.LastName, Refferal.STATUS.Active, doctor.Id,doctor.FirstName,doctor.LastName);
+            Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
             RefferalStorage.getInstance().Add(newRefferal);
             RefferalStorage.getInstance().serialize();
             tRefferal.Visibility = Visibility.Collapsed;
