@@ -220,8 +220,8 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
-    private ObservableCollection<String> alergens;
-    public ObservableCollection<String> Alergens
+    private ObservableCollection<string> alergens;
+    public ObservableCollection<string> Alergens
     {
         get { return alergens; }
         set
@@ -250,7 +250,7 @@ public class Patient : INotifyPropertyChanged
     public Patient() { }
 
     public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, string username, string password, DateTime birthDate,
-        string marriageStatus, long socNumber, string city, string country, ObservableCollection<String> alergens, ObservableCollection<Job> workHistory)
+        string marriageStatus, long socNumber, string city, string country, ObservableCollection<string> alergens, ObservableCollection<Job> workHistory)
     {
         Id = id;
         FirstName = firstName;

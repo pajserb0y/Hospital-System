@@ -1,6 +1,7 @@
 ﻿using NHibernate.Hql.Ast.ANTLR.Util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -106,7 +107,13 @@ namespace HospitalSystem.code
             txtSoc.Text = selectedPatient.SocNumber.ToString();
             txtCity.Text = selectedPatient.City;
             txtCountry.Text = selectedPatient.Country;
+
+            if(selectedPatient.Alergens == null)
+                selectedPatient.Alergens = new ObservableCollection<string>();
             listViewAlergens.ItemsSource = selectedPatient.Alergens;
+
+            if (selectedPatient.WorkHistory == default)
+                selectedPatient.WorkHistory = new ObservableCollection<Job>();
             dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
