@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,10 +26,8 @@ namespace HospitalSystem.code
             InitializeComponent();
         }
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {         
-            if (currentPatient.Alergens == null)
-                currentPatient.Alergens = new ObservableCollection<string>();
-            currentPatient.Alergens.Add(txtSubstance.Text);
+        {
+            currentPatient.Alergens.Add(txtSubstance.Text.ToString());
             this.Close();
         }        
     }

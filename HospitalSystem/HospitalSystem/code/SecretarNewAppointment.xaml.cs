@@ -36,7 +36,7 @@ namespace HospitalSystem.code
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
             appt.Patient = currentPatient;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appt.Room = RoomStorage.getInstance().GetOne(8);
+            appt.Room = (Room)cbRoom.SelectedItem;
             appt.Date = (DateTime)dpDate.SelectedDate;
             appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
             Room selectedRoom = (Room)cbRoom.SelectedItem;
@@ -64,7 +64,7 @@ namespace HospitalSystem.code
                 collectionAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate && temp.Room == (Room)cbRoom.SelectedItem)
+                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate)
                         return true;
                     return false;
                 };

@@ -33,7 +33,6 @@ namespace HospitalSystem.code
             int indexOfAlergen = currentPatient.Alergens.IndexOf(currentAlergen);         
             currentPatient.Alergens.RemoveAt(indexOfAlergen);
             currentPatient.Alergens.Insert(indexOfAlergen, txtSubstance.Text);
-            PatientsStorage.getInstance().Edit(currentPatient);
             this.Close();
         }
         private void Window_Closed(object sender, EventArgs e)
