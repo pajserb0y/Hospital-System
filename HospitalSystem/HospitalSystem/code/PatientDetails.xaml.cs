@@ -56,14 +56,14 @@ namespace HospitalSystem.code
             txtCity.Text = currentPatient.City;
             txtCountry.Text = currentPatient.Country;
 
-            collectionViewJob.Filter = (e) =>
-            {
-                Job temp = e as Job;
-                if (temp.PID == currentPatient.Id)
-                    return true;
-                return false;
-            };
-            dgJob.ItemsSource = collectionViewJob;
+            //collectionViewJob.Filter = (e) =>
+            //{
+            //    Job temp = e as Job;
+            //    if (temp.PID == currentPatient.Id)
+            //        return true;
+            //    return false;
+            //};
+            //dgJob.ItemsSource = collectionViewJob;
 
             if (currentPatient != null)
             {
@@ -172,7 +172,7 @@ namespace HospitalSystem.code
             string specialization = cbSpecializationRefferal.Text;
             Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
             int id = RefferalStorage.getInstance().GenerateNewID();
-            Patient patient = selectedPatient;
+            Patient patient = currentPatient;
             Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id,patient.FirstName,patient.LastName, Refferal.STATUS.Active, doctor.Id,doctor.FirstName,doctor.LastName);
             RefferalStorage.getInstance().Add(newRefferal);
             RefferalStorage.getInstance().serialize();
