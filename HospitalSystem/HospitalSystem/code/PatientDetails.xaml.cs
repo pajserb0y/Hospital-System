@@ -81,7 +81,7 @@ namespace HospitalSystem.code
             {
                 collectionViewOperation.Filter = (e) =>
                 {
-                    Examination temp = e as Examination;
+                    Appointment temp = e as Appointment;
                     if (temp.Patient == currentPatient && temp.IsOperation == true)
                         return true;
                     return false;

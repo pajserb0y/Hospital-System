@@ -67,8 +67,11 @@ namespace HospitalSystem.code
             foreach (Refferal r in RefferalStorage.getInstance().GetAll())
             {
                 if (r.PatientId == patient.Id)
-                    if (r.Specialization == spec)
+                    if (r.Specialization == spec && r.Status == Refferal.STATUS.Active)
+                    {
+                        r.Status = Refferal.STATUS.Used;
                         return true;
+                    }
             }
 
             return false;
