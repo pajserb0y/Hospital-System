@@ -19,7 +19,8 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientInitialWindow : Window
     {
-        ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        ListCollectionView allAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        ListCollectionView allExaminations = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         Dictionary<int, int> newApptsMade = new Dictionary<int, int>();
 
         public PatientInitialWindow()
@@ -27,13 +28,9 @@ namespace HospitalSystem.code
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
 
-            ObservableCollection<Appointment> appts = AppointmentStorage.getInstance().GetAll();
-            dgAppointment.ItemsSource = appts;
-
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
             cbPatient.ItemsSource = patients;
         }
-
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -100,6 +97,22 @@ namespace HospitalSystem.code
             }
         }
 
+        private void Button_Feedback(object sender, RoutedEventArgs e)
+        {
+            if (cbPatient.SelectedItem != null && dgExamination.SelectedItem != null)
+            {
+
+                FeedbackForm rateExamination = new FeedbackForm((Examination)dgExamination.SelectedItem, ((Patient)cbPatient.SelectedItem).Id);
+                rateExamination.Show();
+            }
+        }
+
+        private void provideGeneralFeedback(int pid)
+        {
+            FeedbackForm rateExamination = new FeedbackForm(null, pid);
+            rateExamination.Show();
+        }
+
         private void patientChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbPatient.SelectedItem != null)
@@ -107,14 +120,27 @@ namespace HospitalSystem.code
                 if (!newApptsMade.ContainsKey(((Patient)cbPatient.SelectedItem).Id))
                     newApptsMade.Add(((Patient)cbPatient.SelectedItem).Id, 0);
 
-                collectionView.Filter = (e) =>
+
+                allAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
                     if (temp.Patient == cbPatient.SelectedItem)
                         return true;
                     return false;
                 };
-                dgAppointment.ItemsSource = collectionView;
+                dgAppointment.ItemsSource = allAppointments;
+
+                allExaminations.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Patient == cbPatient.SelectedItem)
+                        return true;
+                    return false;
+                };
+                dgExamination.ItemsSource = allExaminations;
+
+                if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
+                    provideGeneralFeedback(((Patient)cbPatient.SelectedItem).Id);
             }
         }
     }

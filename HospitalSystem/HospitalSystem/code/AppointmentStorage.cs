@@ -50,6 +50,7 @@ public class AppointmentStorage
             temp.RoomId = e.Room.Id;
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             temp.TimesChanged = e.TimesChanged;
             temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
@@ -76,13 +77,14 @@ public class AppointmentStorage
         }
         foreach (AppointmentViewModel e in apptIDs)
         {
-            Appointment temp = new Appointment();
+            Examination temp = new Examination();
             temp.Id = e.Id;
             temp.Doctor = DoctorStorage.getInstance().GetOne(e.DoctorId);
             temp.Patient = PatientsStorage.getInstance().GetOne(e.PatientId);
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             temp.TimesChanged = e.TimesChanged;
             temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
@@ -220,8 +222,20 @@ internal class AppointmentViewModel
         }
     }
 
-    private int timesChanged;
+    private bool isOperation;
+    public bool IsOperation
+    {
+        get { return isOperation; }
+        set
+        {
+            if (isOperation != value)
+            {
+                isOperation = value;
+            }
+        }
+    }
 
+    private int timesChanged;
     public int TimesChanged
     {
         get { return timesChanged; }
@@ -229,7 +243,6 @@ internal class AppointmentViewModel
     }
 
     private DateTime timeOfCreation;
-
     public DateTime TimeOfCreation
     {
         get { return timeOfCreation; }
