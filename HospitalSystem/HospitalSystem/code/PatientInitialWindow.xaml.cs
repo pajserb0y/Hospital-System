@@ -19,20 +19,18 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientInitialWindow : Window
     {
-        ListCollectionView collectionView = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        ListCollectionView allAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+        ListCollectionView allExaminations = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+        Dictionary<int, int> newApptsMade = new Dictionary<int, int>();
 
         public PatientInitialWindow()
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
 
-            ObservableCollection<Appointment> appts = AppointmentStorage.getInstance().GetAll();
-            dgAppointment.ItemsSource = appts;
-
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
             cbPatient.ItemsSource = patients;
         }
-
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -44,6 +42,22 @@ namespace HospitalSystem.code
         {
             if (cbPatient.SelectedItem != null)
             {
+                int pid = ((Patient)cbPatient.SelectedItem).Id;
+
+
+                foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
+                {
+                    if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date == DateTime.Now.Date)
+                        newApptsMade[pid] += 1;
+                    else if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date < DateTime.Now.Date)
+                        newApptsMade[pid] = 0;
+                }
+
+                if (newApptsMade[pid] >= 3)
+                {
+                    MessageBox.Show("Cannot make more than 3 appointments in a day! Contact secretary for more details.");
+                    return;
+                }            
                 NewAppointment newAppt = new NewAppointment((Patient)cbPatient.SelectedItem);
                 newAppt.Show();
             }
@@ -83,18 +97,50 @@ namespace HospitalSystem.code
             }
         }
 
+        private void Button_Feedback(object sender, RoutedEventArgs e)
+        {
+            if (cbPatient.SelectedItem != null && dgExamination.SelectedItem != null)
+            {
+
+                FeedbackForm rateExamination = new FeedbackForm((Examination)dgExamination.SelectedItem, ((Patient)cbPatient.SelectedItem).Id);
+                rateExamination.Show();
+            }
+        }
+
+        private void provideGeneralFeedback(int pid)
+        {
+            FeedbackForm rateExamination = new FeedbackForm(null, pid);
+            rateExamination.Show();
+        }
+
         private void patientChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbPatient.SelectedItem != null)
             {
-                collectionView.Filter = (e) =>
+                if (!newApptsMade.ContainsKey(((Patient)cbPatient.SelectedItem).Id))
+                    newApptsMade.Add(((Patient)cbPatient.SelectedItem).Id, 0);
+
+
+                allAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
                     if (temp.Patient == cbPatient.SelectedItem)
                         return true;
                     return false;
                 };
-                dgAppointment.ItemsSource = collectionView;
+                dgAppointment.ItemsSource = allAppointments;
+
+                allExaminations.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Patient == cbPatient.SelectedItem)
+                        return true;
+                    return false;
+                };
+                dgExamination.ItemsSource = allExaminations;
+
+                if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
+                    provideGeneralFeedback(((Patient)cbPatient.SelectedItem).Id);
             }
         }
     }

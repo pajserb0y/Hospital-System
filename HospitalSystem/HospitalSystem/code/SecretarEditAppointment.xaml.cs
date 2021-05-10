@@ -38,6 +38,7 @@ namespace HospitalSystem.code
             dpDate.SelectedDate = selectedApp.Date;
             cbTime.Items.Add(selectedApp.Time.ToString("HH:mm"));
             cbTime.SelectedItem = selectedApp.Time.ToString("HH:mm");
+            cbRoom.Items.Add(selectedApp.Room);
             cbRoom.SelectedItem = selectedApp.Room;
         }
 
@@ -57,8 +58,7 @@ namespace HospitalSystem.code
             else
             {
                 dpDate.SelectedDate = currentAppointment.Date;
-                InvalidEdit iv = new InvalidEdit();
-                iv.Show();
+                MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
             }
         }
 

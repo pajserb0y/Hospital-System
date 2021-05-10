@@ -20,7 +20,7 @@ namespace HospitalSystem.code
             InitializeComponent();
 
             InitializeCollection();
-
+            
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
@@ -28,6 +28,7 @@ namespace HospitalSystem.code
             tOperation.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
         }
+        
         private void InitializeCollection()
         {
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
@@ -187,9 +188,20 @@ namespace HospitalSystem.code
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
-            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Drug selectedDrug = (Drug)cbDrug.SelectedItem;
+            
+            foreach(Ingridient ingridient in selectedDrug.Ingridients)
+                if (currExam.Patient.Alergens.Contains(ingridient.Name))
+                {
+                    MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
+                    return;
+                }
+
             int patientId = currExam.Patient.Id;
-            Prescription newPrescription = new Prescription(prescID, patientId, currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+
+            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Prescription newPrescription = new Prescription(prescID, patientId, currExam.Id, selectedDrug, txtTaking.Text, currExam.Date);
+            
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
             tExam.Focus();

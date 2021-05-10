@@ -29,7 +29,5 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style></TextBlock>
-        <TextBox x:Name="txtNo" TextWrapping="Wrap" IsReadOnly="True" Margin="352,0,0,289" HorizontalAlignment="Left" Width="31" Height="20" VerticalAlignment="Bottom"/>
-        <Label Content="No:" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="34" Margin="249,0,0,280" VerticalAlignment="Bottom" Width="100"/>
     </Grid>
 </Window>

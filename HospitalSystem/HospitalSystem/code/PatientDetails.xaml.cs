@@ -18,15 +18,17 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientDetails : Window
     {
-        ListCollectionView collectionViewJob = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         ListCollectionView collectionViewRefferals = new ListCollectionView(RefferalStorage.getInstance().GetAll());
         ListCollectionView collectionViewOperation = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
-        private Patient selectedPatient;
 
-        public PatientDetails(Patient currentPatient)
+        private Patient currentPatient;
+
+        public PatientDetails(Patient selectedPatient)
         {
             InitializeComponent();
+            currentPatient = selectedPatient;
+
 
             selectedPatient = currentPatient;
             txtID.Text = currentPatient.Id.ToString();
@@ -117,6 +119,9 @@ namespace HospitalSystem.code
             cbGuest.IsEnabled = false;
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
+
+            listViewAlergens.ItemsSource = selectedPatient.Alergens;
+            dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
         private void Button_View_Examination(object sender, RoutedEventArgs e)
@@ -135,6 +140,22 @@ namespace HospitalSystem.code
     
             tExam.Visibility = Visibility.Visible;
             tExam.Focus();
+        }
+        private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            NewAlergen newAlergen = new NewAlergen(currentPatient);
+            newAlergen.Show();
+        }
+
+        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
+            editAlergen.Show();
+        }
+
+        private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
+        {
+            currentPatient.Alergens.Remove(listViewAlergens.SelectedItem.ToString());
         }
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)

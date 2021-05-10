@@ -14,23 +14,22 @@ using System.Windows.Shapes;
 namespace HospitalSystem.code
 {
     /// <summary>
-    /// Interaction logic for NewJob.xaml
+    /// Interaction logic for NewAlergen.xaml
     /// </summary>
-    public partial class NewJob : Window
+    public partial class NewAlergen : Window
     {
         Patient currentPatient;
-        public NewJob(Patient selectedPatient)
+        public NewAlergen(Patient selectedPatient)
         {
             currentPatient = selectedPatient;
             InitializeComponent();
         }
-
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (currentPatient.WorkHistory == default)
-                currentPatient.WorkHistory = new ObservableCollection<Job>();
-            currentPatient.WorkHistory.Add(new Job(txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text));
+        {         
+            if (currentPatient.Alergens == null)
+                currentPatient.Alergens = new ObservableCollection<string>();
+            currentPatient.Alergens.Add(txtSubstance.Text);
             this.Close();
-        }
+        }        
     }
 }

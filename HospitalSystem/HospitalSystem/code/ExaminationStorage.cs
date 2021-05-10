@@ -99,6 +99,8 @@ public class ExaminationStorage
             temp.Date = e.Date;
             temp.Time = e.Time;
             temp.IsOperation = e.IsOperation;
+            temp.TimeOfCreation = e.TimeOfCreation;
+            temp.TimesChanged = e.TimesChanged;
             exams.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(exams);
@@ -131,6 +133,8 @@ public class ExaminationStorage
             temp.Date = e.Date;
             temp.Time = e.Time;
             temp.IsOperation = e.IsOperation;
+            temp.TimeOfCreation = e.TimeOfCreation;
+            temp.TimesChanged = e.TimesChanged;
             exams.Add(temp);
         }
         return exams;
@@ -219,6 +223,33 @@ internal class ExaminationViewModel
             if (isOperation != value)
             {
                 isOperation = value;
+            }
+        }
+    }
+    private int timesChanged;
+
+    public int TimesChanged
+    {
+        get { return timesChanged; }
+        set 
+        {
+            if (timesChanged != value)
+            {
+                timesChanged = value;
+            }
+        }
+    }
+
+    private DateTime timeOfCreation;
+
+    public DateTime TimeOfCreation
+    {
+        get { return timeOfCreation; }
+        set 
+        {
+            if (timeOfCreation != value)
+            {
+                timeOfCreation = value;
             }
         }
     }

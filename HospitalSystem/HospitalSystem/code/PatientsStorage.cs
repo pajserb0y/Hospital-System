@@ -71,6 +71,8 @@ public class PatientsStorage
                 P.Country = patient.Country;
                 P.City = patient.City;
                 P.BirthDate = patient.BirthDate;
+                P.Alergens = patient.Alergens;
+                P.WorkHistory = patient.WorkHistory;
             }
     }
 

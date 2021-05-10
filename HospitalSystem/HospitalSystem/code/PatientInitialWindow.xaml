@@ -8,11 +8,11 @@
         Title="PatientInitialWindow" Height="700" Width="1050">
     <Grid>
         <DataGrid x:Name="dgAppointment" Grid.Row="0" AutoGenerateColumns="False"
-                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="61,41,225,158"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="61,41,225,393"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Appt ID" Binding="{Binding Id}"/>
                 <DataGridTemplateColumn Header="Patient" Width="2*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -36,7 +36,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <ComboBox x:Name="cbPatient" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="118" SelectionChanged="patientChanged" Margin="61,558,0,0">
+        <ComboBox x:Name="cbPatient" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" SelectionChanged="patientChanged" Margin="61,607,0,0">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -50,10 +50,39 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,59,0,0" VerticalAlignment="Top" Width="118" Click="Button_Add"/>
-        <Button Content="Edit" HorizontalAlignment="Left" Margin="874,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Edit"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,206,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Delete"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="874,558,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Back"/>
-        <Button Content="Medication" HorizontalAlignment="Left" Margin="255,553,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Medication"/>
+        <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,43,0,0" VerticalAlignment="Top" Width="118" Click="Button_Add"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="874,142,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Edit"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Delete"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="874,534,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Back"/>
+        <Button Content="Medication" HorizontalAlignment="Left" Margin="874,446,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Medication"/>
+        <DataGrid x:Name="dgExamination" Grid.Row="0" AutoGenerateColumns="False"
+            SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="61,314,225,93"
+            CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
+                <DataGridTemplateColumn Header="Patient" Width="2*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Patient.Id}"/>
+                                <TextBlock Text="    "/>
+                                <TextBlock Text="{Binding Patient.FirstName}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding Patient.LastName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
+                <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
+                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Give feedback" HorizontalAlignment="Left" Margin="874,355,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Feedback"/>
     </Grid>
 </Window>

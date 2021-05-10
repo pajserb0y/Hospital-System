@@ -51,6 +51,8 @@ public class AppointmentStorage
             temp.Date = e.Date;
             temp.Time = e.Time;
             temp.IsOperation = e.IsOperation;
+            temp.TimesChanged = e.TimesChanged;
+            temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(appts);
@@ -83,6 +85,8 @@ public class AppointmentStorage
             temp.Date = e.Date;
             temp.Time = e.Time;
             temp.IsOperation = e.IsOperation;
+            temp.TimesChanged = e.TimesChanged;
+            temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
         }
         return appts;
@@ -107,9 +111,9 @@ public class AppointmentStorage
             if (appointment.Id == a.Id)
             {
                 a.Doctor = appointment.Doctor;
-                a.Patient = appointment.Patient;
                 a.Date = appointment.Date;
                 a.Time = appointment.Time;
+                a.TimesChanged += 1;
             }
         serialize();
     }
@@ -218,8 +222,7 @@ internal class AppointmentViewModel
             }
         }
     }
-
-
+  
     private bool isOperation;
     public bool IsOperation
     {
@@ -229,6 +232,31 @@ internal class AppointmentViewModel
             if (isOperation != value)
             {
                 isOperation = value;
+            }
+        }
+    }
+    private int timesChanged;
+    public int TimesChanged
+    {
+        get { return timesChanged; }
+        set 
+        {
+            if (timesChanged != value)
+            {
+                timesChanged = value;
+            }
+        }
+    }
+
+    private DateTime timeOfCreation;
+    public DateTime TimeOfCreation
+    {
+        get { return timeOfCreation; }
+        set
+        {
+            if (timeOfCreation != value)
+            {
+                timeOfCreation = value;
             }
         }
     }
