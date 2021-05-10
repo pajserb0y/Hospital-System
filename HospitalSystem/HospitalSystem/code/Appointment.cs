@@ -100,6 +100,37 @@ public class Appointment : INotifyPropertyChanged
             }
         }
     }
+
+    private int timesChanged;
+
+    public int TimesChanged
+    {
+        get { return timesChanged; }
+        set
+        {
+            if (timesChanged != value)
+            {
+                timesChanged = value;
+                OnPropertyChanged("TimesChanged");
+            }
+        }
+    }
+
+    private DateTime timeOfCreation;
+
+    public DateTime TimeOfCreation
+    {
+        get { return timeOfCreation; }
+        set
+        {
+            if (timeOfCreation != value)
+            {
+                timeOfCreation = value;
+                OnPropertyChanged("TimeOfCreation");
+            }
+        }
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(String name)

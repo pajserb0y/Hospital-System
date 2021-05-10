@@ -24,8 +24,8 @@ public class Doctor : INotifyPropertyChanged
     }
 
 
-    private String firstname;
-    public String FirstName
+    private string firstname;
+    public string FirstName
     {
         get { return firstname; }
         set
@@ -38,8 +38,8 @@ public class Doctor : INotifyPropertyChanged
         }
     }
 
-    private String lastname;
-    public String LastName
+    private string lastname;
+    public string LastName
     {
         get { return lastname; }
         set
@@ -67,8 +67,8 @@ public class Doctor : INotifyPropertyChanged
     }
 
 
-    private String adress;
-    public String Adress
+    private string adress;
+    public string Adress
     {
         get { return adress; }
         set
@@ -95,8 +95,8 @@ public class Doctor : INotifyPropertyChanged
         }
     }
 
-    private String specialization;
-    public String Specialization
+    private string specialization;
+    public string Specialization
     {
         get { return specialization; }
         set
@@ -122,7 +122,7 @@ public class Doctor : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged(String name)
+    protected virtual void OnPropertyChanged(string name)
     {
         if (PropertyChanged != null)
         {
