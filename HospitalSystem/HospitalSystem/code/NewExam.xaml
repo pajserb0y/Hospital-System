@@ -7,29 +7,12 @@
         mc:Ignorable="d"
         Title="NewExam" Height="450" Width="800">
     <Grid RenderTransformOrigin="0.429,0.383">
-        <Label Content="Patient" HorizontalAlignment="Left" Height="37" Margin="96,26,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="96,84,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Date" HorizontalAlignment="Left" Height="36" Margin="96,217,0,0" VerticalAlignment="Top" Width="104"/>
-        <DatePicker x:Name="dp1" HorizontalAlignment="Left" Margin="223,222,0,0" VerticalAlignment="Top" Height="26" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True"/>
-        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click"/>
-
-        <Label Content="Room" HorizontalAlignment="Left" Height="36" Margin="96,155,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="Time" HorizontalAlignment="Left" Height="36" Margin="96,277,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.5,1.418"/>
-        <TextBox x:Name="txt1" HorizontalAlignment="Left" Margin="223,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="27"/>
-        <ComboBox x:Name="cbPatient"  HorizontalAlignment="Left" Margin="223,27,0,0" VerticalAlignment="Top" Width="200"  >
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Id}"/>
-                        <TextBlock Text=" - "/>
-                        <TextBlock Text="{Binding Path=FirstName}"/>
-                        <TextBlock Text=" "/>
-                        <TextBlock Text="{Binding Path=LastName}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Left" Margin="223,93,0,0" VerticalAlignment="Top" Width="200" >
+        <Label Content="Patient:" HorizontalAlignment="Left"  Margin="96,60,0,0" VerticalAlignment="Top" Width="58" />
+        <Label Content="Doctor:" HorizontalAlignment="Left"  Margin="97,127,0,0" VerticalAlignment="Top" Width="58" />
+        <Label Content="Date:" HorizontalAlignment="Left"  Margin="109,250,0,0" VerticalAlignment="Top" Width="44" />
+        <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="194,256,0,0" VerticalAlignment="Top" Height="26" Width="189" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
+        <Label Content="Time:" HorizontalAlignment="Left"  Margin="110,311,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.5,1.418" Width="45"/>
+        <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Left" Margin="194,129,0,0" VerticalAlignment="Top" Width="236" SelectionChanged="doctorChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -42,17 +25,32 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="cbRoom"  HorizontalAlignment="Left" Margin="223,155,0,0" VerticalAlignment="Top" Width="200" >
+        <ComboBox x:Name="cbTime"  HorizontalAlignment="Left" Margin="194,318,0,0" VerticalAlignment="Top" Width="236" SelectionChanged="timeChanged"/>
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click_Save"/>
+        <ComboBox x:Name="cbRoom"  HorizontalAlignment="Left" Margin="194,193,0,0" VerticalAlignment="Top" Width="236">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text=" - "/>
+                        <TextBlock Text=" "/>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-
+        <Label Content="Room:" HorizontalAlignment="Left"  Margin="102,191,0,0" VerticalAlignment="Top" Width="52" />
+        <ComboBox x:Name="cbPatient"  HorizontalAlignment="Left" Margin="194,64,0,0" VerticalAlignment="Top" Width="236" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text=" - "/>
+                        <TextBlock Text="{Binding FirstName}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding LastName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 </Window>

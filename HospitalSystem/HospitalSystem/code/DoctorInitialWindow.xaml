@@ -108,6 +108,9 @@
                             <Grid>
                                 <Button Content="Save" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Save_Anamnesis"/>
                                 <Button Content="Prescription" HorizontalAlignment="Right" Margin="0,30,230,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Prescription"/>
+                                <Button Content="Refferal" HorizontalAlignment="Right" Margin="0,30,380,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Refferal"/>
+                                <Button Content="Operation" HorizontalAlignment="Right" Margin="0,30,530,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Operation"/>
+
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -137,6 +140,82 @@
                                 <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0"/>
 
                                 <Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Name="tRefferal" Header="Refferal">
+                        <StackPanel>
+                            <Grid Height="Auto" Width="Auto" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="97.693"></RowDefinition>
+                                    <RowDefinition Height="98*"></RowDefinition>
+                                    <RowDefinition Height="112*"></RowDefinition>
+                                    <RowDefinition Height="71*"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Content="Note:" Grid.Row="0" Grid.Column="0" Margin="80,50,0,0" Padding="0,0,20,0"/>
+
+                                <ComboBox x:Name="cbSpecializationRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="cbSpecializationRefferal_SelectionChanged"/>
+                                <ComboBox x:Name="cbDoctorRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top" Width="200">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Id}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding LastName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+
+                                <TextBox x:Name="txtNoteRefferal" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="200" Grid.Column="0" HorizontalAlignment="Center" Margin="0,80,100,0" />
+
+                                <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,889,140"/>
+                                <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,889,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
+
+                                <Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Name="tOperation" Header="Operation">
+                        <StackPanel>
+                            <Grid Height="Auto" Width="Auto" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="68*"></ColumnDefinition>
+                                    <ColumnDefinition Width="193*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="97.693"></RowDefinition>
+                                    <RowDefinition Height="98*"></RowDefinition>
+                                    <RowDefinition Height="112*"></RowDefinition>
+                                    <RowDefinition Height="71*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Content="Name:" Grid.Row="0" Grid.Column="0" Margin="80,50,0,91" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Note:" Grid.Row="1" Grid.Column="0" Margin="80,50,0,91" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+                                <ComboBox x:Name="cbSpecializationOperation" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2"/>
+                                <ComboBox x:Name="cbDoctorOperation" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="160,90,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <ComboBox x:Name="cbOprationTime" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="160,170,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+
+                                <TextBox x:Name="txtNoteOperation" Grid.Row="1" Grid.RowSpan="2" Width="800" Height="100" Grid.Column="0" HorizontalAlignment="Left" Margin="72,80,0,0" Grid.ColumnSpan="2" />
+                                <TextBox x:Name="txtOperationName" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="30" Grid.Column="0" HorizontalAlignment="Left" Margin="72,20,0,0" Grid.ColumnSpan="2" />
+
+                                <Label Content="Specialization:" Grid.Row="3" Grid.Column="0" Margin="70,50,0,96" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Doctor:" Grid.Row="3" Grid.Column="0" Margin="70,90,0,96" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Date:" Grid.Row="3" Grid.Column="0" Margin="70,130,0,96" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Time:" Grid.Row="3" Grid.Column="0" Margin="70,170,0,96" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+                                <Button Content="Save" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="574,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
+                                <DatePicker x:Name="dpOperationDate" HorizontalAlignment="Left" Margin="160,127,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="200"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -184,7 +263,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
-                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="950" Canvas.Left="3"/>
                                 </Canvas>
                                 <Canvas Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="183" Margin="0,250,0,0"  VerticalAlignment="Top" Width="953" Visibility="Visible">
 
@@ -203,7 +282,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
-                                    <Rectangle Height="183" Stroke="Black" Width="953"/>
+                                    <Rectangle Height="183" Stroke="Black" Width="953" Canvas.Left="3"/>
                                 </Canvas>
                             </Grid>
                         </StackPanel>

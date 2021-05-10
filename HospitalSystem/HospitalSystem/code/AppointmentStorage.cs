@@ -126,13 +126,14 @@ public class AppointmentStorage
                 this.appointments.Remove(a);
                 break;
             }
+        serialize();
     }
    
    public void Add(Appointment a)
    {
         this.appointments.Add(a);
         serialize();
-   }
+    }
 
     public int GenerateNewID()
     {
@@ -221,7 +222,7 @@ internal class AppointmentViewModel
             }
         }
     }
-
+  
     private bool isOperation;
     public bool IsOperation
     {
@@ -234,7 +235,6 @@ internal class AppointmentViewModel
             }
         }
     }
-
     private int timesChanged;
     public int TimesChanged
     {
@@ -260,5 +260,4 @@ internal class AppointmentViewModel
             }
         }
     }
-
 }

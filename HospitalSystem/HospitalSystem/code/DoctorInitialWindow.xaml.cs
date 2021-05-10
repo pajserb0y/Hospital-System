@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HospitalSystem.code
 {
@@ -27,28 +20,15 @@ namespace HospitalSystem.code
             InitializeComponent();
 
             InitializeCollection();
-
-            //FillDrugList();
-
+            
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
+            tOperation.Visibility = Visibility.Collapsed;
+            tRefferal.Visibility = Visibility.Collapsed;
         }
-
-        //private void FillDrugList()
-        //{
-        //    Drug d1 = new Drug(1, "Bensedin");
-        //    Drug d2 = new Drug(2, "Bromazepam");
-        //    Drug d3 = new Drug(3, "Trodon");
-
-        //    cbDrug.Items.Add(d1);
-        //    cbDrug.Items.Add(d2);
-        //    cbDrug.Items.Add(d3);
-
-
-        //}
-
+        
         private void InitializeCollection()
         {
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
@@ -64,11 +44,59 @@ namespace HospitalSystem.code
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
             dgDoctorExams.ItemsSource = appointments;
+
+            InitializeSpecializatonForRefferal(cbSpecializationRefferal);
+        }
+
+        private void InitializeSpecializatonForRefferal(ComboBox cb)
+        {
+            ListCollectionView specializationCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
+            List<Doctor> doctorsWithDifferentSpecialization = new List<Doctor>();
+            specializationCollection.Filter = (doc) =>
+            {
+                bool specializationAlreadyInList = false;
+                Doctor tempDoc = doc as Doctor;
+                if (doctorsWithDifferentSpecialization.Count <= 0)
+                {
+                    doctorsWithDifferentSpecialization.Add(tempDoc);
+                    return true;
+                }
+                foreach (Doctor dr in doctorsWithDifferentSpecialization)
+                    if (tempDoc.Specialization == dr.Specialization)
+                        specializationAlreadyInList = true;
+
+                if (specializationAlreadyInList is false)
+                {
+                    doctorsWithDifferentSpecialization.Add(tempDoc);
+                    return true;
+                }
+                return false;
+            };
+            cb.ItemsSource = specializationCollection;
+        }
+
+        private void cbSpecializationRefferal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbSpecializationRefferal.SelectedIndex != -1)
+                InitializeDoctorsForRefferal(cbSpecializationRefferal.SelectedItem.ToString(), cbDoctorRefferal);
+        }
+
+        private void InitializeDoctorsForRefferal(string Specializaton, ComboBox cb)
+        {
+            ListCollectionView doctorsCollection = new ListCollectionView(DoctorStorage.getInstance().GetAll());
+            doctorsCollection.Filter = (e) =>
+            {
+                Doctor temp = e as Doctor;
+                if (temp.Specialization == Specializaton)
+                    return true;
+                return false;
+            };
+            cb.ItemsSource = doctorsCollection;
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            ExaminationStorage.getInstance().serialize();
+            AppointmentStorage.getInstance().serialize();
             this.Close();
         }
 
@@ -90,20 +118,20 @@ namespace HospitalSystem.code
 
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
+            ObservableCollection<Appointment> ExamList = AppointmentStorage.getInstance().GetAll();
             var selectedItem = dgDoctorExams.SelectedItem;
             if (selectedItem == null)
             {
                 return;
             }
-            EditExam editExamWindow = new EditExam((Examination)selectedItem);
+            EditExam editExamWindow = new EditExam((Appointment)selectedItem);
             editExamWindow.Show();
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            ExaminationStorage.getInstance().serialize();
+            AppointmentStorage.getInstance().serialize();
             mainWindow.Show();
             this.Close();
         }
@@ -134,7 +162,7 @@ namespace HospitalSystem.code
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
             currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
-            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text,txtDiagnosis.Text);
+            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
             AnamnesisStorage.getInstance().Add(newAnamnesis);
             AnamnesisStorage.getInstance().serialize();
 
@@ -146,7 +174,7 @@ namespace HospitalSystem.code
             AppointmentStorage.getInstance().serialize();
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
-            //dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
+           // dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
         }
 
         private void Button_Begin(object sender, RoutedEventArgs e)
@@ -170,8 +198,10 @@ namespace HospitalSystem.code
                 }
 
             int patientId = currExam.Patient.Id;
+
             int prescID = PrescriptionStorage.getInstance().GenerateNewID();
             Prescription newPrescription = new Prescription(prescID, patientId, currExam.Id, selectedDrug, txtTaking.Text, currExam.Date);
+            
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
             tExam.Focus();
@@ -187,18 +217,18 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Visible;
         }
 
-        private  Drug selectedDrug;
+        private Drug selectedDrug;
 
         private void Button_View_Verified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgVerifiedDrugs.SelectedItem;
-            if(selectedDrug != null)
+            if (selectedDrug != null)
                 View_Drug(dgVerifiedDrugs);
         }
         private void Button_View_Unverified_Drug(object sender, RoutedEventArgs e)
         {
             selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
-            if(selectedDrug != null)
+            if (selectedDrug != null)
                 View_Drug(dgUnverifiedDrugs);
         }
 
@@ -217,14 +247,14 @@ namespace HospitalSystem.code
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-        //    string input = txtPatient.Text;
+            //    string input = txtPatient.Text;
 
-        //    string[] tokens = input.Split(" ");
-        //    if(tokens.Length > 3)
-        //    {
-        //        txtPatient.Foreground.Freeze;
+            //    string[] tokens = input.Split(" ");
+            //    if(tokens.Length > 3)
+            //    {
+            //        txtPatient.Foreground.Freeze;
 
-        //    }
+            //    }
         }
 
         private void Button_Add_Ingridient(object sender, RoutedEventArgs e)
@@ -252,7 +282,7 @@ namespace HospitalSystem.code
         {
             int newAmount = 0;
             foreach (Ingridient i in selectedDrug.Ingridients)
-                 newAmount += i.Amount;
+                newAmount += i.Amount;
             selectedDrug.Amount = newAmount;
             DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Name = txtName.Text;
             DrugStorage.getInstance().serialize();
@@ -271,7 +301,7 @@ namespace HospitalSystem.code
 
         private void Button_Report(object sender, RoutedEventArgs e)
         {
-            selectedDrug = (Drug) dgUnverifiedDrugs.SelectedItem;
+            selectedDrug = (Drug)dgUnverifiedDrugs.SelectedItem;
             if (selectedDrug != null)
             {
                 tReport.Visibility = Visibility.Visible;
@@ -288,6 +318,35 @@ namespace HospitalSystem.code
             DrugStorage.getInstance().GetOneDrug(selectedDrug.Id).Report = txtReport.Text;
             tReport.Visibility = Visibility.Collapsed;
             tDrugRecord.Focus();
+        }
+
+        private void Button_Save_Refferal(object sender, RoutedEventArgs e)
+        {
+            string Note = txtNoteRefferal.Text;
+            string specialization = cbSpecializationRefferal.Text;
+            Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
+            int id = RefferalStorage.getInstance().GenerateNewID();
+            Examination currExam = (Examination)dgDoctorExams.SelectedItem;
+            Patient patient = currExam.Patient;
+            Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
+            RefferalStorage.getInstance().Add(newRefferal);
+            RefferalStorage.getInstance().serialize();
+            tRefferal.Visibility = Visibility.Collapsed;
+            tExam.Focus();
+        }
+
+        private void Button_Refferal(object sender, RoutedEventArgs e)
+        {
+            txtNoteRefferal.Text = "";
+            cbDoctorRefferal.SelectedIndex = -1;
+            cbSpecializationRefferal.SelectedIndex = -1;
+            tRefferal.Visibility = Visibility.Visible;
+            tRefferal.Focus();
+        }
+
+        private void Button_Operation(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
