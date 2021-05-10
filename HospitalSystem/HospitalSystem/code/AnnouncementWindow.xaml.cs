@@ -31,6 +31,13 @@ namespace HospitalSystem.code
         public AnnouncementWindow(Announcement selectedAnnouncement)
         {
             InitializeComponent();
+            initializeSelectedAnnouncementDetails(selectedAnnouncement);
+
+            hideUnimportantDetails();
+        }
+
+        private void initializeSelectedAnnouncementDetails(Announcement selectedAnnouncement)
+        {
             dpDate.SelectedDate = selectedAnnouncement.Date;
             txtTime.Text = selectedAnnouncement.Time.ToString("HH:mm");
             txtTitle.Text = selectedAnnouncement.Title;
@@ -39,8 +46,6 @@ namespace HospitalSystem.code
 
             txtTitle.IsReadOnly = true;
             richTextBoxMessage.IsReadOnly = true;
-
-            hideUnimportantDetails();
         }
 
         private void hideUnimportantDetails()

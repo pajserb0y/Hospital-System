@@ -178,7 +178,7 @@ namespace HospitalSystem.code
             cbDoctor.ItemsSource = doctorCollection;
 
 
-            //trazim one termine koje moram da pomerim, jer nema slobodnih
+            //CASE 4: trazim one termine koje moram da pomerim, jer nema slobodnih
             if (occupied.Count == (wantedDoctorsID.Count * 2) && occupied.Count > 0)
             {
                 hideAppointmentDetails();
