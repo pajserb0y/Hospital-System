@@ -120,7 +120,13 @@ namespace HospitalSystem.code
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
 
+
+            if (selectedPatient.Alergens == null)
+                selectedPatient.Alergens = new ObservableCollection<string>();
             listViewAlergens.ItemsSource = selectedPatient.Alergens;
+
+            if (selectedPatient.WorkHistory == default)
+                selectedPatient.WorkHistory = new ObservableCollection<Job>();
             dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
