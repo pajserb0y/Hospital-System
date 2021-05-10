@@ -50,6 +50,7 @@ public class AppointmentStorage
             temp.RoomId = e.Room.Id;
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             temp.TimesChanged = e.TimesChanged;
             temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
@@ -83,6 +84,7 @@ public class AppointmentStorage
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
+            temp.IsOperation = e.IsOperation;
             temp.TimesChanged = e.TimesChanged;
             temp.TimeOfCreation = e.TimeOfCreation;
             appts.Add(temp);
@@ -234,7 +236,6 @@ internal class AppointmentViewModel
     }
 
     private int timesChanged;
-
     public int TimesChanged
     {
         get { return timesChanged; }
@@ -248,7 +249,6 @@ internal class AppointmentViewModel
     }
 
     private DateTime timeOfCreation;
-
     public DateTime TimeOfCreation
     {
         get { return timeOfCreation; }
