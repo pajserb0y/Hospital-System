@@ -28,7 +28,7 @@ namespace HospitalSystem.code
 
             InitializeCollection();
 
-            FillDrugList();
+            //FillDrugList();
 
             tExam.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
@@ -36,18 +36,18 @@ namespace HospitalSystem.code
             tReport.Visibility = Visibility.Collapsed;
         }
 
-        private void FillDrugList()
-        {
-            Drug d1 = new Drug(1, "Bensedin");
-            Drug d2 = new Drug(2, "Bromazepam");
-            Drug d3 = new Drug(3, "Trodon");
+        //private void FillDrugList()
+        //{
+        //    Drug d1 = new Drug(1, "Bensedin");
+        //    Drug d2 = new Drug(2, "Bromazepam");
+        //    Drug d3 = new Drug(3, "Trodon");
 
-            cbDrug.Items.Add(d1);
-            cbDrug.Items.Add(d2);
-            cbDrug.Items.Add(d3);
+        //    cbDrug.Items.Add(d1);
+        //    cbDrug.Items.Add(d2);
+        //    cbDrug.Items.Add(d3);
 
 
-        }
+        //}
 
         private void InitializeCollection()
         {
@@ -59,6 +59,7 @@ namespace HospitalSystem.code
 
             dgVerifiedDrugs.ItemsSource = verifiedDrugs;
             dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
+            cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
 
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
@@ -159,9 +160,18 @@ namespace HospitalSystem.code
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
         {
             Examination currExam = (Examination)dgDoctorExams.SelectedItem;
-            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Drug selectedDrug = (Drug)cbDrug.SelectedItem;
+            
+            foreach(Ingridient ingridient in selectedDrug.Ingridients)
+                if (currExam.Patient.Alergens.Contains(ingridient.Name))
+                {
+                    MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
+                    return;
+                }
+
             int patientId = currExam.Patient.Id;
-            Prescription newPrescription = new Prescription(prescID, patientId,  currExam.Id, (Drug)cbDrug.SelectedItem, txtTaking.Text, currExam.Date);
+            int prescID = PrescriptionStorage.getInstance().GenerateNewID();
+            Prescription newPrescription = new Prescription(prescID, patientId, currExam.Id, selectedDrug, txtTaking.Text, currExam.Date);
             PrescriptionStorage.getInstance().Add(newPrescription);
             PrescriptionStorage.getInstance().serialize();
             tExam.Focus();

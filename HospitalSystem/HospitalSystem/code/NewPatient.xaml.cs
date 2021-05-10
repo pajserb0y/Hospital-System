@@ -26,7 +26,7 @@ namespace HospitalSystem.code
         {
             Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdresa.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, false,
-                txtUsername.Text, txtPassword.Text, default(DateTime), "", 0, "", "");
+                txtUsername.Text, txtPassword.Text, default(DateTime), "", 0, "", "", default, default);
             PatientsStorage.getInstance().Add(patient);
             this.Close();
         }

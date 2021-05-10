@@ -38,6 +38,7 @@ namespace HospitalSystem.code
             dpDate.SelectedDate = selectedApp.Date;
             cbTime.Items.Add(selectedApp.Time.ToString("HH:mm"));
             cbTime.SelectedItem = selectedApp.Time.ToString("HH:mm");
+            cbRoom.Items.Add(selectedApp.Room);
             cbRoom.SelectedItem = selectedApp.Room;
         }
 

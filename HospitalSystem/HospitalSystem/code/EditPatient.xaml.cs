@@ -19,12 +19,9 @@ namespace HospitalSystem.code
     public partial class EditPatient : Window
     {
         private Patient currentPatient;
-        ListCollectionView jobCollection = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView appointmentCollection = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         ListCollectionView examCollection = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
-        ListCollectionView alergensCollection = new ListCollectionView(AlergenStorage.getInstance().GetAll());
 
-        public Action<object, MouseButtonEventArgs> TabControl_SelectionChanged { get; }
 
         public EditPatient(Patient selectedPatient)
         {
@@ -33,25 +30,12 @@ namespace HospitalSystem.code
 
             currentPatient = selectedPatient;
             initializeSelectedPatientDetails(selectedPatient);
-            fillJobDataGrid();
             fillAppointments();
             fillExaminations();
             hideExaminationDetails();
             fillAnnouncements();
-            fillAlergens();
         }
-
-        private void fillAlergens()
-        {
-            alergensCollection.Filter = (e) =>
-            {
-                Alergen temp = e as Alergen;
-                if (temp.PatientID == currentPatient.Id)
-                    return true;
-                return false;
-            };
-            listViewAlergens.ItemsSource = alergensCollection;
-        }
+      
         private void fillAnnouncements()
         {
             List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
@@ -83,18 +67,6 @@ namespace HospitalSystem.code
                 return false;
             };
             dgApp.ItemsSource = appointmentCollection;
-        }
-
-        private void fillJobDataGrid()
-        {
-            jobCollection.Filter = (e) =>
-            {
-                Job temp = e as Job;
-                if (temp.PID == currentPatient.Id)
-                    return true;
-                return false;
-            };
-            dgJob.ItemsSource = jobCollection;
         }
 
         private void hideExaminationDetails()
@@ -134,6 +106,8 @@ namespace HospitalSystem.code
             txtSoc.Text = selectedPatient.SocNumber.ToString();
             txtCity.Text = selectedPatient.City;
             txtCountry.Text = selectedPatient.Country;
+            listViewAlergens.ItemsSource = selectedPatient.Alergens;
+            dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
         #region Chart + Account + Inbox
@@ -142,40 +116,40 @@ namespace HospitalSystem.code
             PatientsStorage.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
                 txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text),
-                txtCity.Text, txtCountry.Text));
+                txtCity.Text, txtCountry.Text, currentPatient.Alergens, currentPatient.WorkHistory));
             PatientsStorage.getInstance().serialize();
             this.Close();
         }
         private void txbAddJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NewJob newJob = new NewJob(currentPatient.Id);
+            NewJob newJob = new NewJob(currentPatient);
             newJob.Show();
         }
         private void txbEditJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            EditJob editJob = new EditJob((Job)dgJob.SelectedItem);
+            EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
             editJob.Show();
             (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
         }
         private void txbDeleteJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            JobStorage.getInstance().Delete((Job)dgJob.SelectedItem);
+            currentPatient.WorkHistory.Remove((Job)dgJob.SelectedItem);
         }
         private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
-            NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
+            NewAlergen newAlergen = new NewAlergen(currentPatient);
             newAlergen.Show();
         }
 
         private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
         {
-            EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
+            EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
             editAlergen.Show();
         }
 
         private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
         {
-            AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
+            currentPatient.Alergens.Remove(listViewAlergens.SelectedItem.ToString());
         }
 
         private void txbRead_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -257,8 +231,7 @@ namespace HospitalSystem.code
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            JobStorage.getInstance().serialize();
-            AlergenStorage.getInstance().serialize();
+            //JobStorage.getInstance().serialize();
             this.Close();
         }        
     }

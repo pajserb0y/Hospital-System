@@ -374,7 +374,7 @@ namespace HospitalSystem.code
             Patient patient = new Patient();
             if (cbPatient.SelectedItem == null)
             {
-                patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), "", "", 0, default, "", 0, "", true, "", "", default(DateTime), "", 0, "", "");
+                patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), "", "", 0, default, "", 0, "", true, "", "", default(DateTime), "", 0, "", "", default, default);
                 PatientsStorage.getInstance().Add(patient);
             }
             else

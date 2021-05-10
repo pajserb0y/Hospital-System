@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,17 +18,18 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class NewJob : Window
     {
-        int patientID;
-        public NewJob(int pid)
+        Patient currentPatient;
+        public NewJob(Patient selectedPatient)
         {
-            patientID = pid;
+            currentPatient = selectedPatient;
             InitializeComponent();
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Job job = new Job(JobStorage.getInstance().GenerateNewID(patientID), txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text, patientID);
-            JobStorage.getInstance().Save(job);
+            if (currentPatient.WorkHistory == default)
+                currentPatient.WorkHistory = new ObservableCollection<Job>();
+            currentPatient.WorkHistory.Add(new Job(txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text));
             this.Close();
         }
     }
