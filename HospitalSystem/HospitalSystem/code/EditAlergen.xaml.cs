@@ -17,24 +17,27 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class EditAlergen : Window
     {
-        private Alergen currentAlergen;
-        public EditAlergen(Alergen selectedAlergen)
+        private string currentAlergen;
+        private Patient currentPatient;
+        public EditAlergen(Patient selectedPatient, string selectedAlergen)
         {
+            currentPatient = selectedPatient;
             currentAlergen = selectedAlergen;
             InitializeComponent();
             this.Closed += new EventHandler(Window_Closed);
-            txtSubstance.Text = selectedAlergen.Substance;
+            txtSubstance.Text = selectedAlergen;
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Alergen alergen = new Alergen(currentAlergen.No, txtSubstance.Text, currentAlergen.PatientID);
-            AlergenStorage.getInstance().Edit(alergen);
+            int indexOfAlergen = currentPatient.Alergens.IndexOf(currentAlergen);         
+            currentPatient.Alergens.RemoveAt(indexOfAlergen);
+            currentPatient.Alergens.Insert(indexOfAlergen, txtSubstance.Text);
+            PatientsStorage.getInstance().Edit(currentPatient);
             this.Close();
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            AlergenStorage.getInstance().serialize();
             this.Close();
         }
     }

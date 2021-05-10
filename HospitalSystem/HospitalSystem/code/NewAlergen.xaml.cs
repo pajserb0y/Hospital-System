@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,16 +18,17 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class NewAlergen : Window
     {
-        int patientID;
-        public NewAlergen(int pid)
+        Patient currentPatient;
+        public NewAlergen(Patient selectedPatient)
         {
-            patientID = pid;
+            currentPatient = selectedPatient;
             InitializeComponent();
         }
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Alergen alergen = new Alergen(AlergenStorage.getInstance().GenerateNewID(patientID), txtSubstance.Text, patientID);
-            AlergenStorage.getInstance().Save(alergen);
+        {         
+            if (currentPatient.Alergens == null)
+                currentPatient.Alergens = new ObservableCollection<string>();
+            currentPatient.Alergens.Add(txtSubstance.Text);
             this.Close();
         }        
     }

@@ -17,9 +17,7 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class PatientDetails : Window
     {
-        ListCollectionView collectionViewJob = new ListCollectionView(JobStorage.getInstance().GetAll());
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
-        ListCollectionView alergensCollection = new ListCollectionView(AlergenStorage.getInstance().GetAll());
         private Patient currentPatient;
 
         public PatientDetails(Patient selectedPatient)
@@ -53,14 +51,7 @@ namespace HospitalSystem.code
             txtCity.Text = selectedPatient.City;
             txtCountry.Text = selectedPatient.Country;
 
-            collectionViewJob.Filter = (e) =>
-            {
-                Job temp = e as Job;
-                if (temp.PID == selectedPatient.Id)
-                    return true;
-                return false;
-            };
-            dgJob.ItemsSource = collectionViewJob;
+            
 
             if (selectedPatient != null)
             {
@@ -91,15 +82,8 @@ namespace HospitalSystem.code
             cbGuest.IsEnabled = false;
             tExam.Visibility = Visibility.Collapsed;
 
-
-            alergensCollection.Filter = (e) =>
-            {
-                Alergen temp = e as Alergen;
-                if (temp.PatientID == selectedPatient.Id)
-                    return true;
-                return false;
-            };
-            listViewAlergens.ItemsSource = alergensCollection;
+            listViewAlergens.ItemsSource = selectedPatient.Alergens;
+            dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
         private void Button_View(object sender, RoutedEventArgs e)
@@ -121,19 +105,19 @@ namespace HospitalSystem.code
         }
         private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
-            NewAlergen newAlergen = new NewAlergen(currentPatient.Id);
+            NewAlergen newAlergen = new NewAlergen(currentPatient);
             newAlergen.Show();
         }
 
         private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
         {
-            EditAlergen editAlergen = new EditAlergen((Alergen)listViewAlergens.SelectedItem);
+            EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
             editAlergen.Show();
         }
 
         private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
         {
-            AlergenStorage.getInstance().Delete((Alergen)listViewAlergens.SelectedItem);
+            currentPatient.Alergens.Remove(listViewAlergens.SelectedItem.ToString());
         }
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)

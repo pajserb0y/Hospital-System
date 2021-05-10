@@ -106,7 +106,14 @@ public class Appointment : INotifyPropertyChanged
     public int TimesChanged
     {
         get { return timesChanged; }
-        set { timesChanged = value; }
+        set
+        {
+            if (timesChanged != value)
+            {
+                timesChanged = value;
+                OnPropertyChanged("TimesChanged");
+            }
+        }
     }
 
     private DateTime timeOfCreation;
@@ -114,7 +121,14 @@ public class Appointment : INotifyPropertyChanged
     public DateTime TimeOfCreation
     {
         get { return timeOfCreation; }
-        set { timeOfCreation = value; }
+        set
+        {
+            if (timeOfCreation != value)
+            {
+                timeOfCreation = value;
+                OnPropertyChanged("TimeOfCreation");
+            }
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
