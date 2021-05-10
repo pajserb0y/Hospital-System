@@ -7,6 +7,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 public class Patient : INotifyPropertyChanged
 {
@@ -219,11 +220,37 @@ public class Patient : INotifyPropertyChanged
             }
         }
     }
+    private ObservableCollection<String> alergens;
+    public ObservableCollection<String> Alergens
+    {
+        get { return alergens; }
+        set
+        {
+            if (alergens != value)
+            {
+                alergens = value;
+                OnPropertyChanged("Alergens");
+            }
+        }
+    }
+    private ObservableCollection<Job> workHistory;
+    public ObservableCollection<Job> WorkHistory
+    {
+        get { return workHistory; }
+        set
+        {
+            if (workHistory != value)
+            {
+                workHistory = value;
+                OnPropertyChanged("WorkHistory");
+            }
+        }
+    }
 
     public Patient() { }
 
-    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, 
-        string username, string password, DateTime birthDate, string marriageStatus, long socNumber, string city, string country)
+    public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, string username, string password, DateTime birthDate,
+        string marriageStatus, long socNumber, string city, string country, ObservableCollection<String> alergens, ObservableCollection<Job> workHistory)
     {
         Id = id;
         FirstName = firstName;
@@ -241,7 +268,8 @@ public class Patient : INotifyPropertyChanged
         SocNumber = socNumber;
         City = city;
         Country = country;
-       // WorkHistory = workHistory;
+        Alergens = alergens;
+        WorkHistory = workHistory;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

@@ -37,6 +37,9 @@ namespace HospitalSystem.code
             richTextBoxMessage.Document.Blocks.Clear();
             richTextBoxMessage.Document.Blocks.Add(new Paragraph(new Run(selectedAnnouncement.Content)));
 
+            txtTitle.IsReadOnly = true;
+            richTextBoxMessage.IsReadOnly = true;
+
             hideUnimportantDetails();
         }
 

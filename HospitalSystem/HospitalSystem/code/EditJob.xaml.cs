@@ -17,18 +17,19 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class EditJob : Window
     {
-        private Job p;
-        public EditJob(Job selectedJob)
+        private Job currentJob;
+        private Patient currentPatient;
+        public EditJob(Patient selectedPatient, Job selectedJob)
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
-            p = selectedJob;
+            currentPatient = selectedPatient;
+            currentJob = selectedJob;
             initializeSelectedJobDetails(selectedJob);
         }
 
         private void initializeSelectedJobDetails(Job selectedJob)
         {
-            txtNo.Text = selectedJob.No.ToString();
             txtName.Text = selectedJob.CompanyName;
             txtJob.Text = selectedJob.Position;
             txtReg.Text = selectedJob.RegisterNumber.ToString();
@@ -37,12 +38,13 @@ namespace HospitalSystem.code
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            JobStorage.getInstance().serialize();
             this.Close();
         }
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            JobStorage.getInstance().Edit(new Job(p.No, txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text, p.PID));
+            int indexOfJob = currentPatient.WorkHistory.IndexOf(currentJob);
+            currentPatient.WorkHistory.RemoveAt(indexOfJob);
+            currentPatient.WorkHistory.Insert(indexOfJob, new Job(txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text));
             this.Close();
         }
     }

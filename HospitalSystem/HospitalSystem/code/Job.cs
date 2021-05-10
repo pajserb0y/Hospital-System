@@ -9,19 +9,6 @@ using System.ComponentModel;
 
 public class Job : INotifyPropertyChanged
 {
-    private int no;
-    public int No
-    {
-        get { return no; }
-        set
-        {
-            if (no != value)
-            {
-                no = value;
-                OnPropertyChanged("No");
-            }
-        }
-    }
     private String companyName;
     public String CompanyName
     {
@@ -74,28 +61,13 @@ public class Job : INotifyPropertyChanged
             }
         }
     }
-    private int pID;
-    public int PID
-    {
-        get { return pID; }
-        set
-        {
-            if (pID != value)
-            {
-                pID = value;
-                OnPropertyChanged("PID");
-            }
-        }
-    }
 
-    public Job(int no, string companyName, string position, int registerNumber, string activityCode, int pid)
+    public Job(string companyName, string position, int registerNumber, string activityCode)
     {
-        this.no = no;
         this.companyName = companyName;
         this.position = position;
         this.registerNumber = registerNumber;
         this.activityCode = activityCode;
-        this.pID = pid;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

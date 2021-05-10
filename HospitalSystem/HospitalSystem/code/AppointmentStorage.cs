@@ -239,14 +239,26 @@ internal class AppointmentViewModel
     public int TimesChanged
     {
         get { return timesChanged; }
-        set { timesChanged = value; }
+        set 
+        {
+            if (timesChanged != value)
+            {
+                timesChanged = value;
+            }
+        }
     }
 
     private DateTime timeOfCreation;
     public DateTime TimeOfCreation
     {
         get { return timeOfCreation; }
-        set { timeOfCreation = value; }
+        set
+        {
+            if (timeOfCreation != value)
+            {
+                timeOfCreation = value;
+            }
+        }
     }
 
 }
