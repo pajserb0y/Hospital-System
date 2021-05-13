@@ -27,8 +27,6 @@ namespace HospitalSystem.code
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (currentPatient.WorkHistory == default)
-                currentPatient.WorkHistory = new ObservableCollection<Job>();
             currentPatient.WorkHistory.Add(new Job(txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text));
             this.Close();
         }

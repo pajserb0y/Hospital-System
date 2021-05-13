@@ -77,7 +77,7 @@ public class AppointmentStorage
         }
         foreach (AppointmentViewModel e in apptIDs)
         {
-            Examination temp = new Examination();
+            Appointment temp = new Appointment();
             temp.Id = e.Id;
             temp.Doctor = DoctorStorage.getInstance().GetOne(e.DoctorId);
             temp.Patient = PatientsStorage.getInstance().GetOne(e.PatientId);

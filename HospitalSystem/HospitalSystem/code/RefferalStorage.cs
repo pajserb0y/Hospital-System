@@ -55,8 +55,13 @@ namespace HospitalSystem.code
                     r.Note = refferal.Note;
                     r.Specialization = refferal.Specialization;
                     r.PatientId = refferal.PatientId;
+                    r.PatientFirstName = refferal.PatientFirstName;
+                    r.PatientLastName = refferal.PatientLastName;
                     r.DoctorId = refferal.DoctorId;
+                    r.DoctorFirstName = refferal.DoctorFirstName;
+                    r.DoctorFirstName = refferal.DoctorLastName;
                 }
+            serialize();
         }
 
         public void Delete(Refferal refferal)
@@ -67,11 +72,13 @@ namespace HospitalSystem.code
                     this.refferals.Remove(r);
                     break;
                 }
+            serialize();
         }
 
         public void Add(Refferal refferal)
         {
             this.refferals.Add(refferal);
+            serialize();
         }
 
         public int GenerateNewID()

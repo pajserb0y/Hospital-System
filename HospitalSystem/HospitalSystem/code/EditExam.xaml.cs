@@ -30,21 +30,20 @@ namespace HospitalSystem.code
             cbPatient.SelectedItem = selectedAppointment.Patient;
             cbDoctor.SelectedItem = selectedAppointment.Doctor;
             cbRoom.SelectedItem = selectedAppointment.Room;
-            dp1.SelectedDate = selectedAppointment.Date;
-            txt1.Text = Convert.ToString(selectedAppointment.Time.TimeOfDay);
+            dpDate.SelectedDate = selectedAppointment.Date;
+            cbTime.SelectedItem = selectedAppointment.Time;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
             appointment.Patient = (Patient)cbPatient.SelectedItem;
             appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
             appointment.Room = (Room)cbRoom.SelectedItem;
-            appointment.Date = (DateTime)dp1.SelectedDate;
-            appointment.Time = Convert.ToDateTime(txt1.Text);
+            appointment.Date = (DateTime)dpDate.SelectedDate;
+            appointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+            Room selectedRoom = (Room)cbRoom.SelectedItem;
+            _ = selectedRoom.Name == "Ordination" ? appointment.IsOperation = false : appointment.IsOperation = true;
             AppointmentStorage.getInstance().Edit(appointment);
-            //List<Examination> ExamList = ExaminationStorage.getInstance().GetAll();
-            //foreach (Examination exam in ExamList)
-            //     DataGridXAML.Items.Add(exam);
             this.Close();
         }
     }

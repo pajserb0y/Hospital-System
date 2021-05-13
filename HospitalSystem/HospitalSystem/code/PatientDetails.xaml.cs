@@ -21,7 +21,6 @@ namespace HospitalSystem.code
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         ListCollectionView collectionViewRefferals = new ListCollectionView(RefferalStorage.getInstance().GetAll());
         ListCollectionView collectionViewOperation = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
-
         private Patient currentPatient;
 
         public PatientDetails(Patient selectedPatient)
@@ -29,8 +28,6 @@ namespace HospitalSystem.code
             InitializeComponent();
             currentPatient = selectedPatient;
 
-
-            selectedPatient = currentPatient;
             txtID.Text = currentPatient.Id.ToString();
             txtIme.Text = currentPatient.FirstName;
             txtPrezime.Text = currentPatient.LastName;
@@ -65,6 +62,31 @@ namespace HospitalSystem.code
             //};
             //dgJob.ItemsSource = collectionViewJob;
 
+            InitializeCollections();
+
+            txtID.IsReadOnly = true; //PREBACI U XAML
+            txtIme.IsReadOnly = true;
+            txtPrezime.IsReadOnly = true;
+            txtJmbg.IsReadOnly = true;
+            txtEmail.IsReadOnly = true;
+            txtTel.IsReadOnly = true;
+            txtAdress.IsReadOnly = true;
+            txtSoc.IsReadOnly = true;
+            txtCity.IsReadOnly = true;
+            txtCountry.IsReadOnly = true;
+            cbMarriage.IsEnabled = false;
+            dpBirth.IsEnabled = false;
+            rbF.IsEnabled = false;
+            rbM.IsEnabled = false;
+            cbGuest.IsEnabled = false;
+            tExam.Visibility = Visibility.Collapsed;
+            tRefferal.Visibility = Visibility.Collapsed;
+
+
+        }
+
+        private void InitializeCollections()
+        {
             if (currentPatient != null)
             {
                 collectionViewExam.Filter = (e) =>
@@ -100,28 +122,13 @@ namespace HospitalSystem.code
                 };
                 dgPatientRefferals.ItemsSource = collectionViewRefferals;
             }
+            if (currentPatient.Alergens == null)
+                currentPatient.Alergens = new ObservableCollection<string>();
+            listViewAlergens.ItemsSource = currentPatient.Alergens;
 
-
-            txtID.IsReadOnly = true; //PREBACI U XAML
-            txtIme.IsReadOnly = true;
-            txtPrezime.IsReadOnly = true;
-            txtJmbg.IsReadOnly = true;
-            txtEmail.IsReadOnly = true;
-            txtTel.IsReadOnly = true;
-            txtAdress.IsReadOnly = true;
-            txtSoc.IsReadOnly = true;
-            txtCity.IsReadOnly = true;
-            txtCountry.IsReadOnly = true;
-            cbMarriage.IsEnabled = false;
-            dpBirth.IsEnabled = false;
-            rbF.IsEnabled = false;
-            rbM.IsEnabled = false;
-            cbGuest.IsEnabled = false;
-            tExam.Visibility = Visibility.Collapsed;
-            tRefferal.Visibility = Visibility.Collapsed;
-
-            listViewAlergens.ItemsSource = selectedPatient.Alergens;
-            dgJob.ItemsSource = selectedPatient.WorkHistory;
+            if (currentPatient.WorkHistory == null)
+                currentPatient.WorkHistory = new ObservableCollection<Job>();
+            dgJob.ItemsSource = currentPatient.WorkHistory;
         }
 
         private void Button_View_Examination(object sender, RoutedEventArgs e)
@@ -149,8 +156,11 @@ namespace HospitalSystem.code
 
         private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
         {
-            EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
-            editAlergen.Show();
+            if (listViewAlergens.SelectedItem != null)
+            {
+                EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
+                editAlergen.Show();
+            }
         }
 
         private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
@@ -261,6 +271,18 @@ namespace HospitalSystem.code
         private void Button_View_Operation(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Cancel_Refferal(object sender, RoutedEventArgs e)
+        {
+            tRefferal.Visibility = Visibility.Collapsed;
+            tRefferals.Focus();
+        }
+
+        private void Button_Cancel_Anamnesis(object sender, RoutedEventArgs e)
+        {
+            tExam.Visibility = Visibility.Collapsed;
+            tMedHis.Focus();
         }
     }
 }

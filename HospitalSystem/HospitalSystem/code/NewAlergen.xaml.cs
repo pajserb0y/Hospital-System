@@ -26,8 +26,6 @@ namespace HospitalSystem.code
         }
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {         
-            if (currentPatient.Alergens == null)
-                currentPatient.Alergens = new ObservableCollection<string>();
             currentPatient.Alergens.Add(txtSubstance.Text);
             this.Close();
         }        

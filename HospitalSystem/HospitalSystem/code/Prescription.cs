@@ -46,6 +46,13 @@ namespace HospitalSystem.code
 
         }
 
+        private Drug drug;
+        public Drug Drug
+        {
+            get { return drug; }
+            set { drug = value; }
+        }
+
         public Prescription(int prescID, int patientID, int examID, Drug drug, string taking, DateTime date)
         {
             this.id = prescID;
@@ -55,13 +62,5 @@ namespace HospitalSystem.code
             this.taking = taking;
             this.dateOfPrescription = date;
         }
-
-        private Drug drug;
-        public Drug Drug
-        {
-            get { return drug; }
-            set { drug = value; }
-        }
-
     }
 }
