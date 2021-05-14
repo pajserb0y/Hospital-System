@@ -21,6 +21,7 @@ namespace HospitalSystem.code
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         ListCollectionView collectionViewRefferals = new ListCollectionView(RefferalStorage.getInstance().GetAll());
         ListCollectionView collectionViewOperation = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
+       
         private Patient currentPatient;
 
         public PatientDetails(Patient selectedPatient)
@@ -122,6 +123,18 @@ namespace HospitalSystem.code
                 };
                 dgPatientRefferals.ItemsSource = collectionViewRefferals;
             }
+            collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
+            if (currentPatient != null)
+            {
+                collectionViewExam.Filter = (e) =>
+                {
+                    Examination temp = e as Examination;
+                    if (temp.Patient == currentPatient && temp.Prescriptions != null)
+                        return true;
+                    return false;
+                };
+                dgPatientPrescriptions.ItemsSource = collectionViewExam;
+            }
             if (currentPatient.Alergens == null)
                 currentPatient.Alergens = new ObservableCollection<string>();
             listViewAlergens.ItemsSource = currentPatient.Alergens;
@@ -134,7 +147,7 @@ namespace HospitalSystem.code
         private void Button_View_Examination(object sender, RoutedEventArgs e)
         {
             Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
-            Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
+            Anamnesis anamnesis = selectedExam.Anamnesis;
 
             txtAnamnesis.Clear();
             txtDiagnosis.Clear();
@@ -171,9 +184,9 @@ namespace HospitalSystem.code
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
         {
             Examination currExam = (Examination) dgPatientExams.SelectedItem;
-            Anamnesis anamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
-            AnamnesisStorage.getInstance().Edit(anamnesis);
-            AnamnesisStorage.getInstance().serialize();
+            Anamnesis anamnesis = new Anamnesis(txtAnamnesis.Text, txtDiagnosis.Text);
+            currExam.Anamnesis = anamnesis;
+            ExaminationStorage.getInstance().Edit(currExam);
         }
 
         private void Button_Save_Refferal(object sender, RoutedEventArgs e)
@@ -283,6 +296,16 @@ namespace HospitalSystem.code
         {
             tExam.Visibility = Visibility.Collapsed;
             tMedHis.Focus();
+        }
+
+        private void Button_View_Prescription(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_New_Prescription(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

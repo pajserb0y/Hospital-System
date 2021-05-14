@@ -1,1 +1,0 @@
-[{"Id":1,"PatientID":9,"ExaminationID":16,"DateOfPrescription":"2021-05-10T00:00:00","Taking":"PROBNI PREGLED","Drug":{"Id":3,"Report":null,"Status":0,"Name":"Probiotik","Amount":890,"Ingridients":[{"Name":"Jod","Amount":200},{"Name":"Acetil","Amount":100},{"Name":"Bor","Amount":100},{"Name":"Magnezijum","Amount":200},{"Name":"Kikiriki","Amount":290}]}}]

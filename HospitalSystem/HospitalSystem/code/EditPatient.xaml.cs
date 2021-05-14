@@ -193,8 +193,8 @@ namespace HospitalSystem.code
             showExaminationDetails();
 
             Examination selectedExam = (Examination)dgExam.SelectedItem;
-            Anamnesis anamnesis = AnamnesisStorage.getInstance().GetOne(selectedExam.Id);
-            Prescription prescription = PrescriptionStorage.getInstance().GetOne(selectedExam.Id);
+            Anamnesis anamnesis = selectedExam.Anamnesis;
+            Prescription prescription = selectedExam.Prescriptions[0]; 
 
             txtAnamnesis.Clear();
             txtDiagnosis.Clear();

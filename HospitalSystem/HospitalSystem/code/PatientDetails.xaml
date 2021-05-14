@@ -171,7 +171,7 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Name="tRefferals" Header="Refferals" Margin="-6,-2,-2,0">
+            <TabItem Name="tRefferals" Header="Refferal record" Margin="-6,-2,-2,0">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
@@ -209,7 +209,40 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-
+            <TabItem Name="tPrescriptions" Header="Prescription record" Margin="-6,-2,-2,0">
+                <StackPanel>
+                    <Grid Height="Auto" Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20*"></ColumnDefinition>
+                            <ColumnDefinition Width="151*"/>
+                            <ColumnDefinition Width="31*"/>
+                            <ColumnDefinition Width="18*"/>
+                            <ColumnDefinition Width="563*"/>
+                            <ColumnDefinition Width="261*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="dgPatientPrescriptions" Height="580" Grid.Row="0" Grid.Column="1"  Margin="0,50,213,30" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="5">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Prescription ID" Binding="{Binding Prescriptions.Id}"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Prescriptions.DateOfPrescription}" />
+                                <DataGridTextColumn Header="Time" Binding="{Binding Prescriptions.TimeOfPrescription}" />
+                                <DataGridTextColumn Header="Patient Firstname" Binding="{Binding Patient.FirstName}" />
+                                <DataGridTextColumn Header="Patient Lastname" Binding="{Binding Patient.LastName}" />
+                                <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
+                                <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
+                                <DataGridTextColumn Header="Specialization" Binding="{Binding Doctor.Specialization}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Content="View" HorizontalAlignment="Center" Grid.Column="5"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_View_Prescription" RenderTransformOrigin="0.445,-3.998" Margin="0,141,0,0"/>
+                        <Button Content="New Prescription" HorizontalAlignment="Center" Grid.Column="5"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_New_Prescription" RenderTransformOrigin="0.445,-3.998" Margin="0,223,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
             <TabItem Name="tRefferal" Header="Refferal" Margin="-2,-6,-2,0">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" >

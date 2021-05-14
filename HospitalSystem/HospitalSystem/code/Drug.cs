@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HospitalSystem.code
 {
-    class Drug : INotifyPropertyChanged
+    public class Drug : INotifyPropertyChanged
     { 
          public Drug(int v1, string v2)
          {

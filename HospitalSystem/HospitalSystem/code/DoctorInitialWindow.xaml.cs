@@ -13,7 +13,7 @@ namespace HospitalSystem.code
     public partial class DoctorInitialWindow : Window
     {
         ListCollectionView collectionViewAppointment = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
-        Examination currExam = new Examination();
+        private Examination currExam = new Examination();
 
         public DoctorInitialWindow()
         {
@@ -116,19 +116,17 @@ namespace HospitalSystem.code
         {
             Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
 
-            Anamnesis newAnamnesis = new Anamnesis(currExam.Id, txtAnamnesis.Text, txtDiagnosis.Text);
-            AnamnesisStorage.getInstance().Add(newAnamnesis);
-            AnamnesisStorage.getInstance().serialize();
 
-            ExaminationStorage.getInstance().Add(currExam);
-            ExaminationStorage.getInstance().serialize();
+            currExam.Anamnesis = new Anamnesis(txtAnamnesis.Text, txtDiagnosis.Text);
+            //currExam.Anamnesis.AnamnesisInfo = txtAnamnesis.Text;
+            //currExam.Anamnesis.Diagnosis = txtDiagnosis.Text;
 
+            ExaminationStorage.getInstance().Edit(currExam);
 
             AppointmentStorage.getInstance().Delete(currApp);
             AppointmentStorage.getInstance().serialize();
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
-           // dgDoctorExams.Items.Remove(dgDoctorExams.SelectedItem);
         }
 
         private void Button_Begin(object sender, RoutedEventArgs e)
@@ -145,6 +143,7 @@ namespace HospitalSystem.code
             currExam.TimesChanged = currApp.TimesChanged;
             currExam.TimeOfCreation = currApp.TimeOfCreation;
 
+            ExaminationStorage.getInstance().Add(currExam);
             tExam.Visibility = Visibility.Visible;
             txtAnamnesis.Clear();
             txtDiagnosis.Clear();
@@ -163,12 +162,15 @@ namespace HospitalSystem.code
                         return;
                     }
             }
+            if (currExam.Prescriptions == null)
+                currExam.Prescriptions = new ObservableCollection<Prescription>();
 
-            int prescriptionId = PrescriptionStorage.getInstance().GenerateNewID();
-            Prescription newPrescription = new Prescription(prescriptionId, currExam.Patient.Id, currExam.Id, selectedDrug, txtTaking.Text, currExam.Date);
+            int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
+            Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date,currExam.Time);
+
+            currExam.Prescriptions.Add(newPrescription);
             
-            PrescriptionStorage.getInstance().Add(newPrescription);
-            PrescriptionStorage.getInstance().serialize();
+            ExaminationStorage.getInstance().Edit(currExam);
             tExam.Focus();
             tPersc.Visibility = Visibility.Collapsed;
         }
@@ -176,8 +178,10 @@ namespace HospitalSystem.code
         private void Button_Prescription(object sender, RoutedEventArgs e)
         {
             txtDate.Text = currExam.Date.ToString("dd/MM/yyyy");
+            txtTime.Text = currExam.Time.ToString("HH/mm");
             cbDrug.SelectedIndex = -1;
             txtTaking.Clear();
+            txtInterval.Clear();
             tPersc.Visibility = Visibility.Visible;
         }
 

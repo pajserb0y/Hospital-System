@@ -52,6 +52,8 @@ namespace HospitalSystem.code
                 currentAppointment.Room = (Room)cbRoom.SelectedItem;
                 currentAppointment.Date = (DateTime)dpDate.SelectedDate;
                 currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                Room selectedRoom = (Room)cbRoom.SelectedItem;
+                _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
                 AppointmentStorage.getInstance().Edit(currentAppointment);
                 this.Close();
             }
