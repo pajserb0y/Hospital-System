@@ -116,15 +116,13 @@ namespace HospitalSystem.code
         {
             Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
 
-
-            currExam.Anamnesis = new Anamnesis(txtAnamnesis.Text, txtDiagnosis.Text);
-            //currExam.Anamnesis.AnamnesisInfo = txtAnamnesis.Text;
-            //currExam.Anamnesis.Diagnosis = txtDiagnosis.Text;
+            currExam.Anamnesis.AnamnesisInfo = txtAnamnesis.Text;
+            currExam.Anamnesis.Diagnosis = txtDiagnosis.Text;
 
             ExaminationStorage.getInstance().Edit(currExam);
 
             AppointmentStorage.getInstance().Delete(currApp);
-            AppointmentStorage.getInstance().serialize();
+
             t0.Focus();
             tExam.Visibility = Visibility.Collapsed;
         }

@@ -40,8 +40,8 @@ public class Examination : Appointment
     }
     public Examination() 
     {
-        this.anamnesis = null;
-        this.prescriptions = null;
+        this.anamnesis = new Anamnesis();
+        this.prescriptions = new ObservableCollection<Prescription>();
     }
 
     public Examination(Anamnesis anamnesis, ObservableCollection<Prescription> prescriptions)

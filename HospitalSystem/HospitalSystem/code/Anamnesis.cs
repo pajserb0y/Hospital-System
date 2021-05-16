@@ -36,5 +36,7 @@ namespace HospitalSystem.code
             anamnesisInfo = anam;
             diagnosis = diag;
         }
+        public Anamnesis()
+        { }
     }
 }
