@@ -26,8 +26,13 @@ namespace HospitalSystem.code
             InitializeComponent();
         }
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+<<<<<<< HEAD
         {
             currentPatient.Alergens.Add(txtSubstance.Text.ToString());
+=======
+        {         
+            currentPatient.Alergens.Add(txtSubstance.Text);
+>>>>>>> BugFixOperationVol2
             this.Close();
         }        
     }

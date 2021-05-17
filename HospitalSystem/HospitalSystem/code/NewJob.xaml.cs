@@ -26,7 +26,11 @@ namespace HospitalSystem.code
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+<<<<<<< HEAD
         {            
+=======
+        {
+>>>>>>> BugFixOperationVol2
             currentPatient.WorkHistory.Add(new Job(txtName.Text, txtJob.Text, Convert.ToInt32(txtReg.Text), txtAct.Text));
             this.Close();
         }

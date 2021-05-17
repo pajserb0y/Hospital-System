@@ -19,18 +19,13 @@ namespace HospitalSystem.code
             return instance;
         }
 
-
         private ObservableCollection<Drug> drugs;
         public ObservableCollection<Drug> Drugs
         {
             get { return drugs; }
             set { drugs = value; }
         }
-
-
-        //private String FileLocationUnverifiedDrugs = "../../../Resource/Neverifikovani_Lekovi.json";
-        private String FileLocation = "../../../Resource/Lekovi.json";
-
+        private String FileLocation = "../../../Resource/Drugs.json";
 
         public DrugStorage()
         {
@@ -45,13 +40,6 @@ namespace HospitalSystem.code
             return null;
         }
 
-        //public Drug GetOneUnverifiedDrug(int Id)
-        //{
-        //    foreach (Drug d in unverifiedDrugs)
-        //        if (Id == d.Id)
-        //            return d;
-        //    return null;
-        //}
         public ObservableCollection<Drug> GetAllDrugs()
         {
             return drugs;
@@ -81,18 +69,12 @@ namespace HospitalSystem.code
                 {
                     d.Name = drug.Name;
                     d.Amount = drug.Amount;
+                    d.Ingridients = drug.Ingridients;
+                    d.Status = drug.Status;
+                    d.Report = drug.Report;
                 }
+            serialize();
         }
-
-        //public void EditUnverifiedDrug(Drug drug)
-        //{
-        //    foreach (Drug d in this.unverifiedDrugs)
-        //        if (drug.Id == d.Id)
-        //        {
-        //            d.Name = drug.Name;
-        //            d.Amount = drug.Amount;
-        //        }
-        //}
 
         public void DeleteDrug(Drug drug)
         {
@@ -102,37 +84,18 @@ namespace HospitalSystem.code
                     this.drugs.Remove(d);
                     break;
                 }
+            serialize();
         }
-
-        //public void DeleteUnverifiedDrug(Drug drug)
-        //{
-        //    foreach (Drug d in unverifiedDrugs)
-        //        if (drug.Id == d.Id)
-        //        {
-        //            this.unverifiedDrugs.Remove(d);
-        //            break;
-        //        }
-        //}
-
         public void AddDrug(Drug drug)
         {
             this.drugs.Add(drug);
+            serialize();
         }
-
-        //public void AddUnverifiedDrug(Drug drug)
-        //{
-        //    this.unverifiedDrugs.Add(drug);
-        //}
 
         public int GenerateNewDrugID()
         {
             return ((drugs.Count - 1) == -1) ? 1 : drugs[drugs.Count - 1].Id + 1;
         }
-
-        //public int GenerateNewUnverifiedDrugID()
-        //{
-        //    return ((unverifiedDrugs.Count - 1) == -1) ? 1 : unverifiedDrugs[unverifiedDrugs.Count - 1].Id + 1;
-        //}
 
         public void serialize()
         {

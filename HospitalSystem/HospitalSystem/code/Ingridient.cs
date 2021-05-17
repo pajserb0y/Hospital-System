@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HospitalSystem.code
 {
-    class Ingridient : INotifyPropertyChanged
+    public class Ingridient : INotifyPropertyChanged
     {
         private string name;
         public string Name

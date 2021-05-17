@@ -1,32 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace HospitalSystem.code
 {
-    class Prescription
+    public class Prescription
     {
         private int id;
         public int Id
         {
             get { return id; }
-            set { id = value; }
-
-        }
-
-        private int patientID;
-        public int PatientID
-        {
-            get { return patientID; }
-            set { patientID = value; }
-
-        }
-
-        private int examinationID;
-        public int ExaminationID
-        {
-            get { return examinationID; }
-            set { examinationID = value; }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    OnPropertyChanged("Id");
+                }
+            }
 
         }
 
@@ -34,34 +26,93 @@ namespace HospitalSystem.code
         public DateTime DateOfPrescription
         {
             get { return dateOfPrescription; }
-            set { dateOfPrescription = value; }
+            set
+            {
+                if (dateOfPrescription != value)
+                {
+                    dateOfPrescription = value;
+                    OnPropertyChanged("DateOfPrescription");
+                }
+            }
 
+        }
+
+        private int interval;
+        public int Interval
+        {
+            get { return interval; }
+            set
+            {
+                if (interval != value)
+                {
+                    interval = value;
+                    OnPropertyChanged("Interval");
+                }
+            }
         }
 
         private string taking;
         public string Taking
         {
             get { return taking; }
-            set { taking = value; }
+            set
+            {
+                if (taking != value)
+                {
+                    taking = value;
+                    OnPropertyChanged("Taking");
+                }
+            }
 
-        }
-
-        public Prescription(int prescID, int patientID, int examID, Drug drug, string taking, DateTime date)
-        {
-            this.id = prescID;
-            this.patientID = patientID;
-            this.examinationID = examID;
-            this.drug = drug;
-            this.taking = taking;
-            this.dateOfPrescription = date;
         }
 
         private Drug drug;
         public Drug Drug
         {
             get { return drug; }
-            set { drug = value; }
+            set
+            {
+                if (drug != value)
+                {
+                    drug = value;
+                    OnPropertyChanged("Drug");
+                }
+            }
         }
 
+        private DateTime timeOfPerscription;
+        public DateTime TimeOfPerscription
+        {
+            get { return timeOfPerscription; }
+            set
+            {
+                if (timeOfPerscription != value)
+                {
+                    timeOfPerscription = value;
+                    OnPropertyChanged("TimeOfPerscription");
+                }
+            }
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(String name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        public Prescription(int prescID, Drug drug, string taking,int interval, DateTime date,DateTime time)
+        {
+            this.id = prescID;
+            this.drug = drug;
+            this.taking = taking;
+            this.dateOfPrescription = date;
+            this.timeOfPerscription = time;
+            this.interval = interval;
+        }
     }
 }

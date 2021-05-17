@@ -30,13 +30,13 @@ public class Equipment
       // TODO: implement
    }
    
-   public EquipmentType GetType()
+   public EquipmentType GetTypeEqiup()
    {
       // TODO: implement
       return null;
    }
    
-   public void SetType(EquipmentType type)
+   public void SetTypeEqiup(EquipmentType type)
    {
       // TODO: implement
    }

@@ -24,8 +24,6 @@ namespace HospitalSystem.code
         public NewExam()
         {
             InitializeComponent();
-            //currentPatient = selectedPatient;
-            //txtPatient.Text = selectedPatient.ToString();
             cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
         }
@@ -33,11 +31,11 @@ namespace HospitalSystem.code
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            Examination appt = new Examination();
+            Appointment appt = new Appointment();
             appt.Id = AppointmentStorage.getInstance().GenerateNewID();
             appt.Patient = (Patient) cbPatient.SelectedItem;
             appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appt.Room = RoomStorage.getInstance().GetOne(8);
+            appt.Room = (Room) cbRoom.SelectedItem;
             appt.Date = (DateTime)dpDate.SelectedDate;
             appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
             Room selectedRoom = (Room)cbRoom.SelectedItem;
@@ -65,7 +63,7 @@ namespace HospitalSystem.code
                 collectionAppointments.Filter = (e) =>
                 {
                     Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate && temp.Room == (Room)cbRoom.SelectedItem)
+                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dpDate.SelectedDate)
                         return true;
                     return false;
                 };

@@ -6,18 +6,6 @@ namespace HospitalSystem.code
 {
     public class Anamnesis
     {
-        private int id;
-        public int Id
-        {
-            get { return id; }
-            set
-            {
-                if (id != value)
-                {
-                    id = value;
-                }
-            }
-        }
         private string anamnesisInfo;
         public string AnamnesisInfo
         {
@@ -43,11 +31,12 @@ namespace HospitalSystem.code
                 }
             }
         }
-         public Anamnesis(int idExam,string anam, string diag)
+         public Anamnesis(string anam, string diag)
         {
-            id = idExam;
             anamnesisInfo = anam;
             diagnosis = diag;
         }
+        public Anamnesis()
+        { }
     }
 }

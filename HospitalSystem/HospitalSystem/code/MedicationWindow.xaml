@@ -12,7 +12,7 @@
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Medication" Binding="{Binding Drug}" Width="0.8*">
+                <DataGridTextColumn Header="Medication" Binding="{Binding Prescription.Drug}" Width="0.8*">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -20,14 +20,14 @@
                     </DataGridTextColumn.HeaderStyle>
                     
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Date of prescription" Binding="{Binding DateOfPrescription}" Width="1.2*" >
+                <DataGridTextColumn Header="Date of prescription" Binding="{Binding Prescription.DateOfPrescription}" Width="1.2*" >
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Taking instructions" Binding="{Binding Taking}" Width="3*">
+                <DataGridTextColumn Header="Taking instructions" Binding="{Binding Prescription.Taking}" Width="3*">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center" />

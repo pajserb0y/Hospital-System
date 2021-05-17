@@ -17,21 +17,21 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class MedicationWindow : Window
     {
-        ListCollectionView collectionView = new ListCollectionView(PrescriptionStorage.getInstance().GetAll());
+        ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
 
         public MedicationWindow(Patient selectedItem)
         {
             InitializeComponent();
 
-            collectionView.Filter = (e) =>
+            collectionViewExam.Filter = (e) =>
             {
-                Prescription temp = e as Prescription;
-                if (temp.PatientID == selectedItem.Id)
+                Examination temp = e as Examination;
+                if (temp.Patient == selectedItem)
                     return true;
                 return false;
             };
 
-            dgMedication.ItemsSource = collectionView;
+            dgMedication.ItemsSource = collectionViewExam;
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)

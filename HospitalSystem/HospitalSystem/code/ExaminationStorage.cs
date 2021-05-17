@@ -30,7 +30,7 @@ public class ExaminationStorage
         set { examinations = value; }
     }
 
-    private String FileLocation = "../../../Resource/Pregledi.json";
+    private String FileLocation = "../../../Resource/Examinations.json";
 
 
     public ExaminationStorage()
@@ -61,7 +61,10 @@ public class ExaminationStorage
                 e.Room = exam.Room;
                 e.Date = exam.Date;
                 e.Time = exam.Time;
+                e.Anamnesis = exam.Anamnesis;
+                e.Prescriptions = exam.Prescriptions;
             }
+        serialize();
     }
 
     public void Delete(Examination exam)
@@ -72,18 +75,20 @@ public class ExaminationStorage
                 this.examinations.Remove(e);
                 break;
             }
+        serialize();
     }
 
     public void Add(Examination exam)
     {
         this.examinations.Add(exam);
+        serialize();
     }
 
     public int GenerateNewID()
     {
         if(examinations == null)
             return 1;
-        return ((examinations.Count - 1) == -1) ? 1 : examinations[examinations.Count - 1].Id + 1;
+        return (examinations.Count == 0) ? 1 : examinations[examinations.Count - 1].Id + 1;
     }
 
     public void serialize()
@@ -101,6 +106,8 @@ public class ExaminationStorage
             temp.IsOperation = e.IsOperation;
             temp.TimeOfCreation = e.TimeOfCreation;
             temp.TimesChanged = e.TimesChanged;
+            temp.Anamnesis = e.Anamnesis;
+            temp.Prescriptions = e.Prescriptions;
             exams.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(exams);
@@ -135,9 +142,16 @@ public class ExaminationStorage
             temp.IsOperation = e.IsOperation;
             temp.TimeOfCreation = e.TimeOfCreation;
             temp.TimesChanged = e.TimesChanged;
+            temp.Anamnesis = e.Anamnesis;
+            temp.Prescriptions = e.Prescriptions;
             exams.Add(temp);
         }
         return exams;
+    }
+
+    public int GenerateNewPrescriptionID(Examination currentExam)
+    {
+        return (currentExam.Prescriptions.Count == 0 /*|| currentExam.Prescriptions == null*/) ? 1 : currentExam.Prescriptions[currentExam.Prescriptions.Count - 1].Id + 1;
     }
 }
 
@@ -223,6 +237,34 @@ internal class ExaminationViewModel
             if (isOperation != value)
             {
                 isOperation = value;
+            }
+        }
+    }
+
+    private Anamnesis anamnesis;
+
+    public Anamnesis Anamnesis
+    {
+        get { return anamnesis; }
+        set
+        {
+            if (value != anamnesis)
+            {
+                anamnesis = value;
+            }
+        }
+    }
+
+    private ObservableCollection<Prescription> prescriptions;
+
+    public ObservableCollection<Prescription> Prescriptions
+    {
+        get { return prescriptions; }
+        set
+        {
+            if (prescriptions != value)
+            {
+                prescriptions = value;
             }
         }
     }
