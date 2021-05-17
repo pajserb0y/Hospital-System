@@ -1,1 +1,1 @@
-[]
+[{"Id":1,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":14,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":"POSLEDNJA PROBA","Diagnosis":"POSLEDNJA PROBA"},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":8,"Taking":"POSLEDNJA PROBA","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPerscription":"2021-05-09T07:30:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"}]

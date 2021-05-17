@@ -139,7 +139,9 @@ namespace HospitalSystem.code
                 currentPatient.Alergens = new ObservableCollection<string>();
             listViewAlergens.ItemsSource = currentPatient.Alergens;
 
-<<<<<<< HEAD
+            if (currentPatient.WorkHistory == null)
+                currentPatient.WorkHistory = new ObservableCollection<Job>();
+            dgJob.ItemsSource = currentPatient.WorkHistory;
 
             txtID.IsReadOnly = true; //PREBACI U XAML
             txtIme.IsReadOnly = true;
@@ -158,20 +160,6 @@ namespace HospitalSystem.code
             cbGuest.IsEnabled = false;
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
-
-
-            if (selectedPatient.Alergens == null)
-                selectedPatient.Alergens = new ObservableCollection<string>();
-            listViewAlergens.ItemsSource = selectedPatient.Alergens;
-
-            if (selectedPatient.WorkHistory == default)
-                selectedPatient.WorkHistory = new ObservableCollection<Job>();
-            dgJob.ItemsSource = selectedPatient.WorkHistory;
-=======
-            if (currentPatient.WorkHistory == null)
-                currentPatient.WorkHistory = new ObservableCollection<Job>();
-            dgJob.ItemsSource = currentPatient.WorkHistory;
->>>>>>> BugFixOperationVol2
         }
 
         private void Button_View_Examination(object sender, RoutedEventArgs e)

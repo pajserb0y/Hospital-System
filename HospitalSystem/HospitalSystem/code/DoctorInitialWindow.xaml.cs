@@ -160,11 +160,8 @@ namespace HospitalSystem.code
                         return;
                     }
             }
-<<<<<<< HEAD
-=======
             if (currExam.Prescriptions == null)
                 currExam.Prescriptions = new ObservableCollection<Prescription>();
->>>>>>> BugFixOperationVol2
 
             int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
             Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date,currExam.Time);
