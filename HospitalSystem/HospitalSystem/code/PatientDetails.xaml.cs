@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -133,7 +134,16 @@ namespace HospitalSystem.code
                         return true;
                     return false;
                 };
-                dgPatientPrescriptions.ItemsSource = collectionViewExam;
+                ObservableCollection<PrescriptionDTO> PrescriptionList = new ObservableCollection<PrescriptionDTO>();
+                foreach(Examination e in collectionViewExam)
+                {
+                    foreach(Prescription p in e.Prescriptions)
+                    {
+                        PrescriptionDTO temp = new PrescriptionDTO(p, e);
+                        PrescriptionList.Add(temp);
+                    }
+                }
+                dgPatientPrescriptions.ItemsSource = PrescriptionList;
             }
             if (currentPatient.Alergens == null)
                 currentPatient.Alergens = new ObservableCollection<string>();
@@ -160,24 +170,12 @@ namespace HospitalSystem.code
             cbGuest.IsEnabled = false;
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
+            tPersc.Visibility = Visibility.Collapsed;
         }
 
         private void Button_View_Examination(object sender, RoutedEventArgs e)
         {
-            Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
-            Anamnesis anamnesis = selectedExam.Anamnesis;
-
-            txtAnamnesis.Clear();
-            txtDiagnosis.Clear();
-
-            if (anamnesis != null)
-            { 
-                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
-                txtDiagnosis.Text = anamnesis.Diagnosis;
-            }
-    
-            tExam.Visibility = Visibility.Visible;
-            tExam.Focus();
+            View_Examination_Or_Operation(dgPatientExams);
         }
         private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
@@ -229,6 +227,7 @@ namespace HospitalSystem.code
             cbSpecializationRefferal.SelectedIndex = -1;
             cbDoctorRefferal.IsEnabled = true;
             cbSpecializationRefferal.IsEnabled = true;
+            btnSavePrescription.Visibility = Visibility.Visible;
             tRefferal.Visibility = Visibility.Visible;
             tRefferal.Focus();
         }
@@ -248,7 +247,9 @@ namespace HospitalSystem.code
 
             cbDoctorRefferal.IsEnabled = false;
             cbSpecializationRefferal.IsEnabled = false;
+            txtNoteRefferal.IsEnabled = false;
 
+            btnSavePrescription.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Visible;
             tRefferal.Focus();
         }
@@ -301,7 +302,25 @@ namespace HospitalSystem.code
 
         private void Button_View_Operation(object sender, RoutedEventArgs e)
         {
+            View_Examination_Or_Operation(dgPatientOperations);
+        }
 
+        private void View_Examination_Or_Operation(DataGrid dg)
+        {
+            Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
+            Anamnesis anamnesis = selectedExam.Anamnesis;
+
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+
+            if (anamnesis != null)
+            {
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
+            }
+
+            tExam.Visibility = Visibility.Visible;
+            tExam.Focus();
         }
 
         private void Button_Cancel_Refferal(object sender, RoutedEventArgs e)
@@ -318,12 +337,48 @@ namespace HospitalSystem.code
 
         private void Button_View_Prescription(object sender, RoutedEventArgs e)
         {
+            PrescriptionDTO selectedPrescription = (PrescriptionDTO) dgPatientPrescriptions.SelectedItem;
+            Examination correspondingExam = new Examination();
+            correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
+            txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
+            txtTime.Text = correspondingExam.Time.ToString("HH/mm");
+            cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
+            cbDrug.SelectedItem = selectedPrescription.Drug;
+            txtTaking.Text = selectedPrescription.Taking;
+            txtInterval.Text =Convert.ToString(selectedPrescription.Interval);
 
+            txtDate.IsEnabled = false;
+            txtTime.IsEnabled = false;
+            cbDrug.IsEnabled = false;
+            txtTaking.IsEnabled = false;
+            txtInterval.IsEnabled = false;
+
+            tPersc.Visibility = Visibility.Visible;
+            tPersc.Focus();
         }
 
-        private void Button_New_Prescription(object sender, RoutedEventArgs e)
-        {
+        //private void Button_Save_Prescription(object sender, RoutedEventArgs e)
+        //{
+        //    PrescriptionDTO selectedPrescription = (PrescriptionDTO)dgPatientPrescriptions.SelectedItem;
+        //    Examination correspondingExam = new Examination();
+        //    correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
+        //    for(int i= 0; i < correspondingExam.Prescriptions.Count - 1; ++i)
+        //    {
+        //        if(correspondingExam.Prescriptions[i].Id == selectedPrescription.PrescriptionId)
+        //        {
+        //            correspondingExam.Prescriptions[i].Taking = selectedPrescription.Taking;
+        //            correspondingExam.Prescriptions[i].Interval = selectedPrescription.Interval;
+        //            correspondingExam.Prescriptions[i].Drug = selectedPrescription.Drug;
+        //            break;
+        //        }
+        //    }
+        //    ExaminationStorage.getInstance().Edit(correspondingExam);
+        //}
 
+        private void Button_Cancel_Prescription(object sender, RoutedEventArgs e)
+        {
+            tPersc.Visibility = Visibility.Collapsed;
+            tMedHis.Focus();
         }
     }
 }
