@@ -36,6 +36,20 @@ public class Room : INotifyPropertyChanged
             }
         }
     }
+    private bool isOccupied;
+
+    public bool IsOccupied
+    {
+        get { return isOccupied; }
+        set
+        {
+            if (isOccupied != value)
+            {
+                isOccupied = value;
+                OnPropertyChanged("IsOccupied");
+            }
+        }
+    }
     public event PropertyChangedEventHandler PropertyChanged;
     protected virtual void OnPropertyChanged(String name)
     {
@@ -44,52 +58,35 @@ public class Room : INotifyPropertyChanged
             PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
     }
-    public System.Collections.ArrayList equipment;
-   
-   /// <pdGenerated>default getter</pdGenerated>
-   public System.Collections.ArrayList GetEquipment()
-   {
-      if (equipment == null)
-         equipment = new System.Collections.ArrayList();
-      return equipment;
-   }
-   
-   /// <pdGenerated>default setter</pdGenerated>
-   public void SetEquipment(System.Collections.ArrayList newEquipment)
-   {
-      RemoveAllEquipment();
-      foreach (Equipment oEquipment in newEquipment)
-         AddEquipment(oEquipment);
-   }
-   
-   /// <pdGenerated>default Add</pdGenerated>
-   public void AddEquipment(Equipment newEquipment)
-   {
-      if (newEquipment == null)
-         return;
-      if (this.equipment == null)
-         this.equipment = new System.Collections.ArrayList();
-      if (!this.equipment.Contains(newEquipment))
-         this.equipment.Add(newEquipment);
-   }
-   
-   /// <pdGenerated>default Remove</pdGenerated>
-   public void RemoveEquipment(Equipment oldEquipment)
-   {
-      if (oldEquipment == null)
-         return;
-      if (this.equipment != null)
-         if (this.equipment.Contains(oldEquipment))
-            this.equipment.Remove(oldEquipment);
-   }
-   
-   /// <pdGenerated>default removeAll</pdGenerated>
-   public void RemoveAllEquipment()
-   {
-      if (equipment != null)
-         equipment.Clear();
-   }
+    //DODAO SAM DATE I INTERVAL ZATO STO MI TREBA OD KOG DATUMA I KOLIKO DUGO JE ZAUZETA SOBA
 
+    private DateTime date;
+    public DateTime Date
+    {
+        get { return date; }
+        set
+        {
+            if (date != value)
+            {
+                date = value;
+                OnPropertyChanged("Date");
+            }
+        }
+    }
+
+    private int interval;
+    public int Interval
+    {
+        get { return interval; }
+        set
+        {
+            if (interval != value)
+            {
+                interval = value;
+                OnPropertyChanged("Interval");
+            }
+        }
+    }
     public Room(int id, string name)
     {
         Id = id;

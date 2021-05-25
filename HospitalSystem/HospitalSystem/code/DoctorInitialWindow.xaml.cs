@@ -26,7 +26,7 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
-            tOperation.Visibility = Visibility.Collapsed;
+            tHospitalization.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
         }
         
@@ -391,9 +391,43 @@ namespace HospitalSystem.code
             };
             cb.ItemsSource = doctorsCollection;
         }
-        private void Button_Operation(object sender, RoutedEventArgs e)
+        private void Button_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            txtHospitalizationNote.Clear();
+            txtHospitalizationPatient.Text = Convert.ToString(currExam.Patient);
+            txtHospitalizationPatient.IsEnabled = false;
+            cbHospitalizationInterval.SelectedIndex = -1;
+            cbHospitalizationRoom.SelectedIndex = -1;
+            cbHospitalizatonBed.SelectedIndex = -1;
+            dpHospitalizationDate.SelectedDate = null;
+            tHospitalization.Visibility = Visibility.Visible;
+            tHospitalization.Focus();
+        }
+
+        private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Date_Picker_Hospitalization_Changed(object sender, RoutedEventArgs e)
+        {
+            if(dpHospitalizationDate.SelectedDate != null)
+            {
+                InitializeRoomForHospitalization(dpHospitalizationDate.SelectedDate);
+            }
+        }
+
+        private void InitializeRoomForHospitalization(DateTime? selectedDate)
+        {
+            ListCollectionView roomCollection = new ListCollectionView(RoomStorage.getInstance().GetAll());
+            roomCollection.Filter = (e) =>
+            {
+                Room temp = e as Doctor;
+                if (temp.Specialization == Specializaton)
+                    return true;
+                return false;
+            };
+            cb.ItemsSource = doctorsCollection;
         }
     }
 }
