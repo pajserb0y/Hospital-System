@@ -5,6 +5,8 @@
  ***********************************************************************/
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 public class Doctor : INotifyPropertyChanged
@@ -109,7 +111,21 @@ public class Doctor : INotifyPropertyChanged
         }
     }
 
-    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone, string specialization)
+    private ObservableCollection<DateTime> freeDays;
+    public ObservableCollection<DateTime> FreeDays
+    {
+        get { return freeDays; }
+        set
+        {
+            if (freeDays != value)
+            {
+                freeDays = value;
+                OnPropertyChanged("FreeDays");
+            }
+        }
+    }
+
+    public Doctor(int id, string firstName, string lastName, long jmbg, string adress, long telephone, string specialization, ObservableCollection<DateTime> freeDays)
     {
         Id = id;
         FirstName = firstName;
@@ -118,6 +134,7 @@ public class Doctor : INotifyPropertyChanged
         Adress = adress;
         Telephone = telephone;
         Specialization = specialization;
+        FreeDays = freeDays;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

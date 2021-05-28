@@ -72,5 +72,12 @@ namespace HospitalSystem.code
             AnnouncementWindow announcementWindow = new AnnouncementWindow();
             announcementWindow.Show();
         }
+
+        private void ButtonDoctors_Click(object sender, RoutedEventArgs e)
+        {
+            DoctorsWindow doctorsWindow = new DoctorsWindow();
+            doctorsWindow.Show();
+            this.Close();
+        }
     }
 }
