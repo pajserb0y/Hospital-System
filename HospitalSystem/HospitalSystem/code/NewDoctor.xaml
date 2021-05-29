@@ -9,18 +9,18 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <Label Content="Last name:" HorizontalAlignment="Left" Margin="114,128,0,0" VerticalAlignment="Top"/>
-        <Label Content="Specialization:" HorizontalAlignment="Left" Margin="98,354,0,0" VerticalAlignment="Top"/>
-        <Label Content="First name:" HorizontalAlignment="Left" Margin="114,74,0,0" VerticalAlignment="Top"/>
-        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="114,296,0,0" VerticalAlignment="Top"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="134,242,0,0" VerticalAlignment="Top"/>
-        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="138,186,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="196,78,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="196,136,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="196,192,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="196,248,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="196,304,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="196,360,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <Label Content="Last name:" HorizontalAlignment="Left" Margin="98,136,0,0" VerticalAlignment="Top"/>
+        <Label Content="Specialization:" HorizontalAlignment="Left" Margin="82,362,0,0" VerticalAlignment="Top"/>
+        <Label Content="First name:" HorizontalAlignment="Left" Margin="98,82,0,0" VerticalAlignment="Top"/>
+        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="98,304,0,0" VerticalAlignment="Top"/>
+        <Label Content="Adress:" HorizontalAlignment="Left" Margin="118,250,0,0" VerticalAlignment="Top"/>
+        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="122,194,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="180,86,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="180,144,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="180,200,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="180,256,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="180,312,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="180,368,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
 
         <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="349,498,0,0" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="94" >
             <TextBlock.Style>

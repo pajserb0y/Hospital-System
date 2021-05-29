@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,7 @@ namespace HospitalSystem.code
 
             currentDoctor = selectedDoctor;
             initializeSelectedDoctorDetails(selectedDoctor);
+            setButtonImages();
         }
 
         private void initializeSelectedDoctorDetails(Doctor selectedDoctor)
@@ -44,6 +46,16 @@ namespace HospitalSystem.code
                 selectedDoctor.FreeDays = new ObservableCollection<DateTime>();
             freeDaysList.ItemsSource = selectedDoctor.FreeDays;
         }
+
+        private void setButtonImages()
+        {
+            buttonAddFreeDays.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/add.jpg"))));
+            buttonDeleteFreeDays.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/delete.jpg"))));
+            buttonAddShift.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/add.jpg"))));
+            buttonEditShift.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/edit.jpg"))));
+            buttonDeleteShift.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/delete.jpg"))));
+        }
+
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             DoctorStorage.getInstance().Edit(new Doctor(currentDoctor.Id, txtFirstName.Text, txtLastName.Text, Convert.ToInt64(txtJmbg.Text), txtAdress.Text,
@@ -53,8 +65,34 @@ namespace HospitalSystem.code
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            //JobStorage.getInstance().serialize();
+            //DoctorStorage.getInstance().serialize();
             this.Close();
+        }
+
+        private void buttonAddFreeDays_Click(object sender, RoutedEventArgs e)
+        {
+            NewFreeDaysWindow newFreeDaysWindow = new NewFreeDaysWindow(currentDoctor);
+            newFreeDaysWindow.Show();
+        }
+
+        //private void buttonEditFreeDays_Click(object sender, RoutedEventArgs e)
+        //{
+        //    NewFreeDaysWindow newFreeDaysWindow = new NewFreeDaysWindow(currentDoctor, freeDaysList.SelectedItem);
+        //    newFreeDaysWindow.Show();
+        //}
+        private void buttonDeleteFreeDays_Click(object sender, RoutedEventArgs e)
+        {
+            List<DateTime> tempList = new List<DateTime>();
+            foreach (DateTime selectedDate in freeDaysList.SelectedItems)
+                tempList.Add(selectedDate);
+
+            foreach (DateTime date in tempList)
+                currentDoctor.FreeDays.Remove(date);
+        }
+
+        void setImagesAgain(object sender, MouseEventArgs e)
+        {
+            setButtonImages();
         }
     }
 }
