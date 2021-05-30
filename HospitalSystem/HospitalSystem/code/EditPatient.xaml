@@ -8,6 +8,38 @@
         Title="Edit patient" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>-->
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>-->
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
 
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="720" Width="1000" VerticalAlignment="Center" >
@@ -83,42 +115,24 @@
                                 <DataGridTextColumn Header="Activity code" Binding="{Binding ActivityCode}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddJob_PreviewMouseDown" Cursor="Hand" FontSize="18" 
-                                   HorizontalAlignment="Right" Margin="0,340,0,0" Grid.Row="6" Grid.Column="0">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="^ edit" TextWrapping="Wrap" PreviewMouseDown="txbEditJob_PreviewMouseDown" Cursor="Hand" FontSize="18" 
-                                   HorizontalAlignment="Center" Margin="0,340,0,0" Grid.Row="6" Grid.Column="1">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                        <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDeleteJob_PreviewMouseDown" Cursor="Hand" 
-                                   HorizontalAlignment="Left" Margin="0,340,0,0"  Grid.Row="6" Grid.Column="2" FontSize="18">
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
+                        <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddJob" HorizontalAlignment="Right" Margin="0,80,50,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
+                            Click="txbAddJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                            <DockPanel>
+                                <Image Source="/Images/add.jpg" Height="21" Width="20"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditJob" HorizontalAlignment="Right" Margin="0,120,50,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
+                            Click="txbEditJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                            <DockPanel>
+                                <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteJob" HorizontalAlignment="Right" Margin="0,160,50,0" VerticalAlignment="Top" Width="24" Height="24"
+                                BorderThickness="0" Cursor="Hand" Click="txbDeleteJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                            <DockPanel>
+                                <Image Source="/Images/delete.jpg" Width="27"/>
+                            </DockPanel>
+                        </Button>
                         <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
                                    HorizontalAlignment="Right" Margin="0,300,50,20" Padding="10,10,10,10" Grid.Row="6" Grid.Column="3">
                             <TextBlock.Style>
@@ -133,9 +147,24 @@
                             </TextBlock.Style></TextBlock>
                         <Label Content="Alergens" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,28,0,0" Width="100" Height="40" Grid.RowSpan="1" Grid.ColumnSpan="1"/>
                         <ListView x:Name="listViewAlergens" Grid.Row="6" Grid.Column="3" Margin="0,53,50,120"/>
-                        <Button Content="add" Cursor="Hand" FontSize="18" HorizontalAlignment="Left" Margin="0,250,0,90" Grid.Row="6" Grid.Column="3" Click="ButtonAddAlergen_Click" Background="White" />
-                        <Button Content="edit" Cursor="Hand" FontSize="18" HorizontalAlignment="Center" Margin="0,250,70,90" Grid.Row="6" Grid.Column="3" Click="ButtonEditAlergen_Click" Background="White"/>
-                        <Button Content="delete" Cursor="Hand" HorizontalAlignment="Right" Margin="0,250,50,90"  Grid.Row="6" Grid.Column="3" FontSize="18" Click="ButtonDeleteAlergen_Click" Background="White"/>
+                        <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddAlergen" HorizontalAlignment="Right" Margin="0,80,20,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
+                            Click="ButtonAddAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
+                            <DockPanel>
+                                <Image Source="/Images/add.jpg" Height="21" Width="20"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditAlergen" HorizontalAlignment="Right" Margin="0,120,20,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
+                            Click="ButtonEditAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
+                            <DockPanel>
+                                <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteAlergen" HorizontalAlignment="Right" Margin="0,160,20,0" VerticalAlignment="Top" Width="24" Height="24"
+                                BorderThickness="0" Cursor="Hand" Click="ButtonDeleteAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
+                            <DockPanel>
+                                <Image Source="/Images/delete.jpg" Width="27"/>
+                            </DockPanel>
+                        </Button>
                     </Grid>
                 </StackPanel>
             </TabItem>

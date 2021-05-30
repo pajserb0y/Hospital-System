@@ -66,6 +66,7 @@ namespace HospitalSystem.code
                     d.Adress = doctor.Adress;
                     d.Telephone = doctor.Telephone;
                     d.Specialization = doctor.Specialization;
+                    d.FreeDays = doctor.FreeDays;
                 }
         }
 
@@ -79,7 +80,7 @@ namespace HospitalSystem.code
                 }
         }
 
-        public void Save(Doctor doctor)
+        public void Add(Doctor doctor)
         {
             this.doctors.Add(doctor);
         }
