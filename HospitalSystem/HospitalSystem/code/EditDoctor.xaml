@@ -69,21 +69,28 @@
             </TextBlock.Style></TextBlock>
 
         <ListView x:Name="freeDaysList" Margin="97,338,557,156" SelectionMode="Multiple">
-            <!--<ListView.ItemTemplate>
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding FreeDays, StringFormat={}{0:dd/MM/yyyy}}"/>
-                        <TextBlock Text="-"/>
+                        <TextBlock Text="{Binding StringFormat={}{0:dd/MM/yyyy}}"/>
                     </WrapPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>-->
+            </ListView.ItemTemplate>
         </ListView>
         <Label Content="Free days" HorizontalAlignment="Left" Margin="97,307,0,0" VerticalAlignment="Top"/>
         <ListView x:Name="workingShiftsList" Margin="557,338,97,156">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding FreeDays}"/>
+                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text=".   "/>
+                        <TextBlock Text="{Binding StartTime, StringFormat={}{0:HH:mm }}"/>
+                        <TextBlock Text="-"/>
+                        <TextBlock Text="{Binding EndTime, StringFormat={}{0:HH:mm }}"/>
+                        <TextBlock Text="on "/>
+                        <TextBlock Text="{Binding StartDate, StringFormat={}{0:dd/MM/yyyy}}"/>
+                        <TextBlock Text=" - "/>
+                        <TextBlock Text="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -92,8 +99,8 @@
         <Button Template="{DynamicResource ButtonTemplate1}" x:Name="buttonAddFreeDays" HorizontalAlignment="Right" Margin="0,347,528,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
                 Click="buttonAddFreeDays_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <DockPanel>
-                <Image Source="/Images/add.jpg" Height="21" Width="20" MouseEnter="setImagesAgain"/>
-            </DockPanel>            
+                <Image Source="/Images/add.jpg" Height="21" Width="20"/>
+            </DockPanel>
         </Button>
         <!--<Button x:Name="buttonEditFreeDays" HorizontalAlignment="Right" Margin="0,394,528,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonEditFreeDays_Click">
             <DockPanel>
@@ -107,20 +114,25 @@
             </DockPanel>
         </Button>
         <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonAddShift" HorizontalAlignment="Right" Margin="0,346,66,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" 
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand">
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonAddShift_Click">
             <DockPanel>
                 <Image Source="\Images/add.jpg" Height="21" Width="20"/>
             </DockPanel>
         </Button>
-        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditShift" HorizontalAlignment="Right" Margin="0,393,66,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand">
+        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditShift" HorizontalAlignment="Right" Margin="0,393,66,0" VerticalAlignment="Top" Width="24" Height="24" 
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonEditShift_Click">
             <DockPanel>
                 <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
             </DockPanel>
         </Button>
-        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteShift" HorizontalAlignment="Right" Margin="0,439,61,0" VerticalAlignment="Top" Height="30" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Width="32">
+        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteShift" HorizontalAlignment="Right" Margin="0,439,61,0" VerticalAlignment="Top" Height="30" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Width="32" Click="buttonDeleteShift_Click">
             <DockPanel>
                 <Image Source="/Images/delete.jpg" Width="27"/>
             </DockPanel>
         </Button>
+        <DatePicker Name="datePickerStart" Margin="0,0,761,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102"/>
+        <DatePicker Name="datePickerEnd" Margin="0,0,573,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102"/>
+        <Label Content="From:" Margin="0,0,866,116" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40"/>
+        <Label Content="To:" Margin="0,0,677,116" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25"/>
     </Grid>
 </Window>

@@ -30,13 +30,24 @@ namespace HospitalSystem.code
             InitializeComponent();
 
             currentPatient = selectedPatient;
+            setButtonImages();
             initializeSelectedPatientDetails(selectedPatient);
             fillAppointments();
             fillExaminations();
             hideExaminationDetails();
             fillAnnouncements();
         }
-      
+
+        private void setButtonImages()
+        {
+            buttonAddJob.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/add.jpg"))));
+            buttonEditJob.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/edit.jpg"))));
+            buttonDeleteJob.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/delete.jpg"))));
+            buttonAddAlergen.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/add.jpg"))));
+            buttonEditAlergen.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/edit.jpg"))));
+            buttonDeleteAlergen.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/delete.jpg"))));
+        }
+
         private void fillAnnouncements()
         {
             List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
@@ -127,18 +138,18 @@ namespace HospitalSystem.code
             PatientsStorage.getInstance().serialize();
             this.Close();
         }
-        private void txbAddJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbAddJob_PreviewMouseDown(object sender, RoutedEventArgs e)
         {
             NewJob newJob = new NewJob(currentPatient);
             newJob.Show();
         }
-        private void txbEditJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbEditJob_PreviewMouseDown(object sender, RoutedEventArgs e)
         {
             EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
             editJob.Show();
             (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
         }
-        private void txbDeleteJob_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void txbDeleteJob_PreviewMouseDown(object sender, RoutedEventArgs e)
         {
             currentPatient.WorkHistory.Remove((Job)dgJob.SelectedItem);
         }
@@ -179,7 +190,7 @@ namespace HospitalSystem.code
             if (selectedApp != null)
             {
                 SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                secretarEditAppointment.Show();
+                //secretarEditAppointment.Show();
                 (dgApp.ItemContainerGenerator.ContainerFromItem(dgApp.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
             }  
         }

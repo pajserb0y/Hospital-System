@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -249,11 +250,30 @@ namespace HospitalSystem.code
 
         private void findDoctorsWithSelectedSpecialization(List<string> occupied, List<string> wantedDoctorsID, Doctor tempDoctor)
         {
-            if (tempDoctor.Specialization == cbSpecialization.SelectedItem.ToString())    //svi doktori sa tom specijalizacijom
+            if (tempDoctor.Specialization == cbSpecialization.SelectedItem.ToString() && isDoctorInHospital(tempDoctor))    //svi doktori sa tom specijalizacijom koji rade u naredna dva termina
             {
                 wantedDoctorsID.Add(tempDoctor.Id.ToString());
                 findOccupiedAppointments(occupied, tempDoctor);
             }
+        }
+        private bool isDoctorInHospital(Doctor tempDoctor)
+        {
+            ListCollectionView shiftsCollection = new ListCollectionView(WorkingShiftStorage.getInstance().GetAll());
+            shiftsCollection.Filter = (shift) =>
+            {
+                WorkingShift workingShift = shift as WorkingShift;
+                if (workingShift.DoctorId == tempDoctor.Id && !tempDoctor.FreeDays.Contains(DateTime.Now.Date) &&
+                    (workingShift.StartDate <= DateTime.Now.Date && workingShift.EndDate >= DateTime.Now.Date) &&
+                    (((DateTime)Convert.ToDateTime(findFirstNearestTerm()) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(findFirstNearestTerm()) <= workingShift.EndTime) || 
+                    ((DateTime)Convert.ToDateTime(findSecondNearestTerm()) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(findSecondNearestTerm()) <= workingShift.EndTime)))
+                    return true;
+                return false;
+            };
+
+            if (shiftsCollection.Count == 0)
+                return false;
+            else
+                return true;
         }
 
         private DateTime findNearestAvailableTermForDoctor(Doctor doctor)
@@ -374,6 +394,7 @@ namespace HospitalSystem.code
 
             checkIfExistAnyAvailableRoom(appointmentCollection, occupiedRooms, roomCollection);
             cbRoom.ItemsSource = roomCollection;
+            cbRoom.SelectedIndex = 0;
         }
 
         private void checkIfExistAnyAvailableRoom(ListCollectionView appointmentCollection, List<Room> occupiedRooms, List<Room> roomCollection)

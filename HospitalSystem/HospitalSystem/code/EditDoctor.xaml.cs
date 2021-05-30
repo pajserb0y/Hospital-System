@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -42,9 +43,35 @@ namespace HospitalSystem.code
             //txtUsername.Text = selectedDoctor.Username;
             //txtPassword.Text = selectedDoctor.Password;
 
+            fillFreeDaysList(selectedDoctor);
+            filterShiftsAndFillList();
+        }
+
+        private void fillFreeDaysList(Doctor selectedDoctor)
+        {
             if (selectedDoctor.FreeDays == null)
                 selectedDoctor.FreeDays = new ObservableCollection<DateTime>();
+            else
+            {
+                List<DateTime> freeDays = new List<DateTime>(selectedDoctor.FreeDays);
+                foreach (DateTime freeDay in freeDays)
+                    if (freeDay.Year != DateTime.Now.Year)
+                        selectedDoctor.FreeDays.Remove(freeDay);
+            }
             freeDaysList.ItemsSource = selectedDoctor.FreeDays;
+        }
+
+        private void filterShiftsAndFillList()
+        {
+            ListCollectionView shiftsCollection = new ListCollectionView(WorkingShiftStorage.getInstance().GetAll());
+            shiftsCollection.Filter = (shift) =>
+            {
+                WorkingShift workingShift = shift as WorkingShift;
+                if (workingShift.DoctorId == currentDoctor.Id)
+                    return true;
+                return false;
+            };
+            workingShiftsList.ItemsSource = shiftsCollection;
         }
 
         private void setButtonImages()
@@ -71,15 +98,38 @@ namespace HospitalSystem.code
 
         private void buttonAddFreeDays_Click(object sender, RoutedEventArgs e)
         {
-            NewFreeDaysWindow newFreeDaysWindow = new NewFreeDaysWindow(currentDoctor);
-            newFreeDaysWindow.Show();
+            if (datePickerStart.SelectedDate != null && datePickerEnd.SelectedDate != null)
+            {
+                DateTime date = (DateTime)datePickerStart.SelectedDate;
+                DateTime endDate = (DateTime)datePickerEnd.SelectedDate;
+                checkFreeDaysLengthAndFillList(date, endDate);
+                datePickerStart.SelectedDate = null;
+                datePickerEnd.SelectedDate = null;
+            }
         }
 
-        //private void buttonEditFreeDays_Click(object sender, RoutedEventArgs e)
-        //{
-        //    NewFreeDaysWindow newFreeDaysWindow = new NewFreeDaysWindow(currentDoctor, freeDaysList.SelectedItem);
-        //    newFreeDaysWindow.Show();
-        //}
+        private void checkFreeDaysLengthAndFillList(DateTime date, DateTime endDate)
+        {
+            while (date <= endDate)
+            {
+                if (currentDoctor.FreeDays.Contains(date) || date < DateTime.Now.Date)
+                {
+                    date = date.AddDays(1);
+                    continue;
+                }
+                else if (currentDoctor.FreeDays.Count <= 30)
+                {
+                    currentDoctor.FreeDays.Add(date);
+                    date = date.AddDays(1);
+                }
+                else
+                {
+                    MessageBox.Show("Nije moguce imati vise od 30 slobodnih dana godisnje!");
+                    break;
+                }
+            }
+        }
+
         private void buttonDeleteFreeDays_Click(object sender, RoutedEventArgs e)
         {
             List<DateTime> tempList = new List<DateTime>();
@@ -90,9 +140,21 @@ namespace HospitalSystem.code
                 currentDoctor.FreeDays.Remove(date);
         }
 
-        void setImagesAgain(object sender, MouseEventArgs e)
+        private void buttonAddShift_Click(object sender, RoutedEventArgs e)
         {
-            setButtonImages();
+            NewShiftWindow newShiftWindow = new NewShiftWindow(currentDoctor.Id);
+            newShiftWindow.Show();
         }
+
+        private void buttonEditShift_Click(object sender, RoutedEventArgs e)
+        {
+            NewShiftWindow newShiftWindow = new NewShiftWindow((WorkingShift)workingShiftsList.SelectedItem);
+            newShiftWindow.Show();
+        }
+
+        private void buttonDeleteShift_Click(object sender, RoutedEventArgs e)
+        {
+            WorkingShiftStorage.getInstance().Delete((WorkingShift)workingShiftsList.SelectedItem);
+        }     
     }
 }

@@ -26,8 +26,8 @@
                     <TextBox x:Name="txtTime" Margin="684,41,43,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" Height="24"/>
                     <CheckBox x:Name="checkBoxDoctors" Content="All doctors" HorizontalAlignment="Left" Margin="573,111,0,0" VerticalAlignment="Top" Checked="CheckBoxDoctorsChanged" Unchecked="CheckBoxDoctorsChanged"/>
                     <CheckBox x:Name="checkBoxPatients" Content="All patients" HorizontalAlignment="Left" Margin="574,163,0,0" VerticalAlignment="Top" Checked="CheckBoxPatientsChanged" Unchecked="CheckBoxPatientsChanged"/>
-                    <Button x:Name="buttonChooseDoctors" Content="choose..." HorizontalAlignment="Left" Margin="703,108,0,0" VerticalAlignment="Top" Width="53" Click="buttonChooseDoctors_Click"  />
-                    <Button x:Name="buttonChoosePatients" Content="choose..." HorizontalAlignment="Left" Margin="703,163,0,0" VerticalAlignment="Top" Width="53" Click="buttonChoosePatients_Click"  />
+                    <Button x:Name="buttonChooseDoctors" Content="choose..." HorizontalAlignment="Left" Margin="703,108,0,0" VerticalAlignment="Top" Width="53" Click="buttonChooseDoctors_Click" Cursor="Hand" />
+                    <Button x:Name="buttonChoosePatients" Content="choose..." HorizontalAlignment="Left" Margin="703,163,0,0" VerticalAlignment="Top" Width="53" Click="buttonChoosePatients_Click"  Cursor="Hand" />
                     <TextBlock x:Name="textBlockSend" Text="send &gt;" TextWrapping="Wrap" PreviewMouseDown="txbSend_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="664,0,0,43"
                                Visibility="Visible" VerticalAlignment="Bottom" HorizontalAlignment="Left">
                         <TextBlock.Style>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -83,9 +84,30 @@ namespace HospitalSystem.code
 
             foreach (string s in terms)
             {
-                if (!occupiedTerms.Contains(s))
-                    cbTime.Items.Add(s);
+                Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
+                if(dpDate.SelectedDate != null)
+                    if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
+                        cbTime.Items.Add(s);
             }
+        }
+
+        private bool doctorIsInHospital(Doctor selectedDoctor, string term)
+        {
+            ListCollectionView shiftsCollection = new ListCollectionView(WorkingShiftStorage.getInstance().GetAll());
+            shiftsCollection.Filter = (shift) =>
+            {
+                WorkingShift workingShift = shift as WorkingShift;
+                if (workingShift.DoctorId == selectedDoctor.Id && (workingShift.StartDate <= dpDate.SelectedDate && workingShift.EndDate >= dpDate.SelectedDate) &&
+                    (((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime) ||
+                    ((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime)))
+                    return true;
+                return false;
+            };
+
+            if (shiftsCollection.Count == 0)
+                return false;
+            else
+                return true;
         }
 
         private void timeChanged(object sender, System.EventArgs e)
