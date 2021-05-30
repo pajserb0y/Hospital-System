@@ -40,35 +40,37 @@ namespace HospitalSystem.code
 
         private void Button_Add(object sender, RoutedEventArgs e)
         {
-            if (cbPatient.SelectedItem != null)
+            if (cbPatient.SelectedItem == null)
+                return;
+            
+            int pid = ((Patient)cbPatient.SelectedItem).Id;
+            foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
             {
-                int pid = ((Patient)cbPatient.SelectedItem).Id;
-
-
-                foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
-                {
-                    if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date == DateTime.Now.Date)
-                        newApptsMade[pid] += 1;
-                    else if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date < DateTime.Now.Date)
-                        newApptsMade[pid] = 0;
-                }
-
-                if (newApptsMade[pid] >= 3)
-                {
-                    MessageBox.Show("Cannot make more than 3 appointments in a day! Contact secretary for more details.");
-                    return;
-                }            
-                NewAppointment newAppt = new NewAppointment((Patient)cbPatient.SelectedItem);
-                newAppt.Show();
+                if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date == DateTime.Now.Date)
+                    newApptsMade[pid] += 1;
+                else if (a.Patient == cbPatient.SelectedItem && a.TimeOfCreation.Date < DateTime.Now.Date)
+                    newApptsMade[pid] = 0;
             }
+
+            if (newApptsMade[pid] >= 3)
+            {
+                MessageBox.Show("Cannot make more than 3 appointments in a day! Contact secretary for more details.");
+                return;
+            }            
+            NewAppointment newAppt = new NewAppointment((Patient)cbPatient.SelectedItem);
+            newAppt.Show();         
         }
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            if (dgAppointment.SelectedItem != null)
-            {
-                AppointmentStorage.getInstance().Delete((Appointment)dgAppointment.SelectedItem);            
-            }
+            if (dgAppointment.SelectedItem == null)
+                return;
+
+            if (cbPatient.SelectedItem == null)
+                return;
+
+            AppointmentStorage.getInstance().Delete((Appointment)dgAppointment.SelectedItem);          
+           
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
