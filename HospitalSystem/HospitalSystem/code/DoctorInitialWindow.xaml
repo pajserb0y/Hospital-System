@@ -7,16 +7,62 @@
         mc:Ignorable="d"
         Title="DoctorInitialWindow" Height="700" Width="1210">
     <Grid>
-        <TabControl x:Name="tabControlMain" TabStripPlacement="Left" Margin="0,0,-126,0" >
-            <TabItem Header="Home"></TabItem>
-            <TabItem Header="Examination">
-
-                <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="650" Width="1050" VerticalAlignment="Top" >
-                    <TabItem Name="t0" Header="Appointments">
+        <TabControl x:Name="tabControlHome" TabStripPlacement="Left" Margin="0,0,10,0" >
+            <TabItem Header="Home">
+                <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="650" Width="1050" VerticalAlignment="Top" >
+                    <TabItem Name="tStart" Header="Start">
                         <StackPanel>
                             <Grid Height="Auto" Width="Auto" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="400"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="500"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label  Content="Announcements" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Margin="100,47,-100,-47" Grid.RowSpan="2"/>
+                                <Button Content="View" HorizontalAlignment="Left" Grid.Column="2"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_View_Announcement" Margin="82,420,0,0" RenderTransformOrigin="0.215,1.69"/>
+                                <Rectangle HorizontalAlignment="Left" Height="328" Margin="100,47,0,0" Stroke="Black" VerticalAlignment="Top" Width="675" Grid.ColumnSpan="3"/>
+                                <Label Content="Choose doctor:"  Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Margin="94,8,0,402" />
+                                <DataGrid x:Name="dgDoctorAnnouncements" Height="300" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" 
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Margin="100,75,25,125" >
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                                        <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                                        <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <ComboBox x:Name="cbDoctorHome" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="118" SelectionChanged="doctorHomeChanged" Margin="81,38,0,0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Id}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding LastName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Examination">
+
+                <TabControl x:Name="tabControl2" HorizontalAlignment="Left" Height="650" Width="1050" VerticalAlignment="Top" >
+                    <TabItem Name="tAppointments" Header="Appointments">
+                        <StackPanel>
+                            <Grid Height="Auto" Width="Auto" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
                                     <ColumnDefinition Width="40*"/>
                                     <ColumnDefinition Width="74*"/>
                                     <ColumnDefinition Width="27*"/>

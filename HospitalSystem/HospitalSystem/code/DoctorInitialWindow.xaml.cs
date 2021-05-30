@@ -37,10 +37,15 @@ namespace HospitalSystem.code
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
             ObservableCollection<Drug> verifiedDrugs = DrugStorage.getInstance().GetAllVerifiedDrugs();
             ObservableCollection<Drug> unverifiedDrugs = DrugStorage.getInstance().GetAllUnverifiedDrugs();
+            ObservableCollection<Announcement> announcements = AnnouncementStorage.getInstance().GetAll();
 
             dgVerifiedDrugs.ItemsSource = verifiedDrugs;
             dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
             cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
+
+            //Home
+            cbDoctorHome.ItemsSource = doctors;
+            dgDoctorAnnouncements.ItemsSource = 
 
             cbDoctor.ItemsSource = doctors;
             cbPatient.ItemsSource = patients;
@@ -53,6 +58,31 @@ namespace HospitalSystem.code
         {
             AppointmentStorage.getInstance().serialize();
             this.Close();
+        }
+        private void doctorHomeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListCollectionView collectionViewAnnouncement = new ListCollectionView(AnnouncementStorage.getInstance().GetAll());
+            if (cbDoctorHome.SelectedItem == null) //PREIMENOVATI cb u comboBox
+            {
+                return;
+            }
+            collectionViewAnnouncement.Filter = (announcement) =>
+            {
+                Announcement tempAnnouncement = announcement as Announcement;
+                Doctor tempDoctor = (Doctor)cbDoctorHome.SelectedItem;
+                if (tempAnnouncement.DoctorIDs.Contains(tempDoctor.Id))
+                    return true;
+                return false;
+            };
+            dgDoctorAnnouncements.ItemsSource = collectionViewAnnouncement;
+        }
+        private void Button_View_Announcement(object sender, RoutedEventArgs e)
+        {
+            if(dgDoctorAnnouncements.SelectedIndex != -1)
+            {
+                Announcement announcement = (Announcement)dgDoctorAnnouncements.SelectedItem;
+                MessageBox.Show(announcement.Content);
+            }
         }
 
         private void Button_Add(object sender, RoutedEventArgs e)
@@ -123,7 +153,7 @@ namespace HospitalSystem.code
 
             AppointmentStorage.getInstance().Delete(currApp);
 
-            t0.Focus();
+            tAppointments.Focus();
             tExam.Visibility = Visibility.Collapsed;
         }
 

@@ -80,15 +80,15 @@ namespace HospitalSystem.code
             }
         }
 
-        private DateTime timeOfPerscription;
-        public DateTime TimeOfPerscription
+        private DateTime timeOfPrescription;
+        public DateTime TimeOfPrescription
         {
-            get { return timeOfPerscription; }
+            get { return timeOfPrescription; }
             set
             {
-                if (timeOfPerscription != value)
+                if (timeOfPrescription != value)
                 {
-                    timeOfPerscription = value;
+                    timeOfPrescription = value;
                     OnPropertyChanged("TimeOfPerscription");
                 }
             }
@@ -111,7 +111,7 @@ namespace HospitalSystem.code
             this.drug = drug;
             this.taking = taking;
             this.dateOfPrescription = date;
-            this.timeOfPerscription = time;
+            this.timeOfPrescription = time;
             this.interval = interval;
         }
     }
