@@ -22,12 +22,15 @@ namespace HospitalSystem.code
         ListCollectionView allAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         ListCollectionView allExaminations = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         Dictionary<int, int> newApptsMade = new Dictionary<int, int>();
+        Patient currentPatient;
 
+        #region Appointments and examinations
         public PatientInitialWindow()
         {
             this.Closed += new EventHandler(Window_Closed);
             InitializeComponent();
 
+            hideExaminationDetails();
             ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
             cbPatient.ItemsSource = patients;
         }
@@ -36,6 +39,13 @@ namespace HospitalSystem.code
         {
             AppointmentStorage.getInstance().serialize();
             this.Close();
+        }
+
+        private void hideExaminationDetails()
+        {
+            tabAnamnesis.Visibility = Visibility.Collapsed;
+            tabPrescription.Visibility = Visibility.Collapsed;
+            tabNotes.Visibility = Visibility.Collapsed;
         }
 
         private void Button_Add(object sender, RoutedEventArgs e)
@@ -90,23 +100,39 @@ namespace HospitalSystem.code
             this.Close();
         }
 
-        private void Button_Medication(object sender, RoutedEventArgs e)
+        private void Button_View(object sender, RoutedEventArgs e)
         {
-            if (cbPatient.SelectedItem != null)
+            Examination selectedExam = (Examination)dgExamination.SelectedItem;
+            Anamnesis anamnesis = selectedExam.Anamnesis;
+            ObservableCollection<Prescription> prescriptions = selectedExam.Prescriptions;
+            showExaminationDetails();
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+            txtNotes.Clear();
+            if (anamnesis != null)
             {
-                MedicationWindow mw = new MedicationWindow((Patient)cbPatient.SelectedItem);
-                mw.Show();
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
             }
+
+            txtNotes.Text = selectedExam.Notes;
+            dgMedication.ItemsSource = prescriptions;
+            tabAnamnesis.Focus();
+        }
+
+        private void showExaminationDetails()
+        {
+            tabAnamnesis.Visibility = Visibility.Visible;
+            tabPrescription.Visibility = Visibility.Visible;
         }
 
         private void Button_Feedback(object sender, RoutedEventArgs e)
         {
-            if (cbPatient.SelectedItem != null && dgExamination.SelectedItem != null)
-            {
-
-                FeedbackForm rateExamination = new FeedbackForm((Examination)dgExamination.SelectedItem, ((Patient)cbPatient.SelectedItem).Id);
-                rateExamination.Show();
-            }
+            if (cbPatient.SelectedItem == null || dgExamination.SelectedItem == null)
+                return;
+            
+            FeedbackForm rateExamination = new FeedbackForm((Examination)dgExamination.SelectedItem, ((Patient)cbPatient.SelectedItem).Id);
+            rateExamination.Show();         
         }
 
         private void provideGeneralFeedback(int pid)
@@ -117,33 +143,144 @@ namespace HospitalSystem.code
 
         private void patientChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbPatient.SelectedItem != null)
+            if (cbPatient.SelectedItem == null)
+                return;
+            currentPatient = (Patient)cbPatient.SelectedItem;
+
+            if (!newApptsMade.ContainsKey(currentPatient.Id))
+                newApptsMade.Add(currentPatient.Id, 0);
+
+            initializeSelectedPatientDetails(currentPatient);
+            hideExaminationDetails();
+            fillAnnouncements();
+            filterAppointments();
+            filterExaminations();
+
+            if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
+                provideGeneralFeedback(currentPatient.Id);     
+        }
+
+        private void filterExaminations()
+        {
+            allExaminations.Filter = (e) =>
             {
-                if (!newApptsMade.ContainsKey(((Patient)cbPatient.SelectedItem).Id))
-                    newApptsMade.Add(((Patient)cbPatient.SelectedItem).Id, 0);
+                Examination temp = e as Examination;
+                if (temp.Patient == cbPatient.SelectedItem)
+                    return true;
+                return false;
+            };
+            dgExamination.ItemsSource = allExaminations;
+        }
 
+        private void filterAppointments()
+        {
+            allAppointments.Filter = (e) =>
+            {
+                Appointment temp = e as Appointment;
+                if (temp.Patient == cbPatient.SelectedItem)
+                    return true;
+                return false;
+            };
+            dgAppointment.ItemsSource = allAppointments;
+        }
+        #endregion
 
-                allAppointments.Filter = (e) =>
-                {
-                    Appointment temp = e as Appointment;
-                    if (temp.Patient == cbPatient.SelectedItem)
-                        return true;
-                    return false;
-                };
-                dgAppointment.ItemsSource = allAppointments;
+        #region Chart
+        private void initializeSelectedPatientDetails(Patient selectedPatient)
+        {
+            txtID.Text = selectedPatient.Id.ToString();
+            txtIme.Text = selectedPatient.FirstName;
+            txtPrezime.Text = selectedPatient.LastName;
+            txtJmbg.Text = selectedPatient.Jmbg.ToString();
+            txtAdress.Text = selectedPatient.Adress;
+            txtTel.Text = selectedPatient.Telephone.ToString();
+            txtEmail.Text = selectedPatient.Email;
+            _ = selectedPatient.Gender == 'M' ? rbM.IsChecked = true : rbF.IsChecked = true;
+            _ = selectedPatient.Guest = false;
+            dpBirth.SelectedDate = selectedPatient.BirthDate;
 
-                allExaminations.Filter = (e) =>
-                {
-                    Examination temp = e as Examination;
-                    if (temp.Patient == cbPatient.SelectedItem)
-                        return true;
-                    return false;
-                };
-                dgExamination.ItemsSource = allExaminations;
+            if (selectedPatient.MarriageStatus == "Married")
+                cbMarriage.SelectedIndex = 0;
+            if (selectedPatient.MarriageStatus == "Unmarried")
+                cbMarriage.SelectedIndex = 1;
+            if (selectedPatient.MarriageStatus == "Divorced")
+                cbMarriage.SelectedIndex = 2;
+            if (selectedPatient.MarriageStatus == "Widow(er)")
+                cbMarriage.SelectedIndex = 3;
 
-                if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
-                    provideGeneralFeedback(((Patient)cbPatient.SelectedItem).Id);
-            }
+            txtSoc.Text = selectedPatient.SocNumber.ToString();
+            txtCity.Text = selectedPatient.City;
+            txtCountry.Text = selectedPatient.Country;
+
+            if (selectedPatient.Alergens == null)
+                selectedPatient.Alergens = new ObservableCollection<string>();
+            listViewAlergens.ItemsSource = selectedPatient.Alergens;
+
+            if (selectedPatient.WorkHistory == default)
+                selectedPatient.WorkHistory = new ObservableCollection<Job>();
+            dgJob.ItemsSource = selectedPatient.WorkHistory;
+        }
+
+        private void Button_Save_Changes(object sender, RoutedEventArgs e)
+        {
+            PatientsStorage.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
+                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, false,
+                "", "", (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text),
+                txtCity.Text, txtCountry.Text, currentPatient.Alergens, currentPatient.WorkHistory));
+            PatientsStorage.getInstance().serialize();
+            this.Close();
+        }
+        private void Button_Add_Job(object sender, RoutedEventArgs e)
+        {
+            NewJob newJob = new NewJob(currentPatient);
+            newJob.Show();
+        }
+        private void Button_Edit_Job(object sender, RoutedEventArgs e)
+        {
+            EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
+            editJob.Show();
+            (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;
+        }
+        private void Button_Delete_Job(object sender, RoutedEventArgs e)
+        {
+            currentPatient.WorkHistory.Remove((Job)dgJob.SelectedItem);
+        }
+
+        private void Button_Add_Alergen(object sender, RoutedEventArgs e)
+        {
+            NewAlergen newAlergen = new NewAlergen(currentPatient);
+            newAlergen.Show();
+        }
+        #endregion
+
+        #region Inbox
+        private void fillAnnouncements()
+        {
+            List<Announcement> selectedPatientAnnouncements = new List<Announcement>();
+            foreach (Announcement ann in AnnouncementStorage.getInstance().GetAll())
+                if (ann.PatientIDs.Contains(currentPatient.Id))
+                    selectedPatientAnnouncements.Add(ann);
+            announcementList.ItemsSource = selectedPatientAnnouncements;
+        }
+
+        private void Button_Read(object sender, RoutedEventArgs e)
+        {
+            AnnouncementWindow announcementWindow = new AnnouncementWindow((Announcement)announcementList.SelectedItem);
+            announcementWindow.Show();
+        }
+        #endregion
+
+        private void Button_Add_Notes(object sender, RoutedEventArgs e)
+        {
+            tabNotes.Visibility = Visibility.Visible;
+            tabNotes.Focus();
+        }
+
+        private void Button_Save_Notes(object sender, RoutedEventArgs e)
+        {
+            Examination temp = (Examination)dgExamination.SelectedItem;
+            temp.Notes = txtNotes.Text;
+            ExaminationStorage.getInstance().Edit(temp);
         }
     }
 }

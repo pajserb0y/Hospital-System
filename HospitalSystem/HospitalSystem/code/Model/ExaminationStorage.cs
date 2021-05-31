@@ -63,6 +63,7 @@ public class ExaminationStorage
                 e.Time = exam.Time;
                 e.Anamnesis = exam.Anamnesis;
                 e.Prescriptions = exam.Prescriptions;
+                e.Notes = exam.Notes;
             }
         serialize();
     }
@@ -108,6 +109,7 @@ public class ExaminationStorage
             temp.TimesChanged = e.TimesChanged;
             temp.Anamnesis = e.Anamnesis;
             temp.Prescriptions = e.Prescriptions;
+            temp.Notes = e.Notes;
             exams.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(exams);
@@ -144,6 +146,7 @@ public class ExaminationStorage
             temp.TimesChanged = e.TimesChanged;
             temp.Anamnesis = e.Anamnesis;
             temp.Prescriptions = e.Prescriptions;
+            temp.Notes = e.Notes;
             exams.Add(temp);
         }
         return exams;
@@ -292,6 +295,20 @@ internal class ExaminationViewModel
             if (timeOfCreation != value)
             {
                 timeOfCreation = value;
+            }
+        }
+    }
+
+    private string notes = "";
+
+    public string Notes
+    {
+        get { return notes; }
+        set
+        {
+            if (value != notes)
+            {
+                notes = value;
             }
         }
     }
