@@ -1,39 +1,139 @@
 [
   {
     "Id": 1,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 2,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 3,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 4,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 5,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 6,
-    "Name": "Ordination"
+    "Name": "Ordination",
+    "Beds": null
   },
   {
     "Id": 7,
-    "Name": "Operation room"
+    "Name": "Operation room",
+    "Beds": null
   },
   {
     "Id": 8,
-    "Name": "Operation room"
+    "Name": "Operation room",
+    "Beds": null
   },
   {
     "Id": 9,
-    "Name": "Operation room"
+    "Name": "Operation room",
+    "Beds": null
+  },
+  {
+    "Id": 10,
+    "Name": "Operation room",
+    "Beds": null
+  },
+  {
+    "Id": 11,
+    "Name": "Room",
+    "Beds": [
+      {
+        "Id": 2,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      },
+      {
+        "Id": 3,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 12,
+    "Name": "Room",
+    "Beds": [
+      {
+        "Id": 2,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      },
+      {
+        "Id": 3,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 13,
+    "Name": "Room",
+    "Beds": [
+      {
+        "Id": 2,
+        "Interval": [
+          {
+            "Item1": "2021-06-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 14,
+    "Name": "Room",
+    "Beds": [
+      {
+        "Id": 2,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      },
+      {
+        "Id": 3,
+        "Interval": [
+          {
+            "Item1": "2021-05-15T00:00:00",
+            "Item2": "2021-05-18T00:00:00"
+          }
+        ]
+      }
+    ]
   }
-
 ]

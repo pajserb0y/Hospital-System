@@ -396,10 +396,10 @@ namespace HospitalSystem.code
             txtHospitalizationNote.Clear();
             txtHospitalizationPatient.Text = Convert.ToString(currExam.Patient);
             txtHospitalizationPatient.IsEnabled = false;
-            cbHospitalizationInterval.SelectedIndex = -1;
+            dpHospitalizationOUT.SelectedDate = null;
             cbHospitalizationRoom.SelectedIndex = -1;
             cbHospitalizatonBed.SelectedIndex = -1;
-            dpHospitalizationDate.SelectedDate = null;
+            dpHospitalizationIN.SelectedDate = null;
             tHospitalization.Visibility = Visibility.Visible;
             tHospitalization.Focus();
         }
@@ -409,25 +409,98 @@ namespace HospitalSystem.code
 
         }
 
-        private void Date_Picker_Hospitalization_Changed(object sender, RoutedEventArgs e)
+        private void Date_Picker_HospitalizationIN_Changed(object sender, RoutedEventArgs e)
         {
-            if(dpHospitalizationDate.SelectedDate != null)
+            if(dpHospitalizationIN.SelectedDate != null)
             {
-                InitializeRoomForHospitalization(dpHospitalizationDate.SelectedDate);
+                InitializeRoomForHospitalization(dpHospitalizationIN.SelectedDate);
             }
         }
 
         private void InitializeRoomForHospitalization(DateTime? selectedDate)
         {
-            ListCollectionView roomCollection = new ListCollectionView(RoomStorage.getInstance().GetAll());
-            roomCollection.Filter = (e) =>
-            {
-                Room temp = e as Doctor;
-                if (temp.Specialization == Specializaton)
-                    return true;
+            //ListCollectionView roomCollection = new ListCollectionView(RoomStorage.getInstance().GetAll());
+            //roomCollection.Filter = (e) =>
+            //{
+            //    Room temp = e as Doctor;
+            //    if (temp.Specialization == Specializaton)
+            //        return true;
+            //    return false;
+            //};
+            //cb.ItemsSource = doctorsCollection;
+        }
+
+        private void cbHospitalizationRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           // if (dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT != null)
+          //  {
+                fillListOfAvailableBeds();
+          //  }
+        }
+        private void fillListOfAvailableRooms(List<Bed> beds)
+        {
+            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+            ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
+            
+            roomCollectionView.Filter = (room) =>
+            { 
+                Room tempRoom = room as Room;
+                if (tempRoom.Name == "Room")
+                {
+                    foreach (Bed tempBed in tempRoom.Beds)
+                    {
+                        foreach ((DateTime, DateTime) val in tempBed.Interval)
+                        {
+                            if (val.Item1 <= inTime && val.Item2 >= inTime)
+                                return false;
+                            if (val.Item1 <= outTime && val.Item2 >= outTime)
+                                return false;
+                            if (val.Item1 >= inTime && val.Item2 <= outTime)
+                                return false;
+                            return true;
+                        }
+                    }
+                }
                 return false;
             };
-            cb.ItemsSource = doctorsCollection;
+            cbHospitalizationRoom.ItemsSource = roomCollectionView;
+        }
+
+        private void dpHospitalizationTimeOut_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            fillListOfAvailableRooms(new List<Bed>());
+        }
+
+        private void fillListOfAvailableBeds()
+        {
+            if(cbHospitalizationRoom.SelectedIndex != -1)
+            {
+
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
+                ListCollectionView bedCollectionView = new ListCollectionView(selectedRoom.Beds);
+
+                bedCollectionView.Filter = (bed) =>
+                {
+                    Bed tempBed = bed as Bed;
+
+                    foreach ((DateTime, DateTime) val in tempBed.Interval)
+                    {
+                        if (val.Item1 <= inTime && val.Item2 >= inTime)
+                            return false;
+                        if (val.Item1 <= outTime && val.Item2 >= outTime)
+                            return false;
+                        if (val.Item1 >= inTime && val.Item2 <= outTime)
+                            return false;
+                        return true;
+                    }
+                    return false;
+                };
+                cbHospitalizatonBed.ItemsSource = bedCollectionView;
+            }
         }
     }
 }
+

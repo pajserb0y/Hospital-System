@@ -5,6 +5,7 @@
  ***********************************************************************/
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 public class Room : INotifyPropertyChanged
@@ -36,20 +37,7 @@ public class Room : INotifyPropertyChanged
             }
         }
     }
-    private bool isOccupied;
 
-    public bool IsOccupied
-    {
-        get { return isOccupied; }
-        set
-        {
-            if (isOccupied != value)
-            {
-                isOccupied = value;
-                OnPropertyChanged("IsOccupied");
-            }
-        }
-    }
     public event PropertyChangedEventHandler PropertyChanged;
     protected virtual void OnPropertyChanged(String name)
     {
@@ -60,22 +48,50 @@ public class Room : INotifyPropertyChanged
     }
     //DODAO SAM DATE I INTERVAL ZATO STO MI TREBA OD KOG DATUMA I KOLIKO DUGO JE ZAUZETA SOBA
 
-    private DateTime date;
-    public DateTime Date
+    private ObservableCollection<Bed> beds;
+    public ObservableCollection<Bed> Beds
     {
-        get { return date; }
+        get { return beds; }
         set
         {
-            if (date != value)
+            if (beds != value)
             {
-                date = value;
-                OnPropertyChanged("Date");
+                beds = value;
+                OnPropertyChanged("Beds");
             }
         }
     }
 
-    private int interval;
-    public int Interval
+    public Room(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+    public override string ToString()
+    {
+        return Id.ToString() + " " + Name;
+    }
+
+}
+
+public class Bed
+{
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
+    //private ObservableCollection<Tuple<DateTime,DateTime,int>> interval;
+    private ObservableCollection<(DateTime, DateTime)> interval;
+    public ObservableCollection<(DateTime, DateTime)> Interval
     {
         get { return interval; }
         set
@@ -87,14 +103,16 @@ public class Room : INotifyPropertyChanged
             }
         }
     }
-    public Room(int id, string name)
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(String name)
     {
-        Id = id;
-        Name = name;
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
     }
     public override string ToString()
     {
-        return Id.ToString() + " " + Name;
+        return "Bed" + Id.ToString();
     }
-
 }
