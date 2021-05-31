@@ -19,6 +19,7 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class SecretarEditAppointment : Window
     {
+        bool fromConstructor;
         private Appointment currentAppointment;
         ObservableCollection<Refferal> refferals = RefferalStorage.getInstance().GetAll();
         ListCollectionView collectionAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
@@ -30,6 +31,7 @@ namespace HospitalSystem.code
             currentAppointment = selectedApp;
             InitializeComponent();
 
+            fromConstructor = true;
             this.Show();
             cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
             initializeSelectedAppointmentDetails(selectedApp);                        
@@ -101,7 +103,7 @@ namespace HospitalSystem.code
 
         private void doctorChanged(object sender, System.EventArgs e)
         {
-            if (dpDate.SelectedDate != null)
+            if (!fromConstructor)
             {
                 filter();
                 if (displayTerms() == 1)
@@ -110,10 +112,14 @@ namespace HospitalSystem.code
         }
 
         private void dateChanged(object sender, System.EventArgs e)
-        {            
-            filter();
-            if (displayTerms() == 1)
-                Window_Closed();
+        {
+            if (!fromConstructor)
+            {
+                filter();
+                if (displayTerms() == 1)
+                    Window_Closed();
+                fromConstructor = false;
+            }
         }
 
         private void filter()
@@ -132,25 +138,29 @@ namespace HospitalSystem.code
 
         private int displayTerms()
         {
-            List<string> occupiedTerms = new List<string>();
-            cbTime.Items.Clear();
-
-            foreach (Appointment a in collectionAppointments)
+            if (cbDoctor.SelectedItem != null && dpDate.SelectedDate != null)
             {
-                occupiedTerms.Add(a.Time.ToString("HH:mm"));
-            }
+                List<string> occupiedTerms = new List<string>();
+                cbTime.Items.Clear();
 
-            foreach (string s in terms)
-            {
-                Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
-                if (dpDate.SelectedDate <= DateTime.Now.Date)
+                foreach (Appointment a in collectionAppointments)
                 {
-                    MessageBox.Show("Changing past appointment is not allowed!");
-                    //this.Close();
-                    return 1;                    
+                    occupiedTerms.Add(a.Time.ToString("HH:mm"));
                 }
-                if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
-                    cbTime.Items.Add(s);
+
+                foreach (string s in terms)
+                {
+                    Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
+                    if (dpDate.SelectedDate <= DateTime.Now.Date)
+                    {
+                        MessageBox.Show("Changing past appointment is not allowed!");
+                        //this.Close();
+                        return 1;
+                    }
+                    if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
+                        cbTime.Items.Add(s);
+                }
+                return 0;
             }
             return 0;
         }
