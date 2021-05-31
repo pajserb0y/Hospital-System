@@ -393,7 +393,6 @@ namespace HospitalSystem.code
         }
         private void Button_Hospitalization(object sender, RoutedEventArgs e)
         {
-            txtHospitalizationNote.Clear();
             txtHospitalizationPatient.Text = Convert.ToString(currExam.Patient);
             txtHospitalizationPatient.IsEnabled = false;
             dpHospitalizationOUT.SelectedDate = null;
@@ -406,7 +405,23 @@ namespace HospitalSystem.code
 
         private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
         {
+            Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
+            Bed selectedBed = (Bed)cbHospitalizatonBed.SelectedItem;
+            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+            Patient selectedPatient = (Patient)currExam.Patient;
+            foreach (Bed b in selectedRoom.Beds)
+            {
+                if(b == selectedBed)
+                {
 
+                    b.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
+                    break;
+                }
+            }
+            RoomStorage.getInstance().Edit(selectedRoom);
+            tHospitalization.Visibility = Visibility.Collapsed;
+            tExam.Focus();
         }
 
         private void Date_Picker_HospitalizationIN_Changed(object sender, RoutedEventArgs e)
@@ -450,7 +465,7 @@ namespace HospitalSystem.code
                 {
                     foreach (Bed tempBed in tempRoom.Beds)
                     {
-                        foreach ((DateTime, DateTime) val in tempBed.Interval)
+                        foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
                         {
                             if (val.Item1 <= inTime && val.Item2 >= inTime)
                                 return false;
@@ -486,7 +501,7 @@ namespace HospitalSystem.code
                 {
                     Bed tempBed = bed as Bed;
 
-                    foreach ((DateTime, DateTime) val in tempBed.Interval)
+                    foreach (Tuple<DateTime,DateTime,int> val in tempBed.Interval)
                     {
                         if (val.Item1 <= inTime && val.Item2 >= inTime)
                             return false;

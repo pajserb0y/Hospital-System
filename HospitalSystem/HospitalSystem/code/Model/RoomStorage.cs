@@ -61,7 +61,9 @@ namespace HospitalSystem.code
                 if (room.Id == r.Id)
                 { 
                     r.Name = room.Name;
+                    r.Beds = room.Beds;
                 }
+            RoomStorage.getInstance().serialize();
         }
 
         public void Delete(Room room)
@@ -72,11 +74,13 @@ namespace HospitalSystem.code
                     this.rooms.Remove(r);
                     break;
                 }
+            RoomStorage.getInstance().serialize();
         }
 
-        public void Save(Room room)
+        public void Add(Room room)
         {
             this.rooms.Add(room);
+            RoomStorage.getInstance().serialize();
         }
 
         public int GenerateNewID()

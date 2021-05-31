@@ -252,13 +252,9 @@
                                 <Rectangle HorizontalAlignment="Left" Height="443" Margin="29,38,0,0" Stroke="Black" VerticalAlignment="Top" Width="981" Grid.ColumnSpan="2" Grid.RowSpan="5"/>
                                 <Label  Content="Hospitalization form" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Margin="29,10,0,32"/>
                                 <Label Content="Patient name:" Grid.Row="0" Grid.Column="0" Margin="70,71,10,71" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                                <Label Content="Note:" Grid.Row="1" Grid.Column="0" Margin="70,61,10,24" Padding="0,0,20,0" Grid.ColumnSpan="2"/>
 
                                 <ComboBox x:Name="cbHospitalizatonBed" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="160,67,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2" />
                                 <ComboBox x:Name="cbHospitalizationRoom" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="160,30,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2" SelectionChanged="cbHospitalizationRoom_SelectionChanged"/>
-
-
-                                <TextBox x:Name="txtHospitalizationNote" Grid.Row="1" Grid.RowSpan="3" Width="800" Height="100" Grid.Column="0" HorizontalAlignment="Left" Margin="72,80,0,57" Grid.ColumnSpan="2" />
                                 <TextBox x:Name="txtHospitalizationPatient" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="30" Grid.Column="0" HorizontalAlignment="Left" Margin="72,89,0,69" Grid.ColumnSpan="2" />
 
                                 <Label Content="Room:" Grid.Row="4" Grid.Column="0" Margin="67,33,118,161" Padding="0,0,20,0"/>

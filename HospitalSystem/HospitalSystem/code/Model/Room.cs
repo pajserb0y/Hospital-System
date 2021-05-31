@@ -89,9 +89,10 @@ public class Bed
             }
         }
     }
-    //private ObservableCollection<Tuple<DateTime,DateTime,int>> interval;
-    private ObservableCollection<(DateTime, DateTime)> interval;
-    public ObservableCollection<(DateTime, DateTime)> Interval
+    private ObservableCollection<Tuple<DateTime,DateTime,int>> interval;
+    //private ObservableCollection<(DateTime, DateTime)> interval;
+    public ObservableCollection<Tuple<DateTime,DateTime,int>> Interval
+    //public ObservableCollection<(DateTime, DateTime)> Interval
     {
         get { return interval; }
         set
