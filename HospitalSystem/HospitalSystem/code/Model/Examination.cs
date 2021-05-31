@@ -38,6 +38,22 @@ public class Examination : Appointment
             }
         }
     }
+
+    private string notes = "";
+
+    public string Notes
+    {
+        get { return notes; }
+        set
+        {
+            if (value != notes)
+            {
+                notes = value;
+                OnPropertyChanged("Notes");
+            }
+        }
+    }
+
     public Examination() 
     {
         this.anamnesis = new Anamnesis();
