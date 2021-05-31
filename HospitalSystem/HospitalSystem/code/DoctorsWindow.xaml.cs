@@ -33,7 +33,7 @@ namespace HospitalSystem.code
 
         private void txbBack_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SecretarInitialWindow mainWindow = new SecretarInitialWindow();
+            MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             DoctorStorage.getInstance().serialize();
             this.Close();
@@ -57,5 +57,33 @@ namespace HospitalSystem.code
             DoctorStorage.getInstance().Delete((Doctor)dgDoctors.SelectedItem);
         }
 
+
+        private void Patients_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Patients >";
+            SecretarInitialWindow secretarInitialWindow = new SecretarInitialWindow();
+            secretarInitialWindow.Show();
+            this.Close();
+        }
+
+        private void Doctors_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Doctors >";
+            DoctorsWindow doctorsWindow = new DoctorsWindow();
+            doctorsWindow.Show();
+            this.Close();
+        }
+        private void Appointments_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Appointments >";
+        }
+        private void Operations_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Operations >";
+        }
+        private void FrontPage_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Front page >";
+        }
     }
 }

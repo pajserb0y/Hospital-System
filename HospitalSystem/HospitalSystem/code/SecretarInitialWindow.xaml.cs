@@ -71,13 +71,35 @@ namespace HospitalSystem.code
         {
             AnnouncementWindow announcementWindow = new AnnouncementWindow();
             announcementWindow.Show();
+        }      
+
+
+        private void Patients_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Patients >";
+            SecretarInitialWindow secretarInitialWindow = new SecretarInitialWindow();
+            secretarInitialWindow.Show();
+            this.Close();
         }
 
-        private void ButtonDoctors_Click(object sender, RoutedEventArgs e)
+        private void Doctors_Click(object sender, RoutedEventArgs e)
         {
+            MainMI.Header = "< Doctors >";
             DoctorsWindow doctorsWindow = new DoctorsWindow();
             doctorsWindow.Show();
             this.Close();
+        }
+        private void Appointments_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Appointments >";
+        }
+        private void Operations_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Operations >";
+        }        
+        private void FrontPage_Click(object sender, RoutedEventArgs e)
+        {
+            MainMI.Header = "< Front page >";
         }
     }
 }
