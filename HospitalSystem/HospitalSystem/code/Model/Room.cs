@@ -7,8 +7,50 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-
-public class Room : INotifyPropertyChanged
+public class Bed
+{
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set
+        {
+            if (id != value)
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+    }
+    private ObservableCollection<Tuple<DateTime, DateTime, int>> interval;
+    //private ObservableCollection<(DateTime, DateTime)> interval;
+    public ObservableCollection<Tuple<DateTime, DateTime, int>> Interval
+    //public ObservableCollection<(DateTime, DateTime)> Interval
+    {
+        get { return interval; }
+        set
+        {
+            if (interval != value)
+            {
+                interval = value;
+                OnPropertyChanged("Interval");
+            }
+        }
+    }
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(String name)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+    public override string ToString()
+    {
+        return "Bed" + Id.ToString();
+    }
+}
+public class Room : Bed,INotifyPropertyChanged
 {
     private int id;
     public int Id
@@ -74,46 +116,3 @@ public class Room : INotifyPropertyChanged
 
 }
 
-public class Bed
-{
-    private int id;
-    public int Id
-    {
-        get { return id; }
-        set
-        {
-            if (id != value)
-            {
-                id = value;
-                OnPropertyChanged("Id");
-            }
-        }
-    }
-    private ObservableCollection<Tuple<DateTime,DateTime,int>> interval;
-    //private ObservableCollection<(DateTime, DateTime)> interval;
-    public ObservableCollection<Tuple<DateTime,DateTime,int>> Interval
-    //public ObservableCollection<(DateTime, DateTime)> Interval
-    {
-        get { return interval; }
-        set
-        {
-            if (interval != value)
-            {
-                interval = value;
-                OnPropertyChanged("Interval");
-            }
-        }
-    }
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(String name)
-    {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
-    }
-    public override string ToString()
-    {
-        return "Bed" + Id.ToString();
-    }
-}

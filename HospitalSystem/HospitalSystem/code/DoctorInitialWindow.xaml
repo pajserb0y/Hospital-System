@@ -271,7 +271,9 @@
                 </TabControl>
 
             </TabItem>
-            <TabItem Header="Charts"></TabItem>
+            <TabItem Header="Charts">
+                
+            </TabItem>
             <TabItem Header="Drug approvement">
                 <TabControl x:Name="tabControlDrug">
                     <TabItem Name="tDrugRecord" Header="Drug Records">
