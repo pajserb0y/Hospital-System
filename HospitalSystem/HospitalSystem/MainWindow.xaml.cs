@@ -52,6 +52,12 @@ namespace HospitalSystem
 
         private void btnDoctor_Click(object sender, RoutedEventArgs e)
         {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp("index", this);
+            }
             DoctorInitialWindow dw = new DoctorInitialWindow();
             dw.Show();
             this.Close();

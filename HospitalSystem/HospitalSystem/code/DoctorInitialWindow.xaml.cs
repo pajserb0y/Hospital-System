@@ -26,7 +26,6 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
-            tOperation.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
         }
         
