@@ -30,9 +30,7 @@ namespace HospitalSystem.code
         {
             currentAppointment = selectedApp;
             InitializeComponent();
-
             fromConstructor = true;
-            this.Show();
             cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
             initializeSelectedAppointmentDetails(selectedApp);                        
         }
@@ -40,6 +38,7 @@ namespace HospitalSystem.code
         public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
         {
             ObservableCollection<Doctor> finalDoctors = new ObservableCollection<Doctor>();
+            finalDoctors.Add(currentAppointment.Doctor);
             findDoctorsWithRefferal(doctors, finalDoctors);
             findGeneralMedicineDoctors(doctors, finalDoctors);
 
@@ -75,23 +74,29 @@ namespace HospitalSystem.code
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            double differenceInDays = Math.Abs(currentAppointment.Date.Subtract((DateTime)dpDate.SelectedDate).TotalDays);
-
-            if (differenceInDays <= 2)
+            if (cbDoctor.SelectedItem != null && cbRoom.SelectedItem != null && dpDate.SelectedDate != null && cbTime.SelectedItem != null)
             {
-                currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-                currentAppointment.Room = (Room)cbRoom.SelectedItem;
-                currentAppointment.Date = (DateTime)dpDate.SelectedDate;
-                currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-                Room selectedRoom = (Room)cbRoom.SelectedItem;
-                _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
-                AppointmentStorage.getInstance().Edit(currentAppointment);
-                this.Close();
+                double differenceInDays = Math.Abs(currentAppointment.Date.Subtract((DateTime)dpDate.SelectedDate).TotalDays);
+                if (differenceInDays <= 2)
+                {
+                    currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                    currentAppointment.Room = (Room)cbRoom.SelectedItem;
+                    currentAppointment.Date = (DateTime)dpDate.SelectedDate;
+                    currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                    Room selectedRoom = (Room)cbRoom.SelectedItem;
+                    _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
+                    AppointmentStorage.getInstance().Edit(currentAppointment);
+                    this.Close();
+                }
+                else
+                {
+                    dpDate.SelectedDate = currentAppointment.Date;
+                    MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
+                }
             }
             else
             {
-                dpDate.SelectedDate = currentAppointment.Date;
-                MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
+                MessageBox.Show("You need first to fill all input fields.");
             }
         }
 

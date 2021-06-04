@@ -11,9 +11,9 @@
         ResizeMode="NoResize">
     <Grid>
         <TabControl>
-            <TabItem Name="tabDetails" Header="Details">
+            <TabItem Name="tabDetails" Header="Details" ToolTip="Announcement details">
                 <Grid>
-                    <RichTextBox x:Name="richTextBoxMessage" Margin="10,106,258,10">
+                    <RichTextBox x:Name="richTextBoxMessage" Margin="10,106,258,10" ToolTip="Ented announcement content">
                         <FlowDocument>
                             <Paragraph>
                             </Paragraph>
@@ -24,12 +24,16 @@
                     <DatePicker x:Name="dpDate" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="98" FirstDayOfWeek="Monday " 
                                     IsTodayHighlighted="True" SelectedDate="{x:Static sys:DateTime.Now}" IsEnabled="False"  Margin="562,41,0,0"/>
                     <TextBox x:Name="txtTime" Margin="684,41,43,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" Height="24"/>
-                    <CheckBox x:Name="checkBoxDoctors" Content="All doctors" HorizontalAlignment="Left" Margin="573,111,0,0" VerticalAlignment="Top" Checked="CheckBoxDoctorsChanged" Unchecked="CheckBoxDoctorsChanged"/>
-                    <CheckBox x:Name="checkBoxPatients" Content="All patients" HorizontalAlignment="Left" Margin="574,163,0,0" VerticalAlignment="Top" Checked="CheckBoxPatientsChanged" Unchecked="CheckBoxPatientsChanged"/>
-                    <Button x:Name="buttonChooseDoctors" Content="choose..." HorizontalAlignment="Left" Margin="703,108,0,0" VerticalAlignment="Top" Width="53" Click="buttonChooseDoctors_Click" Cursor="Hand" />
-                    <Button x:Name="buttonChoosePatients" Content="choose..." HorizontalAlignment="Left" Margin="703,163,0,0" VerticalAlignment="Top" Width="53" Click="buttonChoosePatients_Click"  Cursor="Hand" />
+                    <CheckBox x:Name="checkBoxDoctors" Content="All doctors" HorizontalAlignment="Left" Margin="573,111,0,0" VerticalAlignment="Top" Checked="CheckBoxDoctorsChanged"
+                              Unchecked="CheckBoxDoctorsChanged" ToolTip="Click to (un)check all doctors"/>
+                    <CheckBox x:Name="checkBoxPatients" Content="All patients" HorizontalAlignment="Left" Margin="574,163,0,0" VerticalAlignment="Top" Checked="CheckBoxPatientsChanged"
+                              Unchecked="CheckBoxPatientsChanged" ToolTip="Click to (un)check all patients"/>
+                    <Button x:Name="buttonChooseDoctors" Content="choose..." HorizontalAlignment="Left" Margin="703,108,0,0" VerticalAlignment="Top" Width="53" Click="buttonChooseDoctors_Click"
+                            Cursor="Hand" ToolTip="Click to select particular patients"/>
+                    <Button x:Name="buttonChoosePatients" Content="choose..." HorizontalAlignment="Left" Margin="703,163,0,0" VerticalAlignment="Top" Width="53" Click="buttonChoosePatients_Click" 
+                            Cursor="Hand" ToolTip="Click to select particular doctors"/>
                     <TextBlock x:Name="textBlockSend" Text="send &gt;" TextWrapping="Wrap" PreviewMouseDown="txbSend_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="664,0,0,43"
-                               Visibility="Visible" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                               Visibility="Visible" VerticalAlignment="Bottom" HorizontalAlignment="Left" ToolTip="Click to send announcement">
                         <TextBlock.Style>
                             <Style>
                                 <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -43,12 +47,12 @@
                     </TextBlock>
                     <Label Content="Content:" HorizontalAlignment="Left" Margin="7,80,0,0" VerticalAlignment="Top"/>
                     <Label Content="Title:" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Margin="10,47,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="526"/>
+                    <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Margin="10,47,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="526" ToolTip="Set title for new announcement"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabDoctors" Header="Doctors">
+            <TabItem Name="tabDoctors" Header="Doctors" ToolTip="Click to see doctors for announcement" >
                 <Grid>
-                    <ListView Name="listViewDoctors" Margin="10,10,287,10" SelectionMode="Multiple">
+                    <ListView Name="listViewDoctors" Margin="10,10,287,10" SelectionMode="Multiple" ToolTip="You can (de)select doctors">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
@@ -63,9 +67,9 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabPatients" Header="Patients">
+            <TabItem Name="tabPatients" Header="Patients" ToolTip="Click to see doctors for announcement">
                 <Grid>
-                    <ListView Name="listViewPatients" Margin="10,10,287,10" SelectionMode="Multiple">
+                    <ListView Name="listViewPatients" Margin="10,10,287,10" SelectionMode="Multiple" ToolTip="You can (de)select patients">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>

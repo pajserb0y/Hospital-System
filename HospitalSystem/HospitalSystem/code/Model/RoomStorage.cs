@@ -27,7 +27,7 @@ namespace HospitalSystem.code
             set { rooms = value; }
         }
 
-        private String FileLocation = "../../../Resource/Sobe.json";
+        private String FileLocation = "../../../Resource/Rooms.json";
 
 
         public RoomStorage()

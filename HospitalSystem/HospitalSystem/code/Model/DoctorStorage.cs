@@ -27,7 +27,7 @@ namespace HospitalSystem.code
             set { doctors = value; }
         }
 
-        private String FileLocation = "../../../Resource/Doktori.json";
+        private String FileLocation = "../../../Resource/Doctors.json";
 
 
         public DoctorStorage()

@@ -24,37 +24,46 @@ namespace HospitalSystem
         public MainWindow()
         {
             InitializeComponent();
+            txtUsername.Focus();
         }
 
-        private void btnSekretar_Click(object sender, RoutedEventArgs e)
+        private void txbSubmit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SecretarInitialWindow sek = new SecretarInitialWindow();
-            sek.Show();
-            this.Close();
+            checkLogInDetails();
         }
 
-        private void btnUpravnik_Click(object sender, RoutedEventArgs e)
+        private void checkLogInDetails()
         {
-
+            if (txtUsername.Text == "admin" && txtPassword.Password == "admin")
+            {
+                SecretarInitialWindow sek = new SecretarInitialWindow();
+                sek.Show();
+                this.Close();
+            }
+            else if (txtUsername.Text == "lekar" && txtPassword.Password == "lekar")
+            {
+                DoctorInitialWindow dw = new DoctorInitialWindow();
+                dw.Show();
+                this.Close();
+            }
+            else if (txtUsername.Text == "pacijent" && txtPassword.Password == "pacijent")
+            {
+                PatientInitialWindow patientWindow = new PatientInitialWindow();
+                patientWindow.Show();
+                this.Close();
+            }
+            else
+                MessageBox.Show("Incorrect username or password!");
         }
 
-        private void btnLekar_Click(object sender, RoutedEventArgs e)
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-
-        }
-
-        private void btnPacijent_Click(object sender, RoutedEventArgs e)
-        {
-            PatientInitialWindow patientWindow = new PatientInitialWindow();
-            patientWindow.Show();
-            this.Close();
-        }
-
-        private void btnDoctor_Click(object sender, RoutedEventArgs e)
-        {
-            DoctorInitialWindow dw = new DoctorInitialWindow();
-            dw.Show();
-            this.Close();
+            if (txtPassword.IsFocused)
+                if (e.Key == Key.Return)
+                    checkLogInDetails();
+            if (txtUsername.IsFocused)
+                if (e.Key == Key.Return)
+                    txtPassword.Focus();            
         }
     }
 }
