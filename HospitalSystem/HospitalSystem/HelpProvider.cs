@@ -24,14 +24,14 @@ namespace HospitalSystem
 
         public static void ShowHelp(string key, MainWindow originator)
         {
-            HelpWindow hh = new HelpWindow(key, originator);
-            hh.Show();
+         //   HelpWindow hh = new HelpWindow(key, originator);
+//hh.Show();
         }
 
         public static void ShowHelp(string key, Window s)
         {
-            HelpWindow hh = new HelpWindow(key, s);
-            hh.Show();
+           // HelpWindow hh = new HelpWindow(key, s);
+           // hh.Show();
         }
     }
 }
