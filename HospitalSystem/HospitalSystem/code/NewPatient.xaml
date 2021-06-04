@@ -9,73 +9,39 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="564" VerticalAlignment="Center" Width="478">
-            <TabItem Header="Details">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="First Name:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,40,83,40">
-                        <Label Content="Last Name:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,0,83,20">
-                        <Label Content="JMBG:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Adress:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtAdresa" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel  Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,20,160,20">
-                            <Label Content="Gender:" Padding="0,0,25,0" VerticalContentAlignment="Center"/>
-                            <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="39"  IsChecked="True"/>
-                            <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="32"  />
-                        </StackPanel>
-                        <!--<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,0,0">
-                            <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center"/>
-                        </StackPanel>-->
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Telephone:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,20,83,20">
-                        <Label Content="Email:" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-
-                    <StackPanel Height="Auto" Width="Auto" >
-                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
-                                   HorizontalAlignment="Right" Margin="0,40,50,20" Padding="10,10,10,10" >
-                            <TextBlock.Style>
-                                <Style>
-                                    <Setter Property="TextBlock.TextDecorations" Value="" />
-                                    <Style.Triggers>
-                                        <Trigger Property="UIElement.IsMouseOver" Value="True">
-                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style></TextBlock>
-                    </StackPanel>
-
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Account">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
-                        <Label Content="Username:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="Password:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+        <Label Content="First Name:  *"  Padding="0,0,20,0" Margin="0,0,303,506" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="92"/>
+        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter first name" Margin="0,0,85,513" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+        <Label Content="Last Name:  *" Padding="0,0,20,0" Margin="0,0,303,458" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="92"/>
+        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter last name" Margin="0,0,85,462" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="JMBG:  *" Padding="0,0,20,0" Margin="0,0,303,408" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="66"/>
+        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter JMBG" Margin="0,0,85,414" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="Adress:" Padding="0,0,20,0" Margin="0,0,315,358" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="57"/>
+        <TextBox x:Name="txtAdresa" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter first address" Margin="0,0,85,364" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="Gender:" Padding="0,0,25,0" VerticalContentAlignment="Center" Margin="0,0,294,263" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="82"/>
+        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="39"  IsChecked="True" ToolTip="Male" Margin="0,0,261,271" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="32"  ToolTip="Female" Margin="0,0,200,271" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="Telephone:  *" Padding="0,0,20,0" Margin="0,0,303,307" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="88"/>
+        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter telephone number" Margin="0,0,85,313" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="Email:" Padding="0,0,20,0" Margin="0,0,305,214" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="61"/>
+        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter email" Margin="0,0,85,222" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" HorizontalAlignment="Left" Margin="350,497,0,0" 
+                   Padding="10,10,10,10" ToolTip="Add new patient" Height="60" VerticalAlignment="Top">
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                    <Style.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style></TextBlock>
+        <Label Content="Username:"  Margin="0,0,322,156" Height="34" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="73"/>
+        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter username" Margin="0,0,85,166" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Content="Password:"  Margin="0,0,318,111" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="73"/>
+        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter password" Margin="0,0,85,114" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Label Name="errorJmbg" Content="" Padding="0,0,20,0" Margin="0,0,89,399" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="223" Foreground="Red"/>
+        <Label Name="errorTel" Content="" Padding="0,0,20,0" Margin="0,0,92,298" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="223" Foreground="Red"/>
+        <TextBlock HorizontalAlignment="Center" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="212" Height="27" VerticalAlignment="Top" Margin="0,557,0,0"/>
     </Grid>
 </Window>

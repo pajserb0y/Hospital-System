@@ -131,5 +131,7 @@
         </DataGrid>
         <TextBox x:Name="txtNext" TextWrapping="Wrap" Width="120" Margin="179,445,0,0" Visibility="Visible" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button x:Name="buttonDelay" Content="Delay" HorizontalAlignment="Left" Margin="45,445,0,0" VerticalAlignment="Top" Height="25" Width="77" Click="buttonDelay_Click"  />
+        <TextBlock Margin="0,0,0,0" Text="&lt; Select specialization and doctor. If everything is occupied select term and delay it &gt;" TextWrapping="Wrap" HorizontalAlignment="Center"
+                   FontSize="12" Height="27" VerticalAlignment="Bottom" Width="458"/>
     </Grid>
 </Window>
