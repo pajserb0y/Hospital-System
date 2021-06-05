@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="StepTwo" Height="450" Width="800">
+        Title="StepTwo" Height="480" Width="810">
     <Grid>
         <Button Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_2"/>
         <Button Content="Next" HorizontalAlignment="Left" Margin="552,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click"/>
@@ -23,7 +23,7 @@
         <Button Content="Refferal" HorizontalAlignment="Right" Margin="0,305,218,0" Height="26" VerticalAlignment="Top" Width="79"/>
         <Button Content="Hospitalization" HorizontalAlignment="Right" Margin="0,305,312,0" Height="26" VerticalAlignment="Top" Width="78" />
         <Label Content="Fill diagnosis" FontFamily="Calibri" FontSize="15" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="82,235,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.921,-0.433" Width="487" Height="29"/>
-        <Ellipse HorizontalAlignment="Left" Height="64" Margin="682,286,0,0" Stroke="Black" VerticalAlignment="Top" Width="86"/>
+        <Ellipse HorizontalAlignment="Left" Height="64" Margin="686,287,0,0" Stroke="Black" VerticalAlignment="Top" Width="86"/>
 
     </Grid>
 </Window>

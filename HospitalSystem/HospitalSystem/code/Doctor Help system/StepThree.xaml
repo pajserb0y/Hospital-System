@@ -5,24 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="StepThree" Height="450" Width="800">
+        Title="StepThree"  Height="480" Width="810">
     <Grid>
         <Button Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_2"/>
         <Button Content="Back" HorizontalAlignment="Left" Margin="577,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_1"/>
-        <Label Content="Step Two: Filling anamnesis and agnosis" FontSize="25" FontFamily="Calibri" FontWeight="Bold" HorizontalAlignment="Left" Margin="36,36,0,0" VerticalAlignment="Top" Width="695"/>
+        <Label Content="Step Three: Example of additional funcionality" FontSize="25" FontFamily="Calibri" FontWeight="Bold" HorizontalAlignment="Left" Margin="36,36,0,0" VerticalAlignment="Top" Width="695"/>
         <Rectangle HorizontalAlignment="Center" Height="275" Margin="0,82,0,0" Stroke="Black" VerticalAlignment="Top" Width="742"/>
-        <Label Content="Drug:" FontSize="13" Grid.Row="0" Grid.Column="0" Margin="65,106,679,300" Padding="0,0,20,0"/>
-        <ComboBox x:Name="cbDrug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="126,104,0,0"/>
-        <Label Content="Taking:" Grid.Column="0" Margin="65,156,679,261" Padding="0,0,20,0"/>
+        <Label Content="Drug:" FontSize="13" Grid.Row="0" Grid.Column="0" Margin="65,106,645,313" Padding="0,0,20,0"/>
+        <ComboBox x:Name="cbDrug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="131,104,0,0"/>
+        <Label Content="Taking:" Grid.Column="0" Margin="65,156,645,253" Padding="0,0,20,0"/>
         <Rectangle HorizontalAlignment="Left" Height="100" Margin="65,178,0,0" Stroke="Black" VerticalAlignment="Top" Width="261"/>
-        <Label Content="Interval:" Grid.Column="0" Margin="65,309,679,108" Padding="0,0,20,0"/>
-        <Rectangle HorizontalAlignment="Left" Height="12" Margin="121,311,0,0" Stroke="Black" VerticalAlignment="Top" Width="72" RenderTransformOrigin="0.5,0.5">
+        <Label Content="Interval:" Grid.Column="0" Margin="65,309,630,117" Padding="0,0,20,0"/>
+        <Rectangle HorizontalAlignment="Left" Height="12" Margin="131,311,0,0" Stroke="Black" VerticalAlignment="Top" Width="72" RenderTransformOrigin="0.68,0.762">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
                     <RotateTransform Angle="-0.474"/>
-                    <TranslateTransform/>
+                    <TranslateTransform X="0.026" Y="-0.107"/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
