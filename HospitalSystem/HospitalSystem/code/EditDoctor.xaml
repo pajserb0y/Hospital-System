@@ -131,7 +131,7 @@
                 <Image Source="/Images/delete.jpg" Width="27"/>
             </DockPanel>
         </Button>
-        <DatePicker Name="datePickerStart" Margin="0,0,761,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" ToolTip="Selected start date for doctors free days"/>
+        <DatePicker Name="datePickerStart" Margin="0,0,761,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" ToolTip="Selected start date for doctors free days" SelectedDateChanged="dateStartChanged"/>
         <DatePicker Name="datePickerEnd" Margin="0,0,573,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" ToolTip="Selected end date for doctors free days"/>
         <Label Content="From:" Margin="0,0,866,116" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40"/>
         <Label Content="To:" Margin="0,0,677,116" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25"/>

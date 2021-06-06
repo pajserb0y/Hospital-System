@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -78,7 +79,7 @@ namespace HospitalSystem.code
         private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SecretarNewAppointment secretarNewAppointment = new SecretarNewAppointment();
-            secretarNewAppointment.Show();
+            secretarNewAppointment.ShowDialog();
         }
         private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -91,7 +92,7 @@ namespace HospitalSystem.code
                     if (selectedApp != null)
                     {
                         SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
+                        secretarEditAppointment.ShowDialog();
                         (dgAppToday.ItemContainerGenerator.ContainerFromItem(dgAppToday.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
                     }
                 }
@@ -106,7 +107,7 @@ namespace HospitalSystem.code
                     if (selectedApp != null)
                     {
                         SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
+                        secretarEditAppointment.ShowDialog();
                         (dgAppWeekly.ItemContainerGenerator.ContainerFromItem(dgAppWeekly.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
                     }
                 }
@@ -121,7 +122,7 @@ namespace HospitalSystem.code
                     if (selectedApp != null)
                     {
                         SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
+                        secretarEditAppointment.ShowDialog();
                         (dgAppAll.ItemContainerGenerator.ContainerFromItem(dgAppAll.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
                     }
                 }
@@ -295,7 +296,7 @@ namespace HospitalSystem.code
             for (int i = 0; i <= 6; i++)           
                 table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
 
-            foreach (Appointment appointment in filterWeeklyAppointments())
+            foreach (Appointment appointment in appointmentCollectionWeekly.OrderBy(o => o.Date).ToList())
             {
                 table.AddCell(appointment.Id.ToString());
                 table.AddCell(appointment.Patient.Id.ToString() + "  " + appointment.Patient.FirstName.ToString() + " " + appointment.Patient.LastName.ToString());

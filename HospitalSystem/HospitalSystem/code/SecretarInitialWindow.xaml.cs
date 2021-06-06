@@ -66,13 +66,13 @@ namespace HospitalSystem.code
         private void txbUrgentPatient_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             UrgentPatient urgentPatient = new UrgentPatient();
-            urgentPatient.Show();
+            urgentPatient.ShowDialog();
         }
 
         private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             NewPatient newPatient = new NewPatient();
-            newPatient.Show();
+            newPatient.ShowDialog();
         }
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -80,7 +80,7 @@ namespace HospitalSystem.code
             if (dataGridPatients.SelectedItem != null)
             {
                 EditPatient editPatient = new EditPatient((Patient)dataGridPatients.SelectedItem);
-                editPatient.Show();
+                editPatient.ShowDialog();
                 (dataGridPatients.ItemContainerGenerator.ContainerFromItem(dataGridPatients.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan pacijent
             }
             else
@@ -119,7 +119,7 @@ namespace HospitalSystem.code
         private void txbAnnouncement_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             AnnouncementWindow announcementWindow = new AnnouncementWindow();
-            announcementWindow.Show();
+            announcementWindow.ShowDialog();
         }
 
         public void txtSearch_GotFocus(object sender, RoutedEventArgs e)

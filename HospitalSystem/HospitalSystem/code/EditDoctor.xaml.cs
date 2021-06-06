@@ -59,6 +59,8 @@ namespace HospitalSystem.code
                         selectedDoctor.FreeDays.Remove(freeDay);
             }
             freeDaysList.ItemsSource = selectedDoctor.FreeDays;
+            datePickerStart.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         private void filterShiftsAndFillList()
@@ -158,6 +160,17 @@ namespace HospitalSystem.code
             }
         }
 
+        private void dateStartChanged(object sender, System.EventArgs e)
+        {
+            if (datePickerStart.SelectedDate != null)
+                datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(-1), ((DateTime)datePickerStart.SelectedDate).AddDays(-1)));
+            else
+            {
+                datePickerEnd.BlackoutDates.Clear();
+                datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            }
+        }
+
         private void buttonDeleteFreeDays_Click(object sender, RoutedEventArgs e)
         {
             if (freeDaysList.SelectedItems != null)
@@ -176,7 +189,7 @@ namespace HospitalSystem.code
         private void buttonAddShift_Click(object sender, RoutedEventArgs e)
         {
             NewShiftWindow newShiftWindow = new NewShiftWindow(currentDoctor.Id);
-            newShiftWindow.Show();
+            newShiftWindow.ShowDialog();
         }
 
         private void buttonEditShift_Click(object sender, RoutedEventArgs e)
@@ -184,7 +197,7 @@ namespace HospitalSystem.code
             if (workingShiftsList.SelectedItems != null)
             {
                 NewShiftWindow newShiftWindow = new NewShiftWindow((WorkingShift)workingShiftsList.SelectedItem);
-                newShiftWindow.Show();
+                newShiftWindow.ShowDialog();
             }
             else
                 MessageBox.Show("You need to select shifts first.");
