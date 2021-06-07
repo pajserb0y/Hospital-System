@@ -544,6 +544,11 @@ namespace HospitalSystem.code
                 cbHospitalizatonBed.ItemsSource = bedCollectionView;
             }
         }
+
+        private void Button_Wizard(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

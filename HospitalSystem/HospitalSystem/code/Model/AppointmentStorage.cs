@@ -38,24 +38,33 @@ public class AppointmentStorage
         this.appointments = deserialize();
     }
 
+    private AppointmentViewModel copyAVM(Appointment a)
+    {
+        AppointmentViewModel temp = new AppointmentViewModel();
+
+        temp.Id = a.Id;
+        temp.DoctorId = a.Doctor.Id;
+        temp.PatientId = a.Patient.Id;
+        temp.RoomId = a.Room.Id;
+        temp.Date = a.Date;
+        temp.Time = a.Time;
+        temp.IsOperation = a.IsOperation;
+        temp.TimesChanged = a.TimesChanged;
+        temp.TimeOfCreation = a.TimeOfCreation;
+
+        return temp;
+    }
+
     public void serialize()
     {
         List<AppointmentViewModel> appts = new List<AppointmentViewModel>();
-        foreach (Appointment e in appointments)
+        foreach (Appointment a in appointments)
         {
-            AppointmentViewModel temp = new AppointmentViewModel();
-            temp.Id = e.Id;
-            temp.DoctorId = e.Doctor.Id;
-            temp.PatientId = e.Patient.Id;
-            temp.RoomId = e.Room.Id;
-            temp.Date = e.Date;
-            temp.Time = e.Time;
-            temp.IsOperation = e.IsOperation;
-            temp.TimesChanged = e.TimesChanged;
-            temp.TimeOfCreation = e.TimeOfCreation;
+            AppointmentViewModel temp = copyAVM(a);
             appts.Add(temp);
         }
         var JSONresult = JsonConvert.SerializeObject(appts);
+
         using (StreamWriter sw = new StreamWriter(FileLocation))
         {
             sw.Write(JSONresult);
@@ -66,29 +75,28 @@ public class AppointmentStorage
     public ObservableCollection<Appointment> deserialize()
     {
         List<AppointmentViewModel> apptIDs = new List<AppointmentViewModel>();
-        ObservableCollection<Appointment> appts = new ObservableCollection<Appointment>();
+  
         using (StreamReader sr = new StreamReader(FileLocation))
         {
-
             apptIDs = JsonConvert.DeserializeObject<List<AppointmentViewModel>>(sr.ReadToEnd());
             if (apptIDs == null)
                 apptIDs = new List<AppointmentViewModel>();
             sr.Close();
         }
-        foreach (AppointmentViewModel e in apptIDs)
+
+        return convertAvmToAppt(apptIDs);
+    }
+
+    private ObservableCollection<Appointment> convertAvmToAppt(List<AppointmentViewModel> avms)
+    {
+        ObservableCollection<Appointment> appts = new ObservableCollection<Appointment>();
+
+        foreach (AppointmentViewModel a in avms)
         {
-            Appointment temp = new Appointment();
-            temp.Id = e.Id;
-            temp.Doctor = DoctorStorage.getInstance().GetOne(e.DoctorId);
-            temp.Patient = PatientsStorage.getInstance().GetOne(e.PatientId);
-            temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
-            temp.Date = e.Date;
-            temp.Time = e.Time;
-            temp.IsOperation = e.IsOperation;
-            temp.TimesChanged = e.TimesChanged;
-            temp.TimeOfCreation = e.TimeOfCreation;
+            Appointment temp = new Appointment(a.Id, DoctorStorage.getInstance().GetOne(a.DoctorId), PatientsStorage.getInstance().GetOne(a.PatientId), RoomStorage.getInstance().GetOne(a.RoomId), a.Date, a.Time, a.IsOperation, a.TimesChanged, a.TimeOfCreation);
             appts.Add(temp);
         }
+
         return appts;
     }
 

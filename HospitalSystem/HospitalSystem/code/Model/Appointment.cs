@@ -116,6 +116,21 @@ public class Appointment : INotifyPropertyChanged
         }
     }
 
+    public Appointment() {}
+
+    public Appointment(int id, Doctor doctor, Patient patient, Room room, DateTime date, DateTime time, bool isOperation, int timesChanged, DateTime timeOfCreation)
+    {
+        this.id = id;
+        this.doctor = doctor;
+        this.patient = patient;
+        this.room = room;
+        this.date = date;
+        this.time = time;
+        this.isOperation = isOperation;
+        this.timesChanged = timesChanged;
+        this.timeOfCreation = timeOfCreation;
+    }
+
     private DateTime timeOfCreation;
 
     public DateTime TimeOfCreation
@@ -130,6 +145,8 @@ public class Appointment : INotifyPropertyChanged
             }
         }
     }
+
+    
 
     public event PropertyChangedEventHandler PropertyChanged;
 

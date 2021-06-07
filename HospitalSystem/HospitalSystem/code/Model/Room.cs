@@ -87,9 +87,9 @@ public class Room : INotifyPropertyChanged
         {
             PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+
     }
     //DODAO SAM DATE I INTERVAL ZATO STO MI TREBA OD KOG DATUMA I KOLIKO DUGO JE ZAUZETA SOBA
-
     private ObservableCollection<Bed> beds;
     public ObservableCollection<Bed> Beds
     {
@@ -102,7 +102,7 @@ public class Room : INotifyPropertyChanged
                 OnPropertyChanged("Beds");
             }
         }
-    }
+    } 
 
     public Room(int id, string name)
     {

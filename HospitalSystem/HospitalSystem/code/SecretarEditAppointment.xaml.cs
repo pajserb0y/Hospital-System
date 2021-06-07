@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +19,9 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class SecretarEditAppointment : Window
     {
+        bool fromConstructor;
         private Appointment currentAppointment;
+        ObservableCollection<Refferal> refferals = RefferalStorage.getInstance().GetAll();
         ListCollectionView collectionAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                                                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
@@ -27,8 +31,35 @@ namespace HospitalSystem.code
             currentAppointment = selectedApp;
             InitializeComponent();
 
-            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-            initializeSelectedAppointmentDetails(selectedApp);
+            fromConstructor = true;
+            this.Show();
+            cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
+            initializeSelectedAppointmentDetails(selectedApp);                        
+        }
+
+        public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
+        {
+            ObservableCollection<Doctor> finalDoctors = new ObservableCollection<Doctor>();
+            findDoctorsWithRefferal(doctors, finalDoctors);
+            findGeneralMedicineDoctors(doctors, finalDoctors);
+
+            return finalDoctors;
+        }
+
+        private static void findGeneralMedicineDoctors(ObservableCollection<Doctor> doctors, ObservableCollection<Doctor> finalDoctors)
+        {
+            foreach (Doctor doctor in doctors)
+                if (doctor.Specialization.Equals("General medicine"))
+                    finalDoctors.Add(doctor);
+        }
+
+        private void findDoctorsWithRefferal(ObservableCollection<Doctor> doctors, ObservableCollection<Doctor> finalDoctors)
+        {
+            foreach (Refferal refferal in refferals)
+                if (currentAppointment.Patient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
+                    foreach (Doctor doctor in doctors)
+                        if (doctor.Id == refferal.DoctorId)
+                            finalDoctors.Add(doctor);
         }
 
         private void initializeSelectedAppointmentDetails(Appointment selectedApp)
@@ -64,16 +95,31 @@ namespace HospitalSystem.code
             }
         }
 
+        private void Window_Closed()
+        {
+            //JobStorage.getInstance().serialize();
+            this.Close();
+        }
+
         private void doctorChanged(object sender, System.EventArgs e)
         {
-            filter();
-            displayTerms();
+            if (!fromConstructor)
+            {
+                filter();
+                if (displayTerms() == 1)
+                    Window_Closed();
+            }
         }
 
         private void dateChanged(object sender, System.EventArgs e)
         {
-            filter();
-            displayTerms();
+            if (!fromConstructor)
+            {
+                filter();
+                if (displayTerms() == 1)
+                    Window_Closed();
+                fromConstructor = false;
+            }
         }
 
         private void filter()
@@ -90,21 +136,52 @@ namespace HospitalSystem.code
             }
         }
 
-        private void displayTerms()
+        private int displayTerms()
         {
-            List<string> occupiedTerms = new List<string>();
-            cbTime.Items.Clear();
-
-            foreach (Appointment a in collectionAppointments)
+            if (cbDoctor.SelectedItem != null && dpDate.SelectedDate != null)
             {
-                occupiedTerms.Add(a.Time.ToString("HH:mm"));
-            }
+                List<string> occupiedTerms = new List<string>();
+                cbTime.Items.Clear();
 
-            foreach (string s in terms)
-            {
-                if (!occupiedTerms.Contains(s))
-                    cbTime.Items.Add(s);
+                foreach (Appointment a in collectionAppointments)
+                {
+                    occupiedTerms.Add(a.Time.ToString("HH:mm"));
+                }
+
+                foreach (string s in terms)
+                {
+                    Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
+                    if (dpDate.SelectedDate <= DateTime.Now.Date)
+                    {
+                        MessageBox.Show("Changing past appointment is not allowed!");
+                        //this.Close();
+                        return 1;
+                    }
+                    if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
+                        cbTime.Items.Add(s);
+                }
+                return 0;
             }
+            return 0;
+        }
+
+        private bool doctorIsInHospital(Doctor selectedDoctor, string term)
+        {
+            ListCollectionView shiftsCollection = new ListCollectionView(WorkingShiftStorage.getInstance().GetAll());
+            shiftsCollection.Filter = (shift) =>
+            {
+                WorkingShift workingShift = shift as WorkingShift;
+                if (workingShift.DoctorId == selectedDoctor.Id && (workingShift.StartDate <= dpDate.SelectedDate && workingShift.EndDate >= dpDate.SelectedDate) &&
+                    (((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime) ||
+                    ((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime)))
+                    return true;
+                return false;
+            };
+
+            if (shiftsCollection.Count == 0)
+                return false;
+            else
+                return true;
         }
 
         private void timeChanged(object sender, System.EventArgs e)
