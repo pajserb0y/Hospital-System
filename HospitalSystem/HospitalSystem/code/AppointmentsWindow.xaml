@@ -508,7 +508,8 @@
             <TabItem x:Name="tabToday" Header="Today" ToolTip="Todays appointments">
                 <Grid>
                     <DataGrid x:Name="dgAppToday" Height="550"  AutoGenerateColumns="False" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" VerticalAlignment="Center" Margin="10,0,10,0" >
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" VerticalAlignment="Center"
+                              Margin="10,0,10,0" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="App ID" Binding="{Binding Id}"/>
                             <DataGridTemplateColumn Header="Patient" Width="2*" >

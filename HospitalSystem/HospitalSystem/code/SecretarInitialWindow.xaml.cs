@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HospitalSystem.code.ViewModel;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,9 @@ namespace HospitalSystem.code
             buttonHelp.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.GetFullPath("../../../Images/help.jpg"))));
 
             dataGridPatients.ItemsSource = PatientsStorage.getInstance().GetAll();
+
+
+            DataContext = new PatientViewModel(this);
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -71,8 +75,8 @@ namespace HospitalSystem.code
 
         private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NewPatient newPatient = new NewPatient();
-            newPatient.ShowDialog();
+            //NewPatient newPatient = new NewPatient();
+            //newPatient.ShowDialog();
         }
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)

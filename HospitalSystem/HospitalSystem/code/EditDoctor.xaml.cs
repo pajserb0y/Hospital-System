@@ -163,9 +163,14 @@ namespace HospitalSystem.code
         private void dateStartChanged(object sender, System.EventArgs e)
         {
             if (datePickerStart.SelectedDate != null)
-                datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(-1), ((DateTime)datePickerStart.SelectedDate).AddDays(-1)));
+            {
+                datePickerEnd.SelectedDate = null;
+                datePickerEnd.BlackoutDates.Clear();
+                datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)datePickerStart.SelectedDate).AddDays(-1)));
+            }
             else
             {
+                datePickerEnd.SelectedDate = null;
                 datePickerEnd.BlackoutDates.Clear();
                 datePickerEnd.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
             }
