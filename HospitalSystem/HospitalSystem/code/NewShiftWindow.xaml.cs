@@ -48,16 +48,21 @@ namespace HospitalSystem.code
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (calledConstructor == 1)
-                WorkingShiftStorage.getInstance().Add(new WorkingShift(WorkingShiftStorage.getInstance().GenerateNewID(), currentDoctorID, 
-                    (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()),
-                    (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
-            else
-                WorkingShiftStorage.getInstance().Edit(new WorkingShift(currentShift.Id, currentShift.DoctorId, (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), 
-                    (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()), (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
+            if (comboBoxEndTime.SelectedItem != null && comboBoxStartTime.SelectedItem != null && dpEndDate.SelectedDate != null && dpStartDate.SelectedDate != null)
+            {
+                if (calledConstructor == 1)
+                    WorkingShiftStorage.getInstance().Add(new WorkingShift(WorkingShiftStorage.getInstance().GenerateNewID(), currentDoctorID,
+                        (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()),
+                        (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
+                else
+                    WorkingShiftStorage.getInstance().Edit(new WorkingShift(currentShift.Id, currentShift.DoctorId, (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()),
+                        (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()), (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
 
-            WorkingShiftStorage.getInstance().serialize();
-            this.Close();
+                WorkingShiftStorage.getInstance().serialize();
+                this.Close();
+            }
+            else
+                MessageBox.Show("You need first to fill all input fields.");
         }
 
         private void startTimeChanged(object sender, System.EventArgs e)

@@ -9,20 +9,21 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <Label Content="Last name:" HorizontalAlignment="Left" Margin="98,136,0,0" VerticalAlignment="Top"/>
-        <Label Content="Specialization:" HorizontalAlignment="Left" Margin="82,362,0,0" VerticalAlignment="Top"/>
-        <Label Content="First name:" HorizontalAlignment="Left" Margin="98,82,0,0" VerticalAlignment="Top"/>
-        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="98,304,0,0" VerticalAlignment="Top"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="118,250,0,0" VerticalAlignment="Top"/>
-        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="122,194,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="180,86,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="180,144,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="180,200,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="180,256,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="180,312,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="180,368,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
+        <Label Content="Last name:  *" HorizontalAlignment="Left" Margin="98,136,0,0" VerticalAlignment="Top"/>
+        <Label Content="Specialization:  *" HorizontalAlignment="Left" Margin="82,362,0,0" VerticalAlignment="Top"/>
+        <Label Content="First name:  *" HorizontalAlignment="Left" Margin="98,82,0,0" VerticalAlignment="Top"/>
+        <Label Content="Telephone:  *" HorizontalAlignment="Left" Margin="98,304,0,0" VerticalAlignment="Top"/>
+        <Label Content="Adress:  *" HorizontalAlignment="Left" Margin="118,250,0,0" VerticalAlignment="Top"/>
+        <Label Content="JMBG:  *" HorizontalAlignment="Left" Margin="122,194,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="180,86,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors first name"/>
+        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="180,144,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors last name"/>
+        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="180,200,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors jmbg"/>
+        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="180,256,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors address"/>
+        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="180,312,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors telephone number"/>
+        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="180,368,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors specialization"/>
 
-        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="349,498,0,0" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="94" >
+        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="349,498,0,0" Height="40" VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" Width="94" ToolTip="Add new doctor">
             <TextBlock.Style>
                 <Style>
                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -33,5 +34,7 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style></TextBlock>
+        <Label Name="errorJmbg" HorizontalAlignment="Left" Margin="184,213,0,0" VerticalAlignment="Top" Width="175" Height="33" Foreground="Red"/>
+        <TextBlock HorizontalAlignment="Center" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="214" Height="27" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

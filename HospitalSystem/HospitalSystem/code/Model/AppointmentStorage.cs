@@ -31,7 +31,7 @@ public class AppointmentStorage
         set { appointments = value; }
     }
 
-    private String FileLocation = "../../../Resource/Termini.json";
+    private String FileLocation = "../../../Resource/Appointments.json";
 
     AppointmentStorage()
     {

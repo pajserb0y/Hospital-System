@@ -237,9 +237,9 @@ namespace HospitalSystem.code
         }
         private void Button_Edit_Job(object sender, RoutedEventArgs e)
         {
-            EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
-            editJob.Show();
-            (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;
+            //EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
+            //editJob.Show();
+            //(dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;
         }
         private void Button_Delete_Job(object sender, RoutedEventArgs e)
         {
@@ -248,8 +248,8 @@ namespace HospitalSystem.code
 
         private void Button_Add_Alergen(object sender, RoutedEventArgs e)
         {
-            NewAlergen newAlergen = new NewAlergen(currentPatient);
-            newAlergen.Show();
+            //NewAlergen newAlergen = new NewAlergen(currentPatient);
+            //newAlergen.Show();
         }
         #endregion
 

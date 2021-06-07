@@ -41,22 +41,23 @@
         </ControlTemplate>
     </Window.Resources>
     <Grid>
-        <Label Content="Last name:" HorizontalAlignment="Left" Margin="114,128,0,0" VerticalAlignment="Top"/>
-        <Label Content="Specialization:" HorizontalAlignment="Left" Margin="546,186,0,0" VerticalAlignment="Top"/>
-        <Label Content="First name:" HorizontalAlignment="Left" Margin="114,74,0,0" VerticalAlignment="Top"/>
-        <Label Content="Telephone:" HorizontalAlignment="Left" Margin="562,128,0,0" VerticalAlignment="Top"/>
-        <Label Content="Adress:" HorizontalAlignment="Left" Margin="582,74,0,0" VerticalAlignment="Top"/>
-        <Label Content="JMBG:" HorizontalAlignment="Left" Margin="138,186,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="196,78,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="196,136,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="196,192,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="644,80,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
-        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="644,136,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
-        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="644,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label Content="Last name:  *" HorizontalAlignment="Left" Margin="114,128,0,0" VerticalAlignment="Top"/>
+        <Label Content="Specialization:  *" HorizontalAlignment="Left" Margin="546,186,0,0" VerticalAlignment="Top"/>
+        <Label Content="First name:  *" HorizontalAlignment="Left" Margin="114,74,0,0" VerticalAlignment="Top"/>
+        <Label Content="Telephone:  *" HorizontalAlignment="Left" Margin="562,128,0,0" VerticalAlignment="Top"/>
+        <Label Content="Adress:  *" HorizontalAlignment="Left" Margin="582,74,0,0" VerticalAlignment="Top"/>
+        <Label Content="JMBG:  *" HorizontalAlignment="Left" Margin="138,186,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Margin="196,78,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors first name"/>
+        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Margin="196,136,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors last name"/>
+        <TextBox x:Name="txtJmbg" HorizontalAlignment="Left" Margin="196,192,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="179" ToolTip="Enter doctors JMBG"/>
+        <TextBox x:Name="txtAdress" HorizontalAlignment="Left" Margin="644,80,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="Enter doctors address"/>
+        <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Margin="644,136,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="Enter doctors telephone number"/>
+        <TextBox x:Name="txtSpecialization" HorizontalAlignment="Left" Margin="644,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="Enter doctors specialization"/>
         <Label Content="ID:"  Padding="0,0,10,0" Margin="914,0,0,704" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="37"/>
         <TextBox x:Name="txtID" TextWrapping="Wrap" Width="40" Height="20" IsReadOnly="True" Margin="940,0,0,704" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
-        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" Margin="870,652,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" >
+        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="24" Margin="870,644,0,0" Height="41" VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" Width="80" ToolTip="Save doctors informations">
             <TextBlock.Style>
                 <Style>
                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -82,8 +83,6 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text=".   "/>
                         <TextBlock Text="{Binding StartTime, StringFormat={}{0:HH:mm }}"/>
                         <TextBlock Text="-"/>
                         <TextBlock Text="{Binding EndTime, StringFormat={}{0:HH:mm }}"/>
@@ -97,7 +96,7 @@
         </ListView>
         <Label Content="Working shifts" HorizontalAlignment="Left" Margin="557,307,0,0" VerticalAlignment="Top"/>
         <Button Template="{DynamicResource ButtonTemplate1}" x:Name="buttonAddFreeDays" HorizontalAlignment="Right" Margin="0,347,528,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
-                Click="buttonAddFreeDays_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                Click="buttonAddFreeDays_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Add selected free days">
             <DockPanel>
                 <Image Source="/Images/add.jpg" Height="21" Width="20"/>
             </DockPanel>
@@ -107,32 +106,80 @@
                 <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
             </DockPanel>
         </Button>-->
-        <Button Template="{DynamicResource ButtonTemplate1}" x:Name="buttonDeleteFreeDays" HorizontalAlignment="Right" Margin="0,396,523,0" VerticalAlignment="Top" Width="32" Height="30" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonDeleteFreeDays_Click">
+        <Button Template="{DynamicResource ButtonTemplate1}" x:Name="buttonDeleteFreeDays" HorizontalAlignment="Right" Margin="0,396,523,0" VerticalAlignment="Top" Width="32"
+                Height="30" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonDeleteFreeDays_Click" ToolTip="Delete selected free days">
             <DockPanel>
                 <Image Source="/Images/delete.jpg" Width="27">
                 </Image>
             </DockPanel>
         </Button>
         <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonAddShift" HorizontalAlignment="Right" Margin="0,346,66,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" 
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonAddShift_Click">
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonAddShift_Click" ToolTip="Add doctors new working shift">
             <DockPanel>
                 <Image Source="\Images/add.jpg" Height="21" Width="20"/>
             </DockPanel>
         </Button>
         <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditShift" HorizontalAlignment="Right" Margin="0,393,66,0" VerticalAlignment="Top" Width="24" Height="24" 
-                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonEditShift_Click">
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Click="buttonEditShift_Click" ToolTip="Edit selected doctors working shift">
             <DockPanel>
                 <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
             </DockPanel>
         </Button>
-        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteShift" HorizontalAlignment="Right" Margin="0,439,61,0" VerticalAlignment="Top" Height="30" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Width="32" Click="buttonDeleteShift_Click">
+        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteShift" HorizontalAlignment="Right" Margin="0,439,61,0" VerticalAlignment="Top" Height="30"
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Cursor="Hand" Width="32" Click="buttonDeleteShift_Click" ToolTip="Delete selected doctors working shifts">
             <DockPanel>
                 <Image Source="/Images/delete.jpg" Width="27"/>
             </DockPanel>
         </Button>
-        <DatePicker Name="datePickerStart" Margin="0,0,761,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102"/>
-        <DatePicker Name="datePickerEnd" Margin="0,0,573,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102"/>
+        <DatePicker Name="datePickerStart" Margin="0,0,761,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" ToolTip="Selected start date for doctors free days"/>
+        <DatePicker Name="datePickerEnd" Margin="0,0,573,118" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" ToolTip="Selected end date for doctors free days"/>
         <Label Content="From:" Margin="0,0,866,116" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40"/>
         <Label Content="To:" Margin="0,0,677,116" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,37" Text="&lt; Read instructions for more informations about working in this window &gt;" TextWrapping="Wrap" FontSize="20" Width="666" Height="27" VerticalAlignment="Bottom"/>
+        <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonHelp" HorizontalAlignment="Right" Margin="0,0,870,28" VerticalAlignment="Bottom" Width="44" Height="44" BorderThickness="0" Cursor="Hand"
+                              Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Add patients new job" Click="buttonHelp_Click" >
+            <DockPanel>
+                <Image Source="/Images/help.jpg" Height="41" Width="40"/>
+            </DockPanel>
+        </Button>
+        <RichTextBox Name="txtHelp" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Left" Height="338" Margin="35,0,0,77" VerticalAlignment="Bottom" Width="244" >
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="- If you want to add new doctor click on TextBlock '+ add'                  
+                         - If you want to change informations about this doctor, enter wanted text in text box and click save                       
+                         - If you want to add new free days, first you need to select start date and end date and then click on the left button '+'  
+                         - If you want to delete some free day, select wanted days and click on the left trash button                                  
+                         - If you want to add new shift, then click on the right button '+' and follow instructions     
+                         - If you want to view shift, select wanted shift and click on pen (edit) button
+                         - If you want to delete some shift, select wanted shift and click on the right trash button                                    
+                         - If you want to go back on window with all doctor click on 'back' or close the window"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="&lt; back" ToolTip="Log out from my account" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseDown="txbBack_PreviewMouseDown"
+                   RenderTransformOrigin="-0.729,0.399"  Cursor="Hand" FontSize="17" >
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.TextDecorations" Value="" />
+                    <Style.Triggers>
+                        <Trigger Property="TextBlock.IsMouseOver" Value="True">
+                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Image Name="imageArrow" Source="/Images/arrow.jpg" HorizontalAlignment="Right" Height="36" Margin="0,298,72,0" VerticalAlignment="Top" Width="50" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5" >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90.00"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Ellipse x:Name="elipseSave" Visibility="Collapsed" HorizontalAlignment="Left" Height="66" Margin="861,632,0,0" Stroke="Orange" StrokeThickness="3" VerticalAlignment="Top" Width="99"/>
     </Grid>
 </Window>

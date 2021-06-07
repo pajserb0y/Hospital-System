@@ -22,7 +22,7 @@ namespace HospitalSystem.code
         ListCollectionView collectionViewExam = new ListCollectionView(ExaminationStorage.getInstance().GetAll());
         ListCollectionView collectionViewRefferals = new ListCollectionView(RefferalStorage.getInstance().GetAll());
         ListCollectionView collectionViewOperation = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
-       
+
         private Patient currentPatient;
 
         public PatientDetails(Patient selectedPatient)
@@ -135,9 +135,9 @@ namespace HospitalSystem.code
                     return false;
                 };
                 ObservableCollection<PrescriptionDTO> PrescriptionList = new ObservableCollection<PrescriptionDTO>();
-                foreach(Examination e in collectionViewExam)
+                foreach (Examination e in collectionViewExam)
                 {
-                    foreach(Prescription p in e.Prescriptions)
+                    foreach (Prescription p in e.Prescriptions)
                     {
                         PrescriptionDTO temp = new PrescriptionDTO(p, e);
                         PrescriptionList.Add(temp);
@@ -152,6 +152,26 @@ namespace HospitalSystem.code
             if (currentPatient.WorkHistory == null)
                 currentPatient.WorkHistory = new ObservableCollection<Job>();
             dgJob.ItemsSource = currentPatient.WorkHistory;
+            //HOspitalization
+
+            ObservableCollection<HospitalizationDTO> HospitalizationList = new ObservableCollection<HospitalizationDTO>();
+            HospitalizationDTO hos;
+            foreach (Room room in RoomStorage.getInstance().GetAll())
+            {
+                if (room.Beds != null)
+                {
+                    foreach (Bed bed in room.Beds)
+                        foreach (Tuple<DateTime, DateTime, int> t in bed.Interval)
+                        {
+                            if (t.Item3 == currentPatient.Id)
+                            {
+                                hos = new HospitalizationDTO(bed.Id, t.Item1, t.Item2, currentPatient, room);
+                                HospitalizationList.Add(hos);
+                            }
+                        }
+                }
+            }
+            dgPatientHospitalizations.ItemsSource = HospitalizationList;
 
             txtID.IsReadOnly = true; //PREBACI U XAML
             txtIme.IsReadOnly = true;
@@ -171,6 +191,7 @@ namespace HospitalSystem.code
             tExam.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
             tPersc.Visibility = Visibility.Collapsed;
+            tHospitalization.Visibility = Visibility.Collapsed;
         }
 
         private void Button_View_Examination(object sender, RoutedEventArgs e)
@@ -179,27 +200,23 @@ namespace HospitalSystem.code
         }
         private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
-            NewAlergen newAlergen = new NewAlergen(currentPatient);
-            newAlergen.Show();
-        }
-
-        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
-        {
-            if (listViewAlergens.SelectedItem != null)
-            {
-                EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
-                editAlergen.Show();
-            }
+            if (txtSubstance.Text != "")
+                currentPatient.Alergens.Add(txtSubstance.Text);
         }
 
         private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
         {
-            currentPatient.Alergens.Remove(listViewAlergens.SelectedItem.ToString());
+            List<string> tempList = new List<string>();
+            foreach (string selectedAlergen in listViewAlergens.SelectedItems)
+                tempList.Add(selectedAlergen);
+
+            foreach (string alergen in tempList)
+                currentPatient.Alergens.Remove(alergen);
         }
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
         {
-            Examination currExam = (Examination) dgPatientExams.SelectedItem;
+            Examination currExam = (Examination)dgPatientExams.SelectedItem;
             Anamnesis anamnesis = new Anamnesis(txtAnamnesis.Text, txtDiagnosis.Text);
             currExam.Anamnesis = anamnesis;
             ExaminationStorage.getInstance().Edit(currExam);
@@ -212,7 +229,7 @@ namespace HospitalSystem.code
             Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
             int id = RefferalStorage.getInstance().GenerateNewID();
             Patient patient = currentPatient;
-            Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id,patient.FirstName,patient.LastName, Refferal.STATUS.Active, doctor.Id,doctor.FirstName,doctor.LastName);
+            Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
             RefferalStorage.getInstance().Add(newRefferal);
             RefferalStorage.getInstance().serialize();
             tRefferal.Visibility = Visibility.Collapsed;
@@ -234,7 +251,7 @@ namespace HospitalSystem.code
 
         private void Button_View_Refferal(object sender, RoutedEventArgs e)
         {
-            Refferal selectedRefferal = (Refferal) dgPatientRefferals.SelectedItem;
+            Refferal selectedRefferal = (Refferal)dgPatientRefferals.SelectedItem;
             txtNoteRefferal.Text = selectedRefferal.Note;
 
             Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
@@ -337,7 +354,7 @@ namespace HospitalSystem.code
 
         private void Button_View_Prescription(object sender, RoutedEventArgs e)
         {
-            PrescriptionDTO selectedPrescription = (PrescriptionDTO) dgPatientPrescriptions.SelectedItem;
+            PrescriptionDTO selectedPrescription = (PrescriptionDTO)dgPatientPrescriptions.SelectedItem;
             Examination correspondingExam = new Examination();
             correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
             txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
@@ -345,7 +362,7 @@ namespace HospitalSystem.code
             cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
             cbDrug.SelectedItem = selectedPrescription.Drug;
             txtTaking.Text = selectedPrescription.Taking;
-            txtInterval.Text =Convert.ToString(selectedPrescription.Interval);
+            txtInterval.Text = Convert.ToString(selectedPrescription.Interval);
 
             txtDate.IsEnabled = false;
             txtTime.IsEnabled = false;
@@ -378,6 +395,138 @@ namespace HospitalSystem.code
         private void Button_Cancel_Prescription(object sender, RoutedEventArgs e)
         {
             tPersc.Visibility = Visibility.Collapsed;
+            tMedHis.Focus();
+        }
+
+        private void Button_View_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
+            Room selectedRoom = RoomStorage.getInstance().GetOne(selectedHospitalization.RoomId);
+            Bed selectedBed = new Bed();
+            cbHospitalizationRoom.ItemsSource = RoomStorage.getInstance().GetAll();
+            cbHospitalizatonBed.ItemsSource = selectedRoom.Beds;
+            foreach (Bed bed in selectedRoom.Beds)
+                if (bed.Id == selectedHospitalization.BedId)
+                {
+                    selectedBed = bed;
+                    break;
+                }
+            txtHospitalizationPatient.Text = selectedHospitalization.FirstName + " " + selectedHospitalization.LastName;
+            txtHospitalizationPatient.IsEnabled = false;
+            dpHospitalizationIN.SelectedDate = selectedHospitalization.DateIn;
+            dpHospitalizationOUT.SelectedDate = selectedHospitalization.DateOut;
+            cbHospitalizationRoom.SelectedItem = selectedRoom;
+            cbHospitalizatonBed.SelectedItem = selectedBed;
+
+            tHospitalization.Visibility = Visibility.Visible;
+            tHospitalization.Focus();
+        }
+
+        private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
+            ObservableCollection<Room> rooms = RoomStorage.getInstance().GetAll();
+
+            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+            Patient selectedPatient = currentPatient;
+            foreach (Room room in rooms)
+            {
+                if(room.Beds != null)
+                {
+                    foreach (Bed bed in room.Beds)
+                    {
+                        if(bed.Interval != null)
+                        {
+                            foreach (Tuple<DateTime, DateTime, int> t in bed.Interval)
+                            {
+                                if (t.Item1 == selectedHospitalization.DateIn && t.Item2 == selectedHospitalization.DateOut && t.Item3 == currentPatient.Id && room.Id == selectedHospitalization.RoomId && bed.Id == selectedHospitalization.BedId)
+                                {
+                                    bed.Interval.Remove(t);
+                                    bed.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
+                                    RoomStorage.getInstance().Edit(room);
+                                    return;
+                                }
+                            }
+                        }             
+                    }
+                }
+            }
+            tHospitalization.Visibility = Visibility.Collapsed;
+            tMedHis.Focus();
+        }
+
+        private void cbHospitalizationRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            fillListOfAvailableBeds();
+        }
+
+        private void dpHospitalizationTimeOut_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            fillListOfAvailableRooms(new List<Bed>());
+        }
+        private void fillListOfAvailableRooms(List<Bed> beds)
+        {
+            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+            ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
+
+            roomCollectionView.Filter = (room) =>
+            {
+                Room tempRoom = room as Room;
+                if (tempRoom.Name == "Room")
+                {
+                    foreach (Bed tempBed in tempRoom.Beds)
+                    {
+                        foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
+                        {
+                            if (val.Item1 <= inTime && val.Item2 >= inTime)
+                                return false;
+                            if (val.Item1 <= outTime && val.Item2 >= outTime)
+                                return false;
+                            if (val.Item1 >= inTime && val.Item2 <= outTime)
+                                return false;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
+            cbHospitalizationRoom.ItemsSource = roomCollectionView;
+        }
+        private void fillListOfAvailableBeds()
+        {
+            if (cbHospitalizationRoom.SelectedIndex != -1)
+            {
+
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
+                ListCollectionView bedCollectionView = new ListCollectionView(selectedRoom.Beds);
+
+                bedCollectionView.Filter = (bed) =>
+                {
+                    Bed tempBed = bed as Bed;
+
+                    foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
+                    {
+                        if (val.Item1 <= inTime && val.Item2 >= inTime)
+                            return false;
+                        if (val.Item1 <= outTime && val.Item2 >= outTime)
+                            return false;
+                        if (val.Item1 >= inTime && val.Item2 <= outTime)
+                            return false;
+                        return true;
+                    }
+                    return false;
+                };
+                cbHospitalizatonBed.ItemsSource = bedCollectionView;
+            }
+        }
+
+        private void Button_Cancel_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            tHospitalization.Visibility = Visibility.Collapsed;
             tMedHis.Focus();
         }
     }

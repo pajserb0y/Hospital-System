@@ -1,1 +1,194 @@
-[{"Id":1,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":14,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":8,"Taking":"POSLEDNJA PROBA","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"0001-01-01T00:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":2,"Time":"2021-05-09T10:00:00","Date":"2021-05-09T00:00:00","PatientId":16,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":6,"Taking":"Pojacaj se zajebana je sitacija","Drug":{"Id":6,"Report":null,"Status":0,"Name":"Strepsils","Amount":500,"Ingridients":[{"Name":"Hlor","Amount":200},{"Name":"Sumpor","Amount":300}]},"TimeOfPrescription":"0001-01-01T00:00:00"}],"TimesChanged":3,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":4,"Time":"2021-05-10T10:30:00","Date":"2021-05-10T00:00:00","PatientId":13,"RoomId":1,"DoctorId":4,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-10T00:00:00","Interval":8,"Taking":"jhfgjhgf","Drug":{"Id":3,"Report":null,"Status":0,"Name":"Probiotik","Amount":890,"Ingridients":[{"Name":"Jod","Amount":200},{"Name":"Acetil","Amount":100},{"Name":"Bor","Amount":100},{"Name":"Magnezijum","Amount":200},{"Name":"Kikiriki","Amount":290}]},"TimeOfPrescription":"2021-05-10T10:30:00"},{"Id":2,"DateOfPrescription":"2021-05-10T00:00:00","Interval":6,"Taking":"fsdfsdfs","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"2021-05-10T10:30:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":5,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":"aaaaaaaaaaaaaaaaaaa","Diagnosis":"aaaaaaaaaaaaaaaaaa"},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":2,"Taking":"aaaaaaaaaaaaaaaaaaaaa","Drug":{"Id":4,"Report":null,"Status":0,"Name":"Luc mixtura","Amount":100,"Ingridients":[{"Name":"Sumpor","Amount":100}]},"TimeOfPrescription":"2021-05-09T07:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"}]
+<<<<<<< HEAD
+[{"Id":1,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":14,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":8,"Taking":"POSLEDNJA PROBA","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"0001-01-01T00:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":2,"Time":"2021-05-09T10:00:00","Date":"2021-05-09T00:00:00","PatientId":16,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":6,"Taking":"Pojacaj se zajebana je sitacija","Drug":{"Id":6,"Report":null,"Status":0,"Name":"Strepsils","Amount":500,"Ingridients":[{"Name":"Hlor","Amount":200},{"Name":"Sumpor","Amount":300}]},"TimeOfPrescription":"0001-01-01T00:00:00"}],"TimesChanged":3,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":4,"Time":"2021-05-10T10:30:00","Date":"2021-05-10T00:00:00","PatientId":13,"RoomId":1,"DoctorId":4,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-10T00:00:00","Interval":8,"Taking":"jhfgjhgf","Drug":{"Id":3,"Report":null,"Status":0,"Name":"Probiotik","Amount":890,"Ingridients":[{"Name":"Jod","Amount":200},{"Name":"Acetil","Amount":100},{"Name":"Bor","Amount":100},{"Name":"Magnezijum","Amount":200},{"Name":"Kikiriki","Amount":290}]},"TimeOfPrescription":"2021-05-10T10:30:00"},{"Id":2,"DateOfPrescription":"2021-05-10T00:00:00","Interval":6,"Taking":"fsdfsdfs","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"2021-05-10T10:30:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":5,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":2,"Taking":"aaaaaaaaaaaaaaaaaaaaa","Drug":{"Id":4,"Report":null,"Status":0,"Name":"Luc mixtura","Amount":100,"Ingridients":[{"Name":"Sumpor","Amount":100}]},"TimeOfPrescription":"2021-05-09T07:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":6,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":7,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":8,"Time":"2021-05-09T08:30:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:50.0689012+02:00"},{"Id":9,"Time":"2021-04-18T17:00:00","Date":"2021-05-14T00:00:00","PatientId":12,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":10,"Time":"2021-05-09T08:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:44.0048149+02:00"},{"Id":11,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":12,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":13,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":14,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":15,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":16,"Time":"2021-05-09T15:00:00","Date":"2021-05-14T00:00:00","PatientId":8,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":2,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":17,"Time":"2021-05-30T11:00:00","Date":"2021-05-30T00:00:00","PatientId":12,"RoomId":2,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":18,"Time":"2021-05-09T08:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:44.0048149+02:00"},{"Id":19,"Time":"2021-04-18T17:00:00","Date":"2021-05-14T00:00:00","PatientId":12,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":20,"Time":"2021-05-09T08:30:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:50.0689012+02:00"},{"Id":21,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":22,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:37.9984664+02:00"},{"Id":23,"Time":"2021-05-09T17:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":24,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:37.9984664+02:00"},{"Id":25,"Time":"2021-05-09T12:00:00","Date":"2021-05-10T00:00:00","PatientId":8,"RoomId":1,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":3,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":26,"Time":"2021-05-09T07:00:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:08.7486378+02:00"},{"Id":27,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":14,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":28,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":29,"Time":"2021-05-09T08:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:41:44.0048149+02:00"},{"Id":30,"Time":"2021-05-09T07:00:00","Date":"2021-05-02T00:00:00","PatientId":9,"RoomId":1,"DoctorId":17,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":31,"Time":"2021-05-09T17:30:00","Date":"2021-05-14T00:00:00","PatientId":8,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":1,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":32,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":33,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":34,"Time":"2021-05-09T17:30:00","Date":"2021-05-14T00:00:00","PatientId":8,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":1,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":35,"Time":"2021-05-09T07:00:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:08.7486378+02:00"},{"Id":36,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":37,"Time":"2021-05-30T11:00:00","Date":"2021-05-30T00:00:00","PatientId":12,"RoomId":2,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":38,"Time":"2021-05-09T07:00:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":14,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":39,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":41,"Time":"2021-05-09T17:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":3,"Taking":"2 put dnevno","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"2021-05-09T08:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":41,"Time":"2021-05-09T17:00:00","Date":"2021-05-09T00:00:00","PatientId":8,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[{"Id":1,"DateOfPrescription":"2021-05-09T00:00:00","Interval":3,"Taking":"2 put dnevno","Drug":{"Id":5,"Report":null,"Status":0,"Name":"Bromazepam","Amount":600,"Ingridients":[{"Name":"Brom","Amount":600}]},"TimeOfPrescription":"2021-05-09T08:00:00"}],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":42,"Time":"2021-04-18T17:00:00","Date":"2021-05-14T00:00:00","PatientId":12,"RoomId":8,"DoctorId":18,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":43,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":44,"Time":"2021-05-09T07:00:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:08.7486378+02:00"},{"Id":45,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":46,"Time":"2021-05-09T07:00:00","Date":"2021-05-02T00:00:00","PatientId":9,"RoomId":1,"DoctorId":17,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":47,"Time":"2021-05-09T12:00:00","Date":"2021-05-10T00:00:00","PatientId":8,"RoomId":1,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":3,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":48,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":49,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":50,"Time":"2021-05-30T11:00:00","Date":"2021-05-30T00:00:00","PatientId":12,"RoomId":2,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"},{"Id":51,"Time":"2021-05-09T07:30:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":9,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:22.4295237+02:00"},{"Id":52,"Time":"2021-05-09T07:00:00","Date":"2021-05-10T00:00:00","PatientId":9,"RoomId":1,"DoctorId":1,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T19:46:08.7486378+02:00"},{"Id":53,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":55,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":55,"Time":"2021-05-09T07:30:00","Date":"2021-05-09T00:00:00","PatientId":9,"RoomId":1,"DoctorId":2,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"2021-05-09T20:06:50.5489373+02:00"},{"Id":56,"Time":"2021-05-30T11:00:00","Date":"2021-05-30T00:00:00","PatientId":12,"RoomId":2,"DoctorId":3,"IsOperation":false,"Anamnesis":{"AnamnesisInfo":null,"Diagnosis":null},"Prescriptions":[],"TimesChanged":0,"TimeOfCreation":"0001-01-01T00:00:00"}]
+=======
+[
+  {
+    "Id": 1,
+    "Time": "2021-05-09T07:30:00",
+    "Date": "2021-05-09T00:00:00",
+    "PatientId": 9,
+    "RoomId": 1,
+    "DoctorId": 14,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [
+      {
+        "Id": 1,
+        "DateOfPrescription": "2021-05-09T00:00:00",
+        "Interval": 8,
+        "Taking": "POSLEDNJA PROBA",
+        "Drug": {
+          "Id": 5,
+          "Report": null,
+          "Status": 0,
+          "Name": "Bromazepam",
+          "Amount": 600,
+          "Ingridients": [
+            {
+              "Name": "Brom",
+              "Amount": 600
+            }
+          ]
+        },
+        "TimeOfPrescription": "0001-01-01T00:00:00"
+      }
+    ],
+    "TimesChanged": 0,
+    "TimeOfCreation": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": 2,
+    "Time": "2021-05-09T10:00:00",
+    "Date": "2021-05-09T00:00:00",
+    "PatientId": 16,
+    "RoomId": 1,
+    "DoctorId": 2,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [
+      {
+        "Id": 1,
+        "DateOfPrescription": "2021-05-09T00:00:00",
+        "Interval": 6,
+        "Taking": "Pojacaj se zajebana je sitacija",
+        "Drug": {
+          "Id": 6,
+          "Report": null,
+          "Status": 0,
+          "Name": "Strepsils",
+          "Amount": 500,
+          "Ingridients": [
+            {
+              "Name": "Hlor",
+              "Amount": 200
+            },
+            {
+              "Name": "Sumpor",
+              "Amount": 300
+            }
+          ]
+        },
+        "TimeOfPrescription": "0001-01-01T00:00:00"
+      }
+    ],
+    "TimesChanged": 3,
+    "TimeOfCreation": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": 4,
+    "Time": "2021-05-10T10:30:00",
+    "Date": "2021-05-10T00:00:00",
+    "PatientId": 13,
+    "RoomId": 1,
+    "DoctorId": 4,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [
+      {
+        "Id": 1,
+        "DateOfPrescription": "2021-05-10T00:00:00",
+        "Interval": 8,
+        "Taking": "jhfgjhgf",
+        "Drug": {
+          "Id": 3,
+          "Report": null,
+          "Status": 0,
+          "Name": "Probiotik",
+          "Amount": 890,
+          "Ingridients": [
+            {
+              "Name": "Jod",
+              "Amount": 200
+            },
+            {
+              "Name": "Acetil",
+              "Amount": 100
+            },
+            {
+              "Name": "Bor",
+              "Amount": 100
+            },
+            {
+              "Name": "Magnezijum",
+              "Amount": 200
+            },
+            {
+              "Name": "Kikiriki",
+              "Amount": 290
+            }
+          ]
+        },
+        "TimeOfPrescription": "2021-05-10T10:30:00"
+      },
+      {
+        "Id": 2,
+        "DateOfPrescription": "2021-05-10T00:00:00",
+        "Interval": 6,
+        "Taking": "fsdfsdfs",
+        "Drug": {
+          "Id": 5,
+          "Report": null,
+          "Status": 0,
+          "Name": "Bromazepam",
+          "Amount": 600,
+          "Ingridients": [
+            {
+              "Name": "Brom",
+              "Amount": 600
+            }
+          ]
+        },
+        "TimeOfPrescription": "2021-05-10T10:30:00"
+      }
+    ],
+    "TimesChanged": 0,
+    "TimeOfCreation": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": 5,
+    "Time": "2021-05-09T07:00:00",
+    "Date": "2021-05-09T00:00:00",
+    "PatientId": 9,
+    "RoomId": 1,
+    "DoctorId": 1,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": "aaaaaaaaaaaaaaaaaaa",
+      "Diagnosis": "aaaaaaaaaaaaaaaaaa"
+    },
+    "Prescriptions": [
+      {
+        "Id": 1,
+        "DateOfPrescription": "2021-05-09T00:00:00",
+        "Interval": 2,
+        "Taking": "aaaaaaaaaaaaaaaaaaaaa",
+        "Drug": {
+          "Id": 4,
+          "Report": null,
+          "Status": 0,
+          "Name": "Luc mixtura",
+          "Amount": 100,
+          "Ingridients": [
+            {
+              "Name": "Sumpor",
+              "Amount": 100
+            }
+          ]
+        },
+        "TimeOfPrescription": "2021-05-09T07:00:00"
+      }
+    ],
+    "TimesChanged": 0,
+    "TimeOfCreation": "0001-01-01T00:00:00"
+  }
+]
+>>>>>>> a80f0df2757780bec953d1440f71e2f42b20ee72
