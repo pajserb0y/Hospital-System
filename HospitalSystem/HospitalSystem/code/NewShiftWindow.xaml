@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <DatePicker Name="dpStartDate" Margin="154,0,104,318" Height="24" VerticalAlignment="Bottom" ToolTip="Select start date"/>
+        <DatePicker Name="dpStartDate" Margin="154,0,104,318" Height="24" VerticalAlignment="Bottom" ToolTip="Select start date" SelectedDateChanged="dateStartChanged"/>
         <DatePicker Name="dpEndDate" Margin="154,0,104,253" Height="26" VerticalAlignment="Bottom" ToolTip="Select end date"/>
         <Label Content="Start date:" HorizontalAlignment="Left" Margin="83,0,0,318" VerticalAlignment="Bottom"/>
         <Label Content="End date:" HorizontalAlignment="Left" Margin="87,0,0,253" VerticalAlignment="Bottom"/>

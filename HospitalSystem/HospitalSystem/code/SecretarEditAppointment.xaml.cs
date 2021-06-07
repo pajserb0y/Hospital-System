@@ -32,7 +32,8 @@ namespace HospitalSystem.code
             InitializeComponent();
             fromConstructor = true;
             cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
-            initializeSelectedAppointmentDetails(selectedApp);                        
+            initializeSelectedAppointmentDetails(selectedApp);
+            dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)

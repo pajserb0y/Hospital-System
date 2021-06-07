@@ -30,6 +30,7 @@ namespace HospitalSystem.code
             currentPatient = selectedPatient;
             txtPatient.Text = selectedPatient.ToString();
             cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
+            dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         public SecretarNewAppointment()
@@ -40,6 +41,20 @@ namespace HospitalSystem.code
             List<Patient> patients = new List<Patient>(PatientsStorage.getInstance().GetAll());
             patients.Add(new Patient("---None---"));
             cbPatient.ItemsSource = patients;
+            disableOtherInputFields();
+            dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+        }
+
+        private void disableOtherInputFields()
+        {
+            cbDoctor.IsEnabled = false;
+            dpDate.IsEnabled = false;
+            cbRoom.IsEnabled = false;
+            cbTime.IsEnabled = false;
+            cbDoctor.SelectedIndex = -1;
+            dpDate.SelectedDate = null;
+            cbRoom.SelectedIndex = -1;
+            cbTime.SelectedIndex = -1;
         }
 
         public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
@@ -94,18 +109,32 @@ namespace HospitalSystem.code
 
                 cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
             }
+            disableOtherInputFields();
+            cbDoctor.IsEnabled = true;
         }
 
         private void doctorChanged(object sender, System.EventArgs e)
         {
             filter();
             displayTerms();
+            dpDate.IsEnabled = true;
+            cbTime.IsEnabled = false;
+            cbRoom.IsEnabled = false;
+            dpDate.SelectedDate = null;
+            cbRoom.SelectedIndex = -1;
+            cbTime.SelectedIndex = -1;
         }
 
         private void dateChanged(object sender, System.EventArgs e)
         {
             filter();
             displayTerms();
+            cbTime.IsEnabled = true;
+            cbRoom.IsEnabled = false;
+            cbRoom.SelectedIndex = -1;
+            cbTime.SelectedIndex = -1;
+            if (cbTime.Items.Count == 0 && dpDate.SelectedDate != null)
+                MessageBox.Show("There is not any available term for this doctor on this day.");
         }
 
         private void filter()
@@ -135,7 +164,7 @@ namespace HospitalSystem.code
             foreach (string s in terms)
             {
                 Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
-                if(dpDate.SelectedDate != null)
+                if(dpDate.SelectedDate != null && cbDoctor.SelectedItem != null)
                     if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
                         cbTime.Items.Add(s);
             }
@@ -163,6 +192,10 @@ namespace HospitalSystem.code
         private void timeChanged(object sender, System.EventArgs e)
         {
             displayRooms();
+            cbRoom.IsEnabled = true;
+            cbRoom.SelectedIndex = -1;
+            if (cbRoom.Items.Count == 0 && cbTime.SelectedItem != null)
+                MessageBox.Show("There is not any available room for this doctor on this day in this room.");
         }
 
         private void displayRooms()

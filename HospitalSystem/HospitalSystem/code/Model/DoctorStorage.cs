@@ -78,6 +78,18 @@ namespace HospitalSystem.code
                     this.doctors.Remove(d);
                     break;
                 }
+
+            deletePatientAppointments(doctor);
+        }
+
+        private static void deletePatientAppointments(Doctor doctor)
+        {
+            ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
+            List<Appointment> newAppointmentList = new List<Appointment>(AppointmentStorage.getInstance().GetAll());
+            if (appointments != null)
+                foreach (Appointment ap in newAppointmentList)
+                    if (ap.Doctor == doctor)
+                        appointments.Remove(ap);
         }
 
         public void Add(Doctor doctor)

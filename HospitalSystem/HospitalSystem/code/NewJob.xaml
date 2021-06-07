@@ -31,6 +31,6 @@
             </TextBlock.Style></TextBlock>
         <Label Name="errorActivity" HorizontalAlignment="Left" Margin="162,206,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
         <Label Name="errorRegister" HorizontalAlignment="Left" Margin="162,161,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
-        <TextBlock HorizontalAlignment="Left" Margin="116,0,0,-2" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="182" Height="27" VerticalAlignment="Bottom"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,-2" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="212" Height="27" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

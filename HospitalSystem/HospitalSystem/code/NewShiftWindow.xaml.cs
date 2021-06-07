@@ -31,6 +31,8 @@ namespace HospitalSystem.code
             comboBoxStartTime.ItemsSource = terms;
             comboBoxEndTime.ItemsSource = terms;
             calledConstructor = 1;
+            dpStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         public NewShiftWindow(WorkingShift selectedShift)
@@ -44,6 +46,8 @@ namespace HospitalSystem.code
             comboBoxStartTime.SelectedItem = selectedShift.StartTime.ToString("HH:mm");
             comboBoxEndTime.SelectedItem = selectedShift.EndTime.ToString("HH:mm");
             calledConstructor = 2;
+            dpStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), selectedShift.StartDate.AddDays(-1)));
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), selectedShift.StartDate.AddDays(-1)));
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -77,6 +81,13 @@ namespace HospitalSystem.code
                     k = 1;
             }
             comboBoxEndTime.ItemsSource = endTimeTerms;
+        }
+
+        private void dateStartChanged(object sender, System.EventArgs e)
+        {
+            dpEndDate.SelectedDate = null;
+            dpEndDate.BlackoutDates.Clear();
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpStartDate.SelectedDate).AddDays(-1)));
         }
     }
 }

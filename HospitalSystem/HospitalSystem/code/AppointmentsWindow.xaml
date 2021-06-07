@@ -447,7 +447,7 @@
 
     <Grid>
         <Menu AllowDrop="True" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <MenuItem Name="MainMI" Header="&lt; Appointments >" FontSize="30" Background="White" BorderThickness="0" Style="{DynamicResource MenuItemStyle1}" ToolTip="Click to see other menu items">
+            <MenuItem Cursor="Hand" Name="MainMI" Header="&lt; Appointments >" FontSize="30" Background="White" BorderThickness="0" Style="{DynamicResource MenuItemStyle1}" ToolTip="Click to see other menu items">
                 <MenuItem Header="Patients" Name="PatientsMI" Click="Patients_Click" FontSize="17" Background="White" BorderBrush="White"/>
                 <MenuItem Header="Doctors" Name="DoctorMI" Click="Doctors_Click" FontSize="17" Background="White" BorderBrush="White"/>
                 <MenuItem Header="Appointments" Name="AppointmentMI" Click="Appointments_Click" FontSize="17" Background="White" BorderBrush="White"/>
@@ -508,7 +508,8 @@
             <TabItem x:Name="tabToday" Header="Today" ToolTip="Todays appointments">
                 <Grid>
                     <DataGrid x:Name="dgAppToday" Height="550"  AutoGenerateColumns="False" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
-                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" VerticalAlignment="Center" Margin="10,0,10,0" >
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" VerticalAlignment="Center"
+                              Margin="10,0,10,0" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="App ID" Binding="{Binding Id}"/>
                             <DataGridTemplateColumn Header="Patient" Width="2*" >
