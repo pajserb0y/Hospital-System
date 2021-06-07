@@ -58,12 +58,19 @@ namespace HospitalSystem
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
+            HelpWizard hw = new HelpWizard();
+            hw.Show();
+            this.Close();
+            //DoctorInitialWindow dw = new DoctorInitialWindow();
+            //dw.Show();
+            //this.Close();
             if (txtPassword.IsFocused)
                 if (e.Key == Key.Return)
                     checkLogInDetails();
             if (txtUsername.IsFocused)
                 if (e.Key == Key.Return)
                     txtPassword.Focus();            
+
         }
     }
 }
