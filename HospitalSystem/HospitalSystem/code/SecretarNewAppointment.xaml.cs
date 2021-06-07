@@ -32,36 +32,68 @@ namespace HospitalSystem.code
             cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
         }
 
+        public SecretarNewAppointment()
+        {
+            InitializeComponent();
+            txtPatient.Visibility = Visibility.Collapsed;
+            cbPatient.Visibility = Visibility.Visible;
+            List<Patient> patients = new List<Patient>(PatientsStorage.getInstance().GetAll());
+            patients.Add(new Patient("---None---"));
+            cbPatient.ItemsSource = patients;
+        }
+
         public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
         {
             ObservableCollection<Doctor> finalDoctors = new ObservableCollection<Doctor>();
 
-            foreach (Refferal refferal in refferals)
-                if (currentPatient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
-                    foreach (Doctor doctor in doctors)
-                        if (doctor.Id == refferal.DoctorId)
-                            finalDoctors.Add(doctor);
+            if(currentPatient != null)
+            {
+                foreach (Refferal refferal in refferals)
+                    if (currentPatient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
+                        foreach (Doctor doctor in doctors)
+                            if (doctor.Id == refferal.DoctorId)
+                                finalDoctors.Add(doctor);
 
-            foreach (Doctor doctor in doctors)
-                if (doctor.Specialization.Equals("General medicine"))
-                    finalDoctors.Add(doctor);
-
+                foreach (Doctor doctor in doctors)
+                    if (doctor.Specialization.Equals("General medicine"))
+                        finalDoctors.Add(doctor);
+            }
+            
             return finalDoctors;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Appointment appt = new Appointment();
-            appt.Id = AppointmentStorage.getInstance().GenerateNewID();
-            appt.Patient = currentPatient;
-            appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appt.Room = (Room)cbRoom.SelectedItem;
-            appt.Date = (DateTime)dpDate.SelectedDate;
-            appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-            Room selectedRoom = (Room)cbRoom.SelectedItem;
-            _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
-            AppointmentStorage.getInstance().Add(appt);
-            this.Close();
+            if (cbDoctor.SelectedItem != null && cbRoom.SelectedItem != null && dpDate.SelectedDate != null && cbTime.SelectedItem != null)
+            {
+                Appointment appt = new Appointment();
+                appt.Id = AppointmentStorage.getInstance().GenerateNewID();
+                appt.Patient = currentPatient;
+                appt.Doctor = (Doctor)cbDoctor.SelectedItem;
+                appt.Room = (Room)cbRoom.SelectedItem;
+                appt.Date = (DateTime)dpDate.SelectedDate;
+                appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                Room selectedRoom = (Room)cbRoom.SelectedItem;
+                _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
+                AppointmentStorage.getInstance().Add(appt);
+                this.Close();
+            }
+            else
+                MessageBox.Show("You need first to fill all input fields.");
+        }
+
+        private void patientChanged(object sender, System.EventArgs e)
+        {
+            Patient selectedPatient = (Patient)cbPatient.SelectedItem;
+            if (selectedPatient != null)
+            {
+                if (selectedPatient.FirstName == "---None---")
+                    cbPatient.SelectedIndex = -1;
+                else
+                    currentPatient = selectedPatient;
+
+                cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
+            }
         }
 
         private void doctorChanged(object sender, System.EventArgs e)
@@ -116,8 +148,8 @@ namespace HospitalSystem.code
             {
                 WorkingShift workingShift = shift as WorkingShift;
                 if (workingShift.DoctorId == selectedDoctor.Id && (workingShift.StartDate <= dpDate.SelectedDate && workingShift.EndDate >= dpDate.SelectedDate) &&
-                    (((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime) ||
-                    ((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime)))
+                    ((((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay) ||
+                    (((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay)))
                     return true;
                 return false;
             };

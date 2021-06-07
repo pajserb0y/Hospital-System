@@ -29,8 +29,8 @@
                     <!--<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>-->
                 </Trigger>
                 <Trigger Property="IsPressed" Value="true">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                    <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>-->
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="false">
                     <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
@@ -43,7 +43,7 @@
 
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="720" Width="1000" VerticalAlignment="Center" >
-            <TabItem Header="Chart">
+            <TabItem Header="Chart" ToolTip="Patients chart">
                 <StackPanel>
                     <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,30,0">
                         <Label Content="ID:"  Padding="0,0,10,0"/>
@@ -66,42 +66,45 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
-                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <Label Content="First Name:  *" Padding="0,0,10,0"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" ToolTip="Enter patients first name"/>
                         <Label Content="Social security number:"  Padding="0,0,20,0"  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"/>
-                        <TextBox x:Name="txtSoc" TextWrapping="Wrap" Padding="0,0,20,0" Width="160" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="txtSoc" TextWrapping="Wrap" Padding="0,0,20,0" Width="160" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" ToolTip="Enter patients social security number"/>
 
-                        <Label Content="Last Name:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="Last Name:  *" Padding="0,0,10,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left" ToolTip="Enter patients last name"/>
                         <Label Content="Adress:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0" ToolTip="Enter patients address"/>
 
-                        <Label Content="JMBG:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+                        <Label Content="JMBG:  *" Padding="0,0,10,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left" ToolTip="Enter patients JMBG"/>
                         <Label Content="City:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtCity" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCity" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0" ToolTip="Enter patients city"/>
+                        <Label Name="errorJmbg" Padding="0,0,20,0" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" Foreground="Red"/>
 
                         <Label Content="Birth date:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <DatePicker Name="dpBirth" Grid.Column="1" HorizontalAlignment="Left" Width="230" Height="20" Margin="0,30,0,0" Grid.Row="3"  />
+                        <DatePicker Name="dpBirth" Grid.Column="1" HorizontalAlignment="Left" Width="230" Height="20" Margin="0,30,0,0" Grid.Row="3"  ToolTip="Enter patients birth date"/>
                         <Label Content="Country:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtCountry" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtCountry" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0" ToolTip="Enter patients country"/>
 
                         <Label Content="Gender:" Padding="0,0,20,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,30,0,0" />
-                        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="50,30,0,0" />
-                        <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,30,105,0"/>
-                        <Label Content="Telephone:" Padding="0,0,20,0"  Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,30,0,0" ToolTip="Male"/>
+                        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="40" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="50,30,0,0" ToolTip="Female" />
+                        <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1"
+                                  HorizontalAlignment="Right" Margin="0,30,105,0" ToolTip="Uncheck if patients account stopped being guest"/>
+                        <Label Content="Telephone:  *" Padding="0,0,10,0"  Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0" ToolTip="Enter patients telephone number"/>
 
                         <Label Content="Marriage status:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <ComboBox x:Name="cbMarriage" Width="230" Height="20" Grid.Row="5" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedValuePath="Content">
+                        <ComboBox x:Name="cbMarriage" Width="230" Height="20" Grid.Row="5" Grid.Column="1" Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  SelectedValuePath="Content" ToolTip="Select patients marriage status">
                             <ComboBoxItem Content="Married"/>
                             <ComboBoxItem Content="Unmarried"/>
                             <ComboBoxItem Content="Divorced"/>
                             <ComboBoxItem Content="Widow(er)"/>
                         </ComboBox>
                         <Label Content="Email:" Padding="0,0,20,0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Margin="0,30,0,0"/>
-                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0"/>
+                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="0,30,0,0" ToolTip="Enter patients email"/>
 
                         <Label Content="Work history" Padding="0,5,15,0" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,0,0"/>
                         <DataGrid x:Name="dgJob" Height="280" Width="500" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Margin="30,50,30,30" AutoGenerateColumns="False"
@@ -116,24 +119,25 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddJob" HorizontalAlignment="Right" Margin="0,80,50,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
-                            Click="txbAddJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                            Click="txbAddJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2" ToolTip="Add patients new job">
                             <DockPanel>
                                 <Image Source="/Images/add.jpg" Height="21" Width="20"/>
                             </DockPanel>
                         </Button>
                         <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditJob" HorizontalAlignment="Right" Margin="0,120,50,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
-                            Click="txbEditJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                            Click="txbEditJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2" ToolTip="Edit selected patients job">
                             <DockPanel>
                                 <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
                             </DockPanel>
                         </Button>
                         <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteJob" HorizontalAlignment="Right" Margin="0,160,50,0" VerticalAlignment="Top" Width="24" Height="24"
-                                BorderThickness="0" Cursor="Hand" Click="txbDeleteJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2">
+                                BorderThickness="0" Cursor="Hand" Click="txbDeleteJob_PreviewMouseDown"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="2"
+                                ToolTip="Delete selected patients job">
                             <DockPanel>
                                 <Image Source="/Images/delete.jpg" Width="27"/>
                             </DockPanel>
                         </Button>
-                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+                        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" ToolTip="Save patients chart"
                                    HorizontalAlignment="Right" Margin="0,300,50,20" Padding="10,10,10,10" Grid.Row="6" Grid.Column="3">
                             <TextBlock.Style>
                                 <Style>
@@ -145,22 +149,20 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
+                        <TextBox x:Name="txtSubstance" Grid.Row="6" Grid.Column="3" Margin="0,250,50,0"  TextWrapping="Wrap" HorizontalAlignment="Right" Width="100" Height="20" 
+                                 VerticalAlignment="top" ToolTip="Enter patients new alergen"/>
+                        <Label Content="Substance:" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,245,120,0" Width="100" Height="40" Grid.RowSpan="1" Grid.ColumnSpan="1"/>
                         <Label Content="Alergens" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,28,0,0" Width="100" Height="40" Grid.RowSpan="1" Grid.ColumnSpan="1"/>
-                        <ListView x:Name="listViewAlergens" Grid.Row="6" Grid.Column="3" Margin="0,53,50,120"/>
-                        <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddAlergen" HorizontalAlignment="Right" Margin="0,80,20,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
-                            Click="ButtonAddAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
+                        <ListView x:Name="listViewAlergens" Grid.Row="6" Grid.Column="3" Margin="0,53,50,120" SelectionMode="Multiple"/>
+                        <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddAlergen" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
+                            Click="ButtonAddAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0,80,20,0" Grid.Row="6" Grid.Column="3" ToolTip="Add new alergen from text box Substance">
                             <DockPanel>
                                 <Image Source="/Images/add.jpg" Height="21" Width="20"/>
                             </DockPanel>
                         </Button>
-                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonEditAlergen" HorizontalAlignment="Right" Margin="0,120,20,0" VerticalAlignment="Top" Width="24" Height="24" BorderThickness="0" Cursor="Hand"
-                            Click="ButtonEditAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
-                            <DockPanel>
-                                <Image Source="/Images/edit.jpg" Height="21" Width="20"/>
-                            </DockPanel>
-                        </Button>
-                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteAlergen" HorizontalAlignment="Right" Margin="0,160,20,0" VerticalAlignment="Top" Width="24" Height="24"
-                                BorderThickness="0" Cursor="Hand" Click="ButtonDeleteAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3">
+                        <Button Template="{DynamicResource ButtonTemplate1}" Name="buttonDeleteAlergen" HorizontalAlignment="Right" Margin="0,120,20,0" VerticalAlignment="Top" Width="24" Height="24"
+                                BorderThickness="0" Cursor="Hand" Click="ButtonDeleteAlergen_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Row="6" Grid.Column="3"
+                                ToolTip="Delete selected alergen">
                             <DockPanel>
                                 <Image Source="/Images/delete.jpg" Width="27"/>
                             </DockPanel>
@@ -168,21 +170,14 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Account">
-                <StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,60,83,0">
-                        <Label Content="Username:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                    <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,83,0">
-                        <Label Content="Password:"  Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtPassword" TextWrapping="Wrap" Width="230" Height="20"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Inbox">
+            <TabItem Header="Account" ToolTip="Patients account informations">
                 <Grid>
-                    <ListView x:Name="announcementList" Margin="75,40,159,40">
+                    <Label Content="Username:"  Padding="0,0,20,0" Margin="0,0,546,615" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="86"/>
+                    <TextBox x:Name="txtUsername" TextWrapping="Wrap" Height="20" Margin="0,0,324,623" Width="230" ToolTip="Set patients username" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    <Label Content="Password:"  Padding="0,0,20,0" VerticalContentAlignment="Top" Margin="0,0,546,566" HorizontalAlignment="Right" Width="82" Height="22" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="txtPassword" TextWrapping="Wrap" Height="20" Margin="0,0,324,570" Width="230" ToolTip="Set patients password" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    <Label Content="Inbox"  Padding="0,0,20,0" Margin="0,0,827,512" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="86" FontSize="18"/>
+                    <ListView x:Name="announcementList" Margin="0,0,159,40" HorizontalAlignment="Right" Width="760" Height="471" VerticalAlignment="Bottom">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
@@ -195,8 +190,8 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <TextBlock Text="&lt; read" TextWrapping="Wrap" PreviewMouseDown="txbRead_PreviewMouseDown" Cursor="Hand" FontSize="20" 
-                                   HorizontalAlignment="Right" Margin="0,300,50,20" Padding="10,10,10,10" Grid.Row="6" Grid.Column="3">
+                    <TextBlock Text="&lt; read" TextWrapping="Wrap" PreviewMouseDown="txbRead_PreviewMouseDown" Cursor="Hand" FontSize="20" ToolTip="Read selected announcement"
+                                   HorizontalAlignment="Right" Margin="0,0,42,276" Padding="10,10,10,10" Height="46" VerticalAlignment="Bottom">
                         <TextBlock.Style>
                             <Style>
                                 <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -209,7 +204,7 @@
                         </TextBlock.Style></TextBlock>
                 </Grid>
             </TabItem>
-            <TabItem Header="Appointments">
+            <TabItem Header="Appointments" ToolTip="Patients appointments">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
@@ -268,7 +263,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock Text="+ add" TextWrapping="Wrap" PreviewMouseDown="txbAddApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,100,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                                   HorizontalAlignment="Center" Margin="0,100,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2" ToolTip="Add new appointment for patient">
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -280,7 +275,7 @@
                                 </Style>
                             </TextBlock.Style></TextBlock>
                         <TextBlock Text="&lt; edit" TextWrapping="Wrap" PreviewMouseDown="txbEditApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,170,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                                   HorizontalAlignment="Center" Margin="0,170,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2" ToolTip="Edit selected patients appointment">
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -292,7 +287,7 @@
                                 </Style>
                             </TextBlock.Style></TextBlock>
                         <TextBlock Text="delete &gt;" TextWrapping="Wrap" PreviewMouseDown="txbDeleteApp_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Top"
-                                   HorizontalAlignment="Center" Margin="0,543,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2">
+                                   HorizontalAlignment="Center" Margin="0,543,0,0" Padding="10,10,10,10" Grid.Row="0" Grid.Column="2" ToolTip="Delete selected patients appointment">
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -306,8 +301,8 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            
-            <TabItem Header="Medical history">
+
+            <TabItem Header="Medical history" ToolTip="Patients medical history">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto">
                         <Grid.ColumnDefinitions>
@@ -367,7 +362,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock Text="&lt; view" TextWrapping="Wrap" PreviewMouseDown="txbView_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Center"
-                                   HorizontalAlignment="Center" Padding="10,10,10,10" Grid.Column="2">
+                                   HorizontalAlignment="Center" Padding="10,10,10,10" Grid.Column="2" ToolTip="View selected examination details">
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -378,10 +373,10 @@
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style></TextBlock>
-                        
+
                     </Grid>
                 </StackPanel>
-            </TabItem>            
+            </TabItem>
             <TabItem Name="tabAnamnesis" Header="Anamnesis">
                 <StackPanel>
                     <Grid Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="80,60,83,0">
@@ -404,6 +399,7 @@
                     <Grid Height="Auto" Width="Auto" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"></ColumnDefinition>
+
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="97.693"></RowDefinition>
@@ -411,25 +407,26 @@
                             <RowDefinition Height="112*"></RowDefinition>
                             <RowDefinition Height="71*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,0" Padding="0,0,20,0"/>
-                        <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200" IsEditable="False"/>
+
+                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="100,70,0,0" Padding="0,0,0,0"/>
+
+                        <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200"/>
+
                         <Label Content="Date:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,200,0" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0" IsEnabled="True"/>
-                        <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,0" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0" IsReadOnly="True"/>
+                        <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0"/>
+
+                        <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="85,80,0,0" Padding="0,0,20,0"/>
+
+                        <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0"/>
+
+                        <Label Content="Time:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,200,69" Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,100,69" Padding="40,0,40,0"/>
+                        <Label Content="Interval:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="50,30,0,48" Padding="0,0,20,0"/>
+                        <TextBox x:Name="txtInterval" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,798,48" Padding="40,0,40,0"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Name="t5" Header="Instruction">
-
-            </TabItem>
-            <TabItem Name="t6" Header="Control">
-
-            </TabItem>
-            <TabItem x:Name="t7" Header="Hospitalization" >
-
-            </TabItem>
-            <TabItem Name="t8" Header="Operation">
+            <TabItem Name="tabRefferal" Header="Refferal">
 
             </TabItem>
         </TabControl>

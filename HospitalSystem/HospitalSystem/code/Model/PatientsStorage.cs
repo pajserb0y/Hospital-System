@@ -30,7 +30,7 @@ public class PatientsStorage
         set { patients = value; }
     }
 
-    private String FileLocation = "../../../Resource/Pacijenti.json";
+    private String FileLocation = "../../../Resource/Patients.json";
 
 
     public PatientsStorage()
@@ -94,7 +94,7 @@ public class PatientsStorage
         ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
         List<Appointment> newAppointmentList = new List<Appointment>(AppointmentStorage.getInstance().GetAll());
         if (appointments != null)
-            foreach (Appointment ap in appointments)
+            foreach (Appointment ap in newAppointmentList)
                 if (ap.Patient == patient)
                     appointments.Remove(ap);
     }

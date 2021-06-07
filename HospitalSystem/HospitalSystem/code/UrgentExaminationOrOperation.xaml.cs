@@ -264,8 +264,8 @@ namespace HospitalSystem.code
                 WorkingShift workingShift = shift as WorkingShift;
                 if (workingShift.DoctorId == tempDoctor.Id && !tempDoctor.FreeDays.Contains(DateTime.Now.Date) &&
                     (workingShift.StartDate <= DateTime.Now.Date && workingShift.EndDate >= DateTime.Now.Date) &&
-                    (((DateTime)Convert.ToDateTime(findFirstNearestTerm()) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(findFirstNearestTerm()) <= workingShift.EndTime) || 
-                    ((DateTime)Convert.ToDateTime(findSecondNearestTerm()) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(findSecondNearestTerm()) <= workingShift.EndTime)))
+                    ((((DateTime)Convert.ToDateTime(findFirstNearestTerm())).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(findFirstNearestTerm())).TimeOfDay <= workingShift.EndTime.TimeOfDay) || 
+                    (((DateTime)Convert.ToDateTime(findSecondNearestTerm())).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(findSecondNearestTerm())).TimeOfDay <= workingShift.EndTime.TimeOfDay)))
                     return true;
                 return false;
             };

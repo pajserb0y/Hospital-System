@@ -200,22 +200,18 @@ namespace HospitalSystem.code
         }
         private void ButtonAddAlergen_Click(object sender, RoutedEventArgs e)
         {
-            NewAlergen newAlergen = new NewAlergen(currentPatient);
-            newAlergen.Show();
-        }
-
-        private void ButtonEditAlergen_Click(object sender, RoutedEventArgs e)
-        {
-            if (listViewAlergens.SelectedItem != null)
-            {
-                EditAlergen editAlergen = new EditAlergen(currentPatient, listViewAlergens.SelectedItem.ToString());
-                editAlergen.Show();
-            }
+            if (txtSubstance.Text != "")
+                currentPatient.Alergens.Add(txtSubstance.Text);
         }
 
         private void ButtonDeleteAlergen_Click(object sender, RoutedEventArgs e)
         {
-            currentPatient.Alergens.Remove(listViewAlergens.SelectedItem.ToString());
+            List<string> tempList = new List<string>();
+            foreach (string selectedAlergen in listViewAlergens.SelectedItems)
+                tempList.Add(selectedAlergen);
+
+            foreach (string alergen in tempList)
+                currentPatient.Alergens.Remove(alergen);
         }
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)

@@ -248,6 +248,11 @@ public class Patient : INotifyPropertyChanged
     }
 
     public Patient() { }
+    public Patient(string firstName) 
+    {
+        FirstName = firstName;
+    }
+
 
     public Patient(int id, string firstName, string lastName, long jmbg, char gender, string adress, long telephone, string email, bool guest, string username, string password, DateTime birthDate,
         string marriageStatus, long socNumber, string city, string country, ObservableCollection<string> alergens, ObservableCollection<Job> workHistory)
