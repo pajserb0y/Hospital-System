@@ -26,7 +26,7 @@ namespace HospitalSystem.code
             tPersc.Visibility = Visibility.Collapsed;
             tDrugDetails.Visibility = Visibility.Collapsed;
             tReport.Visibility = Visibility.Collapsed;
-            tOperation.Visibility = Visibility.Collapsed;
+            tHospitalization.Visibility = Visibility.Collapsed;
             tRefferal.Visibility = Visibility.Collapsed;
         }
         
@@ -93,23 +93,37 @@ namespace HospitalSystem.code
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            var selectedItem = dgDoctorAppointments.SelectedItem;
-            if (selectedItem == null)
+            if (dgDoctorAppointments.SelectedItem != null)
             {
-                return;
+                var selectedItem = dgDoctorAppointments.SelectedItem;
+                if (selectedItem == null)
+                {
+                    return;
+                }
+                AppointmentStorage.getInstance().Delete((Appointment)selectedItem);
             }
-            AppointmentStorage.getInstance().Delete((Appointment)selectedItem);
+            else
+            {
+                MessageBox.Show("You have to select appointment!");
+            }
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
         {
-            var selectedItem = dgDoctorAppointments.SelectedItem;
-            if (selectedItem == null)
+            if (dgDoctorAppointments.SelectedItem != null)
             {
-                return;
+                var selectedItem = dgDoctorAppointments.SelectedItem;
+                if (selectedItem == null)
+                {
+                    return;
+                }
+                EditExam editExamWindow = new EditExam((Appointment)selectedItem);
+                editExamWindow.Show();
             }
-            EditExam editExamWindow = new EditExam((Appointment)selectedItem);
-            editExamWindow.Show();
+            else
+            {
+                MessageBox.Show("You have to select appointment!");
+            }
         }
 
         private void Button_Back(object sender, RoutedEventArgs e)
@@ -144,63 +158,84 @@ namespace HospitalSystem.code
 
         private void Button_Save_Anamnesis(object sender, RoutedEventArgs e)
         {
-            Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
+            if(!txtAnamnesis.Text.Equals("") && !txtDiagnosis.Text.Equals(""))
+            {
+                Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
 
-            currExam.Anamnesis.AnamnesisInfo = txtAnamnesis.Text;
-            currExam.Anamnesis.Diagnosis = txtDiagnosis.Text;
+                currExam.Anamnesis.AnamnesisInfo = txtAnamnesis.Text;
+                currExam.Anamnesis.Diagnosis = txtDiagnosis.Text;
 
-            ExaminationStorage.getInstance().Edit(currExam);
+                ExaminationStorage.getInstance().Edit(currExam);
 
-            AppointmentStorage.getInstance().Delete(currApp);
+                AppointmentStorage.getInstance().Delete(currApp);
 
-            tAppointments.Focus();
-            tExam.Visibility = Visibility.Collapsed;
+                tAppointments.Focus();
+                tExam.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
         }
 
         private void Button_Begin(object sender, RoutedEventArgs e)
         {
-            Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
+            if(dgDoctorAppointments.SelectedItem != null)
+            {
+                Appointment currApp = (Appointment)dgDoctorAppointments.SelectedItem;
 
-            currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
-            currExam.Time = currApp.Time;
-            currExam.Date = currApp.Date;
-            currExam.Patient = currApp.Patient;
-            currExam.Room = currApp.Room;
-            currExam.Doctor = currApp.Doctor;
-            currExam.IsOperation = currApp.IsOperation;
-            currExam.TimesChanged = currApp.TimesChanged;
-            currExam.TimeOfCreation = currApp.TimeOfCreation;
+                currExam.Id = ExaminationStorage.getInstance().GenerateNewID();
+                currExam.Time = currApp.Time;
+                currExam.Date = currApp.Date;
+                currExam.Patient = currApp.Patient;
+                currExam.Room = currApp.Room;
+                currExam.Doctor = currApp.Doctor;
+                currExam.IsOperation = currApp.IsOperation;
+                currExam.TimesChanged = currApp.TimesChanged;
+                currExam.TimeOfCreation = currApp.TimeOfCreation;
 
-            ExaminationStorage.getInstance().Add(currExam);
-            tExam.Visibility = Visibility.Visible;
-            txtAnamnesis.Clear();
-            txtDiagnosis.Clear();
-            tExam.Focus();
+                ExaminationStorage.getInstance().Add(currExam);
+                tExam.Visibility = Visibility.Visible;
+                txtAnamnesis.Clear();
+                txtDiagnosis.Clear();
+                tExam.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have to select appointment to start new exam!");
+            }
         }
 
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
         {
-            Drug selectedDrug = (Drug)cbDrug.SelectedItem;
-            if (currExam.Patient.Alergens != null)
+            if(cbDrug.SelectedItem != null && !txtInterval.Text.Equals("") && !txtTaking.Text.Equals(""))
             {
-                foreach (Ingridient ingridient in selectedDrug.Ingridients)
-                    if (currExam.Patient.Alergens.Contains(ingridient.Name))
-                    {
-                        MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
-                        return;
-                    }
+                Drug selectedDrug = (Drug)cbDrug.SelectedItem;
+                if (currExam.Patient.Alergens != null)
+                {
+                    foreach (Ingridient ingridient in selectedDrug.Ingridients)
+                        if (currExam.Patient.Alergens.Contains(ingridient.Name))
+                        {
+                            MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
+                            return;
+                        }
+                }
+                if (currExam.Prescriptions == null)
+                    currExam.Prescriptions = new ObservableCollection<Prescription>();
+
+                int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
+                Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date, currExam.Time);
+
+                currExam.Prescriptions.Add(newPrescription);
+
+                ExaminationStorage.getInstance().Edit(currExam);
+                tExam.Focus();
+                tPersc.Visibility = Visibility.Collapsed;
             }
-            if (currExam.Prescriptions == null)
-                currExam.Prescriptions = new ObservableCollection<Prescription>();
-
-            int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
-            Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date,currExam.Time);
-
-            currExam.Prescriptions.Add(newPrescription);
-            
-            ExaminationStorage.getInstance().Edit(currExam);
-            tExam.Focus();
-            tPersc.Visibility = Visibility.Collapsed;
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
         }
 
         private void Button_Prescription(object sender, RoutedEventArgs e)
@@ -326,16 +361,24 @@ namespace HospitalSystem.code
 
         private void Button_Save_Refferal(object sender, RoutedEventArgs e)
         {
-            string Note = txtNoteRefferal.Text;
-            string specialization = cbSpecializationRefferal.Text;
-            Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
-            int id = RefferalStorage.getInstance().GenerateNewID();
-            //Examination currExam = (Examination)dgDoctorExams.SelectedItem; //treba da bude currExam izabran kad je dugme begin klinkuto i da se sve vreme radi s tim currExam-om
-            Patient patient = currExam.Patient;
-            Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
-            RefferalStorage.getInstance().Add(newRefferal);
-            tRefferal.Visibility = Visibility.Collapsed;
-            tExam.Focus();
+            if(cbSpecializationRefferal.SelectedItem != null)
+            {
+                string Note = txtNoteRefferal.Text;
+                string specialization = cbSpecializationRefferal.Text;
+                Doctor doctor = (Doctor)cbDoctorRefferal.SelectedItem;
+                int id = RefferalStorage.getInstance().GenerateNewID();
+                //Examination currExam = (Examination)dgDoctorExams.SelectedItem; //treba da bude currExam izabran kad je dugme begin klinkuto i da se sve vreme radi s tim currExam-om
+                Patient patient = currExam.Patient;
+                Refferal newRefferal = new Refferal(id, Note, specialization, patient.Id, patient.FirstName, patient.LastName, Refferal.STATUS.Active, doctor.Id, doctor.FirstName, doctor.LastName);
+                RefferalStorage.getInstance().Add(newRefferal);
+                tRefferal.Visibility = Visibility.Collapsed;
+                tExam.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
+           
         }
 
         private void Button_Refferal(object sender, RoutedEventArgs e)
@@ -391,9 +434,121 @@ namespace HospitalSystem.code
             };
             cb.ItemsSource = doctorsCollection;
         }
-        private void Button_Operation(object sender, RoutedEventArgs e)
+        private void Button_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            txtHospitalizationPatient.Text = Convert.ToString(currExam.Patient);
+            txtHospitalizationPatient.IsEnabled = false;
+            dpHospitalizationOUT.SelectedDate = null;
+            cbHospitalizationRoom.SelectedIndex = -1;
+            cbHospitalizatonBed.SelectedIndex = -1;
+            dpHospitalizationIN.SelectedDate = null;
+            tHospitalization.Visibility = Visibility.Visible;
+            tHospitalization.Focus();
+        }
+
+        private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            if(cbHospitalizationRoom.SelectedItem != null && cbHospitalizatonBed.SelectedItem != null && dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
+            {
+                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
+                Bed selectedBed = (Bed)cbHospitalizatonBed.SelectedItem;
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                Patient selectedPatient = (Patient)currExam.Patient;
+                foreach (Bed b in selectedRoom.Beds)
+                {
+                    if (b == selectedBed)
+                    {
+
+                        b.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
+                        break;
+                    }
+                }
+                RoomStorage.getInstance().Edit(selectedRoom);
+                tHospitalization.Visibility = Visibility.Collapsed;
+                tExam.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
+        }
+
+        private void cbHospitalizationRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           //if (dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT != null)
+                fillListOfAvailableBeds();
+
+        }
+        private void fillListOfAvailableRooms(List<Bed> beds)
+        {
+            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+            ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
+            
+            roomCollectionView.Filter = (room) =>
+            { 
+                Room tempRoom = room as Room;
+                if (tempRoom.Name == "Room")
+                {
+                    foreach (Bed tempBed in tempRoom.Beds)
+                    {
+                        foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
+                        {
+                            if (val.Item1 <= inTime && val.Item2 >= inTime)
+                                return false;
+                            if (val.Item1 <= outTime && val.Item2 >= outTime)
+                                return false;
+                            if (val.Item1 >= inTime && val.Item2 <= outTime)
+                                return false;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
+            cbHospitalizationRoom.ItemsSource = roomCollectionView;
+        }
+
+        private void dpHospitalizationTimeOut_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            fillListOfAvailableRooms(new List<Bed>());
+        }
+
+        private void fillListOfAvailableBeds()
+        {
+            if(cbHospitalizationRoom.SelectedIndex != -1)
+            {
+
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
+                ListCollectionView bedCollectionView = new ListCollectionView(selectedRoom.Beds);
+
+                bedCollectionView.Filter = (bed) =>
+                {
+                    Bed tempBed = bed as Bed;
+
+                    foreach (Tuple<DateTime,DateTime,int> val in tempBed.Interval)
+                    {
+                        if (val.Item1 <= inTime && val.Item2 >= inTime)
+                            return false;
+                        if (val.Item1 <= outTime && val.Item2 >= outTime)
+                            return false;
+                        if (val.Item1 >= inTime && val.Item2 <= outTime)
+                            return false;
+                        return true;
+                    }
+                    return false;
+                };
+                cbHospitalizatonBed.ItemsSource = bedCollectionView;
+            }
+        }
+
+        private void Button_Wizard(object sender, RoutedEventArgs e)
         {
 
         }
     }
 }
+
