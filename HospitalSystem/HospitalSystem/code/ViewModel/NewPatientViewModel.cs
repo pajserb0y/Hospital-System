@@ -9,7 +9,6 @@ namespace HospitalSystem.code.ViewModel
     public class NewPatientViewModel : INotifyPropertyChanged
     {
         private RelayCommand okCommand;
-        private RelayCommand cancelCommand;
         private Window window;
 
         private Patient patientItem;
@@ -33,18 +32,6 @@ namespace HospitalSystem.code.ViewModel
             }
 
         }
-
-
-        public RelayCommand CancelCommand
-        {
-            get
-            {
-                return cancelCommand ?? (cancelCommand = new RelayCommand(param => Close()));
-            }
-        }
-
-
-
 
         public void Add()
         {
@@ -71,12 +58,10 @@ namespace HospitalSystem.code.ViewModel
                 }
         }
 
-
         public void Close()
         {
             window.Close();
         }
-
 
 
         public Patient PatientItem

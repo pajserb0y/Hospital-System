@@ -28,9 +28,9 @@
         <TextBox x:Name="txtEmail" Text="{Binding Path=PatientItem.Email}" TextWrapping="Wrap" Width="230" Height="20" ToolTip="Enter email" Margin="0,0,85,222" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
         <TextBlock Text="&lt; save" TextWrapping="Wrap" Cursor="Hand" FontSize="20" HorizontalAlignment="Left" Margin="350,497,0,0" 
                    Padding="10,10,10,10" ToolTip="Add new patient" Height="60" VerticalAlignment="Top">
-            <!--<TextBlock.InputBindings>
-                <MouseBinding Command="{Binding OkCommand}" />
-            </TextBlock.InputBindings>-->
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding OkCommand}" MouseAction="LeftClick"/>
+            </TextBlock.InputBindings>
             <TextBlock.Style>
                 <Style>
                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -48,6 +48,6 @@
         <Label Name="errorJmbg" Content="{Binding ErrorJmbg}" Padding="0,0,20,0" Margin="0,0,89,394" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="223" Foreground="Red"/>
         <Label Name="errorTel" Content="" Padding="0,0,20,0" Margin="0,0,92,298" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="223" Foreground="Red"/>
         <TextBlock HorizontalAlignment="Center" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="212" Height="27" VerticalAlignment="Top" Margin="0,557,0,0"/>
-        <Button Command="{Binding OkCommand}" Content="Button" HorizontalAlignment="Left" Height="34" Margin="428,279,0,0" VerticalAlignment="Top" Width="31"/>
+        <!--<Button Command="{Binding OkCommand}" Content="Button" HorizontalAlignment="Left" Height="34" Margin="428,279,0,0" VerticalAlignment="Top" Width="31"/>-->
     </Grid>
 </Window>

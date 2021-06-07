@@ -447,7 +447,7 @@
 
     <Grid>
         <Menu AllowDrop="True" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <MenuItem Name="MainMI" Header="&lt; Appointments >" FontSize="30" Background="White" BorderThickness="0" Style="{DynamicResource MenuItemStyle1}" ToolTip="Click to see other menu items">
+            <MenuItem Cursor="Hand" Name="MainMI" Header="&lt; Appointments >" FontSize="30" Background="White" BorderThickness="0" Style="{DynamicResource MenuItemStyle1}" ToolTip="Click to see other menu items">
                 <MenuItem Header="Patients" Name="PatientsMI" Click="Patients_Click" FontSize="17" Background="White" BorderBrush="White"/>
                 <MenuItem Header="Doctors" Name="DoctorMI" Click="Doctors_Click" FontSize="17" Background="White" BorderBrush="White"/>
                 <MenuItem Header="Appointments" Name="AppointmentMI" Click="Appointments_Click" FontSize="17" Background="White" BorderBrush="White"/>
