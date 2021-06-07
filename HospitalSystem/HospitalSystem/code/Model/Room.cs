@@ -50,7 +50,7 @@ public class Bed
         return "Bed" + Id.ToString();
     }
 }
-public class Room : Bed,INotifyPropertyChanged
+public class Room : INotifyPropertyChanged
 {
     private int id;
     public int Id
