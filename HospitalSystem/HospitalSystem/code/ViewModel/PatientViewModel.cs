@@ -177,6 +177,7 @@ namespace HospitalSystem.code.ViewModel
                 case MessageBoxResult.Yes:
                     {
                         PatientsStorage.getInstance().Delete(SelectedItem);
+                        Load();
                         break;
                     }
 
@@ -275,6 +276,7 @@ namespace HospitalSystem.code.ViewModel
             window.Close();
             PatientsStorage.getInstance().serialize();
         }
+
 
 
 

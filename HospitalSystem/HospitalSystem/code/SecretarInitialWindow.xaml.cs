@@ -31,21 +31,5 @@ namespace HospitalSystem.code
 
             DataContext = new PatientViewModel(this);
         }
-        
-
-        //private void Doctors_Click(object sender, RoutedEventArgs e)
-        //{
-        //    MainMI.Header = "< Doctors >";
-        //    DoctorsWindow doctorsWindow = new DoctorsWindow();
-        //    doctorsWindow.Show();
-        //    this.Close();
-        //}
-        //private void Appointments_Click(object sender, RoutedEventArgs e)
-        //{
-        //    MainMI.Header = "< Appointments >";
-        //    AppointmentsWindow appointmentsWindow = new AppointmentsWindow();
-        //    appointmentsWindow.Show();
-        //    this.Close();
-        //}     
     }
 }
