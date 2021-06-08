@@ -67,7 +67,7 @@ namespace HospitalSystem.code
         private void txbAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             NewDoctor newDoctor = new NewDoctor();
-            newDoctor.Show();
+            newDoctor.ShowDialog();
         }
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -75,7 +75,7 @@ namespace HospitalSystem.code
             if (dataGridDoctors.SelectedItem != null)
             {
                 EditDoctor editDoctor = new EditDoctor((Doctor)dataGridDoctors.SelectedItem);
-                editDoctor.Show();
+                editDoctor.ShowDialog();
                 (dataGridDoctors.ItemContainerGenerator.ContainerFromItem(dataGridDoctors.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan pacijent
             }
             else
@@ -189,7 +189,7 @@ namespace HospitalSystem.code
                 case MessageBoxResult.Yes:
                     {
                         Demo demo = new Demo();
-                        demo.Show();
+                        demo.ShowDialog();
                         break;
                     }
 

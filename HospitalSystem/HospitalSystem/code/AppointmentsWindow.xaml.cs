@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,7 +36,7 @@ namespace HospitalSystem.code
         {
             List<Appointment> appointmentCollection = new List<Appointment>();
             foreach (Appointment app in AppointmentStorage.getInstance().GetAll())
-                if (app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek)) == DateTime.Now.Date.AddDays(-1 * (int)(DateTime.Today.DayOfWeek)))
+                if (app.Date.AddDays(-1 * ((int)(app.Date.DayOfWeek + 6) % 7)) == DateTime.Now.Date.AddDays(-1 * ((int)(DateTime.Today.DayOfWeek + 6) % 7)))
                     appointmentCollection.Add(app);
             return appointmentCollection;
         }
@@ -78,7 +79,7 @@ namespace HospitalSystem.code
         private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SecretarNewAppointment secretarNewAppointment = new SecretarNewAppointment();
-            secretarNewAppointment.Show();
+            secretarNewAppointment.ShowDialog();
         }
         private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -87,13 +88,16 @@ namespace HospitalSystem.code
             {
                 if (dgAppToday.SelectedItem != null)
                 {
-                    var selectedApp = dgAppToday.SelectedItem;
+                    var selectedApp = (Appointment)dgAppToday.SelectedItem;
                     if (selectedApp != null)
-                    {
-                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
-                        (dgAppToday.ItemContainerGenerator.ContainerFromItem(dgAppToday.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                    }
+                        if (selectedApp.Date >= DateTime.Now.Date)
+                        {
+                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                            secretarEditAppointment.ShowDialog();
+                            (dgAppToday.ItemContainerGenerator.ContainerFromItem(dgAppToday.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                        }
+                        else
+                            MessageBox.Show("Changing past is not allowed!");
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -102,13 +106,16 @@ namespace HospitalSystem.code
             {
                 if (dgAppWeekly.SelectedItem != null)
                 {
-                    var selectedApp = dgAppWeekly.SelectedItem;
+                    var selectedApp = (Appointment)dgAppWeekly.SelectedItem;
                     if (selectedApp != null)
-                    {
-                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
-                        (dgAppWeekly.ItemContainerGenerator.ContainerFromItem(dgAppWeekly.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                    }
+                        if (selectedApp.Date >= DateTime.Now.Date)
+                        {
+                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                            secretarEditAppointment.ShowDialog();
+                            (dgAppWeekly.ItemContainerGenerator.ContainerFromItem(dgAppWeekly.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                        }
+                        else
+                            MessageBox.Show("Changing past is not allowed!");
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -117,13 +124,16 @@ namespace HospitalSystem.code
             {
                 if (dgAppAll.SelectedItem != null)
                 {
-                    var selectedApp = dgAppAll.SelectedItem;
+                    var selectedApp = (Appointment)dgAppAll.SelectedItem;
                     if (selectedApp != null)
-                    {
-                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                        secretarEditAppointment.Show();
-                        (dgAppAll.ItemContainerGenerator.ContainerFromItem(dgAppAll.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                    }
+                        if (selectedApp.Date >= DateTime.Now.Date)
+                        {
+                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                            secretarEditAppointment.ShowDialog();
+                            (dgAppAll.ItemContainerGenerator.ContainerFromItem(dgAppAll.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                        }
+                        else
+                            MessageBox.Show("Changing past is not allowed!");
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -275,9 +285,9 @@ namespace HospitalSystem.code
 
             pdfDocument.Open();
 
-            Paragraph title = new Paragraph(string.Format("All appointments and operations for {0} week", app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek)).Day.ToString() + "/" +
-                                                                                                          app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek)).Month.ToString() + "/" +
-                                                                                                          app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek)).Year.ToString()));
+            Paragraph title = new Paragraph(string.Format("All appointments and operations for {0} week", app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek) + 1).Day.ToString() + "/" +
+                                                                                                          app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek) + 1).Month.ToString() + "/" +
+                                                                                                          app.Date.AddDays(-1 * (int)(app.Date.DayOfWeek) + 1).Year.ToString()));
             title.Alignment = Element.ALIGN_CENTER;
             title.Font.Size = 22;
             pdfDocument.Add(title);
@@ -295,7 +305,7 @@ namespace HospitalSystem.code
             for (int i = 0; i <= 6; i++)           
                 table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
 
-            foreach (Appointment appointment in filterWeeklyAppointments())
+            foreach (Appointment appointment in appointmentCollectionWeekly.OrderBy(o => o.Date).ThenBy(o => o.Time.TimeOfDay).ToList())
             {
                 table.AddCell(appointment.Id.ToString());
                 table.AddCell(appointment.Patient.Id.ToString() + "  " + appointment.Patient.FirstName.ToString() + " " + appointment.Patient.LastName.ToString());

@@ -75,8 +75,7 @@ namespace HospitalSystem
                     checkLogInDetails();
             if (txtUsername.IsFocused)
                 if (e.Key == Key.Return)
-                    txtPassword.Focus();            
-
+                    txtPassword.Focus();        
         }
     }
 }

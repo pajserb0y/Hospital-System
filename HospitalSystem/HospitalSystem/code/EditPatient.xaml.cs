@@ -148,14 +148,14 @@ namespace HospitalSystem.code
         private void txbAddJob_PreviewMouseDown(object sender, RoutedEventArgs e)
         {
             NewJob newJob = new NewJob(currentPatient);
-            newJob.Show();
+            newJob.ShowDialog();
         }
         private void txbEditJob_PreviewMouseDown(object sender, RoutedEventArgs e)
         {
             if (dgJob.SelectedItem != null)
             {
                 NewJob editJob = new NewJob(currentPatient, (Job)dgJob.SelectedItem);
-                editJob.Show();
+                editJob.ShowDialog();
                 (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
             }
             else
@@ -234,7 +234,7 @@ namespace HospitalSystem.code
             if (announcementList.SelectedItem != null)
             {
                 AnnouncementWindow announcementWindow = new AnnouncementWindow((Announcement)announcementList.SelectedItem);
-                announcementWindow.Show();
+                announcementWindow.ShowDialog();
             }
             else
                 MessageBox.Show("You have to select announcement first.");
@@ -246,19 +246,22 @@ namespace HospitalSystem.code
         private void txbAddApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             SecretarNewAppointment secretarNewAppointment = new SecretarNewAppointment(currentPatient);
-            secretarNewAppointment.Show();
+            secretarNewAppointment.ShowDialog();
         }
         private void txbEditApp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (dgApp.SelectedItem != null)
             {
-                var selectedApp = dgApp.SelectedItem;
+                var selectedApp = (Appointment)dgApp.SelectedItem;
                 if (selectedApp != null)
-                {
-                    SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                    secretarEditAppointment.Show();
-                    (dgApp.ItemContainerGenerator.ContainerFromItem(dgApp.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                }
+                    if (selectedApp.Date >= DateTime.Now.Date)
+                    {
+                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                        secretarEditAppointment.ShowDialog();
+                        (dgApp.ItemContainerGenerator.ContainerFromItem(dgApp.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                    }
+                    else
+                        MessageBox.Show("Changing past is not allowed!");
             }
             else
                 MessageBox.Show("You have to select appointment first.");
