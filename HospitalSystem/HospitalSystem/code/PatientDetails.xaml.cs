@@ -251,25 +251,32 @@ namespace HospitalSystem.code
 
         private void Button_View_Refferal(object sender, RoutedEventArgs e)
         {
-            Refferal selectedRefferal = (Refferal)dgPatientRefferals.SelectedItem;
-            txtNoteRefferal.Text = selectedRefferal.Note;
+            if (dgPatientRefferals.SelectedItem != null)
+            { 
+                Refferal selectedRefferal = (Refferal)dgPatientRefferals.SelectedItem;
+                txtNoteRefferal.Text = selectedRefferal.Note;
 
-            Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
+                Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
 
-            cbDoctorRefferal.ItemsSource = DoctorStorage.getInstance().GetAll();
-            cbDoctorRefferal.SelectedItem = selectedDoctor;
+                cbDoctorRefferal.ItemsSource = DoctorStorage.getInstance().GetAll();
+                cbDoctorRefferal.SelectedItem = selectedDoctor;
 
-            InitializeSpecializatonForRefferal(cbSpecializationRefferal);
-            cbSpecializationRefferal.SelectedItem = selectedDoctor;
+                InitializeSpecializatonForRefferal(cbSpecializationRefferal);
+                cbSpecializationRefferal.SelectedItem = selectedDoctor;
 
-            cbDoctorRefferal.IsEnabled = false;
-            cbSpecializationRefferal.IsEnabled = false;
-            txtNoteRefferal.IsEnabled = false;
+                cbDoctorRefferal.IsEnabled = false;
+                cbSpecializationRefferal.IsEnabled = false;
+                txtNoteRefferal.IsEnabled = false;
 
-            btnSavePrescription.Visibility = Visibility.Collapsed;
-            tRefferal.Visibility = Visibility.Visible;
-            tRefferal.Focus();
-        }
+                btnSavePrescription.Visibility = Visibility.Collapsed;
+                tRefferal.Visibility = Visibility.Visible;
+                tRefferal.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not selected any refferal!");
+            }
+}
 
         private void cbSpecializationRefferal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

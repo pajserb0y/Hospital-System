@@ -25,8 +25,8 @@
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Label  Content="Announcements" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Margin="100,47,-100,-47" Grid.RowSpan="2"/>
-                                <Button x:Name="button_announcement" Content="View" ToolTip="View selected announcement" HorizontalAlignment="Left" Grid.Column="2"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_View_Announcement" Margin="82,420,0,0" RenderTransformOrigin="0.215,1.69"/>
-                                <Button x:Name="button_logout" Content="Log out" HorizontalAlignment="Left" Grid.Column="3"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_LogOut" Margin="43,420,0,0"/>
+                                <Button x:Name="button_announcement" Content="_View" ToolTip="View selected announcement" HorizontalAlignment="Left" Grid.Column="2"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_View_Announcement" Margin="82,420,0,0" RenderTransformOrigin="0.215,1.69"/>
+                                <Button x:Name="button_logout" Content="_Log out" HorizontalAlignment="Left" Grid.Column="3"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_LogOut" Margin="43,420,0,0"/>
                                 <Rectangle HorizontalAlignment="Left" Height="328" Margin="100,47,0,0" Stroke="Black" VerticalAlignment="Top" Width="675" Grid.ColumnSpan="3"/>
                                 <DataGrid x:Name="dgDoctorAnnouncements" Height="300" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" AutoGenerateColumns="False"
                                   SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" 
@@ -85,13 +85,13 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
 
-                                <Button x:Name="ButtonAddAppointment" Content="Add" ToolTip="Add new appointment or operation" HorizontalAlignment="Left" Height="36" Grid.Row="1" Grid.Column="5" VerticalAlignment="Top" Width="118" Click="Button_Add" Margin="61,23,0,0"/>
-                                <Button x:Name="ButtonEditAppointment" Content="Edit" ToolTip="Edit appointment" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Edit" Margin="61,58,0,0"/>
-                                <Button x:Name="ButtonDeleteAppointment" Content="Delete" ToolTip="Delete appointment" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Delete" Margin="61,56,0,0"/>
-                                <Button x:Name="ButtonBeginExam" Content="Begin" ToolTip="Start new examination" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Begin" Margin="61,56,0,0"/>
+                                <Button x:Name="ButtonAddAppointment" Content="_Add" ToolTip="Add new appointment or operation" HorizontalAlignment="Left" Height="36" Grid.Row="1" Grid.Column="5" VerticalAlignment="Top" Width="118" Click="Button_Add" Margin="61,23,0,0"/>
+                                <Button x:Name="ButtonEditAppointment" Content="_Edit" ToolTip="Edit appointment" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Edit" Margin="61,58,0,0"/>
+                                <Button x:Name="ButtonDeleteAppointment" Content="_Delete" ToolTip="Delete appointment" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Delete" Margin="61,56,0,0"/>
+                                <Button x:Name="ButtonBeginExam" Content="_Begin" ToolTip="Start new examination" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Begin" Margin="61,56,0,0"/>
                                 <DatePicker Grid.Row="0" Grid.Column="4" HorizontalAlignment="Left" Margin="216,0,0,0" VerticalAlignment="Center"/>
-                                <Label Content="Patient: " Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" Margin="28,0,0,0" VerticalAlignment="Center"/>
-                                <TextBox  x:Name="txtPatient" ToolTip="Search by patient" Grid.Column="2"  Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="46,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="200"/>
+                                <Label Content="Search: " Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" Margin="28,0,0,0" VerticalAlignment="Center"/>
+                                <TextBox  x:Name="txtSearchAppointment" ToolTip="Search appointments" Grid.Column="2"  Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="46,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" TextChanged="txtSearchAppointment_TextChanged"/>
                                 <Label  Content="Appointments" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="4" Margin="10,67,675,59" Grid.RowSpan="2" Grid.Column="1"/>
                                 <Rectangle Stroke="Black" Grid.ColumnSpan="5" Margin="10,67,174,-114" Grid.RowSpan="7" Grid.Column="1"/>
                             </Grid>
@@ -112,10 +112,11 @@
                                 <TextBox x:Name="txtDiagnosis" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,10,83,0"/>
                             </Grid>
                             <Grid>
-                                <Button Content="Save" ToolTip="Save current examination" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Save_Anamnesis"/>
-                                <Button Content="Prescription" ToolTip="Write prescription" HorizontalAlignment="Right" Margin="0,30,230,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Prescription"/>
-                                <Button Content="Refferal" ToolTip="Write refferal" HorizontalAlignment="Right" Margin="0,30,380,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Refferal"/>
-                                <Button Content="Hospitalization" ToolTip="Fill hospitalization form" HorizontalAlignment="Left" Margin="395,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Hospitalization"/>
+                                <Button x:Name="button_save_anamesis" Content="_Save" ToolTip="Save current examination" HorizontalAlignment="Right" Margin="0,28,180,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Save_Anamnesis"/>
+                                <Button x:Name="button_prescription" Content="_Prescription" ToolTip="Write prescription" HorizontalAlignment="Left" Margin="355,28,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Prescription"/>
+                                <Button x:Name="button_refferal" Content="_Refferal" ToolTip="Write refferal" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Refferal" RenderTransformOrigin="0.393,0.699" Margin="212,28,0,0"/>
+                                <Button x:Name="button_hospitalization" Content="_Hospitalization" ToolTip="Fill hospitalization form" HorizontalAlignment="Left" Margin="69,28,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Hospitalization"/>
+                                <Button Content="_Cancel" HorizontalAlignment="Right" Margin="0,28,38,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Cancel_Exam"/>
 
                             </Grid>
                         </StackPanel>
@@ -124,8 +125,9 @@
                         <StackPanel>
                             <Grid Height="Auto" Width="Auto" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="91*"></ColumnDefinition>
-                                    <ColumnDefinition Width="257*"/>
+                                    <ColumnDefinition Width="273*"></ColumnDefinition>
+                                    <ColumnDefinition Width="85*"/>
+                                    <ColumnDefinition Width="686*"/>
 
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -135,22 +137,24 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,97" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,69,118,6" Padding="0,0,20,0"/>
 
-                                <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2"/>
+                                <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3"/>
 
-                                <Label Content="Date:" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0,80,200,97" Padding="0,0,20,0" Grid.RowSpan="2"/>
-                                <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0,80,100,97" Padding="40,0,40,0" Grid.RowSpan="2"/>
+                                <Label Content="Date:" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" Margin="0,57,201,17" Padding="0,0,20,0"/>
 
-                                <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,220" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,217" Padding="0,0,20,0" Grid.ColumnSpan="3"/>
 
-                                <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,96" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                                <TextBox x:Name="txtTaking" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="70,106,0,7" Grid.ColumnSpan="3"/>
 
-                                <Button x:Name="button_save_perscription" Content="Save" ToolTip="Save prescription" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="573,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
-                                <Label Content="Time:" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,200,69" Padding="0,0,20,0"/>
-                                <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,100,69" Padding="40,0,40,0"/>
+                                <Button x:Name="button_save_perscription" Content="_Save" ToolTip="Save prescription" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="352,39,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Save_Prescription"/>
+                                <Label Content="Time:" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,200,258" Padding="0,0,20,0"/>
+
                                 <Label Content="Interval:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,127,48" Padding="0,0,20,0"/>
-                                <TextBox x:Name="txtInterval" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,27,48" Padding="40,0,40,0"/>
+                                <Button Content="_Cancel" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Margin="0,39,34,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Cancel_Prescription"/>
+                                <TextBox x:Name="txtDate" Grid.Column="2" HorizontalAlignment="Left" Margin="491,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+                                <TextBox x:Name="txtTime" Grid.Column="2" HorizontalAlignment="Left" Margin="491,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+                                <TextBox x:Name="txtInterval" HorizontalAlignment="Left" Margin="143,30,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -158,7 +162,8 @@
                         <StackPanel>
                             <Grid Height="Auto" Width="Auto" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="335*"></ColumnDefinition>
+                                    <ColumnDefinition Width="709*"/>
 
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -168,10 +173,10 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Note:" Grid.Row="0" Grid.Column="0" Margin="80,50,0,0" Padding="0,0,20,0"/>
+                                <Label Content="Note:" Grid.Row="0" Grid.Column="0" Margin="80,50,0,91" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                                <ComboBox x:Name="cbSpecializationRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="cbSpecializationRefferal_SelectionChanged"/>
-                                <ComboBox x:Name="cbDoctorRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top" Width="200">
+                                <ComboBox x:Name="cbSpecializationRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="cbSpecializationRefferal_SelectionChanged" Grid.ColumnSpan="2"/>
+                                <ComboBox x:Name="cbDoctorRefferal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="160,190,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -186,12 +191,13 @@
                                 </ComboBox>
 
 
-                                <TextBox x:Name="txtNoteRefferal" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="200" Grid.Column="0" HorizontalAlignment="Center" Margin="0,80,100,0" />
+                                <TextBox x:Name="txtNoteRefferal" Grid.Row="0" Grid.RowSpan="2" Width="800" Height="200" Grid.Column="0" HorizontalAlignment="Left" Margin="72,80,0,0" Grid.ColumnSpan="2" />
 
-                                <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,889,140"/>
-                                <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,889,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
+                                <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,180,140"/>
+                                <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,180,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
 
-                                <Button  x:Name="button_save_refferal" Content="Save" ToolTip="Save refferal" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
+                                <Button  x:Name="button_save_refferal" Content="_Save" ToolTip="Save refferal" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="384,15,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Save_Refferal"/>
+                                <Button Content="_Cancel" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,38,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Cancel_Refferal"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -223,9 +229,10 @@
                                 <Label Content="In:" Grid.Row="3" Grid.Column="0" Margin="67,90,0,25" Padding="0,0,20,0" HorizontalAlignment="Left" Width="74"/>
                                 <Label Content="Out:" Grid.Row="4" Grid.Column="0" Margin="69,0,145,207" Padding="0,0,20,0"/>
 
-                                <Button Content="Save" ToolTip="Save hospitalization" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="544,61,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Save_Hospitalization"/>
-                                <DatePicker x:Name="dpHospitalizationIN" HorizontalAlignment="Left" Margin="160,90,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="200"/>
+                                <Button Content="_Save" ToolTip="Save hospitalization" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="432,69,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Save_Hospitalization"/>
+                                <DatePicker x:Name="dpHospitalizationIN" HorizontalAlignment="Left" Margin="160,90,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="200" SelectedDateChanged="dpHospitalizationTimeIn_Changed"/>
                                 <DatePicker x:Name="dpHospitalizationOUT" HorizontalAlignment="Left" Margin="160,129,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="200" Grid.RowSpan="2" SelectedDateChanged="dpHospitalizationTimeOut_Changed"/>
+                                <Button Content="_Cancel" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,69,67,118" Width="118" Click="Button_Cancel_Hospitalization"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -264,8 +271,10 @@
                                 <DataGridTextColumn Header="Jmbg" Binding="{Binding Jmbg}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label Grid.Row="0" Grid.Column="4"  Content="Search:" Margin="484,33,173,35"/>
+                        <TextBox x:Name="txtSearchPatient" ToolTip="Search patients" TextWrapping="Wrap" Height="18"  Width="200" Grid.Row="0" Grid.Column="4" Margin="541,38,187,112" Grid.ColumnSpan="2" TextChanged="txtSearchPatient_TextChanged" />
                         <Label  Content="Patients" FontSize="16" FontWeight="Bold"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="21,29,27,35"/>
-                        <Button x:Name="ButtonViewPatient" Content="View" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_View_Patient_Details" Margin="77,0,0,0"/>
+                        <Button x:Name="ButtonViewPatient" Content="_View" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_View_Patient_Details" Margin="77,0,0,0"/>
 
                     </Grid>
                 </StackPanel>
@@ -288,10 +297,10 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Button  x:Name="Button_View_Verified" Content="View" ToolTip="View drug details" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="755,50,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Verified_Drug"/>
-                                <Button x:Name="Button_View_Unverified" Content="View" ToolTip="View drug details" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="760,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_View_Unverified_Drug"/>
-                                <Button x:Name="Button_Verify" Content="Verify" ToolTip="Verify new drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="630,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Verify_Drug"/>
-                                <Button x:Name="Button_Report" Content="Report" ToolTip="Send report for drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="500,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Report_Drug"/>
+                                <Button  x:Name="Button_View_Verified" Content="_View" ToolTip="View drug details" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="755,50,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Verified_Drug"/>
+                                <Button x:Name="Button_View_Unverified" Content="_View" ToolTip="View drug details" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="760,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_View_Unverified_Drug"/>
+                                <Button x:Name="Button_Verify" Content="_Verify" ToolTip="Verify new drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="630,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Verify_Drug"/>
+                                <Button x:Name="Button_Report" Content="_Report" ToolTip="Send report for drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="500,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Report_Drug"/>
 
                                 <Canvas Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="183" Margin="0,50,0,0"  VerticalAlignment="Top" Width="953" Visibility="Visible">
 
@@ -305,8 +314,7 @@
                                             <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
                                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                                             <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
-                                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
-                                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
@@ -324,8 +332,6 @@
                                             <DataGridTextColumn Header="Drug ID" Binding="{Binding Id}"/>
                                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                                             <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
-                                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
-                                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
@@ -370,6 +376,7 @@
                                 <Label Grid.Column="1"  Grid.Row="2" Content="Ingridient:" HorizontalAlignment="Left" Height="26" Width="70"  Margin="46,47,0,27" Grid.ColumnSpan="2"/>
                                 <Label Grid.Column="1"  Grid.Row="3" Content="Amount:" HorizontalAlignment="Left" Height="26" Width="70"  Margin="46,15,0,27" Grid.ColumnSpan="2"/>
                                 <Rectangle Grid.ColumnSpan="4" Grid.Column="1" HorizontalAlignment="Left" Height="256" Margin="46,74,0,0" Grid.RowSpan="2" Stroke="Black" VerticalAlignment="Top" Width="940"/>
+                                <Button Content="_Cancel" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Right" Margin="0,8,57,24" Width="118" Click="Button_Cancel_drug_details"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -382,7 +389,8 @@
                                 <TextBox x:Name="txtReport" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,10,83,0"/>
                             </Grid>
                             <Grid>
-                                <Button Content="Send report" HorizontalAlignment="Right" Margin="0,50,92,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Send_Report"/>
+                                <Button Content="Send report" HorizontalAlignment="Right" Margin="0,50,165,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Send_Report"/>
+                                <Button Content="_Cancel" HorizontalAlignment="Right" Margin="0,50,29,2" Width="118" Click="Button_Cancel_drug_report"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -425,7 +433,7 @@
                         <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="130,105,0,373" Grid.ColumnSpan="3" RenderTransformOrigin="0.501,0.944"/>
 
                         <Label Content="Doctor details" FontSize="16" FontWeight="Bold" Padding="15,20,0,0" Grid.Column="0" HorizontalAlignment="Right"  Width="155" Margin="0,-16,234,549" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-                        <Button x:Name="SaveDoctorAccount" Content="Save" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="1" Grid.Column="4" VerticalAlignment="Top" Width="118" Click="Button_Save_Doctor_Info" Margin="89,519,0,0" Grid.ColumnSpan="2"/>
+                        <Button x:Name="SaveDoctorAccount" Content="_Save" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="1" Grid.Column="4" VerticalAlignment="Top" Width="118" Click="Button_Save_Doctor_Info" Margin="89,519,0,0" Grid.ColumnSpan="2"/>
                         <Rectangle HorizontalAlignment="Left" Height="185" Margin="42,68,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="6"/>
                         <Label Content="General details" FontSize="13" FontWeight="Medium" Padding="15,20,0,0" Grid.Column="0" HorizontalAlignment="Right"  Width="155" Margin="0,27,212,495" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
@@ -453,7 +461,7 @@
                         </Grid.RowDefinitions>
                         <Label  Content="Help" FontSize="16" FontWeight="Bold" Margin="36,15,274,447"/>
                         <Rectangle HorizontalAlignment="Left" Margin="20,53,0,0" Stroke="Black" Width="1003" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5" Height="547" VerticalAlignment="Top"/>
-                        <Button x:Name="Button_wizard" Content="Wizard" ToolTip="Instuction wizard" HorizontalAlignment="Left" Grid.Column="3"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_Wizard" Margin="92,21,30,30" RenderTransformOrigin="0.215,1.69" Grid.Row="1"/>
+                        <Button x:Name="Button_wizard" Content="_Wizard" ToolTip="Instuction wizard" HorizontalAlignment="Left" Grid.Column="3"  VerticalAlignment="Top"  Height="32" Width="118" Click="Button_Wizard" Margin="92,21,30,30" RenderTransformOrigin="0.215,1.69" Grid.Row="1"/>
                         <Label Content="- If you want to add new patient click on TextBlock '+ add' &#xD;&#xA;- If you want to see informations and medical history from some patient, &#xD;&#xA;select wanted patient and click on TextBlock '&lt; view'  &#xD;&#xA;- If you want to delete some patient, select wanted patient and click on TextBlock 'delete &gt;'&#xD;&#xA;- If you want to log out from your account, click on TextBlock '&lt; log out'&#xD;&#xA;- If you want to search for some patient by each quality &#xD;&#xA;positionate your mouse in input text field 'Search' and enter wanted text                   &#xD;&#xA;- If you want to go on some other window (Doctors or Appointments) &#xD;&#xA;click on header 'Patients' and select wanted menu item&#xD;&#xA;- If you want to create urgent examination &#xD;&#xA;click on TextBlock 'Create urgent examination or operation' and follow instructions                                                  &#xD;&#xA;- If you want to create an announcement click on TextBlock 'Create announcement' and follow instructions" FontFamily="Calibri" FontSize="20" FontWeight="Medium" HorizontalAlignment="Left" Margin="47,100,0,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="433" Width="963" Grid.RowSpan="2"/>
                         <CheckBox x:Name="checkbox_tooltip" Content="Tooltip" Grid.Column="3" HorizontalAlignment="Left" Margin="138,67,0,0" VerticalAlignment="Top" Unchecked="CheckBox_Unchecked" Checked="checkbox_tooltip_Checked"/>
                     </Grid>
