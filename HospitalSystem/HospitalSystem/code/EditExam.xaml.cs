@@ -44,15 +44,22 @@ namespace HospitalSystem.code
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            currentAppointment.Patient = (Patient)cbPatient.SelectedItem;
-            currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-            currentAppointment.Room = (Room)cbRoom.SelectedItem;
-            currentAppointment.Date = (DateTime)dpDate.SelectedDate;
-            currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-            Room selectedRoom = (Room)cbRoom.SelectedItem;
-            _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
-            AppointmentStorage.getInstance().Edit(currentAppointment);
-            this.Close();
+            if (cbPatient.SelectedItem != null && cbDoctor.SelectedItem != null && cbRoom.SelectedItem != null && dpDate.SelectedDate != null && cbTime != null)
+            {
+                currentAppointment.Patient = (Patient)cbPatient.SelectedItem;
+                currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                currentAppointment.Room = (Room)cbRoom.SelectedItem;
+                currentAppointment.Date = (DateTime)dpDate.SelectedDate;
+                currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                Room selectedRoom = (Room)cbRoom.SelectedItem;
+                _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
+                AppointmentStorage.getInstance().Edit(currentAppointment);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("You have to fill all information");
+            }
         }
 
         private void doctorChanged(object sender, System.EventArgs e)
@@ -100,7 +107,14 @@ namespace HospitalSystem.code
 
         private void timeChanged(object sender, System.EventArgs e)
         {
-            displayRooms();
+            if (dpDate.SelectedDate != null)
+            {
+                displayRooms();
+            }
+            else
+            {
+                MessageBox.Show("You have to select date first");
+            }
         }
 
         private void displayRooms()
