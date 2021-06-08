@@ -41,14 +41,12 @@ namespace HospitalSystem.code.ViewModel
 
         public void Finish()
         {
-            DoctorInitialWindow dw = new DoctorInitialWindow(selectedDoctor);
-            dw.Show();
             Close();
         }
         public void Back()
         {
             StepTwo st = new StepTwo(selectedDoctor);
-            st.Show();
+            st.ShowDialog();
             Close();
         }
 
