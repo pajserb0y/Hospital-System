@@ -120,6 +120,27 @@ namespace HospitalSystem.code
             tabAnamnesis.Focus();
         }
 
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Examination selectedExam = (Examination)dgExamination.SelectedItem;
+            Anamnesis anamnesis = selectedExam.Anamnesis;
+            ObservableCollection<Prescription> prescriptions = selectedExam.Prescriptions;
+            showExaminationDetails();
+            txtAnamnesis.Clear();
+            txtDiagnosis.Clear();
+            txtNotes.Clear();
+            if (anamnesis != null)
+            {
+                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                txtDiagnosis.Text = anamnesis.Diagnosis;
+            }
+            tabAnamnesis.Focus();
+
+            txtNotes.Text = selectedExam.Notes;
+            dgMedication.ItemsSource = prescriptions;
+            
+        }
+
         private void showExaminationDetails()
         {
             tabAnamnesis.Visibility = Visibility.Visible;
@@ -143,21 +164,22 @@ namespace HospitalSystem.code
 
         private void patientChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbPatient.SelectedItem == null)
-                return;
-            currentPatient = (Patient)cbPatient.SelectedItem;
+            if (cbPatient.SelectedItem != null)
+            {
+                currentPatient = (Patient)cbPatient.SelectedItem;
 
-            if (!newApptsMade.ContainsKey(currentPatient.Id))
-                newApptsMade.Add(currentPatient.Id, 0);
+                if (!newApptsMade.ContainsKey(currentPatient.Id))
+                    newApptsMade.Add(currentPatient.Id, 0);
 
-            initializeSelectedPatientDetails(currentPatient);
-            hideExaminationDetails();
-            fillAnnouncements();
-            filterAppointments();
-            filterExaminations();
+                initializeSelectedPatientDetails();
+                hideExaminationDetails();
+                fillAnnouncements();
+                filterAppointments();
+                filterExaminations();
 
-            if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
-                provideGeneralFeedback(currentPatient.Id);     
+                if (allExaminations.Count > 0 && allExaminations.Count % 3 == 0)
+                    provideGeneralFeedback(currentPatient.Id);
+            }
         }
 
         private void filterExaminations()
@@ -185,72 +207,28 @@ namespace HospitalSystem.code
         }
         #endregion
 
-        #region Chart
-        private void initializeSelectedPatientDetails(Patient selectedPatient)
+        #region Home
+
+        private void initializeSelectedPatientDetails()
         {
-            txtID.Text = selectedPatient.Id.ToString();
-            txtIme.Text = selectedPatient.FirstName;
-            txtPrezime.Text = selectedPatient.LastName;
-            txtJmbg.Text = selectedPatient.Jmbg.ToString();
-            txtAdress.Text = selectedPatient.Adress;
-            txtTel.Text = selectedPatient.Telephone.ToString();
-            txtEmail.Text = selectedPatient.Email;
-            _ = selectedPatient.Gender == 'M' ? rbM.IsChecked = true : rbF.IsChecked = true;
-            _ = selectedPatient.Guest = false;
-            dpBirth.SelectedDate = selectedPatient.BirthDate;
 
-            if (selectedPatient.MarriageStatus == "Married")
-                cbMarriage.SelectedIndex = 0;
-            if (selectedPatient.MarriageStatus == "Unmarried")
-                cbMarriage.SelectedIndex = 1;
-            if (selectedPatient.MarriageStatus == "Divorced")
-                cbMarriage.SelectedIndex = 2;
-            if (selectedPatient.MarriageStatus == "Widow(er)")
-                cbMarriage.SelectedIndex = 3;
+            firstName.Text = currentPatient.FirstName;
+            lastName.Text = currentPatient.LastName;
+            jmbg.Text = currentPatient.Jmbg.ToString();
+            gender.Text = currentPatient.Gender == 'M' ? "Male" : "Female";
+            adress.Text = currentPatient.Adress;
+            telephone.Text = currentPatient.Telephone.ToString();
+            email.Text = currentPatient.Email;
 
-            txtSoc.Text = selectedPatient.SocNumber.ToString();
-            txtCity.Text = selectedPatient.City;
-            txtCountry.Text = selectedPatient.Country;
-
-            if (selectedPatient.Alergens == null)
-                selectedPatient.Alergens = new ObservableCollection<string>();
-            listViewAlergens.ItemsSource = selectedPatient.Alergens;
-
-            if (selectedPatient.WorkHistory == default)
-                selectedPatient.WorkHistory = new ObservableCollection<Job>();
-            dgJob.ItemsSource = selectedPatient.WorkHistory;
         }
 
-        private void Button_Save_Changes(object sender, RoutedEventArgs e)
+        private void Button_Chart_Details(object sender, RoutedEventArgs e)
         {
-            PatientsStorage.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
-                (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, false,
-                "", "", (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text),
-                txtCity.Text, txtCountry.Text, currentPatient.Alergens, currentPatient.WorkHistory));
-            PatientsStorage.getInstance().serialize();
-            this.Close();
-        }
-        private void Button_Add_Job(object sender, RoutedEventArgs e)
-        {
-            NewJob newJob = new NewJob(currentPatient);
-            newJob.Show();
-        }
-        private void Button_Edit_Job(object sender, RoutedEventArgs e)
-        {
-            EditJob editJob = new EditJob(currentPatient, (Job)dgJob.SelectedItem);
-            editJob.Show();
-            (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;
-        }
-        private void Button_Delete_Job(object sender, RoutedEventArgs e)
-        {
-            currentPatient.WorkHistory.Remove((Job)dgJob.SelectedItem);
+            ChartDetails chartDetails = new ChartDetails(currentPatient);
+            chartDetails.ChangeTextEvent += new ChangeTextHandler(initializeSelectedPatientDetails);
+            chartDetails.ShowDialog();
         }
 
-        private void Button_Add_Alergen(object sender, RoutedEventArgs e)
-        {
-            NewAlergen newAlergen = new NewAlergen(currentPatient);
-            newAlergen.Show();
-        }
         #endregion
 
         #region Inbox
