@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="DoctorInitialWindow" Height="700" Width="1210">
+        Title="DoctorInitialWindow" Height="700" Width="1210"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl x:Name="tabControlHome" TabStripPlacement="Left" Margin="0,0,10,0" >
             <TabItem Header="Home">
@@ -66,8 +67,8 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <DataGrid x:Name="dgDoctorAppointments" Height="530" Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" AutoGenerateColumns="False"
-                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="10,0,174,0"
+                                <DataGrid x:Name="dgDoctorAppointments" Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="10,0,174,-114"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Grid.ColumnSpan="5">
 
                                     <DataGrid.Columns>
@@ -90,7 +91,9 @@
                                 <Button x:Name="ButtonBeginExam" Content="Begin" ToolTip="Start new examination" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="5"  VerticalAlignment="Top"  Height="33" Width="118" Click="Button_Begin" Margin="61,56,0,0"/>
                                 <DatePicker Grid.Row="0" Grid.Column="4" HorizontalAlignment="Left" Margin="216,0,0,0" VerticalAlignment="Center"/>
                                 <Label Content="Patient: " Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" Margin="28,0,0,0" VerticalAlignment="Center"/>
-                                <TextBox  x:Name="txtPatient" ToolTip="Search by patient" Grid.Column="2"  Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="46,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" TextChanged="TextBox_TextChanged"/>
+                                <TextBox  x:Name="txtPatient" ToolTip="Search by patient" Grid.Column="2"  Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="46,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="200"/>
+                                <Label  Content="Appointments" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="4" Margin="10,67,675,59" Grid.RowSpan="2" Grid.Column="1"/>
+                                <Rectangle Stroke="Black" Grid.ColumnSpan="5" Margin="10,67,174,-114" Grid.RowSpan="7" Grid.Column="1"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -121,7 +124,8 @@
                         <StackPanel>
                             <Grid Height="Auto" Width="Auto" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="91*"></ColumnDefinition>
+                                    <ColumnDefinition Width="257*"/>
 
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -131,22 +135,22 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,0" Padding="0,0,20,0"/>
+                                <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,97" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                                <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200"/>
+                                <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2"/>
 
-                                <Label Content="Date:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,200,0" Padding="0,0,20,0"/>
-                                <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0"/>
+                                <Label Content="Date:" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0,80,200,97" Padding="0,0,20,0" Grid.RowSpan="2"/>
+                                <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0,80,100,97" Padding="40,0,40,0" Grid.RowSpan="2"/>
 
-                                <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,0" Padding="0,0,20,0"/>
+                                <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,220" Padding="0,0,20,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                                <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,0"/>
+                                <TextBox x:Name="txtTaking" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,20,0,96" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                                <Button Content="Save" ToolTip="Save prescription" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
-                                <Label Content="Time:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,200,69" Padding="0,0,20,0"/>
-                                <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,100,69" Padding="40,0,40,0"/>
-                                <Label Content="Interval:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,898,48" Padding="0,0,20,0"/>
-                                <TextBox x:Name="txtInterval" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,798,48" Padding="40,0,40,0"/>
+                                <Button x:Name="button_save_perscription" Content="Save" ToolTip="Save prescription" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="573,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>
+                                <Label Content="Time:" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,200,69" Padding="0,0,20,0"/>
+                                <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,100,69" Padding="40,0,40,0"/>
+                                <Label Content="Interval:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,127,48" Padding="0,0,20,0"/>
+                                <TextBox x:Name="txtInterval" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,27,48" Padding="40,0,40,0"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -187,7 +191,7 @@
                                 <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,889,140"/>
                                 <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,889,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
 
-                                <Button Content="Save" ToolTip="Save refferal" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
+                                <Button  x:Name="button_save_refferal" Content="Save" ToolTip="Save refferal" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -378,7 +382,7 @@
                                 <TextBox x:Name="txtReport" TextWrapping="Wrap" Width="830" Height="200" HorizontalAlignment="Left" Margin="80,10,83,0"/>
                             </Grid>
                             <Grid>
-                                <Button Content="Send report" HorizontalAlignment="Right" Margin="0,30,300,30" Height="36" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Width="118" Click="Button_Send_Report"/>
+                                <Button Content="Send report" HorizontalAlignment="Right" Margin="0,50,92,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Send_Report"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -392,75 +396,45 @@
                     </StackPanel>
                     <Grid Height="Auto" Width="Auto" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="68*"/>
-                            <ColumnDefinition Width="41*"/>
-                            <ColumnDefinition Width="31*"/>
-                            <ColumnDefinition Width="18*"/>
-                            <ColumnDefinition Width="22*"/>
-                            <ColumnDefinition Width="360*"/>
-                            <ColumnDefinition Width="180*"/>
-                            <ColumnDefinition Width="309*"/>
-                            <ColumnDefinition Width="51*"/>
+                            <ColumnDefinition Width="58*"/>
+                            <ColumnDefinition Width="349*"/>
+                            <ColumnDefinition Width="246*"/>
+                            <ColumnDefinition Width="186*"/>
+                            <ColumnDefinition Width="108*"/>
+                            <ColumnDefinition Width="132*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="30*"/>
+                            <RowDefinition Height="40*"/>
+                            <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        <Rectangle HorizontalAlignment="Left" Height="553" Margin="34,24,0,0" Grid.RowSpan="6" Stroke="Black" VerticalAlignment="Top" Width="1030" Grid.ColumnSpan="9" Grid.Row="1"/>
-                        <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="34,64,0,16" Grid.ColumnSpan="5" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" HorizontalAlignment="Left" Margin="7,64,0,47" Grid.Column="5" Grid.RowSpan="2"/>
-                        <Label Content="Social security number:"  Padding="0,0,20,0"  Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" Margin="0,75,28,7" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtSoc" TextWrapping="Wrap" Padding="0,0,20,0" Width="230" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="146,75,0,32" Grid.RowSpan="2"/>
+                        <Rectangle HorizontalAlignment="Left" Height="553" Margin="29,25,0,0" Grid.RowSpan="6" Stroke="Black" VerticalAlignment="Top" Width="1030"  Grid.Row="1" Grid.ColumnSpan="6"/>
+                        <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,86,0,456" RenderTransformOrigin="0.5,0.5" Width="124"/>
+                        <TextBox x:Name="txtIme" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" HorizontalAlignment="Left" Margin="85,86,0,470" Grid.Column="1"/>
 
-                        <Label Content="Last Name:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="40,48,0,32" Grid.ColumnSpan="5" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Margin="7,48,0,32" HorizontalAlignment="Left" Grid.Column="5" Grid.RowSpan="2"/>
-                        <Label Content="Adress:" Padding="0,0,20,0" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Right" Margin="0,48,34,32" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Left" Margin="146,48,0,32" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <Label Content="Last Name:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="7,145,0,400"/>
+                        <TextBox x:Name="txtPrezime" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Margin="86,136,0,420" HorizontalAlignment="Left" Grid.Column="1"/>
+                        <Label Content="Adress:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="67,80,0,473" RenderTransformOrigin="-1.634,0.48"/>
+                        <TextBox x:Name="txtAdress" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="130,80,0,476" Grid.ColumnSpan="3"/>
 
-                        <Label Content="JMBG:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="25,48,0,38" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Margin="7,48,0,38" HorizontalAlignment="Left" Grid.Column="5" Grid.RowSpan="2"/>
-                        <Label Content="City:" Padding="0,0,20,0" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Right" Margin="0,48,34,38" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtCity" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Left" Margin="146,48,0,38" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <Label Content="JMBG:" Padding="0,0,20,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="33,196,0,354"/>
+                        <TextBox x:Name="txtJmbg" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Margin="85,191,0,365" HorizontalAlignment="Left" Grid.Column="1"/>
 
-                        <Label Content="Birth date:" Padding="0,0,20,0" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="0,48,353,38" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
-                        <DatePicker x:Name="dpBirth" HorizontalAlignment="Left" Width="230" Height="20" Margin="7,48,0,38" Grid.Row="4" Grid.Column="5" Grid.RowSpan="2"  />
-                        <Label Content="Country:" Padding="0,0,20,0" Grid.Row="4" Grid.Column="6" HorizontalAlignment="Right" Margin="0,48,34,38" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtCountry" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="4" Grid.Column="6" HorizontalAlignment="Left" Margin="146,48,0,38" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                        <Label Content="Gender:" Padding="0,0,20,0" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Center" Margin="0,24,0,0"/>
-                        <RadioButton x:Name="rbM" Content="M" GroupName="rbGender" Height="13" Width="40" Grid.Row="5" HorizontalAlignment="Left" Margin="12,49,0,273" Grid.Column="5" Grid.RowSpan="2" />
-                        <RadioButton x:Name="rbF" Content="F" GroupName="rbGender" Height="13" Width="40" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Margin="57,49,0,273" Grid.RowSpan="2" />
-                        <CheckBox x:Name="cbGuest" Content="Guest" Height="26" Padding="10,0,0,0" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Right" Margin="0,42,98,267" Grid.RowSpan="2"/>
-                        <Label Content="Telephone:" Padding="0,0,20,0"  Grid.Row="5" Grid.Column="6" HorizontalAlignment="Left" Margin="69,42,0,267" Grid.RowSpan="2"/>
-                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Left" Margin="146,45,0,270" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <Label Content="Telephone:" Padding="0,0,20,0"  Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="53,145,0,367" RenderTransformOrigin="0.352,-0.998"/>
+                        <TextBox x:Name="txtTel" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="130,105,0,373" Grid.ColumnSpan="3" RenderTransformOrigin="0.501,0.944"/>
 
-                        <Label Content="Marriage status:" Padding="0,0,20,0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Margin="0,48,353,217" Grid.ColumnSpan="5"/>
-                        <ComboBox x:Name="cbMarriage" Width="230" Height="20" Grid.Row="6" Margin="7,48,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedValuePath="Content" Grid.Column="5">
-                            <ComboBoxItem Content="Married"/>
-                            <ComboBoxItem Content="Unmarried"/>
-                            <ComboBoxItem Content="Divorced"/>
-                            <ComboBoxItem Content="Widow(er)"/>
-                            <!--<ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="Married"/>
-                                        <TextBlock Text="Unmarried"/>
-                                        <TextBlock Text="Divorced"/>
-                                        <TextBlock Text="Widow(er)"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>-->
-                        </ComboBox>
-                        <Label Content="Email:" Padding="0,0,20,0" Grid.Row="6" Grid.Column="6" HorizontalAlignment="Right" Margin="0,48,34,217"/>
-                        <TextBox x:Name="txtEmail" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="6" Grid.Column="6" HorizontalAlignment="Left" Margin="146,48,0,217" Grid.ColumnSpan="2"/>
+                        <Label Content="Doctor details" FontSize="16" FontWeight="Bold" Padding="15,20,0,0" Grid.Column="0" HorizontalAlignment="Right"  Width="155" Margin="0,-16,234,549" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+                        <Button x:Name="SaveDoctorAccount" Content="Save" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="1" Grid.Column="4" VerticalAlignment="Top" Width="118" Click="Button_Save_Doctor_Info" Margin="89,519,0,0" Grid.ColumnSpan="2"/>
+                        <Rectangle HorizontalAlignment="Left" Height="185" Margin="42,68,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="6"/>
+                        <Label Content="General details" FontSize="13" FontWeight="Medium" Padding="15,20,0,0" Grid.Column="0" HorizontalAlignment="Right"  Width="155" Margin="0,27,212,495" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
-                        <Label Content="Doctor details" FontSize="16" FontWeight="Bold" Padding="15,20,0,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"  Width="155" Grid.ColumnSpan="6" Margin="0,-22,360,62" />
-                        <Button x:Name="SaveDoctorAccount" Content="Save" ToolTip="View patient details" HorizontalAlignment="Left" Height="36" Grid.Row="6" Grid.Column="7" VerticalAlignment="Top" Width="118" Click="Button_Save_Doctor" Margin="180,153,0,0"/>
+                        <Label Content="Old Password:" Padding="0,0,20,0" Grid.Row="1" HorizontalAlignment="Left" Margin="51,335,0,210" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="txtOldPassword" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Margin="85,338,0,220" HorizontalAlignment="Left" Grid.Column="1"/>
+                        <Label Content="New Password:" Padding="0,0,20,0" Grid.Row="1" HorizontalAlignment="Left" Margin="47,380,0,165" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="txtNewPassword" TextWrapping="Wrap" Width="230" Height="20" Grid.Row="1" Margin="85,380,0,178" HorizontalAlignment="Left" Grid.Column="1"/>
+                        <Label Content="Log in details" FontSize="13" FontWeight="Medium" Padding="15,20,0,0" Grid.Column="0" HorizontalAlignment="Left"  Width="155" Margin="46,260,0,262" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+                        <Rectangle HorizontalAlignment="Left" Height="185" Margin="42,316,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="6"/>
                     </Grid>
                 </StackPanel>
             </TabItem>

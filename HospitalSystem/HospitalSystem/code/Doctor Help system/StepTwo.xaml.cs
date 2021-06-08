@@ -21,6 +21,7 @@ namespace HospitalSystem.code
         public StepTwo(Doctor doc)
         {
             InitializeComponent();
+            selectedDoctor = doc;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

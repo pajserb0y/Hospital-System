@@ -324,20 +324,27 @@ namespace HospitalSystem.code
 
         private void View_Examination_Or_Operation(DataGrid dg)
         {
-            Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
-            Anamnesis anamnesis = selectedExam.Anamnesis;
-
-            txtAnamnesis.Clear();
-            txtDiagnosis.Clear();
-
-            if (anamnesis != null)
+            if (dgPatientExams.SelectedItem != null)
             {
-                txtAnamnesis.Text = anamnesis.AnamnesisInfo;
-                txtDiagnosis.Text = anamnesis.Diagnosis;
-            }
+                Examination selectedExam = (Examination)dgPatientExams.SelectedItem;
+                Anamnesis anamnesis = selectedExam.Anamnesis;
 
-            tExam.Visibility = Visibility.Visible;
-            tExam.Focus();
+                txtAnamnesis.Clear();
+                txtDiagnosis.Clear();
+
+                if (anamnesis != null)
+                {
+                    txtAnamnesis.Text = anamnesis.AnamnesisInfo;
+                    txtDiagnosis.Text = anamnesis.Diagnosis;
+                }
+
+                tExam.Visibility = Visibility.Visible;
+                tExam.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not selected any examination or operation!");
+            }
         }
 
         private void Button_Cancel_Refferal(object sender, RoutedEventArgs e)
@@ -354,24 +361,31 @@ namespace HospitalSystem.code
 
         private void Button_View_Prescription(object sender, RoutedEventArgs e)
         {
-            PrescriptionDTO selectedPrescription = (PrescriptionDTO)dgPatientPrescriptions.SelectedItem;
-            Examination correspondingExam = new Examination();
-            correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
-            txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
-            txtTime.Text = correspondingExam.Time.ToString("HH/mm");
-            cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
-            cbDrug.SelectedItem = selectedPrescription.Drug;
-            txtTaking.Text = selectedPrescription.Taking;
-            txtInterval.Text = Convert.ToString(selectedPrescription.Interval);
+            if (dgPatientPrescriptions.SelectedItem != null)
+            {
+                PrescriptionDTO selectedPrescription = (PrescriptionDTO)dgPatientPrescriptions.SelectedItem;
+                Examination correspondingExam = new Examination();
+                correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
+                txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
+                txtTime.Text = correspondingExam.Time.ToString("HH/mm");
+                cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
+                cbDrug.SelectedItem = selectedPrescription.Drug;
+                txtTaking.Text = selectedPrescription.Taking;
+                txtInterval.Text = Convert.ToString(selectedPrescription.Interval);
 
-            txtDate.IsEnabled = false;
-            txtTime.IsEnabled = false;
-            cbDrug.IsEnabled = false;
-            txtTaking.IsEnabled = false;
-            txtInterval.IsEnabled = false;
+                txtDate.IsEnabled = false;
+                txtTime.IsEnabled = false;
+                cbDrug.IsEnabled = false;
+                txtTaking.IsEnabled = false;
+                txtInterval.IsEnabled = false;
 
-            tPersc.Visibility = Visibility.Visible;
-            tPersc.Focus();
+                tPersc.Visibility = Visibility.Visible;
+                tPersc.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not selected any prescription!");
+            }
         }
 
         //private void Button_Save_Prescription(object sender, RoutedEventArgs e)
@@ -400,26 +414,33 @@ namespace HospitalSystem.code
 
         private void Button_View_Hospitalization(object sender, RoutedEventArgs e)
         {
-            HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
-            Room selectedRoom = RoomStorage.getInstance().GetOne(selectedHospitalization.RoomId);
-            Bed selectedBed = new Bed();
-            cbHospitalizationRoom.ItemsSource = RoomStorage.getInstance().GetAll();
-            cbHospitalizatonBed.ItemsSource = selectedRoom.Beds;
-            foreach (Bed bed in selectedRoom.Beds)
-                if (bed.Id == selectedHospitalization.BedId)
-                {
-                    selectedBed = bed;
-                    break;
-                }
-            txtHospitalizationPatient.Text = selectedHospitalization.FirstName + " " + selectedHospitalization.LastName;
-            txtHospitalizationPatient.IsEnabled = false;
-            dpHospitalizationIN.SelectedDate = selectedHospitalization.DateIn;
-            dpHospitalizationOUT.SelectedDate = selectedHospitalization.DateOut;
-            cbHospitalizationRoom.SelectedItem = selectedRoom;
-            cbHospitalizatonBed.SelectedItem = selectedBed;
+            if(dgPatientHospitalizations.SelectedItem != null)
+            {
+                HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
+                Room selectedRoom = RoomStorage.getInstance().GetOne(selectedHospitalization.RoomId);
+                Bed selectedBed = new Bed();
+                cbHospitalizationRoom.ItemsSource = RoomStorage.getInstance().GetAll();
+                cbHospitalizatonBed.ItemsSource = selectedRoom.Beds;
+                foreach (Bed bed in selectedRoom.Beds)
+                    if (bed.Id == selectedHospitalization.BedId)
+                    {
+                        selectedBed = bed;
+                        break;
+                    }
+                txtHospitalizationPatient.Text = selectedHospitalization.FirstName + " " + selectedHospitalization.LastName;
+                txtHospitalizationPatient.IsEnabled = false;
+                dpHospitalizationIN.SelectedDate = selectedHospitalization.DateIn;
+                dpHospitalizationOUT.SelectedDate = selectedHospitalization.DateOut;
+                cbHospitalizationRoom.SelectedItem = selectedRoom;
+                cbHospitalizatonBed.SelectedItem = selectedBed;
 
-            tHospitalization.Visibility = Visibility.Visible;
-            tHospitalization.Focus();
+                tHospitalization.Visibility = Visibility.Visible;
+                tHospitalization.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not selected any hospitalization!");
+            }
         }
 
         private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="PatientDetails" Height="700" Width="1050">
+        Title="PatientDetails" Height="700" Width="1050"
+        WindowStartupLocation="CenterScreen">
     <Grid>
 
         <TabControl x:Name="tChart" HorizontalAlignment="Left" Height="670" Width="1050" VerticalAlignment="Center" >
