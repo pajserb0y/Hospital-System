@@ -17,28 +17,30 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class StepOne : Window
     {
-        public StepOne()
+        Doctor selectedDoctor;
+        public StepOne(Doctor doc)
         {
+            selectedDoctor = doc;
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            StepTwo st = new StepTwo();
+            StepTwo st = new StepTwo(selectedDoctor);
             st.Show();
             this.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            HelpWizard hw = new HelpWizard();
+            HelpWizard hw = new HelpWizard(selectedDoctor);
             hw.Show();
             this.Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            DoctorInitialWindow dw = new DoctorInitialWindow();
+            DoctorInitialWindow dw = new DoctorInitialWindow(selectedDoctor);
             dw.Show();
             this.Close();
         }

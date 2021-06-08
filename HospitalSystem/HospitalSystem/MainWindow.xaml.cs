@@ -40,11 +40,23 @@ namespace HospitalSystem
                 sek.Show();
                 this.Close();
             }
-            else if (txtUsername.Text == "lekar" && txtPassword.Password == "lekar")
+            else if (txtPassword.Password == "lekar")
             {
-                DoctorInitialWindow dw = new DoctorInitialWindow();
-                dw.Show();
-                this.Close();
+                string[] FullName = txtUsername.Text.ToLower().Split(" ");
+                foreach(Doctor doc in DoctorStorage.getInstance().GetAll())
+                {
+                    if(FullName[0] == doc.FirstName.ToLower() && FullName[1] == doc.LastName.ToLower())
+                    {
+                        //HelpWizard hw = new HelpWizard(doc);
+                        //hw.Show();
+                        //this.Close();
+                        DoctorInitialWindow dw = new DoctorInitialWindow(doc);
+                        dw.Show();
+                        this.Close();
+                    }
+                }
+
+
             }
             else if (txtUsername.Text == "pacijent" && txtPassword.Password == "pacijent")
             {
@@ -58,12 +70,6 @@ namespace HospitalSystem
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            HelpWizard hw = new HelpWizard();
-            hw.Show();
-            this.Close();
-            //DoctorInitialWindow dw = new DoctorInitialWindow();
-            //dw.Show();
-            //this.Close();
             if (txtPassword.IsFocused)
                 if (e.Key == Key.Return)
                     checkLogInDetails();

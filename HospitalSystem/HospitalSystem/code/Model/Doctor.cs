@@ -136,6 +136,8 @@ public class Doctor : INotifyPropertyChanged
         Specialization = specialization;
         FreeDays = freeDays;
     }
+    public Doctor()
+    { }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
