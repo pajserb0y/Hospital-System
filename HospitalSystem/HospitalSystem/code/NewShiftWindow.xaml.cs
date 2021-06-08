@@ -31,6 +31,8 @@ namespace HospitalSystem.code
             comboBoxStartTime.ItemsSource = terms;
             comboBoxEndTime.ItemsSource = terms;
             calledConstructor = 1;
+            dpStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         public NewShiftWindow(WorkingShift selectedShift)
@@ -44,20 +46,27 @@ namespace HospitalSystem.code
             comboBoxStartTime.SelectedItem = selectedShift.StartTime.ToString("HH:mm");
             comboBoxEndTime.SelectedItem = selectedShift.EndTime.ToString("HH:mm");
             calledConstructor = 2;
+            dpStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), selectedShift.StartDate.AddDays(-1)));
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), selectedShift.StartDate.AddDays(-1)));
         }
 
         private void txbSave_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (calledConstructor == 1)
-                WorkingShiftStorage.getInstance().Add(new WorkingShift(WorkingShiftStorage.getInstance().GenerateNewID(), currentDoctorID, 
-                    (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()),
-                    (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
-            else
-                WorkingShiftStorage.getInstance().Edit(new WorkingShift(currentShift.Id, currentShift.DoctorId, (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), 
-                    (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()), (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
+            if (comboBoxEndTime.SelectedItem != null && comboBoxStartTime.SelectedItem != null && dpEndDate.SelectedDate != null && dpStartDate.SelectedDate != null)
+            {
+                if (calledConstructor == 1)
+                    WorkingShiftStorage.getInstance().Add(new WorkingShift(WorkingShiftStorage.getInstance().GenerateNewID(), currentDoctorID,
+                        (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()), (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()),
+                        (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
+                else
+                    WorkingShiftStorage.getInstance().Edit(new WorkingShift(currentShift.Id, currentShift.DoctorId, (DateTime)Convert.ToDateTime(comboBoxStartTime.SelectedItem.ToString()),
+                        (DateTime)Convert.ToDateTime(comboBoxEndTime.SelectedItem.ToString()), (DateTime)dpStartDate.SelectedDate, (DateTime)dpEndDate.SelectedDate));
 
-            WorkingShiftStorage.getInstance().serialize();
-            this.Close();
+                WorkingShiftStorage.getInstance().serialize();
+                this.Close();
+            }
+            else
+                MessageBox.Show("You need first to fill all input fields.");
         }
 
         private void startTimeChanged(object sender, System.EventArgs e)
@@ -72,6 +81,13 @@ namespace HospitalSystem.code
                     k = 1;
             }
             comboBoxEndTime.ItemsSource = endTimeTerms;
+        }
+
+        private void dateStartChanged(object sender, System.EventArgs e)
+        {
+            dpEndDate.SelectedDate = null;
+            dpEndDate.BlackoutDates.Clear();
+            dpEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpStartDate.SelectedDate).AddDays(-1)));
         }
     }
 }

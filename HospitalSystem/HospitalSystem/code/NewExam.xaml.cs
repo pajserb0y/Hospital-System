@@ -31,17 +31,24 @@ namespace HospitalSystem.code
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            Appointment appt = new Appointment();
-            appt.Id = AppointmentStorage.getInstance().GenerateNewID();
-            appt.Patient = (Patient) cbPatient.SelectedItem;
-            appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-            appt.Room = (Room) cbRoom.SelectedItem;
-            appt.Date = (DateTime)dpDate.SelectedDate;
-            appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-            Room selectedRoom = (Room)cbRoom.SelectedItem;
-            _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
-            AppointmentStorage.getInstance().Add(appt);
-            this.Close();
+            if(cbPatient.SelectedItem != null && cbDoctor.SelectedItem != null && cbRoom.SelectedItem != null && dpDate.SelectedDate != null && cbTime != null)
+            {
+                Appointment appt = new Appointment();
+                appt.Id = AppointmentStorage.getInstance().GenerateNewID();
+                appt.Patient = (Patient)cbPatient.SelectedItem;
+                appt.Doctor = (Doctor)cbDoctor.SelectedItem;
+                appt.Room = (Room)cbRoom.SelectedItem;
+                appt.Date = (DateTime)dpDate.SelectedDate;
+                appt.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                Room selectedRoom = (Room)cbRoom.SelectedItem;
+                _ = selectedRoom.Name == "Ordination" ? appt.IsOperation = false : appt.IsOperation = true;
+                AppointmentStorage.getInstance().Add(appt);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("You have to fill all information");
+            }
         }
 
         private void doctorChanged(object sender, System.EventArgs e)
@@ -89,7 +96,14 @@ namespace HospitalSystem.code
 
         private void timeChanged(object sender, System.EventArgs e)
         {
-            displayRooms();
+            if (dpDate.SelectedDate != null)
+            { 
+                displayRooms(); 
+            }
+            else
+            {
+                MessageBox.Show("You have to select date first");
+            }
         }
 
         private void displayRooms()
@@ -113,9 +127,9 @@ namespace HospitalSystem.code
 
         private void fillListOfOccupiedRooms(List<Room> occupiedRooms)
         {
-            foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
-                if (a.Date == (DateTime)dpDate.SelectedDate && a.Time.ToString("HH:mm") == cbTime.SelectedItem.ToString())
-                    occupiedRooms.Add(a.Room);
+                foreach (Appointment a in AppointmentStorage.getInstance().GetAll())
+                    if (a.Date == (DateTime)dpDate.SelectedDate && a.Time.ToString("HH:mm") == cbTime.SelectedItem.ToString())
+                        occupiedRooms.Add(a.Room);
         }
     }
 }

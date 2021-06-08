@@ -211,7 +211,6 @@ namespace HospitalSystem.code
 
         private void initializeSelectedPatientDetails()
         {
-
             firstName.Text = currentPatient.FirstName;
             lastName.Text = currentPatient.LastName;
             jmbg.Text = currentPatient.Jmbg.ToString();
@@ -219,7 +218,6 @@ namespace HospitalSystem.code
             adress.Text = currentPatient.Adress;
             telephone.Text = currentPatient.Telephone.ToString();
             email.Text = currentPatient.Email;
-
         }
 
         private void Button_Chart_Details(object sender, RoutedEventArgs e)

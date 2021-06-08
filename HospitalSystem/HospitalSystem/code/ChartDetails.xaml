@@ -97,6 +97,10 @@
         <Label Content="Alergens" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="700,0,0,382" Width="100" Height="25" Grid.RowSpan="1" Grid.ColumnSpan="1"/>
         <ListView x:Name="listViewAlergens" Margin="700,0,0,97" Height="280" Width="400" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
+        <TextBox x:Name="txtSubstance" Margin="1000,0,0,382"  TextWrapping="Wrap" HorizontalAlignment="Left" Width="100" Height="25" 
+                                 VerticalAlignment="Bottom" ToolTip="Enter patients new alergen"/>
+        <Label Content="Substance:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="900,0,0,382" Width="100" Height="25" />
+
         <Button Template="{DynamicResource ButtonTemplate1}"  x:Name="buttonAddJob" HorizontalAlignment="Left" Margin="506,0,0,324" VerticalAlignment="Bottom" BorderThickness="0" Cursor="Hand"
                             Click="Button_Add_Job"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Height="24" Width="24" >
             <DockPanel>

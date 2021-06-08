@@ -9,15 +9,15 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
-        <DatePicker Name="dpStartDate" Margin="154,0,104,318" Height="24" VerticalAlignment="Bottom"/>
-        <DatePicker Name="dpEndDate" Margin="154,0,104,253" Height="26" VerticalAlignment="Bottom"/>
+        <DatePicker Name="dpStartDate" Margin="154,0,104,318" Height="24" VerticalAlignment="Bottom" ToolTip="Select start date" SelectedDateChanged="dateStartChanged"/>
+        <DatePicker Name="dpEndDate" Margin="154,0,104,253" Height="26" VerticalAlignment="Bottom" ToolTip="Select end date"/>
         <Label Content="Start date:" HorizontalAlignment="Left" Margin="83,0,0,318" VerticalAlignment="Bottom"/>
         <Label Content="End date:" HorizontalAlignment="Left" Margin="87,0,0,253" VerticalAlignment="Bottom"/>
         <Label Content="From:" HorizontalAlignment="Left" Margin="64,0,0,163" VerticalAlignment="Bottom"/>
         <Label Content="To:" HorizontalAlignment="Left" Margin="221,0,0,163" VerticalAlignment="Bottom"/>
-        <ComboBox Name="comboBoxStartTime" HorizontalAlignment="Left" Margin="109,0,0,163" VerticalAlignment="Bottom" Width="63" SelectionChanged="startTimeChanged"/>
-        <ComboBox Name="comboBoxEndTime" HorizontalAlignment="Left" Margin="251,0,0,164" VerticalAlignment="Bottom" Width="61" />
-        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" 
+        <ComboBox Name="comboBoxStartTime" HorizontalAlignment="Left" Margin="109,0,0,163" VerticalAlignment="Bottom" Width="63" SelectionChanged="startTimeChanged" ToolTip="Select start term time"/>
+        <ComboBox Name="comboBoxEndTime" HorizontalAlignment="Left" Margin="251,0,0,164" VerticalAlignment="Bottom" Width="61" ToolTip="Select end term time"/>
+        <TextBlock x:Name="txbSave" Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20" ToolTip="Add new shift"
                                    HorizontalAlignment="Left" Margin="252,329,0,0" Padding="10,10,10,10" Height="94" VerticalAlignment="Top">
             <TextBlock.Style>
                 <Style>
@@ -29,5 +29,6 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style></TextBlock>
+        <Ellipse x:Name="elipseSave" Visibility="Collapsed" HorizontalAlignment="Left" Height="56" Margin="251,329,0,0" Stroke="Orange" StrokeThickness="3" VerticalAlignment="Top" Width="90"/>
     </Grid>
 </Window>
