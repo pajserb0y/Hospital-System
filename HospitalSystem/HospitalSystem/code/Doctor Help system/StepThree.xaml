@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HospitalSystem.code"
+        xmlns:local="clr-namespace:HospitalSystem.code" 
+        xmlns:viewmodel="clr-namespace:HospitalSystem.code.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:StepThreeViewModel}"
         mc:Ignorable="d"
         Title="StepThree"  Height="480" Width="810"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_2"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="577,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_1"/>
+        <Button Command="{Binding FinishCommand}" Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="577,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
         <Label Content="Step Three: Example of additional funcionality" FontSize="25" FontFamily="Calibri" FontWeight="Bold" HorizontalAlignment="Left" Margin="36,36,0,0" VerticalAlignment="Top" Width="695"/>
         <Rectangle HorizontalAlignment="Center" Height="275" Margin="0,82,0,0" Stroke="Black" VerticalAlignment="Top" Width="742"/>
         <Label Content="Drug:" FontSize="13" Grid.Row="0" Grid.Column="0" Margin="65,106,645,313" Padding="0,0,20,0"/>
