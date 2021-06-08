@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,25 +18,10 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class HelpWizard : Window
     {
-        private Doctor selectedDoctor;
         public HelpWizard(Doctor doc)
         {
-            selectedDoctor = doc;
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            StepOne so = new StepOne(selectedDoctor);
-            so.Show();
-            this.Close();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            DoctorInitialWindow dw = new DoctorInitialWindow(selectedDoctor);
-            dw.Show();
-            this.Close();
+            DataContext = new HelpWizardViewModel(doc, this);
         }
     }
 }

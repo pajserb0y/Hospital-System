@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HospitalSystem.code"
+        xmlns:local="clr-namespace:HospitalSystem.code" 
+        xmlns:viewmodel="clr-namespace:HospitalSystem.code.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:HelpWizardViewModel}"
         mc:Ignorable="d"
         Title="HelpWizard" Height="480" Width="810"
         WindowStartupLocation="CenterScreen">
     <Grid >
-        <Button Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_1"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="552,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click"/>
+        <Button Command="{Binding FinishCommand}" Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
+        <Button Command="{Binding NextCommand}" Content="Next" HorizontalAlignment="Left" Margin="552,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
         <Label Content="Welcome to introduction wizard" FontSize="25" FontFamily="Calibri" FontWeight="Bold" HorizontalAlignment="Left" Margin="36,36,0,0" VerticalAlignment="Top" Width="695"/>
         <Label Content="Follow the next steps, in which are explaned main functionalities of Hospital-System application." HorizontalAlignment="Left" FontFamily="Calibri" FontSize="18" Margin="36,82,0,0" VerticalAlignment="Top" Width="717" Height="35"/>
         <Rectangle HorizontalAlignment="Left" Height="218" Margin="36,139,0,0" Stroke="Black" VerticalAlignment="Top" Width="742"/>

@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HospitalSystem.code"
+        xmlns:local="clr-namespace:HospitalSystem.code" xmlns:viewmodel="clr-namespace:HospitalSystem.code.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:StepOneViewModel}"
         mc:Ignorable="d"
         Title="StepOne" Height="480" Width="810"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_2"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="552,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="442,388,0,0" VerticalAlignment="Top" Width="92" Height="25" Click="Button_Click_1"/>
+        <Button Command="{Binding FinishCommand}" Content="Finish" HorizontalAlignment="Left" Margin="686,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
+        <Button Command="{Binding NextCommand}" Content="Next" HorizontalAlignment="Left" Margin="552,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="442,388,0,0" VerticalAlignment="Top" Width="92" Height="25" />
         <Label Content="Step One: Begining new examination" FontSize="25" FontFamily="Calibri" FontWeight="Bold" HorizontalAlignment="Left" Margin="36,36,0,0" VerticalAlignment="Top" Width="695"/>
         <Rectangle HorizontalAlignment="Left" Height="275" Margin="36,82,0,0" Stroke="Black" VerticalAlignment="Top" Width="742"/>
         <DataGrid Margin="67,114,202,170">
