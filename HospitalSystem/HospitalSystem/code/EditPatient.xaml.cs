@@ -156,7 +156,6 @@ namespace HospitalSystem.code
             {
                 NewJob editJob = new NewJob(currentPatient, (Job)dgJob.SelectedItem);
                 editJob.ShowDialog();
-                (dgJob.ItemContainerGenerator.ContainerFromItem(dgJob.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan job
             }
             else
                 MessageBox.Show("Before editing some job you need to select some firsst.");

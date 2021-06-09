@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HospitalSystem.code"
+        xmlns:local="clr-namespace:HospitalSystem.code" xmlns:viewmodel="clr-namespace:HospitalSystem.code.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:NewJobViewModel}"
         mc:Ignorable="d"
         Title="Add new job" Height="350" Width="410"
         WindowStartupLocation="CenterScreen"
@@ -13,12 +13,15 @@
         <Label Content="Position:  *" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="34" Margin="70,96,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Register code:  *" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="34" Margin="70,143,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Activity code:  *" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="34" Margin="70,188,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="18" Margin="176,56,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter company name"/>
-        <TextBox x:Name="txtJob" HorizontalAlignment="Left" Height="18" Margin="176,102,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter job position"/>
-        <TextBox x:Name="txtReg" HorizontalAlignment="Left" Height="18" Margin="176,149,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter register code"/>
-        <TextBox x:Name="txtAct" HorizontalAlignment="Left" Height="18" Margin="176,194,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter activity code"/>
-        <TextBlock Text="&lt; save" TextWrapping="Wrap" PreviewMouseDown="txbSave_PreviewMouseDown" Cursor="Hand" FontSize="20"  ToolTip="Add new job"
+        <TextBox x:Name="txtName" Text="{Binding Path=CompanyName}"  HorizontalAlignment="Left" Height="18" Margin="176,56,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter company name"/>
+        <TextBox x:Name="txtJob" Text="{Binding Path=JobPosition}"  HorizontalAlignment="Left" Height="18" Margin="176,102,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter job position"/>
+        <TextBox x:Name="txtReg" Text="{Binding Path=RegisterCode}"  HorizontalAlignment="Left" Height="18" Margin="176,149,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter register code"/>
+        <TextBox x:Name="txtAct" Text="{Binding Path=ActivityCode}"  HorizontalAlignment="Left" Height="18" Margin="176,194,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="162" ToolTip="Enter activity code"/>
+        <TextBlock Text="&lt; save" TextWrapping="Wrap"  Cursor="Hand" FontSize="20"  ToolTip="Add new job"
                                    HorizontalAlignment="Left" Margin="296,257,0,0" Padding="10,10,10,10" Height="47" VerticalAlignment="Top" >
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding OkCommand}" MouseAction="LeftClick"/>
+            </TextBlock.InputBindings>
             <TextBlock.Style>
                 <Style>
                     <Setter Property="TextBlock.TextDecorations" Value="" />
@@ -29,8 +32,8 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style></TextBlock>
-        <Label Name="errorActivity" HorizontalAlignment="Left" Margin="162,206,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
-        <Label Name="errorRegister" HorizontalAlignment="Left" Margin="162,161,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
+        <Label Name="errorActivity" Content="{Binding ErrorActivity}" HorizontalAlignment="Left" Margin="162,206,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
+        <Label Name="errorRegister" Content="{Binding ErrorRegister}" HorizontalAlignment="Left" Margin="162,161,0,0" VerticalAlignment="Top" Width="247" Height="30" Foreground="Red"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,0,0,-2" Text="&lt; * means that field is reaqured to fill &gt;" TextWrapping="Wrap" FontSize="12" Width="212" Height="27" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
