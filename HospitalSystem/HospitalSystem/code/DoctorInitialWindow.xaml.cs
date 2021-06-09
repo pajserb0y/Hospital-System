@@ -8,7 +8,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Linq;
 
 namespace HospitalSystem.code
 {
@@ -824,14 +823,14 @@ namespace HospitalSystem.code
             if (dpStartReportDate.SelectedDate != null && dpEndReportDate.SelectedDate != null)
             {
                 List<Drug> wantedDrugs = getDrugsForReport();
-                FileStream fs = new FileStream("../../../Drug usage report.pdf", FileMode.Create, FileAccess.Write, FileShare.None);
+                FileStream fs = new FileStream("../../../Reports/Drug usage report.pdf", FileMode.Create, FileAccess.Write, FileShare.None);
                 Rectangle rec = new Rectangle(800, 1024);
                 Document pdfDocument = new Document(rec);
                 PdfWriter writer = PdfWriter.GetInstance(pdfDocument, fs);
 
                 pdfDocument.Open();
 
-                Paragraph title = new Paragraph(string.Format("Drug usage report for period from {0} to {1}", dpStartReportDate.SelectedDate.ToString(), dpEndReportDate.SelectedDate.ToString()));
+                Paragraph title = new Paragraph(string.Format("Drug usage report for period from {0} to {1}", ((DateTime)dpStartReportDate.SelectedDate).ToString("dd/MM/yyyy"), ((DateTime)dpEndReportDate.SelectedDate).ToString("dd/MM/yyyy")));
                 title.Alignment = Element.ALIGN_CENTER;
                 title.Font.Size = 22;
                 pdfDocument.Add(title);
@@ -839,33 +838,42 @@ namespace HospitalSystem.code
                 pdfDocument.Add(Chunk.NEWLINE);
 
                 PdfPTable table = new PdfPTable(5);
-                float[] widths = new float[] { 0.5f, 2f, 2f, 1f, 1f };
+                float[] widths = new float[] { 0.5f, 3f, 2f,4f, 1f };
                 table.SetWidths(widths);
                 table.DefaultCell.FixedHeight = 20f; //visina reda
                 table.WidthPercentage = 100;
                 table.SpacingBefore = 20f;
                 table.SpacingAfter = 30f;
 
-                //for (int i = 0; i <= 6; i++)
-               //     table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
+
+                table.AddCell("Id");
+                table.AddCell("Name");
+                table.AddCell("Status");
+                table.AddCell("Ingridients");
+                table.AddCell("Amount");
 
                 string ingridients = "";
-                foreach (Drug drug in wantedDrugs)
+                if (wantedDrugs != null)
                 {
-                    table.AddCell(drug.Id.ToString());
-                    table.AddCell(drug.Name.ToString());
-                    table.AddCell(drug.Status.ToString());
-                    if (drug.Ingridients != null)
+                    foreach (Drug drug in wantedDrugs)
                     {
-                        foreach (Ingridient i in drug.Ingridients)
-                        {
-                            ingridients = ingridients + i.ToString() + "; ";
-                        }
+                        table.AddCell(drug.Id.ToString());
+                        table.AddCell(drug.Name.ToString());
                         table.AddCell(drug.Status.ToString());
-                    }
+                        if (drug.Ingridients != null)
+                        {
+                            foreach (Ingridient i in drug.Ingridients)
+                            {
+                                ingridients = ingridients + i.ToString() + "; ";
+                            }
+                            table.AddCell(ingridients);
+                            ingridients = "";
+                        }
 
-                    table.AddCell(drug.Amount.ToString());
+                        table.AddCell(drug.Amount.ToString());
+                    }
                 }
+
                 pdfDocument.Add(table);
 
                 pdfDocument.Close();

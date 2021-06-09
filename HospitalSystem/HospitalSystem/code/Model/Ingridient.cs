@@ -42,5 +42,10 @@ namespace HospitalSystem.code
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
