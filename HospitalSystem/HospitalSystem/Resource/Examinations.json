@@ -34,7 +34,8 @@
       }
     ],
     "TimesChanged": 0,
-    "TimeOfCreation": "0001-01-01T00:00:00"
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
   },
   {
     "Id": 2,
@@ -75,7 +76,8 @@
       }
     ],
     "TimesChanged": 3,
-    "TimeOfCreation": "0001-01-01T00:00:00"
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
   },
   {
     "Id": 4,
@@ -148,19 +150,20 @@
       }
     ],
     "TimesChanged": 0,
-    "TimeOfCreation": "0001-01-01T00:00:00"
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
   },
   {
     "Id": 5,
     "Time": "2021-05-09T07:00:00",
     "Date": "2021-05-09T00:00:00",
     "PatientId": 9,
-    "RoomId": 1,
+    "RoomId": 3,
     "DoctorId": 1,
     "IsOperation": false,
     "Anamnesis": {
-      "AnamnesisInfo": "aaaaaaaaaaaaaaaaaaa",
-      "Diagnosis": "aaaaaaaaaaaaaaaaaa"
+      "AnamnesisInfo": null,
+      "Diagnosis": null
     },
     "Prescriptions": [
       {
@@ -185,6 +188,160 @@
       }
     ],
     "TimesChanged": 0,
-    "TimeOfCreation": "0001-01-01T00:00:00"
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 6,
+    "Time": "2021-06-01T14:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 3,
+    "DoctorId": 18,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 0,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 7,
+    "Time": "2021-06-01T17:00:00",
+    "Date": "2021-05-14T00:00:00",
+    "PatientId": 12,
+    "RoomId": 9,
+    "DoctorId": 18,
+    "IsOperation": true,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 3,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 8,
+    "Time": "2021-06-04T14:30:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 7,
+    "DoctorId": 18,
+    "IsOperation": true,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 9,
+    "Time": "2021-06-08T14:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 3,
+    "DoctorId": 18,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 10,
+    "Time": "2021-06-04T15:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 8,
+    "DoctorId": 18,
+    "IsOperation": true,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 11,
+    "Time": "2021-06-08T14:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 3,
+    "DoctorId": 18,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 12,
+    "Time": "2021-06-08T14:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 3,
+    "DoctorId": 18,
+    "IsOperation": false,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 13,
+    "Time": "2021-06-04T14:30:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 7,
+    "DoctorId": 18,
+    "IsOperation": true,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
+  },
+  {
+    "Id": 14,
+    "Time": "2021-06-04T15:00:00",
+    "Date": "2021-06-01T00:00:00",
+    "PatientId": 14,
+    "RoomId": 8,
+    "DoctorId": 18,
+    "IsOperation": true,
+    "Anamnesis": {
+      "AnamnesisInfo": null,
+      "Diagnosis": null
+    },
+    "Prescriptions": [],
+    "TimesChanged": 1,
+    "TimeOfCreation": "0001-01-01T00:00:00",
+    "Notes": ""
   }
 ]

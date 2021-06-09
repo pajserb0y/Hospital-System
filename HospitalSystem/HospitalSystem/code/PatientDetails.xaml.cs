@@ -251,25 +251,32 @@ namespace HospitalSystem.code
 
         private void Button_View_Refferal(object sender, RoutedEventArgs e)
         {
-            Refferal selectedRefferal = (Refferal)dgPatientRefferals.SelectedItem;
-            txtNoteRefferal.Text = selectedRefferal.Note;
+            if (dgPatientRefferals.SelectedItem != null)
+            { 
+                Refferal selectedRefferal = (Refferal)dgPatientRefferals.SelectedItem;
+                txtNoteRefferal.Text = selectedRefferal.Note;
 
-            Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
+                Doctor selectedDoctor = DoctorStorage.getInstance().GetOne(selectedRefferal.DoctorId);
 
-            cbDoctorRefferal.ItemsSource = DoctorStorage.getInstance().GetAll();
-            cbDoctorRefferal.SelectedItem = selectedDoctor;
+                cbDoctorRefferal.ItemsSource = DoctorStorage.getInstance().GetAll();
+                cbDoctorRefferal.SelectedItem = selectedDoctor;
 
-            InitializeSpecializatonForRefferal(cbSpecializationRefferal);
-            cbSpecializationRefferal.SelectedItem = selectedDoctor;
+                InitializeSpecializatonForRefferal(cbSpecializationRefferal);
+                cbSpecializationRefferal.SelectedItem = selectedDoctor;
 
-            cbDoctorRefferal.IsEnabled = false;
-            cbSpecializationRefferal.IsEnabled = false;
-            txtNoteRefferal.IsEnabled = false;
+                cbDoctorRefferal.IsEnabled = false;
+                cbSpecializationRefferal.IsEnabled = false;
+                txtNoteRefferal.IsEnabled = false;
 
-            btnSavePrescription.Visibility = Visibility.Collapsed;
-            tRefferal.Visibility = Visibility.Visible;
-            tRefferal.Focus();
-        }
+                btnSavePrescription.Visibility = Visibility.Collapsed;
+                tRefferal.Visibility = Visibility.Visible;
+                tRefferal.Focus();
+            }
+            else
+            {
+                MessageBox.Show("You have not selected any refferal!");
+            }
+}
 
         private void cbSpecializationRefferal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -334,8 +341,17 @@ namespace HospitalSystem.code
 
                 if (anamnesis != null)
                 {
-                    txtAnamnesis.Text = anamnesis.AnamnesisInfo;
-                    txtDiagnosis.Text = anamnesis.Diagnosis;
+                    if (anamnesis.AnamnesisInfo != null && anamnesis.Diagnosis != null)
+                    {
+                        txtAnamnesis.Text = anamnesis.AnamnesisInfo.ToString();
+                        txtDiagnosis.Text = anamnesis.Diagnosis.ToString();
+                    }
+                    else
+                    {
+                        txtAnamnesis.Text = "";
+                        txtDiagnosis.Text = "";
+                    }
+
                 }
 
                 tExam.Visibility = Visibility.Visible;
@@ -368,14 +384,14 @@ namespace HospitalSystem.code
                 correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
                 txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
                 txtTime.Text = correspondingExam.Time.ToString("HH/mm");
-                cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
-                cbDrug.SelectedItem = selectedPrescription.Drug;
+                
+                txtDrug.Text = selectedPrescription.Drug.ToString();
                 txtTaking.Text = selectedPrescription.Taking;
                 txtInterval.Text = Convert.ToString(selectedPrescription.Interval);
 
                 txtDate.IsEnabled = false;
                 txtTime.IsEnabled = false;
-                cbDrug.IsEnabled = false;
+                txtDrug.IsEnabled = false;
                 txtTaking.IsEnabled = false;
                 txtInterval.IsEnabled = false;
 

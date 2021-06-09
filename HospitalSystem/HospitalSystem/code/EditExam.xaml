@@ -11,7 +11,7 @@
         <Label Content="Doctor" HorizontalAlignment="Left" Height="36" Margin="96,84,0,0" VerticalAlignment="Top" Width="104"/>
         <Label Content="Date" HorizontalAlignment="Left" Height="36" Margin="96,153,0,0" VerticalAlignment="Top" Width="104"/>
         <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="223,158,0,0" VerticalAlignment="Top" Height="26" Width="160" FirstDayOfWeek="Monday" IsTodayHighlighted="True"  SelectedDateChanged="dateChanged"/>
-        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click_Save"/>
+        <Button  Content="_Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click_Save"/>
 
         <Label Content="Room" HorizontalAlignment="Left" Height="36" Margin="96,283,0,0" VerticalAlignment="Top" Width="104"/>
         <Label Content="Time" HorizontalAlignment="Left" Height="36" Margin="96,220,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.5,1.418"/>

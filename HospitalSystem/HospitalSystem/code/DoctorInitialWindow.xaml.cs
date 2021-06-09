@@ -1,9 +1,14 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 
 namespace HospitalSystem.code
 {
@@ -43,15 +48,12 @@ namespace HospitalSystem.code
 
             dgVerifiedDrugs.ItemsSource = verifiedDrugs;
             dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
-            cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
+            cbDrug.ItemsSource = verifiedDrugs;
 
-            //Home
-            //cbDoctorHome.ItemsSource = doctors;
-            //cbDoctor.ItemsSource = doctors;
-
+            dpStartReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
             //na home page je bio cbDoctorHome a na exaimnationu je bio cbDoctor
-            dgPatients.ItemsSource = PatientsStorage.getInstance().GetAll();
-            //dgDoctorAppointments.ItemsSource = appointments;
+            dgPatients.ItemsSource = patients;
             fillAnnouncement();
             fillAppointment();
             fillDoctorAccount();
@@ -234,34 +236,43 @@ namespace HospitalSystem.code
 
         private void Button_Save_Prescription(object sender, RoutedEventArgs e)
         {
-            if(cbDrug.SelectedItem != null && !txtInterval.Text.Equals("") && !txtTaking.Text.Equals(""))
+            try
             {
-                Drug selectedDrug = (Drug)cbDrug.SelectedItem;
-                if (currExam.Patient.Alergens != null)
+                int interval = Convert.ToInt32(txtInterval.Text);
+                if (cbDrug.SelectedItem != null && !txtInterval.Text.Equals("") && !txtTaking.Text.Equals(""))
                 {
-                    foreach (Ingridient ingridient in selectedDrug.Ingridients)
-                        if (currExam.Patient.Alergens.Contains(ingridient.Name))
-                        {
-                            MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
-                            return;
-                        }
+                    Drug selectedDrug = (Drug)cbDrug.SelectedItem;
+                    if (currExam.Patient.Alergens != null)
+                    {
+                        foreach (Ingridient ingridient in selectedDrug.Ingridients)
+                            if (currExam.Patient.Alergens.Contains(ingridient.Name))
+                            {
+                                MessageBox.Show("Patient is ALERGIC on some ingredint of this medicine!");
+                                return;
+                            }
+                    }
+                    if (currExam.Prescriptions == null)
+                        currExam.Prescriptions = new ObservableCollection<Prescription>();
+
+                    int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
+                    Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date, currExam.Time);
+
+                    currExam.Prescriptions.Add(newPrescription);
+
+                    ExaminationStorage.getInstance().Edit(currExam);
+                    tExam.Focus();
+                    tPersc.Visibility = Visibility.Collapsed;
                 }
-                if (currExam.Prescriptions == null)
-                    currExam.Prescriptions = new ObservableCollection<Prescription>();
-
-                int prescriptionId = ExaminationStorage.getInstance().GenerateNewPrescriptionID(currExam);
-                Prescription newPrescription = new Prescription(prescriptionId, selectedDrug, txtTaking.Text, Convert.ToInt32(txtInterval.Text), currExam.Date, currExam.Time);
-
-                currExam.Prescriptions.Add(newPrescription);
-
-                ExaminationStorage.getInstance().Edit(currExam);
-                tExam.Focus();
-                tPersc.Visibility = Visibility.Collapsed;
+                else
+                {
+                    MessageBox.Show("You have not filled all necessary information!");
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("You have not filled all necessary information!");
+                MessageBox.Show("You have not filled correct information!");
             }
+            
         }
 
         private void Button_Prescription(object sender, RoutedEventArgs e)
@@ -272,6 +283,7 @@ namespace HospitalSystem.code
             txtTaking.Clear();
             txtInterval.Clear();
             tPersc.Visibility = Visibility.Visible;
+            tPersc.Focus();
         }
 
         Drug selectedDrug;
@@ -317,21 +329,29 @@ namespace HospitalSystem.code
 
         private void Button_Add_Ingridient(object sender, RoutedEventArgs e)
         {
-            if(txtNewIngridients.Text != string.Empty && txtNewAmount.Text != string.Empty)
+            try
             {
                 Ingridient ingridient = new Ingridient();
-                ingridient.Name = txtNewIngridients.Text;
                 ingridient.Amount = Convert.ToInt32(txtNewAmount.Text);
-                selectedDrug.Ingridients.Add(ingridient);
-                foreach (Ingridient i in selectedDrug.Ingridients)
-                    selectedDrug.Amount += i.Amount;
-                txtNewIngridients.Clear();
-                txtNewAmount.Clear();
+                if (txtNewIngridients.Text != string.Empty && txtNewAmount.Text != string.Empty)
+                {
+                    ingridient.Name = txtNewIngridients.Text; 
+                    selectedDrug.Ingridients.Add(ingridient);
+                    foreach (Ingridient i in selectedDrug.Ingridients)
+                        selectedDrug.Amount += i.Amount;
+                    txtNewIngridients.Clear();
+                    txtNewAmount.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("You have not filled all information!");
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("You have not filled all information!");
+                MessageBox.Show("You have not filled correct information!");
             }
+            
         }
 
         private void Button_Delete_Ingridient(object sender, RoutedEventArgs e)
@@ -493,6 +513,8 @@ namespace HospitalSystem.code
             cbHospitalizationRoom.SelectedIndex = -1;
             cbHospitalizatonBed.SelectedIndex = -1;
             dpHospitalizationIN.SelectedDate = null;
+            dpHospitalizationIN.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
             tHospitalization.Visibility = Visibility.Visible;
             tHospitalization.Focus();
         }
@@ -561,9 +583,25 @@ namespace HospitalSystem.code
             cbHospitalizationRoom.ItemsSource = roomCollectionView;
         }
 
+        private void dpHospitalizationTimeIn_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (dpHospitalizationIN.SelectedDate != null)
+            {
+                dpHospitalizationOUT.SelectedDate = null;
+                dpHospitalizationOUT.BlackoutDates.Clear();
+                dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpHospitalizationIN.SelectedDate).AddDays(-1)));
+            }
+            else
+            {
+                dpHospitalizationOUT.SelectedDate = null;
+                dpHospitalizationOUT.BlackoutDates.Clear();
+                dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            }
+        }
         private void dpHospitalizationTimeOut_Changed(object sender, SelectionChangedEventArgs e)
         {
-            fillListOfAvailableRooms(new List<Bed>());
+            if(dpHospitalizationOUT.SelectedDate != null)
+                fillListOfAvailableRooms(new List<Bed>());
         }
 
         private void fillListOfAvailableBeds()
@@ -615,8 +653,14 @@ namespace HospitalSystem.code
             Button_View_Verified.ToolTip = null;
             Button_wizard.ToolTip = null;
             button_announcement.ToolTip = null;
-            txtPatient.ToolTip = null;
+            txtSearchAppointment.ToolTip = null;
             button_save_perscription.ToolTip = null;
+            button_hospitalization.ToolTip = null;
+            button_refferal.ToolTip = null;
+            button_prescription.ToolTip = null;
+            button_save_anamesis.ToolTip = null;
+            button_save_refferal.ToolTip = null;
+            txtSearchPatient.ToolTip = null;
         }
 
         private void checkbox_tooltip_Checked(object sender, RoutedEventArgs e)
@@ -631,27 +675,41 @@ namespace HospitalSystem.code
             Button_View_Verified.ToolTip = "View drug details";
             Button_wizard.ToolTip = "Instuction wizard";
             button_announcement.ToolTip = "View selected announcement";
-            txtPatient.ToolTip = "Search by patient";
+            txtSearchAppointment.ToolTip = "Search appointments";
             button_save_perscription.ToolTip = "Save prescription";
+            button_hospitalization.ToolTip = "Fill hospitalization form";
+            button_refferal.ToolTip = "Write refferal";
+            button_prescription.ToolTip = "Write prescription";
+            button_save_anamesis.ToolTip = "Save current examination";
+            button_save_refferal.ToolTip = "Save refferal";
+            txtSearchPatient.ToolTip = "Search patients";
         }
 
         private void Button_View_Patient_Details(object sender, RoutedEventArgs e)
         {
-            PatientDetails patientDetails = new PatientDetails((Patient)dgPatients.SelectedItem);
-            patientDetails.ShowDialog();
+            if(dgPatients.SelectedItem != null)
+            {
+                PatientDetails patientDetails = new PatientDetails((Patient)dgPatients.SelectedItem);
+                patientDetails.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select patient first!");
+            }
         }
 
         private void Button_Save_Doctor_Info(object sender, RoutedEventArgs e)
         {
             try
             {
-                selectedDoctor.Jmbg = Convert.ToInt32(txtJmbg.Text);
-                selectedDoctor.Telephone = Convert.ToInt32(txtTel.Text);
+                selectedDoctor.Jmbg = Convert.ToInt64(txtJmbg.Text);
+                selectedDoctor.Telephone = Convert.ToInt64(txtTel.Text);
                 if (txtIme.Text != "" && txtPrezime.Text != "" && txtAdress.Text != "" && selectedDoctor.Jmbg != 0 && selectedDoctor.Telephone != 0)
                 {
                     selectedDoctor.FirstName = txtIme.Text;
                     selectedDoctor.LastName = txtPrezime.Text;
                     selectedDoctor.Adress = txtAdress.Text;
+                    DoctorStorage.getInstance().Edit(selectedDoctor);
                 }
                 else
                 {
@@ -662,6 +720,193 @@ namespace HospitalSystem.code
             {
                 MessageBox.Show("You have not filled all necessary information corectly!");
             }          
+        }
+
+        private void txtSearchAppointment_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox search = (TextBox)sender;
+            checkAllApp(search.Text.ToLower());
+        }
+
+        private void checkAllApp(string search)
+        {
+            collectionViewAppointment.Filter = (app) =>
+            {
+                Appointment tempApp = app as Appointment;
+                if (tempApp.Doctor == selectedDoctor && (tempApp.Doctor.FirstName.ToLower().Contains(search) || tempApp.Doctor.LastName.ToLower().Contains(search) || tempApp.Doctor.Specialization.ToLower().Contains(search) ||
+                    tempApp.Patient.FirstName.ToLower().Contains(search) || tempApp.Patient.LastName.ToLower().Contains(search) || tempApp.Date.ToString("dd/MM/yyyy").ToLower().Contains(search) ||
+                    tempApp.Room.Name.ToLower().Contains(search) || tempApp.Time.ToString().ToLower().Contains(search)))
+                    return true;
+                return false;
+            };
+            dgDoctorAppointments.ItemsSource = collectionViewAppointment;
+        }
+
+        private void txtSearchPatient_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox search = (TextBox)sender;
+            filterPatients(search.Text.ToLower());
+        }
+        private void filterPatients(string search)
+        {
+            ObservableCollection<Patient> newPatientCollection = new ObservableCollection<Patient>();
+            ListCollectionView patientCollection = new ListCollectionView(PatientsStorage.getInstance().GetAll());
+            patientCollection.Filter = (patient) =>
+            {
+                Patient tempPatient = patient as Patient;
+                if (tempPatient.Adress.ToLower().Contains(search) || tempPatient.City.ToLower().Contains(search) || tempPatient.Country.ToLower().Contains(search) ||
+                    tempPatient.Email.ToLower().Contains(search) || tempPatient.FirstName.ToLower().Contains(search) || tempPatient.Jmbg.ToString().ToLower().Contains(search) ||
+                    tempPatient.LastName.ToLower().Contains(search) || tempPatient.SocNumber.ToString().ToLower().Contains(search) ||
+                    tempPatient.Telephone.ToString().ToLower().Contains(search) || tempPatient.Username.Contains(search))
+                {
+                    newPatientCollection.Add(tempPatient);
+                    return true;
+                }
+                return false;
+            };
+            dgPatients.ItemsSource = newPatientCollection;
+        }
+
+        private void Button_Cancel_Prescription(object sender, RoutedEventArgs e)
+        {
+            tPersc.Visibility = Visibility.Collapsed;
+            tExam.Focus();
+        }
+
+        private void Button_Cancel_Refferal(object sender, RoutedEventArgs e)
+        {
+            tRefferal.Visibility = Visibility.Collapsed;
+            tExam.Focus();
+        }
+
+        private void Button_Cancel_Hospitalization(object sender, RoutedEventArgs e)
+        {
+            tHospitalization.Visibility = Visibility.Collapsed;
+            tExam.Focus();
+        }
+
+        private void Button_Cancel_Exam(object sender, RoutedEventArgs e)
+        {
+            tExam.Visibility = Visibility.Collapsed;
+            tAppointments.Focus();
+        }
+
+        private void Button_Cancel_drug_details(object sender, RoutedEventArgs e)
+        {
+            tDrugDetails.Visibility = Visibility.Collapsed;
+            tDrugRecord.Focus();
+        }
+
+        private void Button_Cancel_drug_report(object sender, RoutedEventArgs e)
+        {
+
+            tReport.Visibility = Visibility.Collapsed;
+            tDrugRecord.Focus();
+        }
+        private void dpStartReportDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (dpStartReportDate.SelectedDate != null)
+            {
+                dpEndReportDate.SelectedDate = null;
+                dpEndReportDate.BlackoutDates.Clear();
+                dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpStartReportDate.SelectedDate).AddDays(-1)));
+            }
+            else
+            {
+                dpEndReportDate.SelectedDate = null;
+                dpEndReportDate.BlackoutDates.Clear();
+                dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            }
+        }
+
+        private void Button_Generate_Report_Click(object sender, RoutedEventArgs e)
+        {
+            if (dpStartReportDate.SelectedDate != null && dpEndReportDate.SelectedDate != null)
+            {
+                List<Drug> wantedDrugs = getDrugsForReport();
+                FileStream fs = new FileStream("../../../Drug usage report.pdf", FileMode.Create, FileAccess.Write, FileShare.None);
+                Rectangle rec = new Rectangle(800, 1024);
+                Document pdfDocument = new Document(rec);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDocument, fs);
+
+                pdfDocument.Open();
+
+                Paragraph title = new Paragraph(string.Format("Drug usage report for period from {0} to {1}", dpStartReportDate.SelectedDate.ToString(), dpEndReportDate.SelectedDate.ToString()));
+                title.Alignment = Element.ALIGN_CENTER;
+                title.Font.Size = 22;
+                pdfDocument.Add(title);
+
+                pdfDocument.Add(Chunk.NEWLINE);
+
+                PdfPTable table = new PdfPTable(5);
+                float[] widths = new float[] { 0.5f, 2f, 2f, 1f, 1f };
+                table.SetWidths(widths);
+                table.DefaultCell.FixedHeight = 20f; //visina reda
+                table.WidthPercentage = 100;
+                table.SpacingBefore = 20f;
+                table.SpacingAfter = 30f;
+
+                //for (int i = 0; i <= 6; i++)
+               //     table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
+
+                string ingridients = "";
+                foreach (Drug drug in wantedDrugs)
+                {
+                    table.AddCell(drug.Id.ToString());
+                    table.AddCell(drug.Name.ToString());
+                    table.AddCell(drug.Status.ToString());
+                    if (drug.Ingridients != null)
+                    {
+                        foreach (Ingridient i in drug.Ingridients)
+                        {
+                            ingridients = ingridients + i.ToString() + "; ";
+                        }
+                        table.AddCell(drug.Status.ToString());
+                    }
+
+                    table.AddCell(drug.Amount.ToString());
+                }
+                pdfDocument.Add(table);
+
+                pdfDocument.Close();
+
+                MessageBox.Show("Report has been succesfuly saved in Reports by name 'Drug usage report.pdf'!");
+
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo(Path.GetFullPath("../../../Reports/Drug usage report.pdf"))       // da se pdf fajl odmah otvori
+                {
+                    UseShellExecute = true
+                };
+                process.Start();
+            }
+            else
+            {
+                MessageBox.Show("You have to select period for which to generate report!");
+            }
+        }
+
+        private List<Drug> getDrugsForReport()
+        {
+                List<Drug> wantedDrugs = new List<Drug>();
+                if (ExaminationStorage.getInstance().GetAll() != null)
+                {
+                    foreach (Examination exam in ExaminationStorage.getInstance().GetAll())
+                    {
+                        if (exam.Prescriptions != null)
+                        {
+                            foreach (Prescription p in exam.Prescriptions)
+                                if (p.DateOfPrescription >= dpStartReportDate.SelectedDate && p.DateOfPrescription <= dpEndReportDate.SelectedDate)
+                                {
+                                    wantedDrugs.Add(p.Drug);
+                                }
+                        }
+                    }
+                }
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
+            return wantedDrugs;
         }
     }
 }

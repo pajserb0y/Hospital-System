@@ -26,6 +26,7 @@ namespace HospitalSystem.code
             InitializeComponent();
             currentAppointment = selectedAppointment;
             InitializeCollection(selectedAppointment);
+            dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }
 
         private void InitializeCollection(Appointment selectedAppointment)
