@@ -58,7 +58,7 @@ namespace HospitalSystem.code
             foreach (Refferal refferal in refferals)
                 if (currentAppointment.Patient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
                     foreach (Doctor doctor in doctors)
-                        if (doctor.Id == refferal.DoctorId)
+                        if (doctor.Id == refferal.DoctorId && !finalDoctors.Contains(doctor))
                             finalDoctors.Add(doctor);
         }
 

@@ -638,7 +638,7 @@ namespace HospitalSystem.code
         {
             HelpWizard hw = new HelpWizard(selectedDoctor);
             hw.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)

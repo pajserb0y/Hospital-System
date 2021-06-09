@@ -146,9 +146,28 @@ namespace HospitalSystem.code
             {
                 if (dgAppToday.SelectedItem != null)
                 {
-                    var selectedApp = dgAppToday.SelectedItem;
-                    if (selectedApp != null)
-                        AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
+                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
+                    switch (rsltMessageBox)
+                    {
+                        case MessageBoxResult.Yes:
+                            {
+                                var selectedApp = dgAppToday.SelectedItem;
+                                if (selectedApp != null)
+                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                                break;
+                            }
+
+                        case MessageBoxResult.No:
+                            /* ... */
+                            break;
+
+                        case MessageBoxResult.Cancel:
+                            /* ... */
+                            break;
+                    }
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -157,9 +176,28 @@ namespace HospitalSystem.code
             {
                 if (dgAppWeekly.SelectedItem != null)
                 {
-                    var selectedApp = dgAppWeekly.SelectedItem;
-                    if (selectedApp != null)
-                        AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
+                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
+                    switch (rsltMessageBox)
+                    {
+                        case MessageBoxResult.Yes:
+                            {
+                                var selectedApp = dgAppWeekly.SelectedItem;
+                                if (selectedApp != null)
+                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                                break;
+                            }
+
+                        case MessageBoxResult.No:
+                            /* ... */
+                            break;
+
+                        case MessageBoxResult.Cancel:
+                            /* ... */
+                            break;
+                    }                    
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -168,9 +206,28 @@ namespace HospitalSystem.code
             {
                 if (dgAppAll.SelectedItem != null)
                 {
-                    var selectedApp = dgAppAll.SelectedItem;
-                    if (selectedApp != null)
-                        AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
+                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
+                    switch (rsltMessageBox)
+                    {
+                        case MessageBoxResult.Yes:
+                            {
+                                var selectedApp = dgAppAll.SelectedItem;
+                                if (selectedApp != null)
+                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
+                                break;
+                            }
+
+                        case MessageBoxResult.No:
+                            /* ... */
+                            break;
+
+                        case MessageBoxResult.Cancel:
+                            /* ... */
+                            break;
+                    }                    
                 }
                 else
                     MessageBox.Show("You have to select patient first.");
@@ -276,7 +333,7 @@ namespace HospitalSystem.code
         }
 
         private void txbExportToPdf_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {      
+        {
             Appointment app = filterWeeklyAppointments()[0];
             FileStream fs = new FileStream("../../../Reports/Weekly report of appointments.pdf", FileMode.Create, FileAccess.Write, FileShare.None);
             Rectangle rec = new Rectangle(800, 1024);
@@ -302,7 +359,7 @@ namespace HospitalSystem.code
             table.SpacingBefore = 20f;
             table.SpacingAfter = 30f;
 
-            for (int i = 0; i <= 6; i++)           
+            for (int i = 0; i <= 6; i++)
                 table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
 
             foreach (Appointment appointment in appointmentCollectionWeekly.OrderBy(o => o.Date).ThenBy(o => o.Time.TimeOfDay).ToList())
