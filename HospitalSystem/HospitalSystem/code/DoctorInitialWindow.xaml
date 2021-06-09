@@ -297,7 +297,7 @@
                                     <RowDefinition Height="71*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Button  x:Name="Button_View_Verified" Content="_View" ToolTip="View drug details" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="755,50,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_View_Verified_Drug"/>
+                                <Button  x:Name="Button_View_Verified" Content="_View" ToolTip="View drug details" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="767,133,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_View_Verified_Drug"/>
                                 <Button x:Name="Button_View_Unverified" Content="_View" ToolTip="View drug details" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="760,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_View_Unverified_Drug"/>
                                 <Button x:Name="Button_Verify" Content="_Verify" ToolTip="Verify new drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="630,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Verify_Drug"/>
                                 <Button x:Name="Button_Report" Content="_Report" ToolTip="Send report for drug" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="500,50,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Report_Drug"/>
@@ -337,6 +337,12 @@
                                     <TextBox TextWrapping="Wrap"  Width="200" Canvas.Left="730" Canvas.Top="7"/>
                                     <Rectangle Height="183" Stroke="Black" Width="953" Canvas.Left="3"/>
                                 </Canvas>
+                                <DatePicker x:Name="dpStartReportDate" Grid.Column="1" HorizontalAlignment="Left" Margin="64,147,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="165" SelectedDateChanged="dpStartReportDate_Changed"/>
+                                <DatePicker x:Name="dpEndReportDate" Grid.Column="2" HorizontalAlignment="Left" Margin="206,147,0,0" Grid.Row="3" VerticalAlignment="Top" Width="164"/>
+                                <Label Content="Generate report for drug usage in period:" FontSize="15" FontWeight="DemiBold" Grid.Column="1" HorizontalAlignment="Left" Margin="10,108,0,0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="297"/>
+                                <Label Content="From:" Grid.Column="1" FontSize="13" HorizontalAlignment="Center" Margin="0,145,0,0" Grid.Row="3" VerticalAlignment="Top" Width="48"/>
+                                <Label Content="to:&#xD;&#xA;" FontSize="13" Grid.Column="2" HorizontalAlignment="Left" Margin="166,146,0,0" Grid.Row="3" VerticalAlignment="Top" Width="49" Height="25"/>
+                                <Button  x:Name="Button_Generate_Report" Content="_Generate" ToolTip="View drug details" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="409,137,0,0" Height="36" VerticalAlignment="Top" Width="118" Click="Button_Generate_Report_Click"/>
                             </Grid>
                         </StackPanel>
                     </TabItem>

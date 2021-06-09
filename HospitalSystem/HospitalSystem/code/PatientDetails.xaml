@@ -173,7 +173,7 @@
                                 <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                      
+
                         <Button Content="_View" HorizontalAlignment="Left" Grid.Column="5"  VerticalAlignment="Center"  Height="32" Width="118" Click="Button_View_Operation" Margin="110,0,0,0"/>
                     </Grid>
                 </StackPanel>
@@ -265,12 +265,9 @@
                             <RowDefinition Height="71*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,0,0" Padding="0,0,20,0"/>
-
-                        <ComboBox x:Name="cbDrug" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="200"/>
+                        <Label Content="Drug:" Grid.Row="0" Grid.Column="0" Margin="80,70,916,97" Padding="0,0,20,0" Grid.RowSpan="2"/>
 
                         <Label Content="Date:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,200,0" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtDate" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,80,100,0" Padding="40,0,40,0"/>
 
                         <Label Content="Taking:" Grid.Row="1" Grid.Column="0" Margin="70,80,0,0" Padding="0,0,20,0"/>
 
@@ -278,9 +275,11 @@
 
                         <Button Content="_Cancel" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,80,30" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Cancel_Prescription"/>
                         <Label Content="Time:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,200,69" Padding="0,0,20,0"/>
-                        <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,100,69" Padding="40,0,40,0"/>
                         <Label Content="Interval:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,898,48" Padding="0,0,20,0"/>
                         <TextBox x:Name="txtInterval" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,30,798,48" Padding="40,0,40,0"/>
+                        <TextBox x:Name="txtDrug" HorizontalAlignment="Left" Margin="133,71,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163"/>
+                        <TextBox  x:Name="txtDate" HorizontalAlignment="Left" Margin="858,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Grid.RowSpan="2"/>
+                        <TextBox x:Name="txtTime" HorizontalAlignment="Left" Margin="858,10,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
                         <!--<Button Content="Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="702,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Prescription"/>-->
                     </Grid>
                 </StackPanel>

@@ -341,8 +341,17 @@ namespace HospitalSystem.code
 
                 if (anamnesis != null)
                 {
-                    txtAnamnesis.Text = anamnesis.AnamnesisInfo;
-                    txtDiagnosis.Text = anamnesis.Diagnosis;
+                    if (anamnesis.AnamnesisInfo != null && anamnesis.Diagnosis != null)
+                    {
+                        txtAnamnesis.Text = anamnesis.AnamnesisInfo.ToString();
+                        txtDiagnosis.Text = anamnesis.Diagnosis.ToString();
+                    }
+                    else
+                    {
+                        txtAnamnesis.Text = "";
+                        txtDiagnosis.Text = "";
+                    }
+
                 }
 
                 tExam.Visibility = Visibility.Visible;
@@ -375,14 +384,14 @@ namespace HospitalSystem.code
                 correspondingExam = ExaminationStorage.getInstance().GetOne(selectedPrescription.ExamId);
                 txtDate.Text = correspondingExam.Date.ToString("dd/MM/yyyy");
                 txtTime.Text = correspondingExam.Time.ToString("HH/mm");
-                cbDrug.ItemsSource = DrugStorage.getInstance().GetAllVerifiedDrugs();
-                cbDrug.SelectedItem = selectedPrescription.Drug;
+                
+                txtDrug.Text = selectedPrescription.Drug.ToString();
                 txtTaking.Text = selectedPrescription.Taking;
                 txtInterval.Text = Convert.ToString(selectedPrescription.Interval);
 
                 txtDate.IsEnabled = false;
                 txtTime.IsEnabled = false;
-                cbDrug.IsEnabled = false;
+                txtDrug.IsEnabled = false;
                 txtTaking.IsEnabled = false;
                 txtInterval.IsEnabled = false;
 

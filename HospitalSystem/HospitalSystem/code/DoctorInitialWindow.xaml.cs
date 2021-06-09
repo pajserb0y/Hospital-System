@@ -1,9 +1,14 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 
 namespace HospitalSystem.code
 {
@@ -45,7 +50,8 @@ namespace HospitalSystem.code
             dgUnverifiedDrugs.ItemsSource = unverifiedDrugs;
             cbDrug.ItemsSource = verifiedDrugs;
 
-
+            dpStartReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
             //na home page je bio cbDoctorHome a na exaimnationu je bio cbDoctor
             dgPatients.ItemsSource = patients;
             fillAnnouncement();
@@ -509,7 +515,7 @@ namespace HospitalSystem.code
             dpHospitalizationIN.SelectedDate = null;
             dpHospitalizationIN.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
             dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
-        tHospitalization.Visibility = Visibility.Visible;
+            tHospitalization.Visibility = Visibility.Visible;
             tHospitalization.Focus();
         }
 
@@ -796,6 +802,111 @@ namespace HospitalSystem.code
 
             tReport.Visibility = Visibility.Collapsed;
             tDrugRecord.Focus();
+        }
+        private void dpStartReportDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (dpStartReportDate.SelectedDate != null)
+            {
+                dpEndReportDate.SelectedDate = null;
+                dpEndReportDate.BlackoutDates.Clear();
+                dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpStartReportDate.SelectedDate).AddDays(-1)));
+            }
+            else
+            {
+                dpEndReportDate.SelectedDate = null;
+                dpEndReportDate.BlackoutDates.Clear();
+                dpEndReportDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+            }
+        }
+
+        private void Button_Generate_Report_Click(object sender, RoutedEventArgs e)
+        {
+            if (dpStartReportDate.SelectedDate != null && dpEndReportDate.SelectedDate != null)
+            {
+                List<Drug> wantedDrugs = getDrugsForReport();
+                FileStream fs = new FileStream("../../../Drug usage report.pdf", FileMode.Create, FileAccess.Write, FileShare.None);
+                Rectangle rec = new Rectangle(800, 1024);
+                Document pdfDocument = new Document(rec);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDocument, fs);
+
+                pdfDocument.Open();
+
+                Paragraph title = new Paragraph(string.Format("Drug usage report for period from {0} to {1}", dpStartReportDate.SelectedDate.ToString(), dpEndReportDate.SelectedDate.ToString()));
+                title.Alignment = Element.ALIGN_CENTER;
+                title.Font.Size = 22;
+                pdfDocument.Add(title);
+
+                pdfDocument.Add(Chunk.NEWLINE);
+
+                PdfPTable table = new PdfPTable(5);
+                float[] widths = new float[] { 0.5f, 2f, 2f, 1f, 1f };
+                table.SetWidths(widths);
+                table.DefaultCell.FixedHeight = 20f; //visina reda
+                table.WidthPercentage = 100;
+                table.SpacingBefore = 20f;
+                table.SpacingAfter = 30f;
+
+                //for (int i = 0; i <= 6; i++)
+               //     table.AddCell(dgAppWeekly.ColumnFromDisplayIndex(i).Header.ToString());
+
+                string ingridients = "";
+                foreach (Drug drug in wantedDrugs)
+                {
+                    table.AddCell(drug.Id.ToString());
+                    table.AddCell(drug.Name.ToString());
+                    table.AddCell(drug.Status.ToString());
+                    if (drug.Ingridients != null)
+                    {
+                        foreach (Ingridient i in drug.Ingridients)
+                        {
+                            ingridients = ingridients + i.ToString() + "; ";
+                        }
+                        table.AddCell(drug.Status.ToString());
+                    }
+
+                    table.AddCell(drug.Amount.ToString());
+                }
+                pdfDocument.Add(table);
+
+                pdfDocument.Close();
+
+                MessageBox.Show("Report has been succesfuly saved in Reports by name 'Drug usage report.pdf'!");
+
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo(Path.GetFullPath("../../../Reports/Drug usage report.pdf"))       // da se pdf fajl odmah otvori
+                {
+                    UseShellExecute = true
+                };
+                process.Start();
+            }
+            else
+            {
+                MessageBox.Show("You have to select period for which to generate report!");
+            }
+        }
+
+        private List<Drug> getDrugsForReport()
+        {
+                List<Drug> wantedDrugs = new List<Drug>();
+                if (ExaminationStorage.getInstance().GetAll() != null)
+                {
+                    foreach (Examination exam in ExaminationStorage.getInstance().GetAll())
+                    {
+                        if (exam.Prescriptions != null)
+                        {
+                            foreach (Prescription p in exam.Prescriptions)
+                                if (p.DateOfPrescription >= dpStartReportDate.SelectedDate && p.DateOfPrescription <= dpEndReportDate.SelectedDate)
+                                {
+                                    wantedDrugs.Add(p.Drug);
+                                }
+                        }
+                    }
+                }
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
+            return wantedDrugs;
         }
     }
 }
