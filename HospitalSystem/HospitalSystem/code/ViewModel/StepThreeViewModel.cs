@@ -46,8 +46,9 @@ namespace HospitalSystem.code.ViewModel
         public void Back()
         {
             StepTwo st = new StepTwo(selectedDoctor);
-            st.ShowDialog();
             Close();
+            st.ShowDialog();
+            
         }
 
         public void Close()

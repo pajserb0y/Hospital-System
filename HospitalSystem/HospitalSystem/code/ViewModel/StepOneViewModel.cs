@@ -50,20 +50,20 @@ namespace HospitalSystem.code.ViewModel
         public void Next()
         {
             StepTwo st = new StepTwo(selectedDoctor);
-            st.ShowDialog();
             Close();
+            st.ShowDialog();
+            
         }
         public void Finish()
         {
-            DoctorInitialWindow dw = new DoctorInitialWindow(selectedDoctor);
-            dw.ShowDialog();
             Close();
         }
         public void Back()
         {
             HelpWizard hw = new HelpWizard(selectedDoctor);
-            hw.ShowDialog();
             Close();
+            hw.ShowDialog();
+           
         }
 
         public void Close()
