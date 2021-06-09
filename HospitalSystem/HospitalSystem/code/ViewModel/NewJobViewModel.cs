@@ -75,7 +75,6 @@ namespace HospitalSystem.code.ViewModel
             {
                 return okCommand ?? (okCommand = new RelayCommand(param => Add()));
             }
-
         }
 
         public void Add()
@@ -99,7 +98,7 @@ namespace HospitalSystem.code.ViewModel
                         }
                         else
                         {
-                            int indexOfJob = currentPatient.WorkHistory.IndexOf(currentJob);
+                            int indexOfJob = currentPatient.WorkHistory.IndexOf(CurrentJob);
                             currentPatient.WorkHistory.RemoveAt(indexOfJob);
                             currentPatient.WorkHistory.Insert(indexOfJob, new Job(CompanyName, JobPosition, Convert.ToInt32(RegisterCode), ActivityCode));
                             this.Close();

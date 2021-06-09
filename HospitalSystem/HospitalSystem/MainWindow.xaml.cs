@@ -46,12 +46,12 @@ namespace HospitalSystem
                 foreach(Doctor doc in DoctorStorage.getInstance().GetAll())
                 {
                     if(FullName[0] == doc.FirstName.ToLower() && FullName[1] == doc.LastName.ToLower())
-                    {
-                        //HelpWizard hw = new HelpWizard(doc);
-                        //hw.Show();
-                        //this.Close();
+                    {                
                         DoctorInitialWindow dw = new DoctorInitialWindow(doc);
                         dw.Show();
+
+                        HelpWizard hw = new HelpWizard(doc);
+                        hw.ShowDialog();
                         this.Close();
                     }
                 }

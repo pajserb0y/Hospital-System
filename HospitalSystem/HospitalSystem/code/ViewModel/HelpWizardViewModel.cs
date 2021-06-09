@@ -10,11 +10,11 @@ namespace HospitalSystem.code.ViewModel
     {
         private RelayCommand nextCommand;
         private RelayCommand finishCommand;
-        private Window window;
+        private HelpWizard window;
         private Doctor selectedDoctor;
 
 
-        public HelpWizardViewModel(Doctor selectedDoctor, Window window)
+        public HelpWizardViewModel(Doctor selectedDoctor, HelpWizard window)
         {
             this.window = window;
             this.selectedDoctor = selectedDoctor;
@@ -40,13 +40,12 @@ namespace HospitalSystem.code.ViewModel
         public void Next()
         {
             StepOne so = new StepOne(selectedDoctor);
-            so.ShowDialog();
             Close();
+            so.ShowDialog();
+            
         }
         public void Finish()
         {
-            DoctorInitialWindow dw = new DoctorInitialWindow(selectedDoctor);
-            dw.ShowDialog();
             Close();
         }
 
