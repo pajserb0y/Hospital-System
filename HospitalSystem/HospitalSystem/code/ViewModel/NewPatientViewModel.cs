@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -190,20 +191,12 @@ namespace HospitalSystem.code.ViewModel
                     if (Convert.ToInt64(Jmbg) < 100000000000 || Convert.ToInt64(Jmbg) > 9999999999999 || Jmbg.Length != 13)
                         ErrorJmbg = "JMBG must contain 13 digits";
                     else
-                    {
-                        long jmbg = Convert.ToInt64(Jmbg);
-                        long tel = Convert.ToInt64(Telephone);
-                        Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), FirstName, LastName, jmbg, Gender, Adress, tel,
-                            Email, false, Username, Password, default(DateTime), "", 0, "", "", default, default);
-                        PatientsStorage.getInstance().Add(patient);
-                        ViewModel.Load();
-                        this.Close();
-                    }
+                        PatientService.saveNewPatient(FirstName, LastName, Jmbg, Telephone, Gender, Adress, Email, Username, Password, ViewModel, this);
                 }
                 catch
                 {
                     MessageBox.Show("JMBG and Telephone field must contain only digits!");
-                }
+                }            
         }
         public void MChecked()
         {
