@@ -369,7 +369,7 @@ namespace HospitalSystem.code
                 table.AddCell(appointment.Doctor.FirstName.ToString() + " " + appointment.Doctor.LastName.ToString() + " - " + appointment.Doctor.Specialization.ToString());
                 table.AddCell(appointment.Room.Id.ToString() + "  " + appointment.Room.Name.ToString());
                 table.AddCell(appointment.Date.Day.ToString() + "/" + appointment.Date.Month.ToString() + "/" + appointment.Date.Year.ToString());
-                table.AddCell(appointment.Time.TimeOfDay.Hours.ToString() + ":" + appointment.Time.TimeOfDay.Minutes.ToString("D2"));
+                table.AddCell(appointment.Time.TimeOfDay.Hours.ToString("D2") + ":" + appointment.Time.TimeOfDay.Minutes.ToString("D2"));
 
                 if (appointment.IsOperation == true)
                     table.AddCell("YES");
