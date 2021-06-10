@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +19,9 @@ namespace HospitalSystem.code
     /// </summary>
     public partial class SecretarEditAppointment : Window
     {
+        bool fromConstructor;
         private Appointment currentAppointment;
+        ObservableCollection<Refferal> refferals = RefferalStorage.getInstance().GetAll();
         ListCollectionView collectionAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
         List<string> terms = new List<string> { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                                                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" };
@@ -26,9 +30,29 @@ namespace HospitalSystem.code
         {
             currentAppointment = selectedApp;
             InitializeComponent();
-
-            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
+            fromConstructor = true;
+            cbDoctor.ItemsSource = filterDoctors(DoctorStorage.getInstance().GetAll());
             initializeSelectedAppointmentDetails(selectedApp);
+            dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
+        }
+
+        public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
+        {
+            ObservableCollection<Doctor> finalDoctors = new ObservableCollection<Doctor>();
+
+
+                foreach (Refferal refferal in refferals)
+                    if (currentAppointment.Patient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
+                        foreach (Doctor doctor in doctors)
+                            if (doctor.Id == refferal.DoctorId && !finalDoctors.Contains(doctor))
+                                finalDoctors.Add(doctor);
+
+                foreach (Doctor doctor in doctors)
+                    if (doctor.Specialization.Equals("General medicine"))
+                        finalDoctors.Add(doctor);
+            
+
+            return finalDoctors;
         }
 
         private void initializeSelectedAppointmentDetails(Appointment selectedApp)
@@ -44,34 +68,71 @@ namespace HospitalSystem.code
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            double differenceInDays = Math.Abs(currentAppointment.Date.Subtract((DateTime)dpDate.SelectedDate).TotalDays);
-
-            if (differenceInDays <= 2)
+            if (cbDoctor.SelectedItem != null && cbRoom.SelectedItem != null && dpDate.SelectedDate != null && cbTime.SelectedItem != null)
             {
-                currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-                currentAppointment.Room = (Room)cbRoom.SelectedItem;
-                currentAppointment.Date = (DateTime)dpDate.SelectedDate;
-                currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
-                AppointmentStorage.getInstance().Edit(currentAppointment);
-                this.Close();
+                double differenceInDays = Math.Abs(currentAppointment.Date.Subtract((DateTime)dpDate.SelectedDate).TotalDays);
+                if (differenceInDays <= 2)
+                {
+                    currentAppointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+                    currentAppointment.Room = (Room)cbRoom.SelectedItem;
+                    currentAppointment.Date = (DateTime)dpDate.SelectedDate;
+                    currentAppointment.Time = Convert.ToDateTime((string)cbTime.SelectedItem);
+                    Room selectedRoom = (Room)cbRoom.SelectedItem;
+                    _ = selectedRoom.Name == "Ordination" ? currentAppointment.IsOperation = false : currentAppointment.IsOperation = true;
+                    AppointmentStorage.getInstance().Edit(currentAppointment);
+                    this.Close();
+                }
+                else
+                {
+                    dpDate.SelectedDate = currentAppointment.Date;
+                    MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
+                }
             }
             else
             {
-                dpDate.SelectedDate = currentAppointment.Date;
-                MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
+                MessageBox.Show("You need first to fill all input fields.");
             }
+        }
+
+        private void Window_Closed()
+        {
+            //JobStorage.getInstance().serialize();
+            this.Close();
         }
 
         private void doctorChanged(object sender, System.EventArgs e)
         {
-            filter();
-            displayTerms();
+            if (!fromConstructor)
+            {
+                filter();
+            //if (displayTerms() == 1)
+            //    Window_Closed();
+            int i = displayTerms();
+                dpDate.IsEnabled = true;
+                cbTime.IsEnabled = false;
+                cbRoom.IsEnabled = false;
+                dpDate.SelectedDate = null;
+                cbRoom.SelectedIndex = -1;
+                cbTime.SelectedIndex = -1;
+            }
         }
 
         private void dateChanged(object sender, System.EventArgs e)
         {
-            filter();
-            displayTerms();
+            if (!fromConstructor)
+            {
+                filter();
+            int i = displayTerms();
+                //if (displayTerms() == 1)
+                //    Window_Closed();
+                
+                cbTime.IsEnabled = true;
+                cbRoom.IsEnabled = false;
+                cbRoom.SelectedIndex = -1;
+                cbTime.SelectedIndex = -1;
+                if (cbTime.Items.Count == 0 && dpDate.SelectedDate != null)
+                    MessageBox.Show("There is not any available term for this doctor on this day.");
+            }
         }
 
         private void filter()
@@ -88,26 +149,64 @@ namespace HospitalSystem.code
             }
         }
 
-        private void displayTerms()
+        private int displayTerms()
         {
-            List<string> occupiedTerms = new List<string>();
-            cbTime.Items.Clear();
-
-            foreach (Appointment a in collectionAppointments)
+            if (cbDoctor.SelectedItem != null && dpDate.SelectedDate != null)
             {
-                occupiedTerms.Add(a.Time.ToString("HH:mm"));
-            }
+                List<string> occupiedTerms = new List<string>();
+                cbTime.Items.Clear();
 
-            foreach (string s in terms)
-            {
-                if (!occupiedTerms.Contains(s))
-                    cbTime.Items.Add(s);
+                foreach (Appointment a in collectionAppointments)
+                {
+                    occupiedTerms.Add(a.Time.ToString("HH:mm"));
+                }
+
+                foreach (string s in terms)
+                {
+                    Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
+                    if (dpDate.SelectedDate < DateTime.Now.Date)
+                    {
+                        MessageBox.Show("Changing past appointment is not allowed!");
+                        //this.Close();
+                        return 1;
+                    }
+                    if (!occupiedTerms.Contains(s) && !selectedDoctor.FreeDays.Contains((DateTime)dpDate.SelectedDate) && doctorIsInHospital(selectedDoctor, s))
+                        cbTime.Items.Add(s);
+                }
+                return 0;
             }
+            return 0;
         }
+
+        private bool doctorIsInHospital(Doctor selectedDoctor, string term)
+        {
+            ListCollectionView shiftsCollection = new ListCollectionView(WorkingShiftStorage.getInstance().GetAll());
+            shiftsCollection.Filter = (shift) =>
+            {
+                WorkingShift workingShift = shift as WorkingShift;
+                if (workingShift.DoctorId == selectedDoctor.Id && (workingShift.StartDate <= dpDate.SelectedDate && workingShift.EndDate >= dpDate.SelectedDate) &&
+                    ((((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay) ||
+                    (((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay)))
+                    return true;
+                return false;
+            };
+
+            if (shiftsCollection.Count == 0)
+                return false;
+            else
+                return true;
+        }
+        
+        
 
         private void timeChanged(object sender, System.EventArgs e)
         {
             displayRooms();
+            cbRoom.IsEnabled = true;
+            cbRoom.SelectedIndex = -1;
+            if (cbRoom.Items.Count == 0 && cbTime.SelectedItem != null)
+                MessageBox.Show("There is not any available room for this doctor on this day in this room.");
+            fromConstructor = false;
         }
 
         private void displayRooms()

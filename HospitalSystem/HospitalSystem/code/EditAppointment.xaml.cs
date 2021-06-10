@@ -12,9 +12,6 @@ using System.Windows.Shapes;
 
 namespace HospitalSystem.code
 {
-    /// <summary>
-    /// Interaction logic for EditAppointment.xaml
-    /// </summary>
     public partial class EditAppointment : Window
     {
         private Appointment appointment;
@@ -26,9 +23,7 @@ namespace HospitalSystem.code
         {
             InitializeComponent();
             appointment = selectedAppointment;
-
-            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
-           
+            cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();           
             cbDoctor.SelectedItem = selectedAppointment.Doctor;
             cbDoctor.IsEnabled = false;
             dp1.SelectedDate = selectedAppointment.Date;
@@ -36,33 +31,40 @@ namespace HospitalSystem.code
             cbTime.SelectedItem = selectedAppointment.Time.ToString("HH:mm");
         }
 
-        private void Save_Click_Edit(object sender, RoutedEventArgs e)
+        private bool checkTime(DateTime date)
         {
-            double differenceInDays = Math.Abs(appointment.Date.Subtract((DateTime)dp1.SelectedDate).TotalDays);
+            double differenceInDays = Math.Abs(date.Subtract((DateTime)dp1.SelectedDate).TotalDays);
 
-            if (differenceInDays <= 2)
-            {
-                
-                if (appointment.TimesChanged > 2)
-                {
-                    //displayErrorApptChanged();
-                    MessageBox.Show("Cannot change details of appointment more than 3 times!");
-                }
-                else
-                {
-                    appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
-                    string time = (string)cbTime.SelectedItem;
-                    appointment.Time = DateTime.Parse(time);
-                    appointment.Date = (DateTime)dp1.SelectedDate;
-                    AppointmentStorage.getInstance().Edit(appointment);
-                }
-                this.Close();
-            }
-            else
+            if (differenceInDays > 2)
             {
                 dp1.SelectedDate = appointment.Date;
                 MessageBox.Show("Invalid date! Must be within 2 days of the selected appointment.");
+                return false;
             }
+            return true;
+        }
+
+        private void Save_Click_Edit(object sender, RoutedEventArgs e)
+        {
+
+            if (!checkTime(appointment.Date))
+                return;
+            if (appointment.TimesChanged > 2)
+            {
+                MessageBox.Show("Cannot change details of appointment more than 3 times!");
+                return;
+            }
+            if (cbDoctor.SelectedItem != null)
+                appointment.Doctor = (Doctor)cbDoctor.SelectedItem;
+            if (cbTime.SelectedItem != null)
+            {
+                string time = (string)cbTime.SelectedItem;
+                appointment.Time = DateTime.Parse(time);
+            }
+            if (dp1.SelectedDate != null)
+                appointment.Date = (DateTime)dp1.SelectedDate;
+            AppointmentStorage.getInstance().Edit(appointment);
+            this.Close();
         }
 
 

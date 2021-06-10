@@ -4,19 +4,22 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resource\Pacijenti.json" />
+    <None Remove="Resource\Patients.json" />
   </ItemGroup>
 
   <ItemGroup>
+
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NHibernate" Version="5.3.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resource\Pacijenti.json">
+    <Resource Include="Resource\Patients.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -9,9 +9,9 @@
     <Grid RenderTransformOrigin="0.429,0.383">
         <Label Content="Patient:" HorizontalAlignment="Left"  Margin="96,60,0,0" VerticalAlignment="Top" Width="58" />
         <Label Content="Doctor:" HorizontalAlignment="Left"  Margin="97,127,0,0" VerticalAlignment="Top" Width="58" />
-        <Label Content="Date:" HorizontalAlignment="Left"  Margin="109,250,0,0" VerticalAlignment="Top" Width="44" />
-        <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="194,256,0,0" VerticalAlignment="Top" Height="26" Width="189" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
-        <Label Content="Time:" HorizontalAlignment="Left"  Margin="110,311,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.5,1.418" Width="45"/>
+        <Label Content="Date:" HorizontalAlignment="Left"  Margin="102,184,0,0" VerticalAlignment="Top" Width="44" />
+        <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="194,191,0,0" VerticalAlignment="Top" Height="26" Width="189" FirstDayOfWeek="Monday" IsTodayHighlighted="True" SelectedDateChanged="dateChanged"/>
+        <Label Content="Time:" HorizontalAlignment="Left"  Margin="104,249,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.5,1.418" Width="44"/>
         <ComboBox x:Name="cbDoctor"  HorizontalAlignment="Left" Margin="194,129,0,0" VerticalAlignment="Top" Width="236" SelectionChanged="doctorChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -25,9 +25,9 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="cbTime"  HorizontalAlignment="Left" Margin="194,318,0,0" VerticalAlignment="Top" Width="236" SelectionChanged="timeChanged"/>
-        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click_Save"/>
-        <ComboBox x:Name="cbRoom"  HorizontalAlignment="Left" Margin="194,193,0,0" VerticalAlignment="Top" Width="236">
+        <ComboBox x:Name="cbTime"  HorizontalAlignment="Left" Margin="194,251,0,0" VerticalAlignment="Top" Width="236" SelectionChanged="timeChanged"/>
+        <Button  Content="_Save" HorizontalAlignment="Left" Height="30" Margin="582,354,0,0" VerticalAlignment="Top" Width="130" Click="Button_Click_Save"/>
+        <ComboBox x:Name="cbRoom"  HorizontalAlignment="Left" Margin="194,311,0,0" VerticalAlignment="Top" Width="236">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -38,7 +38,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Label Content="Room:" HorizontalAlignment="Left"  Margin="102,191,0,0" VerticalAlignment="Top" Width="52" />
+        <Label Content="Room:" HorizontalAlignment="Left"  Margin="102,304,0,0" VerticalAlignment="Top" Width="52" />
         <ComboBox x:Name="cbPatient"  HorizontalAlignment="Left" Margin="194,64,0,0" VerticalAlignment="Top" Width="236" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>

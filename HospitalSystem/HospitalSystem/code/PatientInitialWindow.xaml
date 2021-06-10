@@ -5,84 +5,210 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalSystem.code"
         mc:Ignorable="d"
-        Title="PatientInitialWindow" Height="700" Width="1050">
+        Title="PatientInitialWindow" Height="736" Width="1050">
     <Grid>
-        <DataGrid x:Name="dgAppointment" Grid.Row="0" AutoGenerateColumns="False"
-                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="61,41,225,393"
+
+        <TabControl x:Name="tAccount" >
+            <TabItem Header="Home">
+                <Grid>
+
+                    <Label Content="First Name:" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" Height="25" Margin="126,0,798,529" VerticalAlignment="Bottom"/>
+                    <Label Content="Last Name:" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,479" Height="25" VerticalAlignment="Bottom"/>
+                    <Label Content="JMBG:" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,431" Height="25" VerticalAlignment="Bottom"/>
+                    <Label Content="Gender" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,380" Height="25" VerticalAlignment="Bottom"/>
+                    <Label Content="Adress" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,325" Height="25" VerticalAlignment="Bottom"/>
+                    <Label Content="Telephone" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,277" Height="25" VerticalAlignment="Bottom"/>
+                    <Label Content="E-mail" Padding="0,0,20,0" Grid.Column="0" Margin="126,0,798,219" Height="25" VerticalAlignment="Bottom"/>
+
+                    <TextBox x:Name="firstName" Width="200" Height="25" Margin="225,0,0,529" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="lastName" Width="200" Height="25" Margin="225,0,0,479" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="jmbg" Width="200" Height="25" Margin="225,0,0,431" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="gender" Width="200" Height="25" Margin="225,0,0,380" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="adress" Width="200" Height="25" Margin="225,0,0,325" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="telephone" Width="200" Height="25" Margin="225,0,0,277" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="email" Width="200" Height="25" Margin="225,0,0,219" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+
+                    <Button x:Name="Chart_Details" Content ="Chart details" Margin="225,0,0,148" Click="Button_Chart_Details" HorizontalAlignment="Left" Width="200" Height="30" VerticalAlignment="Bottom"/>
+                    <Label Content="Personal info" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" Height="30" Margin="225,0,669,577" VerticalAlignment="Bottom" FontSize="20" Width="150" FontWeight="Bold" FontFamily="Segoe UI Semibold"/>
+                    <Label Content="Account info" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" Height="30" Margin="664,0,230,577" VerticalAlignment="Bottom" FontSize="20" Width="150" FontWeight="Bold" FontFamily="Segoe UI Semibold"/>
+                    <Label Content="Username:" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" Height="25" Margin="544,0,380,529" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="firstName_Copy" Width="200" Height="25" Margin="664,0,0,529" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <Button x:Name="Account" Content ="Change username/password" Margin="664,0,0,469" Click="Button_Chart_Details" HorizontalAlignment="Left" Width="200" Height="30" VerticalAlignment="Bottom"/>
+                    <Button x:Name="Sign_out" Content ="Sign out" Margin="664,0,0,214" Click="Button_Chart_Details" HorizontalAlignment="Left" Width="200" Height="30" VerticalAlignment="Bottom"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Inbox">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="193*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView x:Name="announcementList" Margin="75,40,159,102" Grid.ColumnSpan="2">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Path=Title}"/>
+                                    <TextBlock Text=" - "/>
+                                    <TextBlock Text="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                                    <TextBlock Text=",  "/>
+                                    <TextBlock Text="{Binding Time, StringFormat={}{0:HH:mm }}"/>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Button x:Name="Read" Content ="Read" Margin="826,0,0,586" Click="Button_Read" Height="40" Width="80" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Examinations">
+                <Grid>
+
+                    <DataGrid x:Name="dgAppointment" Grid.Row="0" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="219,0,43,384"
+                                  CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Height="250" VerticalAlignment="Bottom">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Appt ID" Binding="{Binding Id}"/>
+                            <DataGridTemplateColumn Header="Patient" Width="2*" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Patient.Id}"/>
+                                            <TextBlock Text="    "/>
+                                            <TextBlock Text="{Binding Path=Patient.FirstName}"/>
+                                            <TextBlock Text=" "/>
+                                            <TextBlock Text="{Binding Path=Patient.LastName}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                            <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
+                            <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
+                            <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+                    <ComboBox x:Name="cbPatient" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" SelectionChanged="patientChanged" Margin="24,631,0,0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Id}"/>
+                                    <TextBlock Text=" - "/>
+                                    <TextBlock Text="{Binding FirstName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding LastName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Content="Add" Margin="37,0,889,556" Click="Button_Add" Height="30" VerticalAlignment="Bottom"/>
+                    <Button Content="Edit" Margin="37,0,889,489" Click="Button_Edit" Height="30" VerticalAlignment="Bottom"/>
+                    <Button Content="Delete" Margin="37,0,889,422" VerticalAlignment="Bottom" Height="30" Click="Button_Delete"/>
+                    <Button Content="View" Margin="37,0,889,159" VerticalAlignment="Bottom" Height="30" Click="Button_View"/>
+                    <DataGrid x:Name="dgExamination" Grid.Row="0" AutoGenerateColumns="False"
+                SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="219,0,43,78"
+                CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column" Height="250" VerticalAlignment="Bottom">
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
+                            <DataGridTemplateColumn Header="Patient" Width="2*" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Patient.Id}"/>
+                                            <TextBlock Text="    "/>
+                                            <TextBlock Text="{Binding Patient.FirstName}"/>
+                                            <TextBlock Text=" "/>
+                                            <TextBlock Text="{Binding Patient.LastName}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
+                            <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
+                            <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
+                            <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Give feedback" Margin="37,0,889,231" VerticalAlignment="Bottom" Height="30" Click="Button_Feedback"/>
+                    <Label Content="Appointments" Padding="0,0,20,0"  Grid.Row="0" Grid.Column="0" Height="30" Margin="37,0,857,608" VerticalAlignment="Bottom" FontSize="20" Width="150" FontWeight="Bold" FontFamily="Segoe UI Semibold"/>
+                    <Label Content="Examinations" Padding="0,0,20,0" Grid.Column="0" Height="30" Margin="37,0,857,302" VerticalAlignment="Bottom" FontSize="20" Width="150" FontWeight="Bold" FontFamily="Segoe UI Semibold"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="tabAnamnesis" Header="Anamnesis">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="252*"/>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="769*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Diagnosis:" Width="100" Height="25" Margin="72,0,80,353" VerticalAlignment="Bottom"  />
+                    <Label Content="Anamnesis:" Margin="72,0,80,642" Width="100" Height="25" VerticalAlignment="Bottom" />
+
+                    <TextBox x:Name="txtAnamnesis" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" IsReadOnly="True" Margin="72,0,0,415" Grid.ColumnSpan="3" VerticalAlignment="Bottom" />
+                    <TextBox x:Name="txtDiagnosis" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" IsReadOnly="True" Margin="72,0,0,124" Grid.ColumnSpan="3" VerticalAlignment="Bottom"/>
+
+                    <Button Content="Add notes"  Height="33" Width="118" Click="Button_Add_Notes" Grid.Column="2" Margin="509,613,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+            <TabItem Name="tabPrescription" Header="Prescription">
+                <StackPanel>
+                    <Grid Height="542" Width="Auto" >
+                        <DataGrid x:Name="dgMedication" Grid.Row="0" AutoGenerateColumns="False"
+                                  SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="81,84,81,119"
                                   CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Appt ID" Binding="{Binding Id}"/>
-                <DataGridTemplateColumn Header="Patient" Width="2*" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Patient.Id}"/>
-                                <TextBlock Text="    "/>
-                                <TextBlock Text="{Binding Path=Patient.FirstName}"/>
-                                <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding Path=Patient.LastName}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Medication" Binding="{Binding Drug}" Width="0.8*">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
 
-                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
-                <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
-                <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
-                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" />
-                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:HH:mm }}" />
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <ComboBox x:Name="cbPatient" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" SelectionChanged="patientChanged" Margin="61,607,0,0">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text=" - "/>
-                        <TextBlock Text="{Binding FirstName}"/>
-                        <TextBlock Text=" "/>
-                        <TextBlock Text="{Binding LastName}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-
-        <Button Content="Add" HorizontalAlignment="Left" Height="36" Margin="874,43,0,0" VerticalAlignment="Top" Width="118" Click="Button_Add"/>
-        <Button Content="Edit" HorizontalAlignment="Left" Margin="874,142,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Edit"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="874,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Delete"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="874,534,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Back"/>
-        <Button Content="Medication" HorizontalAlignment="Left" Margin="874,446,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Medication"/>
-        <DataGrid x:Name="dgExamination" Grid.Row="0" AutoGenerateColumns="False"
-            SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" Margin="61,314,225,93"
-            CanUserResizeRows="False" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFE0DFDF" RowHeaderWidth="10" HeadersVisibility="Column">
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Exam ID" Binding="{Binding Id}"/>
-                <DataGridTemplateColumn Header="Patient" Width="2*" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Patient.Id}"/>
-                                <TextBlock Text="    "/>
-                                <TextBlock Text="{Binding Patient.FirstName}"/>
-                                <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding Patient.LastName}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <DataGridTextColumn Header="Doctor ID" Binding="{Binding Doctor.Id}" />
-                <DataGridTextColumn Header="Doctor Firstname" Binding="{Binding Doctor.FirstName}" />
-                <DataGridTextColumn Header="Doctor Lastname" Binding="{Binding Doctor.LastName}" />
-                <DataGridTextColumn Header="Room ID" Binding="{Binding Room.Id}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}" />
-                <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat=\{0:HH:mm \}}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Give feedback" HorizontalAlignment="Left" Margin="874,355,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.278,2.643" Height="33" Width="118" Click="Button_Feedback"/>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Date of prescription" Binding="{Binding DateOfPrescription, StringFormat={}{0:dd/MM/yyyy}}" Width="1.2*" >
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Taking instructions" Binding="{Binding Taking}" Width="3*">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabNotes" Header="Notes">
+                <Grid>
+                    <Label Content="Enter your notes here: " Width="150" Height="25" Margin="50,0,844,599" VerticalAlignment="Bottom" />
+                    <TextBox x:Name="txtNotes" TextWrapping="Wrap" Width="830" Height="222" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0,0,372" />
+                    <Button x:Name="Save_Notes" Content ="Save notes" Margin="778,346,0,0" Click="Button_Save_Notes" Height="40" Width="102" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

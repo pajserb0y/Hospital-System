@@ -32,17 +32,15 @@ namespace HospitalSystem.code
             initializeSpecializations();
         }
 
-        
-
         private void initializeSpecializations()
         {
             List<Doctor> doctorsWithDifferentSpecialization = new List<Doctor>();            
             foreach (Doctor doc in DoctorStorage.getInstance().GetAll())
             {
-                bool specializationAlreadyInList = false;
                 if (doctorsWithDifferentSpecialization.Count <= 0)
                     doctorsWithDifferentSpecialization.Add(doc);
 
+                bool specializationAlreadyInList = false;
                 foreach (Doctor dr in doctorsWithDifferentSpecialization)
                     if (doc.Specialization == dr.Specialization)
                     {
@@ -63,7 +61,6 @@ namespace HospitalSystem.code
             if (spec == "General medicine")
                 return true;
 
-            bool found = false;
             foreach (Refferal r in RefferalStorage.getInstance().GetAll())
             {
                 if (r.PatientId == patient.Id)
@@ -79,36 +76,24 @@ namespace HospitalSystem.code
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Appointment appt = new Appointment();
-            appt.Id = AppointmentStorage.getInstance().GenerateNewID();
-            appt.Patient = patient;
-            if (cbDoctor.SelectedItem != null)
+            if (cbDoctor.SelectedItem == null)
+                return;
+            Doctor doc = (Doctor)cbDoctor.SelectedItem;
+
+            if (!checkRefferal(doc.Specialization))
             {
-                appt.Doctor = (Doctor)cbDoctor.SelectedItem;
-                if (!checkRefferal(appt.Doctor.Specialization))
-                {
-                    MessageBox.Show("You must have refferal for doctor specializing in " + appt.Doctor.Specialization + ".");
-                    return;
-                }
+                MessageBox.Show("You must have refferal for doctor specializing in " + doc.Specialization + ".");
+                return;
             }
-            else
+
+            if (dp1.SelectedDate == null)
+                return;
+       
+            if (cbTime.SelectedItem == null)
                 return;
 
-            appt.Room = RoomStorage.getInstance().GetOne(1);
-            if (dp1.SelectedDate != null)
-                appt.Date = (DateTime)dp1.SelectedDate;
-            else
-                return;
-
-            if (cbTime.SelectedItem != null)
-            {
-                string time = (string)cbTime.SelectedItem;
-                appt.Time = DateTime.Parse(time);
-            }
-            else
-                return;
-            appt.TimesChanged = 0;
-            appt.TimeOfCreation = DateTime.Now;
+            string time = (string)cbTime.SelectedItem;
+            Appointment appt = new Appointment(AppointmentStorage.getInstance().GenerateNewID(), doc, patient, RoomStorage.getInstance().GetOne(1), (DateTime)dp1.SelectedDate, DateTime.Parse(time), false, 0, DateTime.Now);
             AppointmentStorage.getInstance().Add(appt);
             this.Close();           
         }
@@ -163,8 +148,8 @@ namespace HospitalSystem.code
             {
                 dp1.IsEnabled = false;
                 cbTime.IsEnabled = false;
-
                 DateTime firstAvailable;
+
                 if (cbDoctor.SelectedItem != null)
                 {
                     firstAvailable = findFirstAvailableTerm((Doctor)cbDoctor.SelectedItem);
@@ -184,39 +169,62 @@ namespace HospitalSystem.code
         private void findFirstAvailableDoctor()
         {
             Doctor d = (Doctor)cbSpecialization.SelectedItem;
+            if (d == null)
+                return;
 
-            if (d != null)
-            { 
-                String specialization = d.Specialization;
+            String specialization = d.Specialization;
+            Doctor firstAvailable = (Doctor)doctorCollection.GetItemAt(0);
+            DateTime min = findFirstAvailableTerm(firstAvailable);
+            DateTime temp;
 
-                Doctor firstAvailable = (Doctor)doctorCollection.GetItemAt(0);
-                DateTime min = findFirstAvailableTerm(firstAvailable);
-                DateTime temp;
-
-                foreach(Doctor doc in doctorCollection)
+            foreach(Doctor doc in doctorCollection)
+            {
+                temp = findFirstAvailableTerm(doc);
+                if (temp < min)
                 {
-                    temp = findFirstAvailableTerm(doc);
-
-                    if (temp < min)
-                    {
-                        firstAvailable = doc;
-                        min = temp;
-                    }
+                    firstAvailable = doc;
+                    min = temp;
                 }
-
-                cbDoctor.SelectedItem = firstAvailable;
-                filter();
-                displayTerms();
-                dp1.SelectedDate = min.Date;
-                cbTime.SelectedItem = min.ToString("HH:mm");
             }
+
+            cbDoctor.SelectedItem = firstAvailable;
+            filter();
+            displayTerms();
+            dp1.SelectedDate = min.Date;
+            cbTime.SelectedItem = min.ToString("HH:mm");
         }
 
         private DateTime findFirstAvailableTerm(Doctor doctor)
         {
             ListCollectionView allAppointments = new ListCollectionView(AppointmentStorage.getInstance().GetAll());
             List<string> occupiedTerms = new List<string>();
+            DateTime currentDate = DateTime.Now.Date;
 
+            filterAppointments(doctor, allAppointments, occupiedTerms);
+
+            return findFirstAvailable(occupiedTerms, currentDate);
+        }
+
+        private DateTime findFirstAvailable(List<string> occupiedTerms, DateTime currentDate)
+        {
+            while (true)
+            {
+                foreach (String term in terms)
+                {
+                    String temp = currentDate.Date.ToString("dd-MMM-yyyy") + " " + term;
+
+                    if (!occupiedTerms.Contains(temp))
+                    {
+                        return DateTime.ParseExact(temp, "dd-MMM-yyyy HH:mm", CultureInfo.InvariantCulture);
+                    }
+                }
+
+                currentDate.AddDays(1);
+            }
+        }
+
+        private static void filterAppointments(Doctor doctor, ListCollectionView allAppointments, List<string> occupiedTerms)
+        {
             allAppointments.Filter = (e) =>
             {
                 Appointment tempApp = e as Appointment;
@@ -228,55 +236,37 @@ namespace HospitalSystem.code
 
                 return false;
             };
-
-            DateTime currentDate = DateTime.Now.Date;
-            String temp;
-
-            while(true)
-            {
-                foreach(String term in terms)
-                {
-                    temp = currentDate.Date.ToString("dd-MMM-yyyy") + " " + term;
-
-                    if (!occupiedTerms.Contains(temp))
-                    {
-                        return DateTime.ParseExact(temp, "dd-MMM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                    }
-                }
-
-                currentDate.AddDays(1);
-            }    
         }
 
         private void specializationChanged(object sender, System.EventArgs  e)
         {
-            if (cbSpecialization.SelectedItem != null)
+            if (cbSpecialization.SelectedItem == null)
+                return;
+            
+            doctorCollection.Filter = (e) =>
             {
-                doctorCollection.Filter = (e) =>
-                {
-                    Doctor tempDoctor = e as Doctor;
-                    if (tempDoctor.Specialization == cbSpecialization.SelectedItem.ToString())
-                        return true;
-
-                    return false;
-                };
+                Doctor tempDoctor = e as Doctor;
+                if (tempDoctor.Specialization == cbSpecialization.SelectedItem.ToString())
+                    return true;
+                return false;   
+            };
                 
-            }
             cbDoctor.ItemsSource = doctorCollection;
         }
 
         private void filter()
         {
-            if (cbDoctor.SelectedItem != null && dp1.SelectedDate != null)
+            if (cbDoctor.SelectedItem == null || dp1.SelectedDate == null)
+                return;
+            
+            appointmentCollection.Filter = (e) =>
             {
-                appointmentCollection.Filter = (e) =>
-                {
-                    Appointment temp = e as Appointment;
-                    if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate)
-                        return true;
-                    return false;
-                };
-            }
+                Appointment temp = e as Appointment;
+                if (temp.Doctor == (Doctor)cbDoctor.SelectedItem && temp.Date == (DateTime)dp1.SelectedDate)
+                    return true;
+                return false;
+            };
+          
         }
 
         private void displayTerms()
@@ -295,8 +285,6 @@ namespace HospitalSystem.code
                     cbTime.Items.Add(s);
             }
         }
-
-        
 
     }
 }
