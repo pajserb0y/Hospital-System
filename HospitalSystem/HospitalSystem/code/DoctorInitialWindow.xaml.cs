@@ -258,7 +258,7 @@ namespace HospitalSystem.code
 
                     currExam.Prescriptions.Add(newPrescription);
 
-                    ExaminationStorage.getInstance().Edit(currExam);
+                    //ExaminationStorage.getInstance().Edit(currExam);
                     tExam.Focus();
                     tPersc.Visibility = Visibility.Collapsed;
                 }
@@ -554,32 +554,35 @@ namespace HospitalSystem.code
         }
         private void fillListOfAvailableRooms(List<Bed> beds)
         {
-            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
-            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
-            ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
-            
-            roomCollectionView.Filter = (room) =>
-            { 
-                Room tempRoom = room as Room;
-                if (tempRoom.Name == "Room")
+            if(dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
+            {
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
+
+                roomCollectionView.Filter = (room) =>
                 {
-                    foreach (Bed tempBed in tempRoom.Beds)
+                    Room tempRoom = room as Room;
+                    if (tempRoom.Name == "Room")
                     {
-                        foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
+                        foreach (Bed tempBed in tempRoom.Beds)
                         {
-                            if (val.Item1 <= inTime && val.Item2 >= inTime)
-                                return false;
-                            if (val.Item1 <= outTime && val.Item2 >= outTime)
-                                return false;
-                            if (val.Item1 >= inTime && val.Item2 <= outTime)
-                                return false;
-                            return true;
+                            foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
+                            {
+                                if (val.Item1 <= inTime && val.Item2 >= inTime)
+                                    return false;
+                                if (val.Item1 <= outTime && val.Item2 >= outTime)
+                                    return false;
+                                if (val.Item1 >= inTime && val.Item2 <= outTime)
+                                    return false;
+                                return true;
+                            }
                         }
                     }
-                }
-                return false;
-            };
-            cbHospitalizationRoom.ItemsSource = roomCollectionView;
+                    return false;
+                };
+                cbHospitalizationRoom.ItemsSource = roomCollectionView;
+            }
         }
 
         private void dpHospitalizationTimeIn_Changed(object sender, SelectionChangedEventArgs e)

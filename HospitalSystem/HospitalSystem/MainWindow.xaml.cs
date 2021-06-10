@@ -49,10 +49,9 @@ namespace HospitalSystem
                     {                
                         DoctorInitialWindow dw = new DoctorInitialWindow(doc);
                         dw.Show();
-
+                        this.Close();
                         HelpWizard hw = new HelpWizard(doc);
                         hw.ShowDialog();
-                        this.Close();
                     }
                 }
 

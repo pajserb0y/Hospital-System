@@ -461,36 +461,43 @@ namespace HospitalSystem.code
 
         private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
         {
-            HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
-            ObservableCollection<Room> rooms = RoomStorage.getInstance().GetAll();
-
-            DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
-            DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
-            Patient selectedPatient = currentPatient;
-            foreach (Room room in rooms)
+            if (cbHospitalizationRoom.SelectedItem != null && cbHospitalizatonBed.SelectedItem != null && dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
             {
-                if(room.Beds != null)
+                HospitalizationDTO selectedHospitalization = (HospitalizationDTO)dgPatientHospitalizations.SelectedItem;
+                ObservableCollection<Room> rooms = RoomStorage.getInstance().GetAll();
+
+                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
+                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
+                Patient selectedPatient = currentPatient;
+                foreach (Room room in rooms)
                 {
-                    foreach (Bed bed in room.Beds)
+                    if (room.Beds != null)
                     {
-                        if(bed.Interval != null)
+                        foreach (Bed bed in room.Beds)
                         {
-                            foreach (Tuple<DateTime, DateTime, int> t in bed.Interval)
+                            if (bed.Interval != null)
                             {
-                                if (t.Item1 == selectedHospitalization.DateIn && t.Item2 == selectedHospitalization.DateOut && t.Item3 == currentPatient.Id && room.Id == selectedHospitalization.RoomId && bed.Id == selectedHospitalization.BedId)
+                                foreach (Tuple<DateTime, DateTime, int> t in bed.Interval)
                                 {
-                                    bed.Interval.Remove(t);
-                                    bed.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
-                                    RoomStorage.getInstance().Edit(room);
-                                    return;
+                                    if (t.Item1 == selectedHospitalization.DateIn && t.Item2 == selectedHospitalization.DateOut && t.Item3 == currentPatient.Id && room.Id == selectedHospitalization.RoomId && bed.Id == selectedHospitalization.BedId)
+                                    {
+                                        bed.Interval.Remove(t);
+                                        bed.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
+                                        RoomStorage.getInstance().Edit(room);
+                                        return;
+                                    }
                                 }
                             }
-                        }             
+                        }
                     }
                 }
+                tHospitalization.Visibility = Visibility.Collapsed;
+                tMedHis.Focus();
             }
-            tHospitalization.Visibility = Visibility.Collapsed;
-            tMedHis.Focus();
+            else
+            {
+                MessageBox.Show("You have not filled all necessary information!");
+            }
         }
 
         private void cbHospitalizationRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
