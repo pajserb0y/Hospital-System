@@ -93,7 +93,7 @@ public class AppointmentStorage
 
         foreach (AppointmentViewModel a in avms)
         {
-            Appointment temp = new Appointment(a.Id, DoctorStorage.getInstance().GetOne(a.DoctorId), PatientsStorage.getInstance().GetOne(a.PatientId), RoomStorage.getInstance().GetOne(a.RoomId), a.Date, a.Time, a.IsOperation, a.TimesChanged, a.TimeOfCreation);
+            Appointment temp = new Appointment(a.Id, DoctorStorage.getInstance().GetOne(a.DoctorId), PatientCRUDMenager.getInstance().GetOne(a.PatientId), RoomStorage.getInstance().GetOne(a.RoomId), a.Date, a.Time, a.IsOperation, a.TimesChanged, a.TimeOfCreation);
             appts.Add(temp);
         }
 

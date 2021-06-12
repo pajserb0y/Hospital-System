@@ -226,7 +226,7 @@ namespace HospitalSystem.code.ViewModel
         public void Close()
         {
             window.Close();
-            PatientsStorage.getInstance().serialize();
+            PatientMemoryMenager.serialize(PatientCRUDMenager.getInstance().GetAll());
         }
 
 

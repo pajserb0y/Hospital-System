@@ -31,7 +31,7 @@ namespace HospitalSystem.code
 
         private void InitializeCollection(Appointment selectedAppointment)
         {
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
+            cbPatient.ItemsSource = PatientCRUDMenager.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
 
             cbPatient.SelectedItem = selectedAppointment.Patient;

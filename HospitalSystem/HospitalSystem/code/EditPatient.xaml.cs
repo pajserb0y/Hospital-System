@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -132,11 +133,12 @@ namespace HospitalSystem.code
                         errorJmbg.Content = "JMBG must contain 13 digits";
                     else
                     {
-                        PatientsStorage.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
+                        PatientCRUDMenager.getInstance().Edit(new Patient(currentPatient.Id, txtIme.Text, txtPrezime.Text, Convert.ToInt64(txtJmbg.Text),
                 (char)((bool)rbF.IsChecked ? Convert.ToChar(rbF.Content) : Convert.ToChar(rbM.Content)), txtAdress.Text, Convert.ToInt64(txtTel.Text), txtEmail.Text, cbGuest.IsChecked == true,
                 txtUsername.Text, txtPassword.Text, (DateTime)dpBirth.SelectedDate, cbMarriage.SelectedIndex == -1 ? "" : cbMarriage.SelectedValue.ToString(), Convert.ToInt64(txtSoc.Text),
                 txtCity.Text, txtCountry.Text, currentPatient.Alergens, currentPatient.WorkHistory));
-                        PatientsStorage.getInstance().serialize();
+                        //PatientCRUDMenager.getInstance().serialize();
+                        PatientMemoryMenager.serialize(PatientCRUDMenager.getInstance().GetAll());
                         this.Close();
                     }
                 }

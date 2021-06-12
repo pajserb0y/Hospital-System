@@ -8,30 +8,31 @@ using System.Windows.Data;
 
 namespace HospitalSystem.code.Model
 {
-    public static class PatientService
+    public class PatientService : DeleteChecker
     {
         public static ObservableCollection<Patient> GetAll()
         {
-            return PatientsStorage.getInstance().GetAll();
+            return PatientCRUDMenager.getInstance().GetAll();
         }
 
         public static void Edit(Patient patient)
         {
-            PatientsStorage.getInstance().Edit(patient);
+            PatientCRUDMenager.getInstance().Edit(patient);
         }
 
         public static void Delete(Patient patient)
         {
-            PatientsStorage.getInstance().Delete(patient);
+            PatientCRUDMenager.getInstance().Delete(patient);
         }
         public static void Add(Patient patient)
         {
-            PatientsStorage.getInstance().Add(patient);
+            PatientCRUDMenager.getInstance().Add(patient);
         }
 
         public static int GenerateNewID()
         {
-            return PatientsStorage.getInstance().GenerateNewID();
+            ObservableCollection<Patient> patients = PatientCRUDMenager.getInstance().GetAll();
+            return ((patients.Count - 1) == -1) ? 1 : patients[patients.Count - 1].Id + 1;
         }
 
         public static void openAddPatientWindow(PatientViewModel viewModel)
@@ -48,26 +49,12 @@ namespace HospitalSystem.code.Model
 
         public static void deletePatient(Patient SelectedItem)
         {
-            MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-            MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-
-            MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to delete this patient?", "Permanently deleting", btnMessageBox, icnMessageBox);
-            switch (rsltMessageBox)
-            {
-                case MessageBoxResult.Yes:
-                    {
-                        PatientsStorage.getInstance().Delete(SelectedItem);
-                        break;
-                    }
-
-                case MessageBoxResult.No:
-                    /* ... */
-                    break;
-
-                case MessageBoxResult.Cancel:
-                    /* ... */
-                    break;
-            }
+            DeleteChecker foo = new PatientService();
+            foo.surelyDeleting(SelectedItem);
+        }
+        void DeleteChecker.deleteObject(object selectedItem)
+        {
+            PatientCRUDMenager.getInstance().Delete((Patient)selectedItem);
         }
 
         public static Visibility hideOrShowHelp(Visibility TxtHelp)
@@ -107,7 +94,7 @@ namespace HospitalSystem.code.Model
         public static ObservableCollection<Patient> filterPatients(string search)
         {
             ObservableCollection<Patient> newPatientCollection = new ObservableCollection<Patient>();
-            ListCollectionView patientCollection = new ListCollectionView(PatientsStorage.getInstance().GetAll());
+            ListCollectionView patientCollection = new ListCollectionView(PatientCRUDMenager.getInstance().GetAll());
             patientCollection.Filter = (patient) =>
             {
                 Patient tempPatient = patient as Patient;
@@ -129,9 +116,9 @@ namespace HospitalSystem.code.Model
         {
             long jmbg = Convert.ToInt64(Jmbg);
             long tel = Convert.ToInt64(Telephone);
-            Patient patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), FirstName, LastName, jmbg, Gender, Adress, tel,
+            Patient patient = new Patient(GenerateNewID(), FirstName, LastName, jmbg, Gender, Adress, tel,
                 Email, false, Username, Password, default(DateTime), "", 0, "", "", default, default);
-            PatientsStorage.getInstance().Add(patient);
+            PatientCRUDMenager.getInstance().Add(patient);
             ViewModel.Load();
             window.Close();
         }

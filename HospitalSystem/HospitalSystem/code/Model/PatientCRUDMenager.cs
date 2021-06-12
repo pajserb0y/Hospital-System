@@ -4,20 +4,21 @@
  * Purpose: Definition of the Class Sekretar.PatientsStorage
  ***********************************************************************/
 
+using HospitalSystem.code.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-public class PatientsStorage
+public class PatientCRUDMenager
 {
-    private static PatientsStorage instance = null;
-    public static PatientsStorage getInstance()
+    private static PatientCRUDMenager instance = null;
+    public static PatientCRUDMenager getInstance()
     {
         if (instance == null)
         {
-            instance = new PatientsStorage();
+            instance = new PatientCRUDMenager();
         }
         return instance;
     }
@@ -30,12 +31,12 @@ public class PatientsStorage
         set { patients = value; }
     }
 
-    private String FileLocation = "../../../Resource/Patients.json";
+    //private String FileLocation = "../../../Resource/Patients.json";
 
 
-    public PatientsStorage()
+    public PatientCRUDMenager()
     {
-        this.patients = deserialize();
+        this.patients = PatientMemoryMenager.deserialize();
     }
 
     public Patient GetOne(int patientID)
@@ -49,6 +50,11 @@ public class PatientsStorage
     public ObservableCollection<Patient> GetAll()
     {
         return patients;
+    }
+
+    public void Add(Patient patient)
+    {
+        this.patients.Add(patient);
     }
 
     public void Edit(Patient patient)
@@ -109,35 +115,32 @@ public class PatientsStorage
                     examinations.Remove(ex);
     }
 
-    public void Add(Patient patient)
-    {
-        this.patients.Add(patient);
-    }
+    
 
-    public int GenerateNewID()
-    {
-        return ((patients.Count - 1) == -1) ? 1 : patients[patients.Count - 1].Id + 1;
-    }
+    //public int GenerateNewID()
+    //{
+    //    return ((patients.Count - 1) == -1) ? 1 : patients[patients.Count - 1].Id + 1;
+    //}
 
-    public void serialize()
-    {
-        var JSONresult = JsonConvert.SerializeObject(patients);
-        using (StreamWriter sw = new StreamWriter(FileLocation))
-        {
-            sw.Write(JSONresult);
-            sw.Close();
-        }
-    }
+    //public void serialize()
+    //{
+    //    var JSONresult = JsonConvert.SerializeObject(patients);
+    //    using (StreamWriter sw = new StreamWriter(FileLocation))
+    //    {
+    //        sw.Write(JSONresult);
+    //        sw.Close();
+    //    }
+    //}
 
-    public ObservableCollection<Patient> deserialize()
-    {
-        ObservableCollection<Patient> list = new ObservableCollection<Patient>();
-        using (StreamReader sr = new StreamReader(FileLocation))
-        {
-            list = JsonConvert.DeserializeObject<ObservableCollection<Patient>>(sr.ReadToEnd());
-            sr.Close();
-        }
-        return list;
-    }
+    //public ObservableCollection<Patient> deserialize()
+    //{
+    //    ObservableCollection<Patient> list = new ObservableCollection<Patient>();
+    //    using (StreamReader sr = new StreamReader(FileLocation))
+    //    {
+    //        list = JsonConvert.DeserializeObject<ObservableCollection<Patient>>(sr.ReadToEnd());
+    //        sr.Close();
+    //    }
+    //    return list;
+    //}
 
 }
