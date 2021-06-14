@@ -31,7 +31,7 @@ namespace HospitalSystem.code
             InitializeComponent();
 
             hideExaminationDetails();
-            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientCRUDMenager.getInstance().GetAll();
             cbPatient.ItemsSource = patients;
         }
 

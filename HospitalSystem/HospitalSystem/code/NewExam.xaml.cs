@@ -24,7 +24,7 @@ namespace HospitalSystem.code
         public NewExam()
         {
             InitializeComponent();
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
+            cbPatient.ItemsSource = PatientCRUDMenager.getInstance().GetAll();
             cbDoctor.ItemsSource = DoctorStorage.getInstance().GetAll();
             dpDate.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
         }

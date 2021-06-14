@@ -362,7 +362,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock Text="&lt; view" TextWrapping="Wrap" PreviewMouseDown="txbView_PreviewMouseDown" Cursor="Hand" FontSize="20" VerticalAlignment="Center"
-                                   HorizontalAlignment="Center" Padding="10,10,10,10" Grid.Column="2" ToolTip="View selected examination details">
+                                   HorizontalAlignment="Center" Padding="10,10,10,10" Grid.Column="2" ToolTip="View selected examination details" Visibility="Collapsed">
                             <TextBlock.Style>
                                 <Style>
                                     <Setter Property="TextBlock.TextDecorations" Value="" />

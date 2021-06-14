@@ -18,7 +18,7 @@ namespace HospitalSystem.code
     /// <summary>
     /// Interaction logic for DoctorsWindow.xaml
     /// </summary>
-    public partial class DoctorsWindow : Window
+    public partial class DoctorsWindow : Window, SelectionChecker, DeleteChecker
     {
         public DoctorsWindow()
         {
@@ -72,43 +72,25 @@ namespace HospitalSystem.code
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (dataGridDoctors.SelectedItem != null)
+            if (SelectionChecker.isSelected(dataGridDoctors.SelectedItem))
             {
                 EditDoctor editDoctor = new EditDoctor((Doctor)dataGridDoctors.SelectedItem);
                 editDoctor.ShowDialog();
                 (dataGridDoctors.ItemContainerGenerator.ContainerFromItem(dataGridDoctors.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan pacijent
-            }
-            else
-                MessageBox.Show("You have to select doctor first.");            
+            }     
         }
 
         private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (dataGridDoctors.SelectedItem != null)
-            {
-                MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-                MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-
-                MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to delete this doctor?", "Permanently deleting", btnMessageBox, icnMessageBox);
-                switch (rsltMessageBox)
-                {
-                    case MessageBoxResult.Yes:
-                        {
-                            DoctorStorage.getInstance().Delete((Doctor)dataGridDoctors.SelectedItem);
-                            break;
-                        }
-
-                    case MessageBoxResult.No:
-                        /* ... */
-                        break;
-
-                    case MessageBoxResult.Cancel:
-                        /* ... */
-                        break;
-                }
+            if (SelectionChecker.isSelected(dataGridDoctors.SelectedItem))
+            {               
+                DeleteChecker foo = new DoctorsWindow();
+                foo.surelyDeleting((Doctor)dataGridDoctors.SelectedItem);
             }
-            else
-                MessageBox.Show("You have to select doctor first.");            
+        }
+        void DeleteChecker.deleteObject(object selectedItem)
+        {
+            DoctorStorage.getInstance().Delete((Doctor)selectedItem);
         }
 
 

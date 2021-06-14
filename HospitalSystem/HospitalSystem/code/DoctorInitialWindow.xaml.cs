@@ -40,7 +40,7 @@ namespace HospitalSystem.code
             checkbox_tooltip.IsChecked = null;
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
             ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
-            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientCRUDMenager.getInstance().GetAll();
             ObservableCollection<Drug> verifiedDrugs = DrugStorage.getInstance().GetAllVerifiedDrugs();
             ObservableCollection<Drug> unverifiedDrugs = DrugStorage.getInstance().GetAllUnverifiedDrugs();
             ObservableCollection<Announcement> announcements = AnnouncementStorage.getInstance().GetAll();
@@ -752,7 +752,7 @@ namespace HospitalSystem.code
         private void filterPatients(string search)
         {
             ObservableCollection<Patient> newPatientCollection = new ObservableCollection<Patient>();
-            ListCollectionView patientCollection = new ListCollectionView(PatientsStorage.getInstance().GetAll());
+            ListCollectionView patientCollection = new ListCollectionView(PatientCRUDMenager.getInstance().GetAll());
             patientCollection.Filter = (patient) =>
             {
                 Patient tempPatient = patient as Patient;

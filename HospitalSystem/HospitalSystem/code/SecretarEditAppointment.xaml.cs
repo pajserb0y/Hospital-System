@@ -39,27 +39,20 @@ namespace HospitalSystem.code
         public ObservableCollection<Doctor> filterDoctors(ObservableCollection<Doctor> doctors)
         {
             ObservableCollection<Doctor> finalDoctors = new ObservableCollection<Doctor>();
-            finalDoctors.Add(currentAppointment.Doctor);
-            findDoctorsWithRefferal(doctors, finalDoctors);
-            findGeneralMedicineDoctors(doctors, finalDoctors);
+
+
+                foreach (Refferal refferal in refferals)
+                    if (currentAppointment.Patient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
+                        foreach (Doctor doctor in doctors)
+                            if (doctor.Id == refferal.DoctorId && !finalDoctors.Contains(doctor))
+                                finalDoctors.Add(doctor);
+
+                foreach (Doctor doctor in doctors)
+                    if (doctor.Specialization.Equals("General medicine"))
+                        finalDoctors.Add(doctor);
+            
 
             return finalDoctors;
-        }
-
-        private static void findGeneralMedicineDoctors(ObservableCollection<Doctor> doctors, ObservableCollection<Doctor> finalDoctors)
-        {
-            foreach (Doctor doctor in doctors)
-                if (doctor.Specialization.Equals("General medicine"))
-                    finalDoctors.Add(doctor);
-        }
-
-        private void findDoctorsWithRefferal(ObservableCollection<Doctor> doctors, ObservableCollection<Doctor> finalDoctors)
-        {
-            foreach (Refferal refferal in refferals)
-                if (currentAppointment.Patient.Id == refferal.PatientId && refferal.Status == Refferal.STATUS.Active)
-                    foreach (Doctor doctor in doctors)
-                        if (doctor.Id == refferal.DoctorId && !finalDoctors.Contains(doctor))
-                            finalDoctors.Add(doctor);
         }
 
         private void initializeSelectedAppointmentDetails(Appointment selectedApp)
@@ -112,8 +105,15 @@ namespace HospitalSystem.code
             if (!fromConstructor)
             {
                 filter();
-                if (displayTerms() == 1)
-                    Window_Closed();
+            //if (displayTerms() == 1)
+            //    Window_Closed();
+            int i = displayTerms();
+                dpDate.IsEnabled = true;
+                cbTime.IsEnabled = false;
+                cbRoom.IsEnabled = false;
+                dpDate.SelectedDate = null;
+                cbRoom.SelectedIndex = -1;
+                cbTime.SelectedIndex = -1;
             }
         }
 
@@ -122,9 +122,16 @@ namespace HospitalSystem.code
             if (!fromConstructor)
             {
                 filter();
-                if (displayTerms() == 1)
-                    Window_Closed();
-                fromConstructor = false;
+            int i = displayTerms();
+                //if (displayTerms() == 1)
+                //    Window_Closed();
+                
+                cbTime.IsEnabled = true;
+                cbRoom.IsEnabled = false;
+                cbRoom.SelectedIndex = -1;
+                cbTime.SelectedIndex = -1;
+                if (cbTime.Items.Count == 0 && dpDate.SelectedDate != null)
+                    MessageBox.Show("There is not any available term for this doctor on this day.");
             }
         }
 
@@ -157,7 +164,7 @@ namespace HospitalSystem.code
                 foreach (string s in terms)
                 {
                     Doctor selectedDoctor = (Doctor)cbDoctor.SelectedItem;
-                    if (dpDate.SelectedDate <= DateTime.Now.Date)
+                    if (dpDate.SelectedDate < DateTime.Now.Date)
                     {
                         MessageBox.Show("Changing past appointment is not allowed!");
                         //this.Close();
@@ -178,8 +185,8 @@ namespace HospitalSystem.code
             {
                 WorkingShift workingShift = shift as WorkingShift;
                 if (workingShift.DoctorId == selectedDoctor.Id && (workingShift.StartDate <= dpDate.SelectedDate && workingShift.EndDate >= dpDate.SelectedDate) &&
-                    (((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime) ||
-                    ((DateTime)Convert.ToDateTime(term) >= workingShift.StartTime && (DateTime)Convert.ToDateTime(term) <= workingShift.EndTime)))
+                    ((((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay) ||
+                    (((DateTime)Convert.ToDateTime(term)).TimeOfDay >= workingShift.StartTime.TimeOfDay && ((DateTime)Convert.ToDateTime(term)).TimeOfDay <= workingShift.EndTime.TimeOfDay)))
                     return true;
                 return false;
             };
@@ -189,10 +196,17 @@ namespace HospitalSystem.code
             else
                 return true;
         }
+        
+        
 
         private void timeChanged(object sender, System.EventArgs e)
         {
             displayRooms();
+            cbRoom.IsEnabled = true;
+            cbRoom.SelectedIndex = -1;
+            if (cbRoom.Items.Count == 0 && cbTime.SelectedItem != null)
+                MessageBox.Show("There is not any available room for this doctor on this day in this room.");
+            fromConstructor = false;
         }
 
         private void displayRooms()

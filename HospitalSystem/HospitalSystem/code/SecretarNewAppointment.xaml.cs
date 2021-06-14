@@ -38,7 +38,7 @@ namespace HospitalSystem.code
             InitializeComponent();
             txtPatient.Visibility = Visibility.Collapsed;
             cbPatient.Visibility = Visibility.Visible;
-            List<Patient> patients = new List<Patient>(PatientsStorage.getInstance().GetAll());
+            List<Patient> patients = new List<Patient>(PatientCRUDMenager.getInstance().GetAll());
             patients.Add(new Patient("---None---"));
             cbPatient.ItemsSource = patients;
             disableOtherInputFields();
