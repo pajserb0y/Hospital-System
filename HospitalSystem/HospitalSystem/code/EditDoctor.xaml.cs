@@ -91,7 +91,7 @@ namespace HospitalSystem.code
         {
             DoctorsWindow doctorsWindow = new DoctorsWindow();
             doctorsWindow.Show();
-            PatientsStorage.getInstance().serialize();
+            DoctorStorage.getInstance().serialize();
             this.Close();
         }
 

@@ -26,7 +26,7 @@ namespace HospitalSystem.code
         public UrgentPatient()
         {
             InitializeComponent();
-            cbPatient.ItemsSource = PatientsStorage.getInstance().GetAll();
+            cbPatient.ItemsSource = PatientCRUDMenager.getInstance().GetAll();
             txtTime.Text = DateTime.Now.ToString("HH:mm");
             
             fillComboBoxWithAlSpecializations();      // pronalaze se sve specijalizacije ciji doktori rade u bolnici i ispisuju se samo jednom (distinct)
@@ -436,8 +436,8 @@ namespace HospitalSystem.code
             Patient patient = new Patient();
             if (cbPatient.SelectedItem == null)
             {
-                patient = new Patient(PatientsStorage.getInstance().GenerateNewID(), "", "", 0, default, "", 0, "", true, "", "", default(DateTime), "", 0, "", "", default, default);
-                PatientsStorage.getInstance().Add(patient);
+                patient = new Patient(PatientService.GenerateNewID(), "", "", 0, default, "", 0, "", true, "", "", default(DateTime), "", 0, "", "", default, default);
+                PatientCRUDMenager.getInstance().Add(patient);
             }
             else
                 patient = (Patient)cbPatient.SelectedItem;
