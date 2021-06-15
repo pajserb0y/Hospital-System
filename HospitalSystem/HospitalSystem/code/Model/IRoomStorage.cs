@@ -24,4 +24,3 @@ namespace HospitalSystem.code.Model
         public ObservableCollection<Room> deserialize();
     }
 }
-}

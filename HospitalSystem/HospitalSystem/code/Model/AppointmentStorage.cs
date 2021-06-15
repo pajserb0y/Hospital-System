@@ -5,13 +5,14 @@
  ***********************************************************************/
 
 using HospitalSystem.code;
+using HospitalSystem.code.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-public class AppointmentStorage
+public class AppointmentStorage : IAppointmentStorage
 {
     private static AppointmentStorage instance = null;
 
@@ -38,7 +39,7 @@ public class AppointmentStorage
         this.appointments = deserialize();
     }
 
-    private AppointmentViewModel copyAVM(Appointment a)
+    public AppointmentViewModel copyAVM(Appointment a)
     {
         AppointmentViewModel temp = new AppointmentViewModel();
 
@@ -87,7 +88,7 @@ public class AppointmentStorage
         return convertAvmToAppt(apptIDs);
     }
 
-    private ObservableCollection<Appointment> convertAvmToAppt(List<AppointmentViewModel> avms)
+    public ObservableCollection<Appointment> convertAvmToAppt(List<AppointmentViewModel> avms)
     {
         ObservableCollection<Appointment> appts = new ObservableCollection<Appointment>();
 
@@ -152,7 +153,7 @@ public class AppointmentStorage
 
 }
 
-internal class AppointmentViewModel
+public class AppointmentViewModel
 {
     private int id;
     public int Id
