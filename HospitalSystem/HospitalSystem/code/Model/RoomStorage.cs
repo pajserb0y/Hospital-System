@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HospitalSystem.code.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace HospitalSystem.code
 {
-    class RoomStorage
+    class RoomStorage : IRoomStorage
     {
 
         private static RoomStorage instance = null;
@@ -50,13 +51,6 @@ namespace HospitalSystem.code
 
         public void Edit(Room room)
         {
-            //Patient help = null;
-            //foreach (Patient P in this.Patients)
-            //    if (patient.Id == P.Id)
-            //       help = P;
-            //int i = this.Patients.IndexOf(help);
-            //this.Patients.Remove(help);
-            //this.Patients.Insert(i, patient);
             foreach (Room r in this.rooms)
                 if (room.Id == r.Id)
                 { 
