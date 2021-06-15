@@ -244,7 +244,7 @@ namespace HospitalSystem.code
             cbSpecializationRefferal.SelectedIndex = -1;
             cbDoctorRefferal.IsEnabled = true;
             cbSpecializationRefferal.IsEnabled = true;
-            btnSavePrescription.Visibility = Visibility.Visible;
+            btnSaveRefferal.Visibility = Visibility.Visible;
             tRefferal.Visibility = Visibility.Visible;
             tRefferal.Focus();
         }
@@ -262,13 +262,13 @@ namespace HospitalSystem.code
                 cbDoctorRefferal.SelectedItem = selectedDoctor;
 
                 InitializeSpecializatonForRefferal(cbSpecializationRefferal);
-                cbSpecializationRefferal.SelectedItem = selectedDoctor;
+                cbSpecializationRefferal.SelectedItem = selectedDoctor.Specialization;
 
                 cbDoctorRefferal.IsEnabled = false;
                 cbSpecializationRefferal.IsEnabled = false;
                 txtNoteRefferal.IsEnabled = false;
 
-                btnSavePrescription.Visibility = Visibility.Collapsed;
+                btnSaveRefferal.Visibility = Visibility.Collapsed;
                 tRefferal.Visibility = Visibility.Visible;
                 tRefferal.Focus();
             }

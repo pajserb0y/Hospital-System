@@ -321,8 +321,8 @@
                         <Label Content="Specialization:" Grid.Row="2" Grid.Column="0" Margin="70,50,889,140"/>
                         <Label Content="Doctor:" Grid.Row="2" Grid.Column="0" Margin="70,190,889,96" Padding="0,0,20,0" Grid.RowSpan="2"/>
 
-                        <Button Name="btnSavePrescription" Content="_Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="710,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
-                        <Button Name="btnCancelPrescription" Content="_Cancel" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="843,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Cancel_Refferal"/>
+                        <Button Name="btnSaveRefferal" Content="_Save" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="710,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Save_Refferal"/>
+                        <Button Name="btnCancelRefferal" Content="_Cancel" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="843,0,0,0" Height="36" VerticalAlignment="Center" Width="118" Click="Button_Cancel_Refferal"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
