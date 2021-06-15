@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace HospitalSystem.code.Model
 {
-    interface DeleteChecker
+    interface IDeleteChecker
     {
         void surelyDeleting(Object selectedItem)
         {

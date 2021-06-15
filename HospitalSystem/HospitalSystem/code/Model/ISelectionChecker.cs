@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace HospitalSystem.code.Model
 {
-    interface SelectionChecker
+    interface ISelectionChecker
     {
         public static bool isSelected(Object selectedItem)
         {

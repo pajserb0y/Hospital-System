@@ -18,7 +18,7 @@ namespace HospitalSystem.code
     /// <summary>
     /// Interaction logic for DoctorsWindow.xaml
     /// </summary>
-    public partial class DoctorsWindow : Window, SelectionChecker, DeleteChecker
+    public partial class DoctorsWindow : Window, ISelectionChecker, IDeleteChecker
     {
         public DoctorsWindow()
         {
@@ -72,7 +72,7 @@ namespace HospitalSystem.code
 
         private void txbEdit_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (SelectionChecker.isSelected(dataGridDoctors.SelectedItem))
+            if (ISelectionChecker.isSelected(dataGridDoctors.SelectedItem))
             {
                 EditDoctor editDoctor = new EditDoctor((Doctor)dataGridDoctors.SelectedItem);
                 editDoctor.ShowDialog();
@@ -82,13 +82,13 @@ namespace HospitalSystem.code
 
         private void txbDelete_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (SelectionChecker.isSelected(dataGridDoctors.SelectedItem))
+            if (ISelectionChecker.isSelected(dataGridDoctors.SelectedItem))
             {               
-                DeleteChecker foo = new DoctorsWindow();
+                IDeleteChecker foo = new DoctorsWindow();
                 foo.surelyDeleting((Doctor)dataGridDoctors.SelectedItem);
             }
         }
-        void DeleteChecker.deleteObject(object selectedItem)
+        void IDeleteChecker.deleteObject(object selectedItem)
         {
             DoctorStorage.getInstance().Delete((Doctor)selectedItem);
         }

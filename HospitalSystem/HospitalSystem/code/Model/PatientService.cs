@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace HospitalSystem.code.Model
 {
-    public class PatientService : DeleteChecker
+    public class PatientService : IDeleteChecker
     {
         public static ObservableCollection<Patient> GetAll()
         {
@@ -49,10 +49,10 @@ namespace HospitalSystem.code.Model
 
         public static void deletePatient(Patient SelectedItem)
         {
-            DeleteChecker foo = new PatientService();
+            IDeleteChecker foo = new PatientService();
             foo.surelyDeleting(SelectedItem);
         }
-        void DeleteChecker.deleteObject(object selectedItem)
+        void IDeleteChecker.deleteObject(object selectedItem)
         {
             PatientCRUDMenager.getInstance().Delete((Patient)selectedItem);
         }

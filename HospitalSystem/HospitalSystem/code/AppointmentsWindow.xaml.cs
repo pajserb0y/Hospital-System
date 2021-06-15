@@ -18,7 +18,7 @@ namespace HospitalSystem.code
     /// <summary>
     /// Interaction logic for AppointmentsWindow.xaml
     /// </summary>
-    public partial class AppointmentsWindow : Window, SelectionChecker, DeleteChecker
+    public partial class AppointmentsWindow : Window, ISelectionChecker, IDeleteChecker
     {
         List<Appointment> appointmentCollectionToday = new List<Appointment>();
         List<Appointment> appointmentCollectionWeekly = new List<Appointment>();
@@ -87,7 +87,7 @@ namespace HospitalSystem.code
 
             if (tabToday.IsSelected)
             {
-                if (SelectionChecker.isSelected(dgAppToday.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppToday.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppToday.SelectedItem;
                     if (selectedApp.Date >= DateTime.Now.Date)
@@ -102,7 +102,7 @@ namespace HospitalSystem.code
             }
             else if (tabWeekly.IsSelected)
             {
-                if (SelectionChecker.isSelected(dgAppWeekly.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppWeekly.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppWeekly.SelectedItem;
                     if (selectedApp.Date >= DateTime.Now.Date)
@@ -117,7 +117,7 @@ namespace HospitalSystem.code
             }
             else
             {
-                if (SelectionChecker.isSelected(dgAppAll.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppAll.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppAll.SelectedItem;
                     if (selectedApp.Date >= DateTime.Now.Date)
@@ -136,30 +136,30 @@ namespace HospitalSystem.code
         {
             if (tabToday.IsSelected)
             {
-                if (SelectionChecker.isSelected(dgAppToday.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppToday.SelectedItem))
                 {
-                    DeleteChecker foo = new AppointmentsWindow();
+                    IDeleteChecker foo = new AppointmentsWindow();
                     foo.surelyDeleting(dgAppToday.SelectedItem);
                 }
             }
             else if (tabWeekly.IsSelected)
             {
-                if (SelectionChecker.isSelected(dgAppWeekly.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppWeekly.SelectedItem))
                 {
-                    DeleteChecker foo = new AppointmentsWindow();
+                    IDeleteChecker foo = new AppointmentsWindow();
                     foo.surelyDeleting(dgAppWeekly.SelectedItem);
                 }
             }
             else
             {                
-                if (SelectionChecker.isSelected(dgAppAll.SelectedItem))
+                if (ISelectionChecker.isSelected(dgAppAll.SelectedItem))
                 {
-                    DeleteChecker foo = new AppointmentsWindow();
+                    IDeleteChecker foo = new AppointmentsWindow();
                     foo.surelyDeleting(dgAppAll.SelectedItem);
                 }
             }
         }
-        void DeleteChecker.deleteObject(object selectedItem)
+        void IDeleteChecker.deleteObject(object selectedItem)
         {
             AppointmentStorage.getInstance().Delete((Appointment)selectedItem);
         }
