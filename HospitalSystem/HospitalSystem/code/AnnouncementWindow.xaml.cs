@@ -26,7 +26,7 @@ namespace HospitalSystem.code
             txtTime.Text = DateTime.Now.ToString("HH:mm");
 
             listViewDoctors.ItemsSource = DoctorStorage.getInstance().GetAll();
-            listViewPatients.ItemsSource = PatientsStorage.getInstance().GetAll();
+            listViewPatients.ItemsSource = PatientCRUDMenager.getInstance().GetAll();
         }
         public AnnouncementWindow(Announcement selectedAnnouncement)
         {

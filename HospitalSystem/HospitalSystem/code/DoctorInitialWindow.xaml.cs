@@ -40,7 +40,7 @@ namespace HospitalSystem.code
             checkbox_tooltip.IsChecked = null;
             ObservableCollection<Appointment> appointments = AppointmentStorage.getInstance().GetAll();
             ObservableCollection<Doctor> doctors = DoctorStorage.getInstance().GetAll();
-            ObservableCollection<Patient> patients = PatientsStorage.getInstance().GetAll();
+            ObservableCollection<Patient> patients = PatientCRUDMenager.getInstance().GetAll();
             ObservableCollection<Drug> verifiedDrugs = DrugStorage.getInstance().GetAllVerifiedDrugs();
             ObservableCollection<Drug> unverifiedDrugs = DrugStorage.getInstance().GetAllUnverifiedDrugs();
             ObservableCollection<Announcement> announcements = AnnouncementStorage.getInstance().GetAll();
@@ -506,39 +506,14 @@ namespace HospitalSystem.code
         }
         private void Button_Hospitalization(object sender, RoutedEventArgs e)
         {
-            txtHospitalizationPatient.Text = Convert.ToString(currExam.Patient);
-            txtHospitalizationPatient.IsEnabled = false;
-            dpHospitalizationOUT.SelectedDate = null;
-            cbHospitalizationRoom.SelectedIndex = -1;
-            cbHospitalizatonBed.SelectedIndex = -1;
-            dpHospitalizationIN.SelectedDate = null;
-            dpHospitalizationIN.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
-            dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
-            tHospitalization.Visibility = Visibility.Visible;
-            tHospitalization.Focus();
+            HospitalizationService.HospitalizationServiceInitial(currExam, txtHospitalizationPatient, dpHospitalizationIN, dpHospitalizationOUT, cbHospitalizationRoom, cbHospitalizatonBed, tHospitalization);
         }
 
         private void Button_Save_Hospitalization(object sender, RoutedEventArgs e)
         {
-            if(cbHospitalizationRoom.SelectedItem != null && cbHospitalizatonBed.SelectedItem != null && dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
+            if (cbHospitalizationRoom.SelectedItem != null && cbHospitalizatonBed.SelectedItem != null && dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
             {
-                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
-                Bed selectedBed = (Bed)cbHospitalizatonBed.SelectedItem;
-                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
-                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
-                Patient selectedPatient = (Patient)currExam.Patient;
-                foreach (Bed b in selectedRoom.Beds)
-                {
-                    if (b == selectedBed)
-                    {
-
-                        b.Interval.Add(Tuple.Create(inTime, outTime, selectedPatient.Id));
-                        break;
-                    }
-                }
-                RoomStorage.getInstance().Edit(selectedRoom);
-                tHospitalization.Visibility = Visibility.Collapsed;
-                tExam.Focus();
+                HospitalizationService.Save_Hospitalization(tExam);
             }
             else
             {
@@ -548,94 +523,21 @@ namespace HospitalSystem.code
 
         private void cbHospitalizationRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           //if (dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT != null)
-                fillListOfAvailableBeds();
-
+            HospitalizationService.fillListOfAvailableBeds();
         }
-        private void fillListOfAvailableRooms(List<Bed> beds)
-        {
-            if(dpHospitalizationIN.SelectedDate != null && dpHospitalizationOUT.SelectedDate != null)
-            {
-                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
-                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
-                ListCollectionView roomCollectionView = new ListCollectionView(RoomStorage.getInstance().GetAll());
-
-                roomCollectionView.Filter = (room) =>
-                {
-                    Room tempRoom = room as Room;
-                    if (tempRoom.Name == "Room")
-                    {
-                        foreach (Bed tempBed in tempRoom.Beds)
-                        {
-                            foreach (Tuple<DateTime, DateTime, int> val in tempBed.Interval)
-                            {
-                                if (val.Item1 <= inTime && val.Item2 >= inTime)
-                                    return false;
-                                if (val.Item1 <= outTime && val.Item2 >= outTime)
-                                    return false;
-                                if (val.Item1 >= inTime && val.Item2 <= outTime)
-                                    return false;
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-                };
-                cbHospitalizationRoom.ItemsSource = roomCollectionView;
-            }
-        }
-
+ 
         private void dpHospitalizationTimeIn_Changed(object sender, SelectionChangedEventArgs e)
         {
             if (dpHospitalizationIN.SelectedDate != null)
-            {
-                dpHospitalizationOUT.SelectedDate = null;
-                dpHospitalizationOUT.BlackoutDates.Clear();
-                dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), ((DateTime)dpHospitalizationIN.SelectedDate).AddDays(-1)));
-            }
-            else
-            {
-                dpHospitalizationOUT.SelectedDate = null;
-                dpHospitalizationOUT.BlackoutDates.Clear();
-                dpHospitalizationOUT.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddYears(-1), DateTime.Now.AddDays(-1)));
-            }
+                HospitalizationService.TimeIn_Changed();
         }
         private void dpHospitalizationTimeOut_Changed(object sender, SelectionChangedEventArgs e)
         {
             if(dpHospitalizationOUT.SelectedDate != null)
-                fillListOfAvailableRooms(new List<Bed>());
+               HospitalizationService.fillListOfAvailableRooms(new List<Bed>());
         }
 
-        private void fillListOfAvailableBeds()
-        {
-            if(cbHospitalizationRoom.SelectedIndex != -1)
-            {
-
-                DateTime inTime = (DateTime)dpHospitalizationIN.SelectedDate;
-                DateTime outTime = (DateTime)dpHospitalizationOUT.SelectedDate;
-                Room selectedRoom = (Room)cbHospitalizationRoom.SelectedItem;
-                ListCollectionView bedCollectionView = new ListCollectionView(selectedRoom.Beds);
-
-                bedCollectionView.Filter = (bed) =>
-                {
-                    Bed tempBed = bed as Bed;
-
-                    foreach (Tuple<DateTime,DateTime,int> val in tempBed.Interval)
-                    {
-                        if (val.Item1 <= inTime && val.Item2 >= inTime)
-                            return false;
-                        if (val.Item1 <= outTime && val.Item2 >= outTime)
-                            return false;
-                        if (val.Item1 >= inTime && val.Item2 <= outTime)
-                            return false;
-                        return true;
-                    }
-                    return false;
-                };
-                cbHospitalizatonBed.ItemsSource = bedCollectionView;
-            }
-        }
-
+       
         private void Button_Wizard(object sender, RoutedEventArgs e)
         {
             HelpWizard hw = new HelpWizard(selectedDoctor);
@@ -752,7 +654,7 @@ namespace HospitalSystem.code
         private void filterPatients(string search)
         {
             ObservableCollection<Patient> newPatientCollection = new ObservableCollection<Patient>();
-            ListCollectionView patientCollection = new ListCollectionView(PatientsStorage.getInstance().GetAll());
+            ListCollectionView patientCollection = new ListCollectionView(PatientCRUDMenager.getInstance().GetAll());
             patientCollection.Filter = (patient) =>
             {
                 Patient tempPatient = patient as Patient;

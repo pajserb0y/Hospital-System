@@ -1,4 +1,5 @@
-﻿using iTextSharp.text;
+﻿using HospitalSystem.code.Model;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace HospitalSystem.code
     /// <summary>
     /// Interaction logic for AppointmentsWindow.xaml
     /// </summary>
-    public partial class AppointmentsWindow : Window
+    public partial class AppointmentsWindow : Window, ISelectionChecker, IDeleteChecker
     {
         List<Appointment> appointmentCollectionToday = new List<Appointment>();
         List<Appointment> appointmentCollectionWeekly = new List<Appointment>();
@@ -86,57 +87,48 @@ namespace HospitalSystem.code
 
             if (tabToday.IsSelected)
             {
-                if (dgAppToday.SelectedItem != null)
+                if (ISelectionChecker.isSelected(dgAppToday.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppToday.SelectedItem;
-                    if (selectedApp != null)
-                        if (selectedApp.Date >= DateTime.Now.Date)
-                        {
-                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                            secretarEditAppointment.ShowDialog();
-                            (dgAppToday.ItemContainerGenerator.ContainerFromItem(dgAppToday.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                        }
-                        else
-                            MessageBox.Show("Changing past is not allowed!");
+                    if (selectedApp.Date >= DateTime.Now.Date)
+                    {
+                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                        secretarEditAppointment.ShowDialog();
+                        (dgAppToday.ItemContainerGenerator.ContainerFromItem(dgAppToday.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                    }
+                    else
+                        MessageBox.Show("Changing past is not allowed!");
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
             else if (tabWeekly.IsSelected)
             {
-                if (dgAppWeekly.SelectedItem != null)
+                if (ISelectionChecker.isSelected(dgAppWeekly.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppWeekly.SelectedItem;
-                    if (selectedApp != null)
-                        if (selectedApp.Date >= DateTime.Now.Date)
-                        {
-                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                            secretarEditAppointment.ShowDialog();
-                            (dgAppWeekly.ItemContainerGenerator.ContainerFromItem(dgAppWeekly.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                        }
-                        else
-                            MessageBox.Show("Changing past is not allowed!");
+                    if (selectedApp.Date >= DateTime.Now.Date)
+                    {
+                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                        secretarEditAppointment.ShowDialog();
+                        (dgAppWeekly.ItemContainerGenerator.ContainerFromItem(dgAppWeekly.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                    }
+                    else
+                        MessageBox.Show("Changing past is not allowed!");
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
             else
             {
-                if (dgAppAll.SelectedItem != null)
+                if (ISelectionChecker.isSelected(dgAppAll.SelectedItem))
                 {
                     var selectedApp = (Appointment)dgAppAll.SelectedItem;
-                    if (selectedApp != null)
-                        if (selectedApp.Date >= DateTime.Now.Date)
-                        {
-                            SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
-                            secretarEditAppointment.ShowDialog();
-                            (dgAppAll.ItemContainerGenerator.ContainerFromItem(dgAppAll.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
-                        }
-                        else
-                            MessageBox.Show("Changing past is not allowed!");
+                    if (selectedApp.Date >= DateTime.Now.Date)
+                    {
+                        SecretarEditAppointment secretarEditAppointment = new SecretarEditAppointment((Appointment)selectedApp);
+                        secretarEditAppointment.ShowDialog();
+                        (dgAppAll.ItemContainerGenerator.ContainerFromItem(dgAppAll.SelectedItem) as DataGridRow).IsSelected = false;    //da prestane da bude selektovan app      
+                    }
+                    else
+                        MessageBox.Show("Changing past is not allowed!");
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
         }
 
@@ -144,95 +136,36 @@ namespace HospitalSystem.code
         {
             if (tabToday.IsSelected)
             {
-                if (dgAppToday.SelectedItem != null)
+                if (ISelectionChecker.isSelected(dgAppToday.SelectedItem))
                 {
-                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-
-                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
-                    switch (rsltMessageBox)
-                    {
-                        case MessageBoxResult.Yes:
-                            {
-                                var selectedApp = dgAppToday.SelectedItem;
-                                if (selectedApp != null)
-                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
-                                break;
-                            }
-
-                        case MessageBoxResult.No:
-                            /* ... */
-                            break;
-
-                        case MessageBoxResult.Cancel:
-                            /* ... */
-                            break;
-                    }
+                    IDeleteChecker foo = new AppointmentsWindow();
+                    foo.surelyDeleting(dgAppToday.SelectedItem);
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
             else if (tabWeekly.IsSelected)
             {
-                if (dgAppWeekly.SelectedItem != null)
+                if (ISelectionChecker.isSelected(dgAppWeekly.SelectedItem))
                 {
-                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-
-                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
-                    switch (rsltMessageBox)
-                    {
-                        case MessageBoxResult.Yes:
-                            {
-                                var selectedApp = dgAppWeekly.SelectedItem;
-                                if (selectedApp != null)
-                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
-                                break;
-                            }
-
-                        case MessageBoxResult.No:
-                            /* ... */
-                            break;
-
-                        case MessageBoxResult.Cancel:
-                            /* ... */
-                            break;
-                    }                    
+                    IDeleteChecker foo = new AppointmentsWindow();
+                    foo.surelyDeleting(dgAppWeekly.SelectedItem);
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
             else
-            {
-                if (dgAppAll.SelectedItem != null)
+            {                
+                if (ISelectionChecker.isSelected(dgAppAll.SelectedItem))
                 {
-                    MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-                    MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
-
-                    MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to permanently delete this appointment?", "Loging out", btnMessageBox, icnMessageBox);
-                    switch (rsltMessageBox)
-                    {
-                        case MessageBoxResult.Yes:
-                            {
-                                var selectedApp = dgAppAll.SelectedItem;
-                                if (selectedApp != null)
-                                    AppointmentStorage.getInstance().Delete((Appointment)selectedApp);
-                                break;
-                            }
-
-                        case MessageBoxResult.No:
-                            /* ... */
-                            break;
-
-                        case MessageBoxResult.Cancel:
-                            /* ... */
-                            break;
-                    }                    
+                    IDeleteChecker foo = new AppointmentsWindow();
+                    foo.surelyDeleting(dgAppAll.SelectedItem);
                 }
-                else
-                    MessageBox.Show("You have to select patient first.");
             }
         }
+        void IDeleteChecker.deleteObject(object selectedItem)
+        {
+            AppointmentStorage.getInstance().Delete((Appointment)selectedItem);
+        }
+
+
+
         public void txtSearch_GotFocus(object sender, RoutedEventArgs e)
         {
             TextBox search = (TextBox)sender;

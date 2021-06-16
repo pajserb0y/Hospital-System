@@ -1,0 +1,350 @@
+[
+  {
+    "Id": 1,
+    "PatientID": 8,
+    "ExaminationID": 15,
+    "DateOfPrescription": "2021-04-23T00:00:00",
+    "Taking": "2 puta dnevno po pola",
+    "Drug": {
+      "Id": 1,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bensedin",
+      "Amount": 0,
+      "Ingridients": null
+    }
+  },
+  {
+    "Id": 2,
+    "PatientID": 21,
+    "ExaminationID": 11,
+    "DateOfPrescription": "2021-04-23T00:00:00",
+    "Taking": "Samo umereno",
+    "Drug": {
+      "Id": 2,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 0,
+      "Ingridients": null
+    }
+  },
+  {
+    "Id": 3,
+    "PatientID": 21,
+    "ExaminationID": 11,
+    "DateOfPrescription": "2021-04-23T00:00:00",
+    "Taking": "3 puta po pola",
+    "Drug": {
+      "Id": 2,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 0,
+      "Ingridients": null
+    }
+  },
+  {
+    "Id": 4,
+    "PatientID": 12,
+    "ExaminationID": 16,
+    "DateOfPrescription": "2021-05-08T00:00:00",
+    "Taking": "2 puta po pola",
+    "Drug": {
+      "Id": 3,
+      "Report": null,
+      "Status": 0,
+      "Name": "Trodon",
+      "Amount": 0,
+      "Ingridients": null
+    }
+  },
+  {
+    "Id": 5,
+    "PatientID": 12,
+    "ExaminationID": 19,
+    "DateOfPrescription": "2021-05-08T00:00:00",
+    "Taking": "2 puta dnevno",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 6,
+    "PatientID": 9,
+    "ExaminationID": 23,
+    "DateOfPrescription": "2021-05-02T00:00:00",
+    "Taking": "2 puta dnevno ",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 7,
+    "PatientID": 8,
+    "ExaminationID": 7,
+    "DateOfPrescription": "2021-04-14T00:00:00+02:00",
+    "Taking": "2 puta po pola",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  },
+  {
+    "Id": 8,
+    "PatientID": 14,
+    "ExaminationID": 22,
+    "DateOfPrescription": "2021-04-30T00:00:00",
+    "Taking": "2 puta po pola",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  },
+  {
+    "Id": 9,
+    "PatientID": 12,
+    "ExaminationID": 35,
+    "DateOfPrescription": "2021-05-11T00:00:00",
+    "Taking": "hahaahahha",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 10,
+    "PatientID": 21,
+    "ExaminationID": 32,
+    "DateOfPrescription": "2021-05-15T00:00:00",
+    "Taking": "5 puta dnevno",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  },
+  {
+    "Id": 11,
+    "PatientID": 15,
+    "ExaminationID": 34,
+    "DateOfPrescription": "2021-05-06T00:00:00",
+    "Taking": "2 put 3",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 12,
+    "PatientID": 22,
+    "ExaminationID": 33,
+    "DateOfPrescription": "2021-06-03T00:00:00",
+    "Taking": "adedaedad",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 13,
+    "PatientID": 21,
+    "ExaminationID": 32,
+    "DateOfPrescription": "2021-05-06T00:00:00",
+    "Taking": "2 puta 3",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  },
+  {
+    "Id": 14,
+    "PatientID": 9,
+    "ExaminationID": 31,
+    "DateOfPrescription": "2021-05-07T00:00:00",
+    "Taking": "dasdad",
+    "Drug": {
+      "Id": 6,
+      "Report": null,
+      "Status": 0,
+      "Name": "Strepsils",
+      "Amount": 500,
+      "Ingridients": [
+        {
+          "Name": "Hlor",
+          "Amount": 200
+        },
+        {
+          "Name": "Sumpor",
+          "Amount": 300
+        }
+      ]
+    }
+  },
+  {
+    "Id": 15,
+    "PatientID": 9,
+    "ExaminationID": 25,
+    "DateOfPrescription": "2021-05-02T00:00:00",
+    "Taking": "3 po 1",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  },
+  {
+    "Id": 16,
+    "PatientID": 13,
+    "ExaminationID": 38,
+    "DateOfPrescription": "2021-05-07T00:00:00",
+    "Taking": "2 po 3",
+    "Drug": {
+      "Id": 5,
+      "Report": null,
+      "Status": 0,
+      "Name": "Bromazepam",
+      "Amount": 750,
+      "Ingridients": [
+        {
+          "Name": "Vodonik",
+          "Amount": 150
+        },
+        {
+          "Name": "Brom",
+          "Amount": 600
+        }
+      ]
+    }
+  }
+]

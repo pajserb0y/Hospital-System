@@ -1,0 +1,116 @@
+[
+  {
+    "Id": 1,
+    "Report": null,
+    "Status": 2,
+    "Name": "Pantenol",
+    "Amount": 100,
+    "Ingridients": [
+      {
+        "Name": "Sumpor",
+        "Amount": 100
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Report": null,
+    "Status": 2,
+    "Name": "Tantum Verde",
+    "Amount": 430,
+    "Ingridients": [
+      {
+        "Name": "Hlor",
+        "Amount": 200
+      },
+      {
+        "Name": "Cink",
+        "Amount": 130
+      },
+      {
+        "Name": "Kalijum",
+        "Amount": 100
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Report": null,
+    "Status": 0,
+    "Name": "Probiotik",
+    "Amount": 912,
+    "Ingridients": [
+      {
+        "Name": "Jod",
+        "Amount": 200
+      },
+      {
+        "Name": "Acetil",
+        "Amount": 100
+      },
+      {
+        "Name": "Bor",
+        "Amount": 100
+      },
+      {
+        "Name": "Magnezijum",
+        "Amount": 200
+      },
+      {
+        "Name": "Kikiriki",
+        "Amount": 290
+      },
+      {
+        "Name": "Metan",
+        "Amount": 22
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "Report": null,
+    "Status": 2,
+    "Name": "Luc mixtura",
+    "Amount": 100,
+    "Ingridients": [
+      {
+        "Name": "Sumpor",
+        "Amount": 100
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "Report": null,
+    "Status": 0,
+    "Name": "Bromazepam",
+    "Amount": 750,
+    "Ingridients": [
+      {
+        "Name": "Vodonik",
+        "Amount": 150
+      },
+      {
+        "Name": "Brom",
+        "Amount": 600
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Report": null,
+    "Status": 0,
+    "Name": "Strepsils",
+    "Amount": 500,
+    "Ingridients": [
+      {
+        "Name": "Hlor",
+        "Amount": 200
+      },
+      {
+        "Name": "Sumpor",
+        "Amount": 300
+      }
+    ]
+  }
+]

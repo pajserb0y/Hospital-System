@@ -1,0 +1,16 @@
+﻿<Window x:Class="HospitalSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalSystem"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Button Content="Upravnik" HorizontalAlignment="Left" Margin="140,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnUpravnik_Click"/>
+        <Button Content="Sekretar" HorizontalAlignment="Left" Margin="514,88,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnSekretar_Click"/>
+        <Button Content="Doctor" HorizontalAlignment="Left" Margin="140,229,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnDoctor_Click"/>
+        <Button Content="Pacijent" HorizontalAlignment="Left" Margin="514,224,0,0" VerticalAlignment="Top" Height="60" Width="120" Click="btnPacijent_Click"/>
+    </Grid>
+</Window>

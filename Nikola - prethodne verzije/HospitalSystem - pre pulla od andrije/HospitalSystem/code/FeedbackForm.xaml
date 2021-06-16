@@ -1,0 +1,45 @@
+﻿<Window x:Class="HospitalSystem.code.FeedbackForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalSystem.code"
+        mc:Ignorable="d"
+        Title="FeedbackForm" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="rateExam" Content="How would you rate the quality of examination on " HorizontalAlignment="Left" Height="36" Margin="59,40,0,0" VerticalAlignment="Top" Width="300"/>
+        <Label x:Name="rateDoctor" Content="How would you rate the quality of doctor" HorizontalAlignment="Left" Height="36" Margin="59,96,0,0" VerticalAlignment="Top" Width="250"/>
+
+        <Label x:Name="date"  HorizontalAlignment="Left" Height="36" Margin="385,40,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="doctor"  HorizontalAlignment="Left" Height="36" Margin="335,96,0,0" VerticalAlignment="Top" Width="200"/>
+
+        <ComboBox x:Name="cbRateExam"  HorizontalAlignment="Left" Margin="564,44,0,0" VerticalAlignment="Top" Width="100">
+            <ComboBoxItem Content="5"></ComboBoxItem>
+            <ComboBoxItem Content="4"></ComboBoxItem>
+            <ComboBoxItem Content="3"></ComboBoxItem>
+            <ComboBoxItem Content="2"></ComboBoxItem>
+            <ComboBoxItem Content="1"></ComboBoxItem>
+        </ComboBox>
+        <ComboBox x:Name="cbRateDoctor"  HorizontalAlignment="Left" Margin="564,99,0,0" VerticalAlignment="Top" Width="100">
+            <ComboBoxItem Content="5"></ComboBoxItem>
+            <ComboBoxItem Content="4"></ComboBoxItem>
+            <ComboBoxItem Content="3"></ComboBoxItem>
+            <ComboBoxItem Content="2"></ComboBoxItem>
+            <ComboBoxItem Content="1"></ComboBoxItem>
+        </ComboBox>
+        <Label x:Name="rateOverall" Content="How would you rate the quality of overall service at our hospital?" HorizontalAlignment="Left" Height="36" Margin="59,151,0,0" VerticalAlignment="Top" Width="400"/>
+
+        <Button  Content="Save" HorizontalAlignment="Left" Height="30" Margin="534,371,0,0" VerticalAlignment="Top" Width="130" Click="Save_Click"/>
+        <ComboBox x:Name="cbOverall"  HorizontalAlignment="Left" Margin="564,153,0,0" VerticalAlignment="Top" Width="100">
+            <ComboBoxItem Content="5"></ComboBoxItem>
+            <ComboBoxItem Content="4"></ComboBoxItem>
+            <ComboBoxItem Content="3"></ComboBoxItem>
+            <ComboBoxItem Content="2"></ComboBoxItem>
+            <ComboBoxItem Content="1"></ComboBoxItem>
+        </ComboBox>
+        <Label Content="If you have any comments, feel free to leave them below:" HorizontalAlignment="Left" Height="35" Margin="59,0,0,0" VerticalAlignment="Center" Width="400"/>
+        <TextBox x:Name="comments" TextWrapping="Wrap" Width="605" HorizontalAlignment="Left" Margin="59,240,0,72"/>
+
+
+    </Grid>
+</Window>

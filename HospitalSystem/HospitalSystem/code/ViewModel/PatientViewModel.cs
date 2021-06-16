@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.code.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -129,66 +130,56 @@ namespace HospitalSystem.code.ViewModel
 
 
 
-        private void filterPatients(string search)
-        {
-            ObservableCollection<Patient> newPatientCollection = new ObservableCollection<Patient>();
-            ListCollectionView patientCollection = new ListCollectionView(PatientsStorage.getInstance().GetAll());
-            patientCollection.Filter = (patient) =>
-            {
-                Patient tempPatient = patient as Patient;
-                if (tempPatient.Adress.ToLower().Contains(search) || tempPatient.City.ToLower().Contains(search) || tempPatient.Country.ToLower().Contains(search) ||
-                    tempPatient.Email.ToLower().Contains(search) || tempPatient.FirstName.ToLower().Contains(search) || tempPatient.Jmbg.ToString().ToLower().Contains(search) ||
-                    tempPatient.LastName.ToLower().Contains(search) || tempPatient.SocNumber.ToString().ToLower().Contains(search) ||
-                    tempPatient.Telephone.ToString().ToLower().Contains(search) || tempPatient.Username.Contains(search))
-                {
-                    newPatientCollection.Add(tempPatient);
-                    return true;
-                }
-                return false;
-            };
-            Items = newPatientCollection;
-        }
+       
 
         public void Load()
         {
-            Items = new ObservableCollection<Patient>(PatientsStorage.getInstance().GetAll());
+            Items = new ObservableCollection<Patient>(PatientService.GetAll());
         }
+
+
 
         public void Add()
         {
-            NewPatient np = new NewPatient(this);
-            np.ShowDialog();
+            PatientService.openAddPatientWindow(this);
         }
 
         private void View()
         {
-            EditPatient editPatient = new EditPatient(SelectedItem);
-            editPatient.ShowDialog();
+            PatientService.openEditPatientWindow(SelectedItem);
         }
 
         public void Delete()
         {
-            MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
-            MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+            PatientService.deletePatient(SelectedItem);
+            Load();
+        }
 
-            MessageBoxResult rsltMessageBox = MessageBox.Show("Are you sure that you want to delete this patient?", "Permanently deleting", btnMessageBox, icnMessageBox);
-            switch (rsltMessageBox)
-            {
-                case MessageBoxResult.Yes:
-                    {
-                        PatientsStorage.getInstance().Delete(SelectedItem);
-                        Load();
-                        break;
-                    }
+        public void Help()
+        {
+            TxtHelp = PatientService.hideOrShowHelp(TxtHelp);
+        }
 
-                case MessageBoxResult.No:
-                    /* ... */
-                    break;
+        public void CreateUrgent()
+        {
+            PatientService.openUrgentExaminationWindow();          
+        }
 
-                case MessageBoxResult.Cancel:
-                    /* ... */
-                    break;
-            }
+        public void CreateAnnouncement()
+        {
+            PatientService.openAnnouncementWindow();
+        }
+
+        public void ShowDoctors()
+        {
+            PatientService.selectDoctorsMenuItem(HeaderDoctors);
+            this.Close();
+        }
+
+        public void ShowAppointments()
+        {
+            PatientService.selectAppointmentsMenuItem(HeaderDoctors);
+            this.Close();
         }
 
         public void LogOut()
@@ -203,7 +194,6 @@ namespace HospitalSystem.code.ViewModel
                     {
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
-                        PatientsStorage.getInstance().serialize();
                         Close();
                         break;
                     }
@@ -217,44 +207,6 @@ namespace HospitalSystem.code.ViewModel
                     break;
             }
         }
-
-        public void Help()
-        {
-            if (TxtHelp == Visibility.Visible)
-                TxtHelp = Visibility.Collapsed;
-            else
-                TxtHelp = Visibility.Visible;
-        }
-
-        public void CreateUrgent()
-        {
-            UrgentPatient urgentPatient = new UrgentPatient();
-            urgentPatient.ShowDialog();
-        }
-
-        public void CreateAnnouncement()
-        {
-            AnnouncementWindow announcementWindow = new AnnouncementWindow();
-            announcementWindow.ShowDialog();
-        }
-
-        public void ShowDoctors()
-        {
-            HeaderDoctors = "< Doctors >";
-            DoctorsWindow doctorsWindow = new DoctorsWindow();
-            doctorsWindow.Show();
-            this.Close();
-        }
-
-        public void ShowAppointments()
-        {
-            HeaderAppointments = "< Appointments >";
-            AppointmentsWindow appointmentsWindow = new AppointmentsWindow();
-            appointmentsWindow.Show();
-            this.Close();
-        }
-
-
 
 
 
@@ -274,7 +226,7 @@ namespace HospitalSystem.code.ViewModel
         public void Close()
         {
             window.Close();
-            PatientsStorage.getInstance().serialize();
+            PatientMemoryMenager.serialize(PatientCRUDMenager.getInstance().GetAll());
         }
 
 
@@ -305,7 +257,7 @@ namespace HospitalSystem.code.ViewModel
             set
             {
                 searchTextChanged = value;
-                filterPatients(searchTextChanged);
+                Items = PatientService.filterPatients(searchTextChanged);
                 OnPropertyChanged(nameof(SearchTextChanged));
             }
         }

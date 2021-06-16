@@ -137,7 +137,7 @@ public class ExaminationStorage
             Examination temp = new Examination();
             temp.Id = e.Id;
             temp.Doctor = DoctorStorage.getInstance().GetOne(e.DoctorId);
-            temp.Patient = PatientsStorage.getInstance().GetOne(e.PatientId);
+            temp.Patient = PatientCRUDMenager.getInstance().GetOne(e.PatientId);
             temp.Room = RoomStorage.getInstance().GetOne(e.RoomId);
             temp.Date = e.Date;
             temp.Time = e.Time;
